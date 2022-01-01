@@ -45,9 +45,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('manage_accounts')->read()->access()){ ?>
+                
                   <a href="<?php echo base_url('dashboard/Caccounts/manage_account')?>" class="btn btn-success color4 m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_account')?></a>
-                <?php }?>
+
                 </div>
             </div>
         </div>

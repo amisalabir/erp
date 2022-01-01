@@ -6,7 +6,7 @@ class Cwearhouse extends CI_Controller {
 		$this->load->library('lwearhouse');
 		$this->load->model('Wearhouses');
 		$this->load->model('Stores');
-		$this->auth->check_user_auth();
+		$this->auth->check_admin_auth();
     }
 	//Default loading for wearhouse system.
 	public function index()

@@ -42,6 +42,7 @@ class Product extends MX_Controller
 
     }
 
+
     //Default loading for Product Details.
     public function product_details($p_id)
     {
@@ -49,34 +50,11 @@ class Product extends MX_Controller
         $this->template_lib->full_website_html_view($content);
     }
 
-    //Check 2d variant stock info
-    public function check_2d_variant_info()
-    {
-        $product_id = $this->input->post('product_id',TRUE);
-        $variant_id = $this->input->post('variant_id',TRUE);
-        $variant_color = $this->input->post('variant_color',TRUE);
-        $stock = $this->Products_model->check_variant_wise_stock($variant_id, $product_id, $variant_color);
-
-        if ($stock > 0) {
-            $result[0] = "yes";
-            $price = $this->Products_model->check_variant_wise_price($product_id, $variant_id, $variant_color);
-
-            $result[1] = get_amount($price['price']);
-            $result[2] = get_amount($price['regular_price']);
-            $result[3] = (($price['regular_price']>$price['price'])?ceil((($price['regular_price']-$price['price'])/$price['regular_price'])*100):0);
-
-        } else {
-            $result[0] = 'no';
-        }
-        echo json_encode($result);
-    }
-
     //Check variant wise stock
     public function check_variant_wise_stock()
     {
         $variant_id = $this->input->post('variant_id',TRUE);
         $product_id = $this->input->post('product_id',TRUE);
-        $variant_color = $this->input->post('variant_color',TRUE);
         $stock = $this->Products_model->check_variant_wise_stock($variant_id, $product_id);
 
         if ($stock > 0) {
@@ -92,8 +70,7 @@ class Product extends MX_Controller
         $quantity = $this->input->post('product_quantity',TRUE);
         $product_id = $this->input->post('product_id',TRUE);
         $variant = $this->input->post('variant',TRUE);
-        $variant_color = $this->input->post('variant_color',TRUE);
-        $stock = $this->Products_model->check_quantity_wise_stock($quantity, $product_id, $variant, $variant_color);
+        $stock = $this->Products_model->check_quantity_wise_stock($quantity, $product_id, $variant);
 
         if ($stock >= $quantity) {
             echo "yes";
@@ -105,9 +82,9 @@ class Product extends MX_Controller
     public function brand_product($brand_id=null)
     {
         $price_range = $this->input->get('price',TRUE);
-        $size        = $this->input->get('size',TRUE);
-        $sort        = $this->input->get('sort',TRUE);
-        $rate        = $this->input->get('rate',TRUE);
+        $size = $this->input->get('size',TRUE);
+        $sort = $this->input->get('sort',TRUE);
+        $rate = $this->input->get('rate',TRUE);
 
         $content = $this->lproduct->brand_product($brand_id,$price_range,$size,$sort,$rate);
         $this->template_lib->full_website_html_view($content);

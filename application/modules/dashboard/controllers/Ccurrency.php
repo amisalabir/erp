@@ -6,16 +6,14 @@ class Ccurrency extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        $this->auth->check_user_auth();
         $this->load->library('dashboard/lcurrency');
         $this->load->model('dashboard/Currencies');
+        $this->auth->check_admin_auth();
     }
 
     //Default loading for currency system.
     public function index()
     {
-        $this->permission->check_label('add_currency')->create()->redirect();
-
         $content = $this->lcurrency->currency_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -23,8 +21,6 @@ class Ccurrency extends MX_Controller
     //Insert currency
     public function insert_currency()
     {
-        $this->permission->check_label('add_currency')->create()->redirect();
-
         $this->form_validation->set_rules('currency_name', display('currency_name'), 'trim|required');
         $this->form_validation->set_rules('currency_icon', display('currency_icon'), 'trim|required');
         $this->form_validation->set_rules('currency_position', display('currency_position'), 'trim|required');
@@ -90,16 +86,12 @@ class Ccurrency extends MX_Controller
    //Manage currency
     public function manage_currency()
     {
-        $this->permission->check_label('manage_currency')->read()->redirect();
-
         $content =$this->lcurrency->currency_list();
         $this->template_lib->full_admin_html_view($content);;
     }
     //Currency Update Form
     public function currency_update_form($currency_id)
     {   
-        $this->permission->check_label('manage_currency')->update()->redirect();
-
         $content = $this->lcurrency->currency_edit_data($currency_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -107,8 +99,6 @@ class Ccurrency extends MX_Controller
     // Currency Update
     public function currency_update($currency_id = null)
     {
-        $this->permission->check_label('manage_currency')->update()->redirect();
-
         $this->form_validation->set_rules('currency_name', display('currency_name'), 'trim|required');
         $this->form_validation->set_rules('currency_icon', display('currency_icon'), 'trim|required');
         $this->form_validation->set_rules('currency_position', display('currency_position'), 'trim|required');
@@ -165,8 +155,6 @@ class Ccurrency extends MX_Controller
     // Currency Delete
     public function currency_delete($currency_id)
     {
-        $this->permission->check_label('manage_currency')->delete()->redirect();
-
         $currency = $this->Currencies->delete_currency($currency_id);
 
         if ($currency) {

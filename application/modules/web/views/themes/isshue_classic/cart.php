@@ -123,14 +123,6 @@ if ($this->cart->contents()) {
                                         $var = $query->row();
                                         echo html_escape($var->variant_name);
                                     }
-                                    if (!empty($items['variant_color'])) {
-                                        $this->db->select('variant_name');
-                                        $this->db->from('variant');
-                                        $this->db->where('variant_id', $items['variant_color']);
-                                        $cquery = $this->db->get();
-                                        $cvar = $cquery->row();
-                                        echo "<br>".html_escape($cvar->variant_name);
-                                    }
                                     ?>
                                 </td>
                                 <td><?php echo form_input(array('class' => 'text-center', 'name' => $i . '[qty]', 'value' => $items['qty'], 'maxlength' => '3', 'size' => '5')); ?>

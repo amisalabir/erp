@@ -57,6 +57,8 @@
                     {edit}
 
                     <?php echo form_open_multipart("dashboard/caccounts/inflow_edit_receiver/{transection_id}", array('class' => 'form-vertical', 'id' => 'insert_deposit', 'name' => 'insert_deposit')); ?>
+
+
                     <div class="panel-body">
                     	<?php $today = date('m-d-Y'); ?>
                         

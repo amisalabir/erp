@@ -22,12 +22,11 @@
 		<div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                  <?php if($this->permission->check_label('sales_report')->read()->access()){ ?>
+
                   <a href="<?php echo base_url('Admin_dashboard/todays_sales_report')?>" class="btn btn-info m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('sales_report')?></a>
-              	  <?php } ?>
-              	  <?php if($this->permission->check_label('transfer_report')->read()->access()){ ?>
+
                   <a href="<?php echo base_url('Admin_dashboard/transfer_report')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('transfer_report')?></a>
-                  <?php } ?>
+                  
                 </div>
             </div>
         </div>

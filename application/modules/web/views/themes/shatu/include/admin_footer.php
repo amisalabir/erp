@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-7">
                 <h5 class="newsletter-title"><?php echo display('subscribe_for_news_and') ?></h5>
-                <strong class="offers color44"><?php echo display('offers') ?></strong>
+                <strong class="color44"><?php echo display('offers') ?></strong>
             </div>
             <div class="col-xs-12 col-sm-5">
                 <div id="sub_msg"></div>
@@ -98,16 +98,18 @@
                     } ?></div>
             </div>
             <div class="col-sm-6">
-                <?php if (1 == $Web_settings[0]['pay_with_status']) {
-                if ($pay_withs) {
-                 ?>
+                <?php if (1 == $Web_settings[0]['pay_with_status']) { ?>
                     <ul class="list-inline pull-right">
                         <li><h6 class="color44"><?php echo display('pay_with') ?> :</h6></li>
-                        <?php foreach ($pay_withs as $pay_with):?>
+                        <?php
+                        if ($pay_withs) {
+                            foreach ($pay_withs as $pay_with):?>
                                 <li><a href="<?php echo html_escape($pay_with['link']); ?>" target="_blank"><img width="30" height="30" src="<?php echo base_url() ?>my-assets/image/pay_with/<?php echo html_escape($pay_with['image']); ?>" alt="#"></a></li>
-                            <?php endforeach; ?>
+                            <?php endforeach;
+                        }
+                        ?>
                     </ul>
-                <?php } } ?>
+                <?php } ?>
             </div>
         </div>
     </div>

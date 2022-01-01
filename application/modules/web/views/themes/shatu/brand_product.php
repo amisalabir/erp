@@ -1,10 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php 
-    $is_aff = false;
-    if(check_module_status('affiliate_products') == 1){
-        $is_aff = true;
-    }
-?>
+
 <div class="page-breadcrumbs">
 <div class="container">
 <ol class="breadcrumb">
@@ -438,23 +433,11 @@
                                                    title="<?php echo display('add_to_wishlist') ?>"><i
                                                             class="fa fa-heart"></i></a>
                                             </li>
-                                            <li>
-                                                <?php if($is_aff){ if($product['is_affiliate'] == 1 ){ ?>
-                                                        <a href="<?php echo html_escape($product['affiliate_url']) ?>" target="0" title="<?php echo display('buy_now') ?>" id="affiliate_btn">
-                                                            <i class="fa fa-shopping-bag"></i>
-                                                        </a>
-                                                <?php }else{ ?> 
-                                                    <a href="javascript:void(0)" title="<?php echo display('add_to_cart') ?>"
-                                                   onclick="add_to_cart_item('<?php echo html_escape($product['product_id']); ?>',  '<?php echo  remove_space($product['product_name']); ?>', '<?php echo html_escape($product['default_variant']); ?>', <?php echo $product['variant_price']; ?>)">
-                                                       <i class="fa fa-shopping-bag"></i>
-                                                    </a>
-                                                <?php } }else{ ?>
-                                                    <a href="javascript:void(0)" title="<?php echo display('add_to_cart') ?>"
-                                                   onclick="add_to_cart_item('<?php echo html_escape($product['product_id']); ?>',  '<?php echo  remove_space($product['product_name']); ?>', '<?php echo html_escape($product['default_variant']); ?>', <?php echo $product['variant_price']; ?>)">
-                                                       <i class="fa fa-shopping-bag"></i>
-                                                    </a>
-                                                <?php }  ?>
-                                            </li>
+                                            <li><a href="javascript:void(0)" 
+                                   title="<?php echo display('add_to_cart') ?>"
+                                                   onclick="cart_btn(<?php echo html_escape($product['product_id']) . ', \'' . remove_space($product['product_name']) . '\',';
+                                                   echo ($product['default_variant']) ? '\'' . html_escape($product['default_variant']) . '\'' : '\'nai\''; ?>)"><i
+                                                            class="fa fa-shopping-bag"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>

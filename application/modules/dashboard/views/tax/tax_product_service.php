@@ -47,9 +47,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                    <?php if($this->permission->check_label('manage_product_tax')->read()->access()){ ?>
-                        <a href="<?php echo base_url('dashboard/Ctax/manage_tax')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_tax')?></a>
-                    <?php } ?>
+                    <a href="<?php echo base_url('dashboard/Ctax/manage_tax')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_tax')?></a>
+
                 </div>
             </div>
         </div>

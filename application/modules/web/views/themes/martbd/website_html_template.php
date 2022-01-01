@@ -41,7 +41,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     
     <link href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet">
-    
     <?php
     if ($Soft_settings[0]['rtr'] == 1) {
         ?>
@@ -79,7 +78,6 @@
     <link href="<?php echo base_url('assets/plugins/jquery-nice-select/css/nice-select.css') ?>" rel="stylesheet">
 
     <link href="<?php echo base_url('application/modules/web/views/themes/' . $theme . '/assets/css/style.css?v=2" rel="stylesheet') ?>">
-    
     <?php
     if ($Soft_settings[0]['rtr'] == 1) {
         ?>
@@ -88,15 +86,10 @@
         <?php
     }
     ?>
-    
     <!-- jQuery -->
     <script src="<?php echo base_url()?>assets/js/jquery.min.js" type="text/javascript"></script>
-    <!-- Martbd Product comparison js -->
-    <script src="<?php echo THEME_URL.'martbd/assets/js/main.js'; ?>"></script>
     <!--Bootstrap-->
     <script src="<?php echo base_url('assets/bootstrap/js/bootstrap.min.js') ?>"></script>
-
-    
     <!-- JS form validation -->
     <script src="<?php echo base_url() ?>assets/js/jquery.validate.min.js" type="text/javascript"></script>
     <!-- Sweetalert -->
@@ -142,10 +135,8 @@ if (!empty($this->session->userdata('language'))) {
                         : <?php echo html_escape($company_info[0]['mobile']) ?></li>
                     <li><a href="#"><i class="fa fa-envelope-o"></i> <?php echo display('email') ?>
                             : <?php echo html_escape($company_info[0]['email']) ?></a></li>
-                    <li><a href="<?php  echo base_url('track_my_order'); ?>"><?php echo display('track_my_order');?></li>
                 </ul>
                 <ul class="topBarNav pull-right">
-
                     <li>
                         <select id="change_currency" name="change_currency" class='select resizeselect'>
                             <?php
@@ -232,7 +223,6 @@ if (!empty($this->session->userdata('language'))) {
 
 <!-- Martbd Theme Ajax js -->
 <script src="<?php echo THEME_URL.'martbd/assets/ajaxs/martbd_ajax.js?v=1'; ?>"></script>
-
 
 
 <?php echo htmlspecialchars_decode($Web_settings[0]['facebook_messenger']); ?>

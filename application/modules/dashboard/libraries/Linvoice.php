@@ -203,6 +203,7 @@ class Linvoice {
 
 		$currency_details = $CI->Soft_settings->retrieve_currency_info();
 		$company_info 	  = $CI->Invoices->retrieve_company();
+		$store_info 	  = $CI->Soft_settings->get_store_details($invoice_detail[0]['store_id']);
 
 		$data=array(
 			'title'				=>	display('invoice_details'),
@@ -218,7 +219,7 @@ class Linvoice {
 			'invoice_discount'	=>	$invoice_detail[0]['invoice_discount'],
 			'service_charge'	=>	$invoice_detail[0]['service_charge'],
 			'shipping_charge'	=>	$invoice_detail[0]['shipping_charge'],
-			'shipping_method'	=>	@$shipping_method[0]['method_name'],
+			'shipping_method'	=>	$shipping_method[0]['method_name'],
 			'paid_amount'		=>	$invoice_detail[0]['paid_amount'],
 			'due_amount'		=>	$invoice_detail[0]['due_amount'],
 			'invoice_details'	=>	$invoice_detail[0]['invoice_details'],
@@ -231,9 +232,13 @@ class Linvoice {
             'ship_customer_name'		=>	$invoice_detail[0]['ship_customer_name'],
             'ship_customer_mobile'	=>	$invoice_detail[0]['ship_customer_mobile'],
             'ship_customer_email'	=>	$invoice_detail[0]['ship_customer_email'],
+            'store_name'	=>	$invoice_detail[0]['store_name'],
+            'store_address'	=>	$invoice_detail[0]['store_address'],
 			);
 		$data['Soft_settings'] = $CI->Soft_settings->retrieve_setting_editdata();
+		$data['store_info'] = $CI->Soft_settings->get_store_details($invoice_detail[0]['store_id']);
 		$chapterList = $CI->parser->parse('dashboard/invoice/invoice_html',$data,true);
+
 		return $chapterList;
 	}
 

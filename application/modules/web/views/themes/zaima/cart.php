@@ -74,26 +74,7 @@ $CI =& get_instance();
                                     <div class="cartSection w-100">
                                         <img src="<?php echo base_url() . $items['options']['image']; ?>" alt="Image" class="itemImg float-left d-block pr-3">
                                         <p class="itemNumber fs-11 text-black-50 mb-1">#<?php echo sprintf("%03d", $i); ?></p>
-                                        <h3 class="fs-17 mb-3 font-weight-400"><?php echo html_escape($items['name']); ?> - (
-                                            <?php
-                                            if (!empty($items['variant'])) {
-                                                $this->db->select('variant_name');
-                                                $this->db->from('variant');
-                                                $this->db->where('variant_id', $items['variant']);
-                                                $query = $this->db->get();
-                                                $var = $query->row();
-                                                echo html_escape($var->variant_name);
-                                            }
-                                             if (!empty($items['variant_color'])) {
-                                                $this->db->select('variant_name');
-                                                $this->db->from('variant');
-                                                $this->db->where('variant_id', $items['variant_color']);
-                                                $cquery = $this->db->get();
-                                                $cvar = $cquery->row();
-                                                echo ", ".html_escape($cvar->variant_name);
-                                            }
-                                            ?>
-                                        )</h3>
+                                        <h3 class="fs-17 mb-3 font-weight-400"><?php echo html_escape($items['name']); ?></h3>
                                         <div class="d-flex align-items-center">
                                             <div class="num-block skin-2">
                                                 <div class="num-in d-flex bg-white border mr-2">

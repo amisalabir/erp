@@ -145,9 +145,26 @@
                             <div class="col-sm-6">
                                 <select class="form-control" name="captcha" id="captcha">
                                     <option value=""><?php echo display('select_one') ?></option>
-                                    <option value="1" <?php if ($captcha == '1') {echo "selected";}?>><?php echo display('active') ?></option>
-                                    <option value="0" <?php if ($captcha == '0') {echo "selected";}?>><?php echo display('inactive') ?></option>
+                                    <option value="0" <?php if ($captcha == 0) {echo "selected";}?>><?php echo display('active') ?></option>
+                                    <option value="1" <?php if ($captcha == 1) {echo "selected";}?>><?php echo display('inactive') ?></option>
                                 </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="https://www.google.com/recaptcha/admin/create" target="_blank">Create Account</a>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="site_key" class="col-sm-3 col-form-label"><?php echo display('site_key') ?></label>
+                            <div class="col-sm-6">
+                                <input class="form-control" name ="site_key" id="site_key" type="text" placeholder="Please enter valid captcha site key" value="{site_key}">
+                            </div>
+                        </div>    
+                        
+                        <div class="form-group row">
+                            <label for="secret_key" class="col-sm-3 col-form-label"><?php echo display('secret_key') ?></label>
+                            <div class="col-sm-6">
+                                <input class="form-control" name ="secret_key" id="secret_key" type="text" placeholder="Please enter valid captcha secret key" value="{secret_key}">
                             </div>
                         </div>
                         <div class="form-group row">

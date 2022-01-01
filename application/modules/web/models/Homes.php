@@ -661,7 +661,7 @@ class Homes extends CI_Model
         $CI->load->model('dashboard/Soft_settings');
         $gateway = $CI->Soft_settings->retrieve_active_getway();
         $sms_template = $CI->db->select('*')->from('sms_template')->where('type', $type)->get()->row();
-        $sms = $CI->db->select('*')->from('sms_configuration')->where('status','1')->get()->row();
+        $sms = $CI->db->select('*')->from('sms_configuration')->get()->row();
         $customer_info = $CI->db->select('customer_mobile')->from('customer_information')->where('customer_id', $customer_id)->get()->row();
         if (1 == $gateway->id) {
 
@@ -888,7 +888,6 @@ class Homes extends CI_Model
                     'order_id' => $order_id,
                     'product_id' => $items['product_id'],
                     'variant_id' => $items['variant'],
-                    'variant_color' => (!empty($items['variant_color'])?$items['variant_color']:NULL),
                     'store_id' => (!empty($default_store->store_id) ? $default_store->store_id : null),
                     'quantity' => $items['qty'],
                     'rate' => $items['actual_price'],
@@ -1159,91 +1158,4 @@ class Homes extends CI_Model
             ->row();
         return $result;
     }
-
-
-    // Web order details
-    public function get_order_html_data($order_email, $order_number)
-    {
-        $this->db->select('
-            a.*,
-            b.*,
-            c.*,
-            d.product_id,
-            d.product_name,
-            d.product_details,
-            d.product_model,d.unit,
-            e.unit_short_name,
-            f.variant_name,
-            g.variant_name as variant_color_name,
-            a.details
-            ');
-        $this->db->from('order a');
-        $this->db->join('customer_information b','b.customer_id = a.customer_id', 'left');
-        $this->db->join('order_details c','c.order_id = a.order_id', 'left');
-        $this->db->join('product_information d','d.product_id = c.product_id', 'left');
-        $this->db->join('unit e','e.unit_id = d.unit','left', 'left');
-        $this->db->join('variant f','f.variant_id = c.variant_id','left');
-        $this->db->join('variant g','g.variant_id = c.variant_color','left');
-        $this->db->where('a.order',$order_number);
-        $this->db->where('b.customer_email',$order_email);
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            return $query->result_array();  
-        }
-        return false;
-    }
-
-     // Order payment info
-    public function get_order_payinfo($order_id=false)
-    {
-        if(empty($order_id))
-            return false;
-
-        return $this->db->select('a.*, b.agent as payment_method')
-            ->from('order_payment a')
-            ->join('payment_gateway b', 'a.payment_id=b.used_id','left')
-            ->where('a.order_id', $order_id)
-            ->get()->row_array();
-
-
-    }
-
-    // order status
-    public function get_order_stutus($order_id=false)
-    {
-        if(empty($order_id))
-            return false;
-
-        $invinfo = $this->db->select('invoice_status')
-            ->from('invoice')
-            ->where('order_id', $order_id)
-            ->get()->row();
-        if(!empty($invinfo->invoice_status)){
-            return $invinfo->invoice_status;
-        }else{
-            return false;
-        }
-    }
-
-    //brand List
-    public function get_brand_list()
-    {
-        $this->db->select('*');
-        $this->db->from('brand');
-        $this->db->where('status','1');
-        $this->db->order_by('brand_name','asc');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            return $query->result_array();  
-        }
-        return false;
-    }
-
-    // Insert Product visit analytics
-    public function insert_product_page_visit($product_id)
-    {
-        $result = $this->db->query("INSERT INTO `site_analytics` (product_id,clicks) VALUES ('".$product_id."',1) ON DUPLICATE KEY UPDATE clicks = clicks+1");
-        return $result;
-    }
-
 }

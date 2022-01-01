@@ -32,9 +32,7 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <?php if($this->permission->check_label('language')->read()->access()){ ?>
-                    <a href="<?php echo  base_url('dashboard/Language') ?>" class="btn btn-info">Language Home</a>
-                <?php } ?>
+                <a href="<?php echo  base_url('dashboard/Language') ?>" class="btn btn-info">Language Home</a>
             </div>
         </div>
 

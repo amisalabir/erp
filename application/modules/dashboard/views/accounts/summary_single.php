@@ -81,11 +81,9 @@
 										<td>{payment_type}</td>
 						                <td>
 						                    <center>
-						                    <?php if($this->permission->check_label('accounts_summary')->read()->access()){ ?>
 						                       <a href="<?php echo base_url().'dashboard/Caccounts/inout_edit/{transection_id}/{table}/edit'; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('update') ?> "><i class="fa fa-pencil" aria-hidden="true"></i></a>
 
 						                       <a href="<?php echo base_url().'dashboard/Caccounts/inout_edit/{transection_id}/{table}/del'; ?>" class="deletePurchase btn btn-danger btn-sm" name="20170114125203" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete') ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-						                    <?php } ?>
 						                    </center>
 						                </td>
 									</tr>

@@ -25,27 +25,7 @@ class Categories extends CI_Model {
 		$this->db->order_by('category_name','asc');
 		$query = $this->db->get();
 		if ($query->num_rows() > 0) {
-			return $query->result_array();
-		}
-		return false;
-	}
-
-	//category wise product count
-	public function category_products(){
-		
-		$query = $this->db->query("SELECT a.category_name,(SELECT count(b.product_id) FROM product_information b WHERE a.category_id=b.category_id) as product_count FROM product_category a ORDER BY product_count DESC LIMIT 5 ");
-		if ($query->num_rows() > 0) {
-			return $query->result_array();
-		}
-		return false;
-	}
-
-	//category wise product count
-	public function all_category_products(){
-		
-		$query = $this->db->query("SELECT a.category_name,(SELECT count(b.product_id) FROM product_information b WHERE a.category_id=b.category_id) as product_count FROM product_category a ORDER BY product_count DESC");
-		if ($query->num_rows() > 0) {
-			return $query->result_array();
+			return $query->result_array();	
 		}
 		return false;
 	}	

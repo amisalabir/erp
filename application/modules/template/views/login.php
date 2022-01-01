@@ -105,32 +105,43 @@
                             </div>
                         </div>
                         <div id="login_form">
-                        <?php
-                         echo form_open('admin','id="loginForm" novalidate'); ?>
+                        <?php echo form_open('dashboard/admin_dashboard/do_login','id="loginForm" novalidate'); ?>
 
                             <div class="form-group">
                                 <label class="control-label" for="email"><?php echo display('email') ?></label>
-                                <input type="text" placeholder="<?php echo display('email') ?>" name="email" id="email" class="form-control" value="<?php echo set_value('email'); ?>"> 
+                                <input type="text" placeholder="<?php echo display('email') ?>" name="email" id="email" class="form-control"> 
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="password"><?php echo display('password') ?></label>
-                                <input type="password"  placeholder="<?php echo display('password') ?>" name="password" id="password" class="form-control"  value="<?php echo set_value('password'); ?>"> 
+                                <input type="password"  placeholder="<?php echo display('password') ?>" name="password" id="password" class="form-control"> 
                             </div>
-                            <?php if($setting['captcha']){ ?>
+                            <?php if($setting['captcha'] == 0 && $setting['site_key'] != null && $setting['secret_key'] != null){ ?>
                             <div class="form-group">
                                 <label class="control-label" for="captcha"><?php echo $captcha_image ?></label>
+                                
                                 <input type="captcha"  placeholder="<?php echo display('captcha') ?>" name="captcha" id="captcha" class="form-control"> 
                             </div>
-                            <?php } ?>
+                            <?php } ?> 
                             <div> 
                                 <button  type="reset" class="btn btn-info"><?php echo display('reset') ?></button> 
                                 <button  type="submit" class="btn btn-success"><?php echo display('login') ?></button> 
                             </div>
                               </div>
-
+                            <div id="forget_password_form">
+                            <div class="form-group">
+                                <label class="control-label" for="admin_email"><?php echo display('email') ?></label>
+                                <input type="email" placeholder="<?php echo display('email') ?>" required="" name="admin_email"
+                                       id="admin_email" class="form-control">
+                                <span class="help-block small"><?php echo display('your_unique_email') ?></span>
+                            </div>
+                            <div>
+                                <button class="btn btn-success" id="submit_button"><?php echo display('submit') ?></button>
+                            </div>
+                        </div>
 
                         <div>
                             <button class="btn btn-success" id="login_button"><?php echo display('login') ?></button>
+                            <a class="pull-right" href="#" id="forget_password_button"><?php echo display('forget_password'); ?></a>
                         </div>
                         <?php echo form_close(); ?>
                     </div>
@@ -145,6 +156,11 @@
         <script src="<?php echo base_url('assets/js/jquery.min.js') ?>" type="text/javascript"></script>
         <!-- Bootstrap -->
         <script src="<?php echo base_url('assets/bootstrap/js/bootstrap.min.js') ?>" type="text/javascript"></script>
+
+        <?php if($setting['captcha'] == 0 && $setting['site_key'] != null && $setting['secret_key'] != null){ ?>
+            <input type="hidden" id="site_key" value="<?php echo html_escape($setting['site_key']); ?>">
+        <script src="https://www.google.com/recaptcha/api.js?render=<?php echo html_escape($setting['site_key']); ?>"></script>
+        <?php } ?>
 
         <script src="<?php echo MOD_URL.'template/assets/js/admin_login_form.js'; ?>"></script>
 

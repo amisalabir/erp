@@ -51,33 +51,13 @@
                             <h4><?php echo display('variant_edit') ?> </h4>
                         </div>
                     </div>
-                <?php echo form_open_multipart('dashboard/Cvariant/variant_update/{variant_id}',array('class' => 'form-vertical', 'id' => 'validate'))?>
+                  <?php echo form_open_multipart('dashboard/Cvariant/variant_update/{variant_id}',array('class' => 'form-vertical', 'id' => 'validate'))?>
                     <div class="panel-body">
 
                         <div class="form-group row">
                             <label for="variant_name" class="col-sm-3 col-form-label"><?php echo display('variant_name') ?> <i class="text-danger">*</i></label>
                             <div class="col-sm-6">
                                 <input class="form-control" name ="variant_name" id="variant_name" type="text" placeholder="<?php echo display('variant_name') ?>"  required="" value="{variant_name}">
-                            </div>
-                        </div>
-
-                        
-
-                         <div class="form-group row">
-                            <label for="variant_type" class="col-sm-3 col-form-label"><?php echo display('variant_type')?> <i class="text-danger">*</i></label>
-                            <div class="col-sm-6">
-                                <select name="variant_type" id="variant_type" class="form-control" required="">
-                                    <option value=""></option>
-                                    <option value="size" <?php echo (($variant_type == 'size')? 'selected':'')?>><?php echo display('size')?></option>
-                                    <option value="color" <?php echo (($variant_type == 'color')? 'selected':'')?>><?php echo display('color')?></option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row" id="color_code_area" style="<?php echo (($variant_type=='color')?'':'display: none'); ?>">
-                            <label for="color_code" class="col-sm-3 col-form-label"><?php echo display('color_code') ?> <i class="text-danger">*</i></label>
-                            <div class="col-sm-6">
-                                <input class="form-control" name ="color_code" id="color_code" type="color" placeholder="<?php echo display('color_code') ?>"  required="" value="{color_code}">
                             </div>
                         </div>
 
@@ -112,15 +92,13 @@
                             </div>
                         </div>
                     </div>
-                <?php echo form_close()?>
+                    <?php echo form_close()?>
                 </div>
             </div>
         </div>
     </section>
 </div>
 <!-- Edit customer end -->
-<script src="<?php echo MOD_URL.'dashboard/assets/js/add_variant.js'; ?>"></script>
-
 
 
 

@@ -77,28 +77,8 @@ $company_info = $CI->Companies->company_list();
                         <div class="signup-section"><?php echo display('dont_have_an_account'); ?> <a href="<?php echo base_url('signup') ?>" class="text-primary color42"><?php echo display('sign_up'); ?></a></div>
                     </div>
                 </div>
-                <div class="row mt-5">
-                    <div class="col-md-6 form-group">
-                         <?php if(check_module_status('googlelogin') == 1){ 
-                        ?>
-                            <a class="btn btn-google btn-sm btn-block  search text-white" href="<?php echo base_url('googlelogin/googlelogin/login')?>"><i class="fab fa-google mr-5"></i> <?php echo display('google_login')?></a>
-                        <?php }?>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <?php if((check_module_status('facebooklogin') == 1)){
-                        ?>
-                            <a class="btn btn-facebook btn-sm btn-block  search text-white" href="<?php echo base_url('facebooklogin/facebooklogin/index/1')?>"><i class="fab fa-facebook mr-5"></i> <?php echo display('facebook_login')?></a>
-                        <?php }?> 
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <?php if((check_module_status('linkedinlogin') == 1)){ ?>
-                            <a class="btn btn-linkedin btn-sm btn-block  search text-white" href="<?php echo base_url('linkedinlogin/linkedinlogin/login/1')?>"><i class="fab fa-linkedin mr-5"></i> <?php echo display('linkedin_login')?></a>
-                        <?php }?>
-                    </div>
-                </div>
 
             </div>
         </div>
-
     </div>
 </section>

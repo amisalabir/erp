@@ -8,14 +8,12 @@ class Cunit extends MX_Controller
         parent::__construct();
         $this->load->library('dashboard/lunit');
         $this->load->model('dashboard/Units');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
 
     }
 
     public function index()
     {
-        $this->permission->check_label('add_unit')->create()->redirect();
-
         $content = $this->lunit->unit_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -23,9 +21,6 @@ class Cunit extends MX_Controller
     //Insert unit
     public function insert_unit()
     {
-        $this->permission->check_label('add_unit')->create()->redirect();
-
-        $this->permission->check_label('add_unit')->create()->redirect();
         $this->form_validation->set_rules('unit_name', display('unit_name'), 'trim|required');
         $this->form_validation->set_rules('unit_short_name', display('unit_short_name'), 'trim|required');
 
@@ -65,16 +60,12 @@ class Cunit extends MX_Controller
     //Manage unit
     public function manage_unit()
     {
-        $this->permission->check_label('manage_unit')->read()->redirect();
-
         $content =$this->lunit->unit_list();
         $this->template_lib->full_admin_html_view($content);;
     }
     //unit Update Form
     public function unit_update_form($unit_id)
-    {  
-        $this->permission->check_label('manage_unit')->update()->redirect(); 
-
+    {   
         $content = $this->lunit->unit_edit_data($unit_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -83,7 +74,6 @@ class Cunit extends MX_Controller
     // unit Update
     public function unit_update($unit_id = null)
     {
-        $this->permission->check_label('manage_unit')->update()->redirect();
 
         $this->form_validation->set_rules('unit_name', display('unit_name'), 'trim|required');
         $this->form_validation->set_rules('unit_short_name', display('unit_short_name'), 'trim|required');
@@ -117,8 +107,6 @@ class Cunit extends MX_Controller
     // unit Delete
     public function unit_delete($unit_id)
     {
-        $this->permission->check_label('manage_unit')->delete()->redirect();
-
         $result = $this->Units->delete_unit($unit_id);
         if ($result) {
             $this->session->set_userdata(array('message' => display('successfully_delete')));

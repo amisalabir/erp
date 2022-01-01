@@ -8,6 +8,7 @@ class Cgallery extends MX_Controller
         parent::__construct();
         $this->load->library('dashboard/lgallery');
         $this->load->model('dashboard/Galleries');
+        $this->auth->check_admin_auth();
 
     }
 
@@ -15,8 +16,6 @@ class Cgallery extends MX_Controller
     //Default loading for image system.
     public function index()
     {
-        $this->permission->check_label('add_product_image')->create()->redirect();
-
         $content = $this->lgallery->image_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -24,8 +23,6 @@ class Cgallery extends MX_Controller
     //Insert image
     public function insert_image()
     {
-        $this->permission->check_label('add_product_image')->create()->redirect();
-
 
         $this->form_validation->set_rules('product_id', display('product_name'), 'trim|required');
 
@@ -94,16 +91,12 @@ class Cgallery extends MX_Controller
     //Manage image
     public function manage_image()
     {
-        $this->permission->check_label('manage_product_image')->read()->redirect();
-
         $content =$this->lgallery->image_list();
         $this->template_lib->full_admin_html_view($content);;
     }
     //image Update Form
     public function image_update_form($image_id)
     {   
-        $this->permission->check_label('manage_product_image')->update()->redirect();
-
         $content = $this->lgallery->image_edit_data($image_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -111,7 +104,6 @@ class Cgallery extends MX_Controller
     // image Update
     public function image_update($image_id = null)
     {
-        $this->permission->check_label('manage_product_image')->update()->redirect();
 
         $this->form_validation->set_rules('product_id', display('product_name'), 'trim|required');
 
@@ -188,8 +180,6 @@ class Cgallery extends MX_Controller
     // image Delete
     public function image_delete($image_gallery_id)
     {
-        $this->permission->check_label('manage_product_image')->delete()->redirect();
-
         $this->Galleries->delete_image($image_gallery_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('dashboard/Cgallery/manage_image');

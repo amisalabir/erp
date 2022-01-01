@@ -56,7 +56,6 @@ function bank_info_show(payment_type)
                 var avl_qntt    = 'avl_qntt_'+sl;
                 var price_item  = 'price_item_'+sl;
                 var variant_id  = 'variant_id_'+sl;
-                var color_variant  = 'color_variant_'+sl;
              
                 $.ajax({
                     type: "POST",
@@ -69,7 +68,6 @@ function bank_info_show(payment_type)
                         $('#'+price_item).val(obj.supplier_price);
                         $('#'+avl_qntt).val(obj.total_product);
                         $('#'+variant_id).html(obj.variant);
-                        $('#'+color_variant).empty().append(obj.variant_color);
                     } 
                 });
 
@@ -100,7 +98,7 @@ function bank_info_show(payment_type)
                 allowClear: true
             });
 
-            newdiv.innerHTML ='<td><input type="text" name="product_name" required class="form-control product_name productSelection" onkeyup="product_pur_or_list('+count+');" placeholder="'+display('product_name')+'" id="product_name_'+count+'" tabindex="5" ><input type="hidden" class="autocomplete_hidden_value product_id_'+count+'" name="product_id[]" id="SchoolHiddenId"/><input type="hidden" class="sl" value="'+count+'"></td><td class="text-center"><div class="variant_id_div"><select name="variant_id[]" id="variant_id_'+count+'" class="form-control variant_id width_100p" required="" ><option value=""></option></select></div><div><select name="color_variant[]" id="color_variant_'+count+'" class="form-control color_variant width_100p" ><option value=""></option></select></div></td><td class="text-right"><input type="number" id="avl_qntt_'+count+'" class="form-control text-right" placeholder="0" readonly /></td><td class="text-right"><input type="number" name="product_quantity[]" id="total_qntt_'+count+'" onkeyup="calculate_add_purchase('+count+')" onchange="calculate_add_purchase('+count+')"  class="form-control text-right" placeholder="0" min="0" required/></td><td><input type="number" name="product_rate[]" id="price_item_'+count+'" class="price_item1 text-right form-control" placeholder="0.00" min="0" onkeyup="calculate_add_purchase('+count+')" onchange="calculate_add_purchase('+count+')"/></td><td class="text-right"><input class="total_price text-right form-control" type="text" name="total_price[]" id="total_price_'+count+'" placeholder="0.00" readonly="readonly" /> </td><td><button  class="btn btn-danger text-right" type="button" value="'+display('delete')+'" onclick="deleteRow(this)">'+display('delete')+'</button></td>';
+            newdiv.innerHTML ='<td><input type="text" name="product_name" required class="form-control product_name productSelection" onkeyup="product_pur_or_list('+count+');" placeholder="'+display('product_name')+'" id="product_name_'+count+'" tabindex="5" ><input type="hidden" class="autocomplete_hidden_value product_id_'+count+'" name="product_id[]" id="SchoolHiddenId"/><input type="hidden" class="sl" value="'+count+'"></td><td class="text-center"><select name="variant_id[]" id="variant_id_'+count+'" class="form-control variant_id width_100p" required="" ><option value=""></option></select></td><td class="text-right"><input type="number" id="avl_qntt_'+count+'" class="form-control text-right" placeholder="0" readonly /></td><td class="text-right"><input type="number" name="product_quantity[]" id="total_qntt_'+count+'" onkeyup="calculate_add_purchase('+count+')" onchange="calculate_add_purchase('+count+')"  class="form-control text-right" placeholder="0" min="0" required/></td><td><input type="number" name="product_rate[]" id="price_item_'+count+'" class="price_item1 text-right form-control" placeholder="0.00" min="0" onkeyup="calculate_add_purchase('+count+')" onchange="calculate_add_purchase('+count+')"/></td><td class="text-right"><input class="total_price text-right form-control" type="text" name="total_price[]" id="total_price_'+count+'" placeholder="0.00" readonly="readonly" /> </td><td><button  class="btn btn-danger text-right" type="button" value="'+display('delete')+'" onclick="deleteRow(this)">'+display('delete')+'</button></td>';
             document.getElementById(divName).appendChild(newdiv);
             document.getElementById(tabin).focus();
             count++;
@@ -132,16 +130,15 @@ function bank_info_show(payment_type)
     }
 
     //Select stock by product and variant id
-    $('body').on('change', '.variant_id, .color_variant', function() {
+    $('body').on('change', '.variant_id', function() {
 
-        var sl            = $(this).parent().parent().parent().find(".sl").val();
+        var sl            = $(this).parent().parent().find(".sl").val();
         var product_id    = $('.product_id_'+sl).val();
         var avl_qntt      = $('#avl_qntt_'+sl).val();
         var purchase_to   = $('#purchase_to').val();
         var wearhouse_id  = $('#wearhouse_id').val();
         var store_id      = $('#store_id').val();
-        var variant_id = $('#variant_id_'+sl).val();
-        var variant_color = $('#color_variant_'+sl).val();
+        var variant_id    = $(this).val();
 
         if (purchase_to == 1) {
             if (wearhouse_id == 0) {
@@ -161,7 +158,7 @@ function bank_info_show(payment_type)
             type: "post",
             async: false,
             url: base_url+'dashboard/Cpurchase/wearhouse_available_stock',
-            data: {csrf_test_name:csrf_test_name,product_id: product_id,variant_id:variant_id, variant_color:variant_color,purchase_to:purchase_to,wearhouse_id:wearhouse_id,store_id:store_id},
+            data: {csrf_test_name:csrf_test_name,product_id: product_id,variant_id:variant_id,purchase_to:purchase_to,wearhouse_id:wearhouse_id,store_id:store_id},
             success: function(data) {
                 if (data) {
                     $('#avl_qntt_'+sl).val(data);

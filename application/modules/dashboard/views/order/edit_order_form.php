@@ -30,11 +30,8 @@
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <?php if($this->permission->check_label('manage_customer')->update()->access()){ ?>
-                            <a href="<?php echo base_url('dashboard/Ccustomer/customer_update_form/'.$order_all_data[0]['customer_id'])?>"> 
-                                <button class="btn btn-warning"><?php echo display('customer_edit')?></button>
-                            </a>
-                            <?php } ?>
+                           
+                            <a href="<?php echo base_url('dashboard/Ccustomer/customer_update_form/'.$order_all_data[0]['customer_id'])?>"> <button class="btn btn-warning"><?php echo display('customer_edit')?></button></a>
                         </div>
                     </div>
                     <?php echo form_open('dashboard/Corder/order_update',array('class' => 'form-vertical','id'=>'validate' ))?>
@@ -45,7 +42,8 @@
                                 <div class="form-group row">
                                     <label for="customer_name" class="col-sm-4 col-form-label"><?php echo display('customer_name') ?> <i class="text-danger">*</i></label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="customer_name" value="<?php echo html_escape($customer_name) ?>" class="form-control customerSelection" placeholder='<?php echo display('customer_name') ?>' id="customer_name" required readonly >
+                                       <input type="text" name="customer_name" value="<?php echo html_escape($customer_name) ?>" class="form-control customerSelection" placeholder='<?php echo display('customer_name') ?>' id="customer_name" required readonly >
+
 										<input type="hidden" class="customer_hidden_value" name="customer_id" value="<?php echo html_escape($customer_id) ?>" id="SchoolHiddenId"/>
                                     </div>
                                 </div>
@@ -57,10 +55,11 @@
                                      <i class="text-danger">*</i></label>
                                     <div class="col-sm-8">
                                        <select class="form-control" name="store_id" id="store_id">
-                                            <option value=""></option>
+                                           <option value=""></option>
                                            <?php foreach($store_list as $store){ ?>
                                             <option value="<?php echo html_escape($store['store_id']); ?>" <?php if($store['store_id'] == $store_id){ echo "selected";} ?> ><?php echo html_escape($store['store_name']); ?></option>
                                             <?php } ?>
+                                           
                                        </select>
                                     </div>
                                 </div>
@@ -231,52 +230,22 @@
                                     <input type="hidden" class="sl" value="<?php echo $i?>">
                                 </td>
                                 <td class="text-center">
+                                    <select name="variant_id[]" id="variant_id_<?php echo $i?>" class="form-control variant_id width_100p" required="" >
                                     <?php
-                                         $this->db->select('*');
-                                        $this->db->from('variant');
-                                        $this->db->where_in('variant_id',$exploded);
-                                        $this->db->order_by('variant_name','asc');
-                                        $pvariants = $this->db->get()->result_array();
-                                        $vtypes_arr = array_column($pvariants, 'variant_type');
-
+                                    if ($exploded) {
+                                        foreach ($exploded as $elem) {
+                                            $this->db->select('*');
+                                            $this->db->from('variant');
+                                            $this->db->where('variant_id',$elem);
+                                            $this->db->order_by('variant_name','asc');
+                                            $result = $this->db->get()->row();
                                     ?>
-                                    <div class="variant_id_div">
-                                        <select name="variant_id[]" id="variant_id_<?php echo $i?>" class="form-control variant_id width_100p" required="" >
-                                        <?php
-                                            if(!empty($pvariants)){
-                                                foreach ($pvariants as $vitem) {
-                                                    if($vitem['variant_type'] == 'size'){
-                                            ?>
-                                             <option value="<?php echo html_escape($vitem['variant_id'])?>" <?php if($value['variant_id'] == $vitem['variant_id']){echo "selected";}?>><?php echo html_escape($vitem['variant_name'])?></option>
-
-                                        <?php
-                                                }
-                                            }
+                                        <option value="<?php echo html_escape($result->variant_id)?>" <?php if($value['variant_id'] == $result->variant_id){echo "selected";}?>><?php echo html_escape($result->variant_name)?></option>
+                                    <?php
                                         }
-                                        ?>
-                                        </select>
-                                    </div>
-                                    <?php if(in_array('color', $vtypes_arr)){ ?>
-                                        <div>
-                                            <select name="color_variant[]" id="variant_color_id_<?php echo $i?>" class="form-control color_variant width_100p">
-                                                <option value=""></option>
-                                           <?php
-                                            if(!empty($pvariants)){
-                                                foreach ($pvariants as $vitem) {
-                                                    if($vitem['variant_type'] == 'color'){
-                                            ?>
-                                            <option value="<?php echo html_escape($vitem['variant_id'])?>" <?php if($value['variant_color'] == $vitem['variant_id']){echo "selected";}?>><?php echo html_escape($vitem['variant_name'])?></option>
-                                            <?php 
-                                                    }
-                                                }
-                                            }
-                                            ?>
-                                            </select>
-                                        <?php }else{ ?>
-                                            <input type="hidden" name="color_variant[]" id="variant_color_id_<?php echo $i?>">
-                                        <?php } ?>
-                                        </div>
-
+                                    }
+                                    ?>
+                                    </select>
                                 </td>
                                 <td>
                                     <input type="text" name="available_quantity[]" id="avl_qntt_<?php echo $i?>" class="form-control text-right available_quantity_<?php echo $i?>" placeholder="0" readonly="" value="<?php echo $total_purchase->total_purchase - $total_sale->total_sale?>"/>

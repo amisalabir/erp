@@ -12,13 +12,19 @@ class Company_setup extends MX_Controller
         $this->load->library('dashboard/lcompany');
         $this->load->library('session');
         $this->load->model('dashboard/Companies');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
+
+        if ($this->session->userdata('user_type') == '2') {
+            $this->session->set_userdata(array('error_message' => display('you_are_not_access_this_part')));
+            redirect('Admin_dashboard');
+        }
     }
 
     #==============Company page load===========#
     public function index()
     {
-        $this->manage_company();
+        $content = $this->lcompany->company_add_form();
+        $this->template_lib->full_admin_html_view($content);
     }
 
     #===============Company Search Item===========#
@@ -32,8 +38,6 @@ class Company_setup extends MX_Controller
     #================Manage Company==============#
     public function manage_company()
     {
-        $this->permission->check_label('manage_company')->read()->redirect();
-
         $content = $this->lcompany->company_list();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -41,8 +45,6 @@ class Company_setup extends MX_Controller
     #===============Company update form================#
     public function company_update_form($company_id)
     {   
-        $this->permission->check_label('manage_company')->update()->redirect();
-
         $content = $this->lcompany->company_edit_data($company_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -50,8 +52,6 @@ class Company_setup extends MX_Controller
     #===============Company update===================#
     public function company_update()
     {
-        $this->permission->check_label('manage_company')->update()->redirect();
-
         $company_id = $this->input->post('company_id',TRUE);
         $data = array(
             'company_id' => $company_id,

@@ -252,55 +252,26 @@
                                 <input type="hidden" class="sl" value="<?php echo $i ?>">
                             </td>
                             <td class="text-center">
-                                 <?php
-                                         $this->db->select('*');
-                                        $this->db->from('variant');
-                                        $this->db->where_in('variant_id',$exploded);
-                                        $this->db->order_by('variant_name','asc');
-                                        $pvariants = $this->db->get()->result_array();
-                                        $vtypes_arr = array_column($pvariants, 'variant_type');
-
-                                    ?>
-                                    
-                                <div class="variant_id_div">
-                                    <select name="variant_id[]" id="variant_id_<?php echo $i ?>"
-                                            class="form-control variant_id width_100p" required="">
-                                        <option value=""></option>
-                                        <?php
-                                            if(!empty($pvariants)){
-                                                foreach ($pvariants as $vitem) {
-                                                    if($vitem['variant_type'] == 'size'){
+                                <select name="variant_id[]" id="variant_id_<?php echo $i ?>"
+                                        class="form-control variant_id width_100p" required="">
+                                    <option value=""></option>
+                                    <?php
+                                    if ($exploded) {
+                                        foreach ($exploded as $elem) {
+                                            $this->db->select('*');
+                                            $this->db->from('variant');
+                                            $this->db->where('variant_id', $elem);
+                                            $this->db->order_by('variant_name', 'asc');
+                                            $result = $this->db->get()->row();
                                             ?>
-                                             <option value="<?php echo html_escape($vitem['variant_id'])?>" <?php if($value['variant_id'] == $vitem['variant_id']){echo "selected";}?>><?php echo html_escape($vitem['variant_name'])?></option>
-
-                                        <?php
-                                                }
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <?php if(in_array('color', $vtypes_arr)){ ?>
-                                <div>
-                                    <select name="color_variant[]" id="variant_color_id_<?php echo $i?>" class="form-control color_variant width_100p">
-                                        <option value=""></option>
-                                   <?php
-                                    if(!empty($pvariants)){
-                                        foreach ($pvariants as $vitem) {
-                                            if($vitem['variant_type'] == 'color'){
-                                    ?>
-                                    <option value="<?php echo html_escape($vitem['variant_id'])?>" <?php if($value['variant_color'] == $vitem['variant_id']){echo "selected";}?>><?php echo html_escape($vitem['variant_name'])?></option>
-                                    <?php 
-                                            }
+                                            <option value="<?php echo html_escape($result->variant_id) ?>" <?php if ($value['variant_id'] == $result->variant_id) {
+                                                echo "selected";
+                                            } ?>><?php echo html_escape($result->variant_name) ?></option>
+                                            <?php
                                         }
                                     }
                                     ?>
-                                    </select>
-                                    <?php }else{ ?>
-                                        <input type="hidden" name="color_variant[]" id="variant_color_id_<?php echo $i?>">
-                                    <?php } ?>
-                                </div>
-
+                                </select>
                             </td>
                             <td>
                                 <input type="text" name="available_quantity[]"

@@ -53,6 +53,7 @@
                     </div>
                     <?php echo form_open_multipart('dashboard/Ctax/tax_update/{t_p_s_id}',array('class' => 'form-vertical', 'id' => 'validate'))?>
                     <div class="panel-body">
+
                         <div class="form-group row">
                             <label for="product_name" class="col-sm-3 col-form-label"><?php echo display('product_name')?> <i class="text-danger">*</i></label>
                             <div class="col-sm-6">
@@ -67,6 +68,7 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label for="tax_name" class="col-sm-3 col-form-label"><?php echo display('tax_name')?> <i class="text-danger">*</i></label>
                             <div class="col-sm-6">
@@ -81,12 +83,14 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label for="tax_percentage" class="col-sm-3 col-form-label"><?php echo display('tax_percentage')?> <i class="text-danger">*</i></label>
                             <div class="col-sm-6">
                                 <input class="form-control" name ="tax_percentage" id="tax_percentage" type="number" placeholder="<?php echo display('tax_percentage') ?>"  required="" value="{tax_percentage}">
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label for="example-text-input" class="col-sm-4 col-form-label"></label>
                             <div class="col-sm-6">

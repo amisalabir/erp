@@ -44,12 +44,11 @@
 	    <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                	<?php if($this->permission->check_label('add_supplier')->create()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Csupplier')?>" class="btn btn-success m-b-5 m-r-2">
-                  		<i class="ti-plus"> </i> <?php echo display('add_supplier')?></a>
-                  	<?php }if($this->permission->check_label('supplier_ledger')->read()->access()){ ?>
-                   	<a href="<?php echo base_url('dashboard/Csupplier/supplier_ledger_report')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('supplier_ledger')?></a>
-               		<?php }?>
+                
+                  <a href="<?php echo base_url('dashboard/Csupplier')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_supplier')?></a>
+
+                   <a href="<?php echo base_url('dashboard/Csupplier/supplier_ledger_report')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('supplier_ledger')?></a>
+
                 </div>
             </div>
         </div>
@@ -96,15 +95,10 @@
 										<td>
 											<center>
 											<?php echo form_open()?>
-												<?php if($this->permission->check_label('manage_supplier')->update()->access()){ ?>
-												<a href="<?php echo base_url().'dashboard/Csupplier/supplier_update_form/{supplier_id}'; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>">
-													<i class="fa fa-pencil" aria-hidden="true"></i>
-												</a>
-												<?php }if($this->permission->check_label('manage_supplier')->delete()->access()){?>
-												<a href="<?php echo base_url().'dashboard/Csupplier/supplier_delete/{supplier_id}'; ?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete') ?> ">
-													<i class="fa fa-trash-o" aria-hidden="true"></i>
-												</a>
-												<?php } ?>
+												<a href="<?php echo base_url().'dashboard/Csupplier/supplier_update_form/{supplier_id}'; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+												<a href="<?php echo base_url().'dashboard/Csupplier/supplier_delete/{supplier_id}'; ?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+
 											<?php echo form_close()?>
 											</center>
 										</td>

@@ -21,11 +21,9 @@
 		<div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                	<?php if($this->permission->check_label('sales_report')->read()->access()){ ?>
-                	<a href="<?php echo base_url('dashboard/Admin_dashboard/todays_sales_report')?>" class="btn -btn-info color4 color5 m-b-5 m-r-2">
-                		<i class="ti-align-justify"> </i><?php echo display('sales_report')?>
-                	</a>
-          			<?php } ?>
+
+                	<a href="<?php echo base_url('dashboard/Admin_dashboard/todays_sales_report')?>" class="btn -btn-info color4 color5 m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('sales_report')?></a>
+          
                 </div>
             </div>
         </div>

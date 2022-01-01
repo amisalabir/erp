@@ -53,13 +53,11 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                    <?php  if($this->permission->check_label('manage_order')->read()->access()){ ?>
                     <a href="<?php echo base_url('dashboard/Corder/manage_order') ?>"
                        class="btn btn-info color4 color5 m-b-5 m-r-2"><i
                                 class="ti-align-justify"> </i> <?php echo display('manage_order') ?></a>
-                    <?php } if($this->permission->check_label('pos_sale')->read()->access()){ ?>
-                    <a href="<?php echo base_url('dashboard/Cinvoice/pos_invoice') ?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('pos_invoice') ?></a>
-                <?php } ?>
+                    <a href="<?php echo base_url('dashboard/Cinvoice/pos_invoice') ?>" class="btn btn-primary m-b-5 m-r-2"><i
+                                class="ti-align-justify"> </i> <?php echo display('pos_invoice') ?></a>
                 </div>
             </div>
         </div>
@@ -196,17 +194,9 @@ date_default_timezone_set(DEF_TIMEZONE);
                                         <input type="hidden" class="baseUrl" value="<?php echo base_url(); ?>"/>
                                     </td>
                                     <td class="text-center">
-                                        <div class="variant_id_div">
-                                            <select name="variant_id[]" id="variant_id_1" class="form-control variant_id width_100p" required="">
-                                                <option value=""></option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <select name="color_variant[]" id="variant_color_id_1" class="form-control color_variant width_100p">
-                                                <option value=""></option>
-                                            </select>
-                                        </div>
-
+                                        <select name="variant_id[]" id="variant_id_1" class="form-control variant_id width_100p" required="">
+                                            <option value=""></option>
+                                        </select>
                                     </td>
                                     <td>
                                         <input type="text" name="available_quantity[]"

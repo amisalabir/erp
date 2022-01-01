@@ -9,15 +9,13 @@ class Cwishlist extends MX_Controller
         $this->load->library('dashboard/lwishlist');
         $this->load->model('dashboard/Wishlists');
         $this->load->model('dashboard/Products');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
 
     }
 
     //Default loading for wishlist system.
     public function index()
     {
-        $this->permission->check_label('wishlist')->create()->redirect();
-
         $content = $this->lwishlist->wishlist_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -26,8 +24,6 @@ class Cwishlist extends MX_Controller
     //Insert wishlist
     public function insert_wishlist()
     {
-        $this->permission->check_label('wishlist')->create()->redirect();
-
         $this->form_validation->set_rules('product_id', display('product_name'), 'trim|required');
         if ($this->form_validation->run() == FALSE) {
             $product_list = $CI->Products->product_list(); 
@@ -68,16 +64,12 @@ class Cwishlist extends MX_Controller
     //Manage wishlist
     public function manage_wishlist()
     {
-        $this->permission->check_label('wishlist')->read()->redirect();
-
         $content =$this->lwishlist->wishlist_list();
         $this->template_lib->full_admin_html_view($content);;
     }
     //wishlist Update Form
     public function wishlist_update_form($wishlist_id)
     {   
-        $this->permission->check_label('wishlist')->read()->redirect();
-
         $content = $this->lwishlist->wishlist_edit_data($wishlist_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -86,8 +78,6 @@ class Cwishlist extends MX_Controller
     // wishlist Update
     public function wishlist_update($wishlist_id = null)
     {
-        $this->permission->check_label('wishlist')->update()->redirect();
-
         $this->form_validation->set_rules('product_id', display('product_name'), 'trim|required');
 
         if ($this->form_validation->run() == FALSE) {
@@ -117,8 +107,6 @@ class Cwishlist extends MX_Controller
     // wishlist Delete
     public function wishlist_delete($wishlist_id)
     {
-        $this->permission->check_label('wishlist')->delete()->redirect();
-
         $this->Wishlists->delete_wishlist($wishlist_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('dashboard/Cwishlist/manage_wishlist');
@@ -127,8 +115,6 @@ class Cwishlist extends MX_Controller
     //Inactive
     public function inactive($id)
     {
-        $this->permission->check_label('wishlist')->update()->redirect();
-
         $this->db->set('status', 0);
         $this->db->where('wishlist_id', $id);
         $this->db->update('wishlist');
@@ -139,8 +125,6 @@ class Cwishlist extends MX_Controller
     //Active
     public function active($id)
     {
-        $this->permission->check_label('wishlist')->update()->redirect();
-
         $this->db->set('status', 1);
         $this->db->where('wishlist_id', $id);
         $this->db->update('wishlist');

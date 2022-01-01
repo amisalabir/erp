@@ -34,15 +34,6 @@ $(document).ready(function() {
         });
     });
 
-    $('#variant_prices').on('click', function() {
-
-        if( $(this).prop('checked') == true){
-            $('#set_variant_price').show('slow');
-        }else{
-            $('#set_variant_price').hide('slow');
-        }
-    });
-
     $("#add_category").on('submit', function(event) {
         event.preventDefault();
         var formdata = new FormData($(this)[0]);
@@ -81,14 +72,8 @@ $(document).ready(function() {
         var onsale = $('#onsale option:selected').val();
         if (onsale == 1) {
             $('.onsale_price').css({ 'display': 'block' });
-            $("#variant_prices").prop('checked',false);
-             $('#set_variant_price').css({
-                'display': 'none'
-            });
-            $('#variant_price_area').css({'display': 'none'});
         } else {
             $('.onsale_price').css({ 'display': 'none' });
-            $('#variant_price_area').css({'display': 'block'});
         }
     });
 
@@ -140,28 +125,7 @@ $(document).ready(function() {
             data: { csrf_test_name: csrf_test_name, variants: variants },
             success: function(data) {
                 $('#default_variant').html(data);
-                var fulldata = '<option value=""></option>' + data;
-                $('#size_var').html(fulldata);
             }
-        })
-    });
-
-    // Variant Color
-    $('#variant_colors').on('change', function() {
-
-        var variants = $(this).val();
-        $.ajax({
-            url: base_url + 'dashboard/Cproduct/get_default_variant',
-            type: "post",
-            data: {
-                csrf_test_name: csrf_test_name,
-                variants: variants
-            },
-            success: function(data) {
-                var fulldata = '<option value=""></option>' + data;
-                $('#color_var').html(fulldata);
-            }
-
         })
     });
 });
@@ -184,36 +148,4 @@ function deleteImageRow(dir) {
     if (imageRowDiv != 'image_row_0') {
         $('#' + imageRowDiv).remove();
     }
-}
-
-// Variant wise price set
-$('#variant-row-add').on('click', function(e){
-    e.preventDefault();
-    var key_val = $(this).attr('data-key');
-    var size_variant_id = $('#size_var').val();
-    var size_variant_txt = $('#size_var option:selected').text();
-    var color_variant_id = $('#color_var').val();
-    var color_variant_txt = $('#color_var option:selected').text();
-    var var_price = $('#var_price').val();
-
-    if((size_variant_id !='') && (var_price !='')){
-
-        var variant_row = '<tr id="row_'+key_val+'"><td>'+size_variant_txt+' <input type="hidden" name="size_variant['+key_val+']" value="'+size_variant_id+'"></td><td>'+color_variant_txt+' <input type="hidden" name="color_variant['+key_val+']" value="'+color_variant_id+'"></td><td>'+var_price+' <input type="hidden" name="variant_price_amt['+key_val+']" value="'+var_price+'"></td><td><input type="button" value="-" onclick="deleteVariantRow('+key_val+');" class="btn btn-danger" id="variant-row-remove"></td></tr>';
-
-        $('#variant_area').append(variant_row);
-        $('#variant-row-add').attr('data-key', parseInt(key_val)+1);
-        $('#size_var').val('').trigger('change');
-        $('#color_var').val('').trigger('change');
-        $('#var_price').val('');
-    }else{
-        Swal({
-            type: 'warning',
-            title: 'Please select size and price!'
-        });
-    }
-});
-
-function deleteVariantRow(key_val) {
-    "use strict";
-    $('#row_' + key_val).remove();
 }

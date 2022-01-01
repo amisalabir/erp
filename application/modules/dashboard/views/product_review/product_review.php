@@ -78,7 +78,6 @@
 										<td>
 											<center>
 												<?php
-												if($this->permission->check_label('product_review')->update()->access()){
 		                                            #----status change start---#
 		                                            $status=$value['status'];
 		                                        if ($status==1) {
@@ -95,11 +94,10 @@
 		                                        <?php
 		                                        }
 		                                        #----status change end---#
-		                                   		}
 		                                        ?>
-		                                        <?php if($this->permission->check_label('product_review')->update()->access()){ ?>
+
 												<a href="<?php echo base_url().'dashboard/Cproduct_review/product_review_update_form/'.$value['product_review_id']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-												<?php }?>
+
 												<a href="#" class="delete_product_review btn btn-danger btn-sm" name="<?php echo  $value['product_review_id']?>" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											</center>
 										</td>

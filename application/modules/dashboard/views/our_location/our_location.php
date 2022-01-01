@@ -46,9 +46,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                	<?php if($this->permission->check_label('our_location')->create()->access()){ ?>
-                  		<a href="<?php echo base_url('dashboard/Cour_location')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"></i><?php echo display('add_our_location')?></a>
-                	<?php } ?>
+                  <a href="<?php echo base_url('dashboard/Cour_location')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_our_location')?></a>
                 </div>
             </div>
         </div>
@@ -88,32 +86,30 @@
 										<td class="text-center"><?php echo html_escape($our_location['position'])?></td>
 										<td>
 											<center>
-											<?php if($this->permission->check_label('our_location')->update()->access()){ 
+											<?php
 		                                    $status=$our_location['status'];
 		                                    if ($status==1) {
 		                                    ?>
-	                                            <a href="<?php echo  base_url();?>dashboard/Cour_location/inactive/<?php echo  $our_location['position']?>" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="left" data-original-title="<?php echo display('inactive')?>">
-	                                                <i class="fa fa-times" aria-hidden="true"></i>
-	                                            </a>
-                                        	<?php } else{
-                                                ?>
-                                                <a href="<?php echo  base_url();?>dashboard/Cour_location/active/<?php echo  $our_location['position']?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('active')?>">
-                                                	<i class="fa fa-check" aria-hidden="true"></i>
+                                                <a href="<?php echo  base_url();?>dashboard/Cour_location/inactive/<?php echo  $our_location['position']?>" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="left" data-original-title="<?php echo display('inactive')?>"><i class="fa fa-times" aria-hidden="true"></i>
                                                 </a>
-		                                        <?php 	}	}	?>
-		                                    <?php if($this->permission->check_label('our_location')->update()->access()){ ?>
-												<a href="<?php echo base_url().'dashboard/Cour_location/our_location_update_form/'.$our_location['position']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>">
-													<i class="fa fa-pencil" aria-hidden="true"></i>
-												</a>
-											<?php }if($this->permission->check_label('our_location')->delete()->access()){ ?>
-												<a href="<?php echo base_url('dashboard/Cour_location/our_location_delete/'.$our_location['position'])?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo display('delete') ?> ">
-													<i class="fa fa-trash-o" aria-hidden="true"></i>
-												</a>
-											<?php } ?>
+                                                <?php
+                                            }else{
+                                                ?>
+                                                <a href="<?php echo  base_url();?>dashboard/Cour_location/active/<?php echo  $our_location['position']?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('active')?>"><i class="fa fa-check" aria-hidden="true"></i>
+                                                </a>
+	                                        <?php
+	                                        }
+	                                        ?>
+												<a href="<?php echo base_url().'dashboard/Cour_location/our_location_update_form/'.$our_location['position']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+												<a href="<?php echo base_url('dashboard/Cour_location/our_location_delete/'.$our_location['position'])?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											</center>
 										</td>
 									</tr>
-								<?php }  }	?>
+								<?php
+									}
+								}
+								?>
 								</tbody>
 		                    </table>
 		                </div>

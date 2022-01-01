@@ -78,11 +78,10 @@
 										<td>
 											<center>
 											<?php echo form_open()?>
-											<?php if($this->permission->check_label('contact_form')->update()->access()){ ?>
 												<a href="<?php echo base_url().'dashboard/Cweb_setting/contact_update_form/{id}'; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-											<?php }if($this->permission->check_label('contact_form')->delete()->access()){ ?>
-												<a href="<?php echo base_url('dashboard/Cweb_setting/contact_delete/{id}')?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php }?>
+
+												<a href="<?php echo base_url('dashboard/Cweb_setting/contact_delete/{id}')?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');"" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+
 											<?php echo form_close()?>
 											</center>
 										</td>

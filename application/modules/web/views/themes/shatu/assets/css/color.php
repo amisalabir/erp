@@ -1,4 +1,4 @@
-<?php $colors = $this->color_frontends->retrieve_color_editdata('shatu'); ?>
+<?php $colors = $this->color_frontends->retrieve_color_editdata(); ?>
     <style>
         .color1 {
             background: <?php echo $colors->color1;?> !important;
@@ -57,9 +57,6 @@
         }
 
         .wishlist {
-            color: <?php echo $colors->color4;?> !important;
-        }
-        .comparison {
             color: <?php echo $colors->color4;?> !important;
         }
 

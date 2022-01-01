@@ -22,7 +22,7 @@ $theme = $CI->Themes->get_theme();
             $message = $this->session->userdata('message');
             if (!empty($message)) {
                 ?>
-                <div class="alert alert-success alert-dismissible" role="alert">
+                <div class="alert alert-success alert-dismissible show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -36,7 +36,7 @@ $theme = $CI->Themes->get_theme();
             $error_message = $this->session->userdata('error_message');
             if ($error_message) {
                 ?>
-                <div class="alert alert-danger alert-dismissible" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -90,27 +90,6 @@ $theme = $CI->Themes->get_theme();
                     </p>
                 </div>
             <?php echo form_close(); ?>
-
-            <div class="row">
-                <div class="col-md-6 form-group">
-                     <?php if(check_module_status('googlelogin') == 1){ 
-                    ?>
-                        <a class="btn btn-google btn-sm btn-block  search text-white" href="<?php echo base_url('googlelogin/googlelogin/login')?>"><i class="fa fa-google mr-5"></i> <?php echo display('google_login')?></a>
-                    <?php }?>
-                </div>
-                <div class="col-md-6 form-group">
-                    <?php if((check_module_status('facebooklogin') == 1)){
-                    ?>
-                        <a class="btn btn-facebook btn-sm btn-block  search text-white" href="<?php echo base_url('facebooklogin/facebooklogin/index/1')?>"><i class="fa fa-facebook mr-5"></i> <?php echo display('facebook_login')?></a>
-                    <?php }?> 
-                </div>
-                <div class="col-md-6 form-group">
-                    <?php if((check_module_status('linkedinlogin') == 1)){ ?>
-                        <a class="btn btn-linkedin btn-sm btn-block  search text-white" href="<?php echo base_url('linkedinlogin/linkedinlogin/login/1')?>"><i class="fa fa-linkedin mr-5"></i> <?php echo display('linkedin_login')?></a>
-                    <?php }?>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>

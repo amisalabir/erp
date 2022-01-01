@@ -44,11 +44,7 @@
 	    <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('add_user')->create()->access()){ ?>
-	                <a href="<?php echo base_url('dashboard/User')?>" class="btn btn-success m-b-5 m-r-2">
-	                  	<i class="ti-plus"> </i> <?php echo display('add_user')?>
-	                </a>
-	            <?php }?>
+                  <a href="<?php echo base_url('dashboard/User')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_user')?></a>
                 </div>
             </div>
         </div>
@@ -113,15 +109,14 @@
 										<td>
 											<center>
 											<?php echo form_open()?>
-											<?php if($this->permission->check_label('manage_users')->update()->access()){?>
 												<a href="<?php echo base_url('dashboard/User/user_update_form/'.$user["user_id"]); ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-											<?php } ?>
-											<?php
-											if($this->permission->check_label('manage_users')->create()->access()){
-												if ($user["user_type"] != 1) {
-											?>
+												<?php
+													if ($user["user_type"] != 1) {
+												?>
 												<a href="<?php echo base_url('dashboard/User/user_delete/'.$user["user_id"])?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php }   } ?>
+												<?php
+													}
+												?>
 											<?php echo form_close()?>
 											</center>
 										</td>

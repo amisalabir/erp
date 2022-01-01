@@ -10,7 +10,7 @@ class Ctheme extends MX_Controller
         $this->load->model(array(
             'dashboard/Themes'
         ));
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
 
     }
 

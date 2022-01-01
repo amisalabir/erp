@@ -25,16 +25,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 @ini_set("allow_url_fopen", 1);
 
 //Get Update file
-define('MIN_VERSION', file_get_contents('https://update.bdtask.com/isshue_v4/autoupdate/update_min_version'));
+define('MIN_VERSION', file_get_contents('https://update.bdtask.com/isshue_v3/autoupdate/update_min_version'));
 //Get Update file
-define('MAX_VERSION', file_get_contents('https://update.bdtask.com/isshue_v4/autoupdate/update_max_version'));
+define('MAX_VERSION', file_get_contents('https://update.bdtask.com/isshue_v3/autoupdate/update_max_version'));
 //Update List
-define('UPDATE_LIST','https://update.bdtask.com/isshue_v4/autoupdate/update_list');
+define('UPDATE_LIST','https://update.bdtask.com/isshue_v3/autoupdate/update_list');
 
 //Get Update file
-define('UPDATE_URL','https://update.bdtask.com/isshue_v4/autoupdate');
+define('UPDATE_URL','https://update.bdtask.com/isshue_v3/autoupdate');
 // Get latest version info
-define('UPDATE_INFO_URL','https://update.bdtask.com/isshue_v4/autoupdate/update_info');
+define('UPDATE_INFO_URL','https://update.bdtask.com/isshue_v3/autoupdate/update_info');
 // CRM temporary path
 define('TEMP_FOLDER', FCPATH .'temp' . '/');
 
@@ -49,15 +49,12 @@ class Autoupdate extends CI_Controller
         $this->load->model('template/Template_model');
         $this->load->library('user_agent');
         $this->db->query('SET SESSION sql_mode = ""');
-
-        $this->auth->check_user_auth();
-
     }
 
     public function index(){
-        $this->permission->check_label('update')->read()->redirect();
-
         $CI =& get_instance();
+        $this->auth->check_admin_store_auth();
+
         $data = array();
 
         $data['latest_version']  = file_get_contents(UPDATE_INFO_URL);
@@ -85,7 +82,9 @@ class Autoupdate extends CI_Controller
 
     public function update()
     {
-        $this->permission->check_label('update')->update()->redirect();
+        if (!$this->auth->is_logged()){
+            redirect(base_url());
+        }
 
         $purchase_key   = $this->input->post('purchase_key',TRUE);
         $purchase_key   = trim($purchase_key);
@@ -145,8 +144,6 @@ class Autoupdate extends CI_Controller
     // Update now request
     public function updatenow()
     {
-        $this->permission->check_label('update')->update()->redirect();
-        
         $purchase_key   = $this->input->post('purchase_key',TRUE);
         $purchase_key   = trim($purchase_key);
         $version        = trim($this->input->post('version',TRUE));

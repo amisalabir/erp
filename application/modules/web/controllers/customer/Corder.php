@@ -183,31 +183,6 @@ class Corder extends MX_Controller
         echo json_encode($product_info);
     }
 
-    // Get variant price and stock
-    public function check_customer_2d_variant_info()
-    {
-        $product_id = $this->input->post('product_id',TRUE);
-        $store_id = $this->input->post('store_id',TRUE);
-        $variant_id = $this->input->post('variant_id',TRUE);
-        $variant_color = $this->input->post('variant_color',TRUE);
-
-        $stock = $this->Orders->check_variant_wise_stock($product_id, $store_id, $variant_id, $variant_color);
-
-        if ($stock > 0) {
-            $result[0] = "yes";
-            $price = $this->Orders->check_variant_wise_price($product_id, $variant_id, $variant_color);
-
-            $result[1] = $stock; //stock
-            $result[2] = floatval($price['price']); //price
-            $result[3] = 0; //discount
-
-        } else {
-            $result[0] = 'no';
-        }
-        echo json_encode($result);
-    }
-
-
     //Stock available check
     public function available_stock()
     {

@@ -140,4 +140,16 @@ class Soft_settings extends CI_Model {
 		$this->db->order_by('name','asc');
 		return $this->db->get('countries')->result_array();
 	} 
+	// Get Store Details
+	public function get_store_details($store_id)
+	{
+		$this->db->select('*');
+		$this->db->from('store_set');
+		$this->db->where('store_id',$store_id);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result_array();	
+		}
+		return false;
+	}
 }

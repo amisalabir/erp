@@ -17,9 +17,9 @@ class Color_frontends extends CI_Model
     }
 
 //update frontend template color
-    public function update_color($data, $theme_name='default')
+    public function update_color($data)
     {
-        $this->db->where('theme', $theme_name);
+        $this->db->where('id', 1);
         $this->db->update('color_frontends', $data);
         return true;
     }

@@ -66,7 +66,6 @@ class Purchases extends CI_Model {
 		$supplier_id = $this->input->post('supplier_id',TRUE);
 		$quantity 	= $this->input->post('product_quantity',TRUE);
 		$variant_id = $this->input->post('variant_id',TRUE);
-		$color_variant = $this->input->post('color_variant',TRUE);
 		
 		// Supplier & product id relation ship checker.
 		for ($i=0, $n=count($p_id); $i < $n; $i++) {
@@ -127,7 +126,6 @@ class Purchases extends CI_Model {
 			$product_id = $p_id[$i];
 			$total_price = $t_price[$i];
 			$variant = $variant_id[$i];
-			$variant_color = $color_variant[$i];
 			
 			$data1 = array(
 				'purchase_detail_id'	=>	$this->auth->generator(15),
@@ -139,7 +137,6 @@ class Purchases extends CI_Model {
 				'rate'					=>	$product_rate,
 				'total_amount'			=>	$total_price,
 				'variant_id'			=>	$variant,
-				'variant_color'			=>	(!empty($variant_color)?$variant_color:NULL),
 				'status'				=>	1
 			);
 
@@ -154,7 +151,6 @@ class Purchases extends CI_Model {
 					'store_id'		=>	$this->input->post('store_id',TRUE),
 					'product_id'	=>	$product_id,
 					'variant_id'	=>	$variant,
-					'variant_color'	=>	(!empty($variant_color)?$variant_color:NULL),
 					'date_time'		=>	$this->input->post('purchase_date',TRUE),
 					'quantity'		=>	$product_quantity,
 					'status'		=>  3
@@ -165,9 +161,7 @@ class Purchases extends CI_Model {
 
 					$this->db->insert('transfer',$store);
 				}
-
 		}
-
 
 		// Woocommerce module stock update
 		$woocom_stock = $this->input->post('woocom_stock',TRUE);
@@ -265,7 +259,6 @@ class Purchases extends CI_Model {
 		$p_id 		 = $this->input->post('product_id',TRUE);
 		$supplier_id = $this->input->post('supplier_id',TRUE);
 		$variants	 = $this->input->post('variant_id',TRUE);
-		$variant_colors	 = $this->input->post('color_variant',TRUE);
 
 		//Supplier & product id relation ship checker.
 		for ($i=0, $n=count($p_id); $i < $n; $i++) {
@@ -343,7 +336,6 @@ class Purchases extends CI_Model {
 			$product_id 	  = $p_id[$i];
 			$total_price 	  = $t_price[$i];
 			$variant_id 	  = $variants[$i];
-			$variant_color 	  = (!empty($variant_colors[$i])?$variant_colors[$i]:NULL);
 			
 			$data1 = array(
 				'purchase_detail_id'	=>	$this->auth->generator(15),
@@ -352,7 +344,6 @@ class Purchases extends CI_Model {
 				'store_id'				=>	$this->input->post('store_id',TRUE),
 				'wearhouse_id'			=>	'',
 				'variant_id'			=>	$variant_id,
-				'variant_color'			=>	$variant_color,
 				'quantity'				=>	$product_quantity,
 				'rate'					=>	$product_rate,
 				'total_amount'			=>	$total_price,
@@ -369,7 +360,6 @@ class Purchases extends CI_Model {
 					'store_id'		=>	$this->input->post('store_id',TRUE),
 					'product_id'	=>	$product_id,
 					'variant_id'	=>	$variant_id,
-					'variant_color'	=>	$variant_color,
 					'date_time'		=>	$this->input->post('purchase_date',TRUE),
 					'quantity'		=>	$product_quantity,
 					'status'		=>  3
@@ -457,46 +447,27 @@ class Purchases extends CI_Model {
 		$this->db->where(array('product_information.product_id' => $product_id,'product_information.status' => 1)); 
 		$product_information = $this->db->get()->row();
 
-		$html = $colorhtml = "";
+		$html = "";
 		if ($product_information->variants) {
 			$exploded = explode(',',$product_information->variants);
-
-			$this->db->select('*');
-	        $this->db->from('variant');
-	        $this->db->where_in('variant_id',$exploded);
-	        $this->db->order_by('variant_name','asc');
-	        $variant_list = $this->db->get()->result();
-	        $var_types = array_column($variant_list, 'variant_type');
-
-
 			$html .="<select id=\"variant_id\" class=\"form-control variant_id\" required=\"\" style=\"width:200px\">
 	                    <option value=\"\">".display('select_variant')."</option>";
-	        foreach ($variant_list as $varitem) {
+	        foreach ($exploded as $elem) {
+		        $this->db->select('*');
+		        $this->db->from('variant');
+		        $this->db->where('variant_id',$elem);
+		        $this->db->order_by('variant_name','asc');
+		        $result = $this->db->get()->row();
 
-	        	if($varitem->variant_type=='size'){
-		        	$html .="<option value=".$varitem->variant_id.">".$varitem->variant_name."</option>";
-		        }
+		        $html .="<option value=".$result->variant_id.">".$result->variant_name."</option>";
 	    	}
 	    	$html .="</select>";
-
-
-	    	if(in_array('color',$var_types)) {
-	    		$colorhtml .="<option value=''></option>";
-                foreach ($variant_list as $varitem2) {
-                	if($varitem2->variant_type=='color'){
-			        	$colorhtml .="<option value=".$varitem2->variant_id.">".$varitem2->variant_name."</option>";
-			        }
-                }
-	    	}
-
 	    }
-    	
 
 		$data2 = array( 
 			'product_id' 		=> $product_information->product_id, 
 			'supplier_price'    => $product_information->supplier_price, 
 			'variant'    		=> $html, 
-			'variant_color'    	=> $colorhtml
 		);
 
 		return $data2;
@@ -549,6 +520,7 @@ class Purchases extends CI_Model {
 		$this->db->join('supplier_information b','b.supplier_id = a.supplier_id');
 		$this->db->join('product_purchase_details c','c.purchase_id = a.purchase_id');
 		$this->db->join('product_information d','d.product_id = c.product_id');
+//		$this->db->join('product_purchase e','e.purchase_id = c.purchase_id');
 		$this->db->join('variant f','f.variant_id = c.variant_id');
 		$this->db->where('a.purchase_id',$purchase_id);
 		$query = $this->db->get();
@@ -591,81 +563,4 @@ class Purchases extends CI_Model {
 		}
 		return $con;
 	}
-
-
-	// Get variant stock info
-	public function check_variant_wise_stock($product_id, $store_id, $variant_id, $variant_color = false)
-	{
-
-		$this->db->select("SUM(quantity) as totalPurchaseQnty");
-		$this->db->from('transfer');
-		$this->db->where('product_id',$product_id);
-		$this->db->where('variant_id',$variant_id);
-        if(!empty($variant_color)){
-             $this->db->where('variant_color',$variant_color);
-        }
-		$this->db->where('store_id',$store_id);
-		$purchase = $this->db->get()->row();
-
-		$this->db->select("SUM(quantity) as totalSalesQnty");
-		$this->db->from('invoice_details');
-		$this->db->where('product_id',$product_id);
-		$this->db->where('variant_id',$variant_id);
-        if(!empty($variant_color)){
-             $this->db->where('variant_color',$variant_color);
-        }
-		$this->db->where('store_id',$store_id);
-		$sales = $this->db->get()->row();
-
-		$stock = $purchase->totalPurchaseQnty - $sales->totalSalesQnty;
-        return $stock;
-	}
-
-	// check variant wise product price
-	public function check_variant_wise_price($product_id, $variant_id, $variant_color = false)
-    {
-        $pinfo = $this->db->select('price, onsale, onsale_price, variant_price')
-                ->from('product_information')
-                ->where('product_id', $product_id)
-                ->get()->row();
-
-        if($pinfo->variant_price){
-
-            $this->db->select('price');
-            $this->db->from('product_variants');
-            $this->db->where('product_id', $product_id);
-            $this->db->where('var_size_id', $variant_id);
-            if(!empty($variant_color)){
-                $this->db->where('var_color_id', $variant_color);
-            }else{
-                $this->db->where("var_color_id IS NULL");
-            }
-            $varprice = $this->db->get()->row();
-
-            if(!empty($varprice)){
-                $price_arr['price'] = $varprice->price;
-                $price_arr['regular_price'] = $pinfo->price;
-            }else{
-                 if(!empty($pinfo->onsale) && !empty($pinfo->onsale_price)){
-                    $price_arr['price'] = $pinfo->onsale_price;
-                    $price_arr['regular_price'] = $pinfo->price;
-                }else{
-                    $price_arr['price'] = $price_arr['regular_price'] = $pinfo->price;
-                }
-            }
-
-
-        } else{
-
-            if(!empty($pinfo->onsale) && !empty($pinfo->onsale_price)){
-                $price_arr['price'] = $pinfo->onsale_price;
-                $price_arr['regular_price'] = $pinfo->price;
-            }else{
-                $price_arr['price'] = $price_arr['regular_price'] = $pinfo->price;
-            }
-        }
-
-        return $price_arr;
-
-    }
 }

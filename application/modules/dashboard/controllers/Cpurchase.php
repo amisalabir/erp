@@ -6,7 +6,7 @@ class Cpurchase extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        $this->auth->check_user_auth();
+
         $this->load->model(array(
             'dashboard/Suppliers',
             'dashboard/Purchases',
@@ -23,8 +23,7 @@ class Cpurchase extends MX_Controller
     //Default index function loading
     public function index()
     {
-        $this->permission->check_label('add_purchase')->create()->redirect();
-
+        $this->auth->check_admin_auth();
         $all_supplier = $this->Purchases->select_all_supplier();
         $store_list = $this->Stores->store_list();
         $get_def_store = $this->Stores->get_def_store();
@@ -46,8 +45,8 @@ class Cpurchase extends MX_Controller
     //Purchase Add Form
     public function manage_purchase()
     {
-        $this->permission->check_label('manage_purchase')->read()->redirect();
 
+        $this->auth->check_admin_auth();
         $purchases_list = $this->Purchases->purchase_list();
         if (!empty($purchases_list)) {
             $j = 0;
@@ -81,8 +80,7 @@ class Cpurchase extends MX_Controller
     //Insert Purchase and uload
     public function insert_purchase()
     {
-        $this->permission->check_label('add_purchase')->create()->redirect();
-
+        $this->auth->check_admin_auth();
         $this->Purchases->purchase_entry();
         $this->session->set_userdata(array('message' => display('successfully_added')));
         if (isset($_POST['add-purchase'])) {
@@ -96,8 +94,7 @@ class Cpurchase extends MX_Controller
     //Purchase Update Form
     public function purchase_update_form($purchase_id)
     {
-        $this->permission->check_label('manage_purchase')->update()->redirect();
-
+        $this->auth->check_admin_auth();
         $purchase_detail = $this->Purchases->retrieve_purchase_editdata($purchase_id);
         $supplier_id = $purchase_detail[0]['supplier_id'];
         $supplier_list = $this->Suppliers->supplier_list();
@@ -146,8 +143,7 @@ class Cpurchase extends MX_Controller
     //Purchase Update
     public function purchase_update()
     {
-        $this->permission->check_label('manage_purchase')->update()->redirect();
-
+        $this->auth->check_admin_auth();
         $this->Purchases->update_purchase();
         $this->session->set_userdata(array('message' => display('successfully_updated')));
         redirect(base_url('dashboard/Cpurchase/manage_purchase'));
@@ -157,7 +153,7 @@ class Cpurchase extends MX_Controller
     // Purchase delete
     public function purchase_delete($purchase_id)
     {
-        $this->permission->check_label('manage_purchase')->delete()->redirect();
+        $this->auth->check_admin_auth();
         $this->Purchases->delete_purchase($purchase_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('dashboard/Cpurchase/manage_purchase');
@@ -167,6 +163,7 @@ class Cpurchase extends MX_Controller
     //Purchase item by search
     public function purchase_item_by_search()
     {
+        $this->auth->check_admin_auth();
         $supplier_id = $this->input->post('supplier_id',TRUE);
         $purchases_list = $this->Purchases->purchase_by_search($supplier_id);
         $j = 0;
@@ -196,6 +193,7 @@ class Cpurchase extends MX_Controller
     public function product_search_by_supplier()
     {
 
+        $this->auth->check_admin_auth();
         $supplier_id = $this->input->post('supplier_id',TRUE);
         $product_name = $this->input->post('product_name',TRUE);
         $product_info = $this->Suppliers->product_search_item($supplier_id, $product_name);
@@ -211,6 +209,7 @@ class Cpurchase extends MX_Controller
     // Retrieve Purchase Data
     public function retrieve_product_data()
     {
+        $this->auth->check_admin_auth();
         $product_id = $this->input->post('product_id',TRUE);
         $product_info = $this->Purchases->get_total_product($product_id);
         echo json_encode($product_info);
@@ -220,6 +219,7 @@ class Cpurchase extends MX_Controller
     //Retrive right now inserted data to cretae html
     public function purchase_details_data($purchase_id)
     {
+        $this->auth->check_admin_auth();
         $purchase_detail = $this->Purchases->purchase_details_data($purchase_id);
 
         if (!empty($purchase_detail)) {
@@ -256,29 +256,6 @@ class Cpurchase extends MX_Controller
         $this->parser->parse('template/layout', $data);
 
     }
-    // Get variant price and stock
-    public function check_admin_2d_variant_info()
-    {
-        $product_id = $this->input->post('product_id',TRUE);
-        $store_id = $this->input->post('store_id',TRUE);
-        $variant_id = $this->input->post('variant_id',TRUE);
-        $variant_color = $this->input->post('variant_color',TRUE);
-
-        $stock = $this->Purchases->check_variant_wise_stock($product_id, $store_id, $variant_id, $variant_color);
-
-        if ($stock > 0) {
-            $result[0] = "yes";
-            $price = $this->Purchases->check_variant_wise_price($product_id, $variant_id, $variant_color);
-
-            $result[1] = $stock; //stock
-            $result[2] = floatval($price['price']); //price
-            $result[3] = 0; //discount
-
-        } else {
-            $result[0] = 'no';
-        }
-        echo json_encode($result);
-    }
 
 
     //Stock in available
@@ -286,28 +263,21 @@ class Cpurchase extends MX_Controller
     {
 
         $product_id = $this->input->post('product_id',TRUE);
-        $store_id = $this->input->post('store_id',TRUE);
         $variant_id = $this->input->post('variant_id',TRUE);
-        $variant_color = $this->input->post('variant_color',TRUE);
+        $store_id = $this->input->post('store_id',TRUE);
 
         $this->db->select('SUM(a.quantity) as total_purchase');
         $this->db->from('transfer a');
         $this->db->where('a.product_id', $product_id);
-        $this->db->where('a.store_id', $store_id);
         $this->db->where('a.variant_id', $variant_id);
-        if(!empty($variant_color)){
-            $this->db->where('a.variant_color', $variant_color);
-        }
+        $this->db->where('a.store_id', $store_id);
         $total_purchase = $this->db->get()->row();
 
         $this->db->select('SUM(b.quantity) as total_sale');
         $this->db->from('invoice_details b');
         $this->db->where('b.product_id', $product_id);
-        $this->db->where('b.store_id', $store_id);
         $this->db->where('b.variant_id', $variant_id);
-        if(!empty($variant_color)){
-            $this->db->where('b.variant_color', $variant_color);
-        }
+        $this->db->where('b.store_id', $store_id);
         $total_sale = $this->db->get()->row();
 
         echo $total_purchase->total_purchase - $total_sale->total_sale;
@@ -321,15 +291,11 @@ class Cpurchase extends MX_Controller
         $product_id = $this->input->post('product_id',TRUE);
         $variant_id = $this->input->post('variant_id',TRUE);
         $store_id = $this->input->post('store_id',TRUE);
-        $variant_color = $this->input->post('variant_color',TRUE);
-        
+
         $this->db->select('SUM(a.quantity) as total_purchase');
         $this->db->from('transfer a');
         $this->db->where('a.product_id', $product_id);
         $this->db->where('a.variant_id', $variant_id);
-         if(!empty($variant_color)){
-            $this->db->where('a.variant_color', $variant_color);
-        }
         $this->db->where('a.store_id', $store_id);
         $total_purchase = $this->db->get()->row();
 
@@ -337,9 +303,6 @@ class Cpurchase extends MX_Controller
         $this->db->from('invoice_details b');
         $this->db->where('b.product_id', $product_id);
         $this->db->where('b.variant_id', $variant_id);
-         if(!empty($variant_color)){
-            $this->db->where('b.variant_color', $variant_color);
-        }
         $this->db->where('b.store_id', $store_id);
         $total_sale = $this->db->get()->row();
 
@@ -353,7 +316,6 @@ class Cpurchase extends MX_Controller
 
         $product_id = $this->input->post('product_id',TRUE);
         $variant_id = $this->input->post('variant_id',TRUE);
-        $variant_color = $this->input->post('variant_color',TRUE);
         $store_id = $this->input->post('store_id',TRUE);
         $purchase_to = $this->input->post('purchase_to');
 
@@ -361,9 +323,6 @@ class Cpurchase extends MX_Controller
         $this->db->from('transfer a');
         $this->db->where('a.product_id', $product_id);
         $this->db->where('a.variant_id', $variant_id);
-        if(!empty($variant_color)){
-            $this->db->where('a.variant_color', $variant_color);
-        }
         $this->db->where('a.store_id', $store_id);
         $total_purchase = $this->db->get()->row();
 
@@ -371,9 +330,6 @@ class Cpurchase extends MX_Controller
         $this->db->from('invoice_details b');
         $this->db->where('b.product_id', $product_id);
         $this->db->where('b.variant_id', $variant_id);
-        if(!empty($variant_color)){
-            $this->db->where('b.variant_color', $variant_color);
-        }
         $this->db->where('b.store_id', $store_id);
         $total_sale = $this->db->get()->row();
 

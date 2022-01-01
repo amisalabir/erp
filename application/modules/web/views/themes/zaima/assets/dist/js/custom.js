@@ -154,7 +154,7 @@
             });
         },
         productGallery: function () {
-            
+            var zoomOptions = {zoomWindowWidth: 450, zoomWindowHeight: 458};
             $(".main-img-slider").slick({slidesToShow: 1, slidesToScroll: 1, infinite: false, arrows: true, speed: 300, lazyLoad: "ondemand", asNavFor: ".thumb-nav"});
             $(".thumb-nav").slick({
                 slidesToShow: 5,
@@ -176,22 +176,6 @@
                     {breakpoint: 480, settings: {slidesToShow: 3, slidesToScroll: 3}}
                 ]
             });
-            var zoomOptions = {zoomWindowWidth: 670, zoomWindowHeight: 512};
-                $(".main-img-slider .slick-current img").elevateZoom(zoomOptions);
-                $(".main-img-slider").on("beforeChange", function (
-                        event,
-                        slick,
-                        currentSlide,
-                        nextSlide
-                        ) {
-                    $.removeData(currentSlide, "elevateZoom");
-                    $(".zoomContainer").remove();
-                });
-                $(".main-img-slider").on("afterChange", function () {
-                    $(".main-img-slider .slick-current img").elevateZoom(zoomOptions);
-                });
-
-
             function filter(key) {
                 $(".main-img-slider, .thumb-nav").slick("slickUnfilter");
                 if (typeof key === "string") {

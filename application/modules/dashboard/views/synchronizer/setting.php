@@ -44,17 +44,15 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                    <?php if($this->permission->check_label('backup_and_restore')->read()->access()){ ?>
                      <a href="<?php echo base_url('dashboard/backup_restore/index')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('Backup_restore')?></a>
-                    <?php } ?>
-                <?php if($this->permission->check_label('backup_and_restore')->update()->access()){
+                <?php 
                     $localhost=false;
                     if (in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1', 'localhost'))) {
                 ?>
                   <a href="<?php echo base_url('dashboard/data_synchronizer/form')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('setting')?></a>
-                <?php } }if($this->permission->check_label('backup_and_restore')->read()->access()){ ?>
-                  <a href="<?php echo base_url('dashboard/data_synchronizer/synchronize')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('synchronize')?></a>
                 <?php } ?>
+                  <a href="<?php echo base_url('dashboard/data_synchronizer/synchronize')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('synchronize')?></a>
+
                 </div>
             </div>
         </div>

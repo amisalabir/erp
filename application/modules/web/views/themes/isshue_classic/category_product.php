@@ -1,10 +1,4 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php 
-    $is_aff = false;
-    if(check_module_status('affiliate_products') == 1){
-        $is_aff = true;
-    }
-?>
 <!-- ========== Page Header Area ========== -->
 <section class="page_header">
 <div class="container">
@@ -308,12 +302,6 @@
                                     <div class="item_hover">
                                         <ul class="nav">
                                             <li>
-                                                <a href="javascript:void(0)" class="compare"
-                                                    onclick="comparison_btn(<?php echo html_escape($product->product_id) ?>)">
-                                                    <i class="fa fa-balance-scale"></i>
-                                                </a>
-                                            </li>
-                                            <li>
                                                 <a href="#" class="wishlist"
                                                    name="<?php echo html_escape($product->product_id) ?>"><i
                                                             class="fa fa-heart"></i></a>
@@ -328,33 +316,14 @@
                                             </li>
                                         </ul>
                                         <div class="addtocard">
-                                            <?php echo form_open('')?>
+                                        <?php echo form_open('')?>
                                                 <input type="hidden" value="1">
                                                 <a href="<?php echo base_url('product_details/' . remove_space($product->product_name) . '/' . $product->product_id) ?>">
                                                     <button type="button"
-                                                            class="cart_button color2"><?php echo display('add_to_cart') ?></button>
+                                                            class="cart_button color2"><?php echo display
+                                                        ('add_to_cart') ?></button>
                                                 </a>
                                             <?php echo form_close(); ?>
-                                            <?php if($is_aff){ 
-                                                    if($product->is_affiliate == 1 ){ ?>
-                                                        <a href="<?php echo html_escape($product->affiliate_url) ?>" target="0">
-                                                            <button type="button" class="cart_button color2"><?php echo display('buy_now') ?></button>
-                                                        </a>
-                                                <?php }else{ ?> 
-                                                    <?php echo form_open('');?>
-                                                        <input type="hidden" value="1">
-                                                        <a href="<?php echo base_url('product_details/' . remove_space($product->product_name) . '/' . $product->product_id) ?>">
-                                                            <button type="button" class="cart_button color2"><?php echo display('add_to_cart') ?></button>
-                                                        </a>
-                                                    <?php echo form_close(); ?>
-                                                <?php } }else{ ?>
-                                                    <?php echo form_open('');?>
-                                                        <input type="hidden" value="1">
-                                                        <a href="<?php echo base_url('product_details/' . remove_space($product->product_name) . '/' . $product->product_id) ?>">
-                                                            <button type="button" class="cart_button color2"><?php echo display('add_to_cart') ?></button>
-                                                        </a>
-                                                    <?php echo form_close(); ?>
-                                                <?php }  ?>
                                         </div>
                                     </div>
                                     <span><?php echo display('new') ?></span>

@@ -1,10 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php 
-    $is_aff = false;
-    if(check_module_status('affiliate_products') == 1){
-        $is_aff = true;
-    }
-?>
+
 <?php 
 $CI =& get_instance();
 $theme = $CI->Themes->get_theme();
@@ -504,30 +499,19 @@ if ($best_sales) { ?>
 <div class="box-bottom">
 
     <div class="btn-add-cart">
-    <?php if($is_aff){ 
-        if($product->is_affiliate == 1 ){ ?>
-            <a href="<?php echo html_escape( $product->affiliate_url) ?>" target="0">
-                <img src="<?php echo base_url() . 'application/modules/web/views/themes/' . $theme . '/assets/img/add-cart.png' ?>" alt="image"><?php echo display('buy_now') ?>
-            </a>
-    <?php }else{ ?> 
-        <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>', <?php echo $product->variant_price; ?>);">
-            <img src="<?php echo base_url() . 'application/modules/web/views/themes/' . $theme . '/assets/img/add-cart.png' ?>" alt="image"><?php echo display('add_to_cart') ?>
+        <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>');">
+            <img src="<?php echo base_url() . 'application/modules/web/views/themes/' . $theme . '/assets/img/add-cart.png' ?>"
+                 alt="image"><?php echo display('add_to_cart') ?>
         </a>
-    <?php } }else{ ?>
-        <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>', <?php echo $product->variant_price; ?>);">
-            <img src="<?php echo base_url() . 'application/modules/web/views/themes/' . $theme . '/assets/img/add-cart.png' ?>" alt="image"><?php echo display('add_to_cart') ?>
-        </a>
-    <?php }  ?>
-     </div>
+    </div>
+
     <div class="compare-wishlist">
-        <a href="javascript:void(0)"
-               onclick="comparison_btn(<?php echo html_escape($product->product_id) ?>)"
-               title="<?php echo display('compare') ?>" >
-               <i class="lnr lnr-chart-bars"></i> <?php echo display('compare') ?>
+        <a href="javascript:void(0)" class="wishlist" title=""
+           name="<?php echo html_escape($product->product_id) ?>">
+            <img src="<?php echo base_url() . 'application/modules/web/views/themes/'
+                . $theme . '/assets/img/wishlist.png' ?>"
+                 alt="image"><?php echo display('wishlist') ?>
         </a>
-        <a href="javascript:void(0)" class="wishlist" title="" name="<?php echo html_escape($product->product_id) ?>">
-            <img src="<?php echo base_url() . 'application/modules/web/views/themes/' . $theme . '/assets/img/wishlist.png' ?>" alt="image"><?php echo display('wishlist') ?>
-        </a> 
     </div>
 </div><!-- /.box-bottom -->
 </div>
@@ -764,27 +748,12 @@ foreach ($most_popular_product as $product) {
 </div><!-- /.price-add-to-cart -->
 <div class="box-bottom">
     <div class="btn-add-cart">
-        <?php if($is_aff){ 
-            if($product->is_affiliate == 1 ){ ?>
-                <a href="<?php echo html_escape( $product->affiliate_url) ?>" target="0">
-                    <img src="<?php echo base_url() . 'application/modules/web/views/themes/' . $theme . '/assets/img/add-cart.png' ?>" alt="image"><?php echo display('buy_now') ?>
-                </a>
-        <?php }else{ ?> 
-            <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>', <?php echo $product->variant_price; ?>);">
-                <img src="<?php echo base_url() . 'application/modules/web/views/themes/' . $theme . '/assets/img/add-cart.png' ?>" alt="image"><?php echo display('add_to_cart') ?>
-            </a>
-        <?php } }else{ ?>
-            <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>', <?php echo $product->variant_price; ?>);">
-                <img src="<?php echo base_url() . 'application/modules/web/views/themes/' . $theme . '/assets/img/add-cart.png' ?>" alt="image"><?php echo display('add_to_cart') ?>
-            </a>
-        <?php }  ?>
+        <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>');">
+            <img src="<?php echo base_url() . 'application/modules/web/views/themes/' . $theme . '/assets/img/add-cart.png' ?>"
+                 alt="image"><?php echo display('add_to_cart') ?>
+        </a>
     </div>
     <div class="compare-wishlist">
-        <a href="javascript:void(0)"
-               onclick="comparison_btn(<?php echo html_escape($product->product_id) ?>)"
-               title="<?php echo display('compare') ?>" >
-               <i class="lnr lnr-chart-bars"></i> <?php echo display('compare') ?>
-        </a>
         <a href="javascript:void(0)" class="wishlist" title=""
            name="<?php echo html_escape($product->product_id) ?>">
             <img src="<?php echo base_url() . 'application/modules/web/views/themes/' . $theme . '/assets/img/wishlist.png' ?>"

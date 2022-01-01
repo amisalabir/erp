@@ -46,9 +46,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('add_product_image')->create()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Cgallery')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_image')?></a>
-                <?php } ?>
+                
+                  <a href="<?php echo base_url('dashboard/Cgallery')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_image')?></a>
+
                 </div>
             </div>
         </div>
@@ -74,28 +74,25 @@
 									</tr>
 								</thead>
 								<tbody>
-								<?php if (!empty($image_list)) { 
-									$i=1;
-									foreach ($image_list as $imgitem) {
-									?>
+								<?php if ($image_list) { ?>
+								{image_list}
 									<tr>
-										<td class="text-center"><?php echo $i++; ?></td>
-										<td class="text-center"><a href="<?php echo base_url('dashboard/Cproduct/product_details/'.$imgitem['product_id']);?>">
-                                                <?php echo $imgitem['product_name'].'-('.$imgitem['product_model'].')'; ?><i class="fa fa-shopping-bag pull-right" aria-hidden="true"></i></a></td>
-										<td class="text-center"><img src="<?php echo base_url().$imgitem['image_url'];?>" class="img img-responsive center-block" height="50" width="50"><?php $imgname = explode('/', $imgitem['image_url']); echo end($imgname); ?></td>
+										<td class="text-center">{sl}</td>
+										<td class="text-center"><a href="<?php echo base_url('dashboard/Cproduct/product_details/{product_id}');?>">
+                                                {product_name}-({product_model}) <i class="fa fa-shopping-bag pull-right" aria-hidden="true"></i></a></td>
+										<td class="text-center"><img src="<?php echo base_url();?>{image_url}" class="img img-responsive center-block" height="50" width="50"></td>
 										<td>
 											<center>
 											<?php echo form_open()?>
-											<?php if($this->permission->check_label('manage_product_image')->update()->access()){ ?>
-												<a href="<?php echo base_url().'dashboard/Cgallery/image_update_form/'.$imgitem['image_gallery_id']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-											<?php }if($this->permission->check_label('manage_product_image')->delete()->access()){?>
-												<a href="<?php echo base_url('dashboard/Cgallery/image_delete/'.$imgitem['image_gallery_id'])?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php } ?>
+												<a href="<?php echo base_url().'dashboard/Cgallery/image_update_form/{image_gallery_id}'; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+												<a href="<?php echo base_url('dashboard/Cgallery/image_delete/{image_gallery_id}')?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php echo form_close()?>
 											</center>
 										</td>
 									</tr>
-								<?php } } ?>
+								{/image_list}
+								<?php } ?>
 								</tbody>
 		                    </table>
 		                </div>

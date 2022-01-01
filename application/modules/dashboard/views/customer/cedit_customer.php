@@ -46,12 +46,12 @@
 	    <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('add_customer')->create()->access()){?>
-                	<a href="<?php echo base_url('dashboard/Ccustomer')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"></i> <?php echo display('add_customer')?></a>
-                <?php }if($this->permission->check_label('manage_customer')->read()->redirect()){?>
-                  	<a href="<?php echo base_url('dashboard/Ccustomer/manage_customer')?>" class="btn btn-info m-b-5 m-r-2"><i class="ti-align-justify"></i> <?php echo display('manage_customer')?></a>
-                <?php } ?>
-                  	<a href="<?php echo base_url('dashboard/Ccustomer/paid_customer')?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"></i> <?php echo display('paid_customer')?></a>
+                
+                  <a href="<?php echo base_url('dashboard/Ccustomer')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"></i> <?php echo display('add_customer')?></a>
+
+                  <a href="<?php echo base_url('dashboard/Ccustomer/manage_customer')?>" class="btn btn-info m-b-5 m-r-2"><i class="ti-align-justify"></i> <?php echo display('manage_customer')?></a>
+
+                  <a href="<?php echo base_url('dashboard/Ccustomer/paid_customer')?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"></i> <?php echo display('paid_customer')?></a>
 
                 </div>
             </div>
@@ -95,9 +95,8 @@
 										<td>
 											<center>
 											<?php echo form_open()?>
-											<?php if($this->permission->check_label('manage_customer')->update()->access()){ ?>
 												<a href="<?php echo base_url().'dashboard/Ccustomer/customer_update_form/{customer_id}'; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-											<?php } ?>
+
 												<a href="" class="deleteCustomer btn btn-danger btn-sm" name="{customer_id}" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 
 											<?php echo form_close()?>

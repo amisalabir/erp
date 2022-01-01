@@ -7,17 +7,15 @@ class Clink_page extends MX_Controller
     {
         parent::__construct();
 
-        $this->auth->check_user_auth();
         $this->load->library('dashboard/llink_page');
         $this->load->model('dashboard/Link_pages');
+        $this->auth->check_admin_auth();
 
     }
 
     //Default loading for link_page system.
     public function index()
     {
-        $this->permission->check_label('link_page')->create()->redirect();
-
         $content = $this->llink_page->link_page_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -26,7 +24,6 @@ class Clink_page extends MX_Controller
     //Insert link_page
     public function insert_link_page()
     {
-        $this->permission->check_label('link_page')->create()->redirect();
 
         if ($_FILES['image']['name']) {
             $config['upload_path'] = './my-assets/image/link_page/';
@@ -111,16 +108,12 @@ class Clink_page extends MX_Controller
     //Manage link_page
     public function manage_link_page()
     {
-        $this->permission->check_label('link_page')->read()->redirect();
-
         $content =$this->llink_page->link_page_list();
         $this->template_lib->full_admin_html_view($content);;
     }
     //link_page Update Form
     public function link_page_update_form($link_page_id)
     {   
-        $this->permission->check_label('link_page')->update()->redirect();
-
         $content = $this->llink_page->link_page_edit_data($link_page_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -128,8 +121,6 @@ class Clink_page extends MX_Controller
     // link_page Update
     public function link_page_update($link_page_id = null)
     {
-        $this->permission->check_label('link_page')->update()->redirect();
-
         if ($_FILES['image']['name']) {
             $config['upload_path'] = './my-assets/image/link_page/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg|JPEG|GIF|JPG|PNG';
@@ -197,8 +188,6 @@ class Clink_page extends MX_Controller
     // link_page Delete
     public function link_page_delete($link_page_id)
     {
-        $this->permission->check_label('link_page')->delete()->redirect();
-
         $pinfo = $this->db->where('link_page_id', $link_page_id)->get('link_page')->row();
         $result = $this->Link_pages->delete_link_page($link_page_id);
         if($result){
@@ -217,8 +206,6 @@ class Clink_page extends MX_Controller
     //Inactive
     public function inactive($id)
     {
-        $this->permission->check_label('link_page')->update()->redirect();
-
         $this->db->set('status', 0);
         $this->db->where('page_id', $id);
         $this->db->update('link_page');
@@ -230,8 +217,6 @@ class Clink_page extends MX_Controller
     //Active
     public function active($id)
     {
-        $this->permission->check_label('link_page')->update()->redirect();
-        
         $this->db->set('status', 1);
         $this->db->where('page_id', $id);
         $this->db->update('link_page');

@@ -1,12 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-<?php 
-    $is_aff = false;
-    if(check_module_status('affiliate_products') == 1){
-        $is_aff = true;
-    }
-?>
-
 <?php
 $default_currency_id = $this->session->userdata('currency_id');
 $currency_new_id = $this->session->userdata('currency_new_id');
@@ -164,8 +157,7 @@ if ($block['block_style'] == 2) {
     <h2 class="sec_title color3"><?php echo html_escape($cat_pro[0]['category_name']) ?></h2>
 </div>
 <div class="owl-carousel product_slider product_col5_slider slider-nav">
-    <?php foreach ($cat_pro as $product): 
-        ?>
+    <?php foreach ($cat_pro as $product): ?>
         <div class="item boxed">
             <div class="item_inner">
                 <a href="<?php echo base_url() . 'product_details/' . remove_space($product['product_name']) . '/' . $product['product_id']; ?>"
@@ -284,33 +276,13 @@ if ($block['block_style'] == 2) {
                     <div class="hover_content">
                         <ul class="nav">
                             <li>
-                                <a href="javascript:void(0)"
-                                    onclick="comparison_btn(<?php echo html_escape($product['product_id']) ?>)"
-                                    title="<?php echo display('compare') ?>" >
-                                    <i class="lnr lnr-chart-bars"></i>
-                                </a>
+                                <a href="#" class="wishlist"
+                                   name="<?php echo $product['product_id'] ?>"
+                                   title="<?php echo display('add_to_wishlist') ?>"><i
+                                            class="fa fa-heart"></i></a>
                             </li>
-                            <li>
-                                <a href="#" class="wishlist" name="<?php echo $product['product_id'] ?>" title="<?php echo display('add_to_wishlist') ?>">
-                                   <i class="fa fa-heart"></i>
-                               </a>
-                            </li>
-                            <li>
-                                <?php if($is_aff){ 
-                                    if($product['is_affiliate'] == 1 ){ ?>
-                                        <a id="affiliate_btn" href="<?php echo html_escape( $product['affiliate_url']) ?>" target="0" title="<?php echo display('buy_now') ?>">
-                                            <i class="fa fa-shopping-bag"></i>
-                                        </a>
-                                <?php }else{ ?> 
-                                    <a href="javascript:void(0)" title="<?php echo display('add_to_cart') ?>" onclick="add_to_cart_item(<?php echo $product['product_id'] . ', \'' . remove_space($product['product_name']) . '\','; echo ($product['default_variant']) ? '\'' . $product['default_variant'] . '\'' : '\'nai\''; ?>, <?php echo $product['variant_price']; ?>)">
-                                        <i class="fa fa-shopping-bag"></i>
-                                    </a>
-                                <?php } }else{ ?>
-                                    <a href="javascript:void(0)" title="<?php echo display('add_to_cart') ?>" onclick="add_to_cart_item(<?php echo $product['product_id'] . ', \'' . remove_space($product['product_name']) . '\','; echo ($product['default_variant']) ? '\'' . $product['default_variant'] . '\'' : '\'nai\''; ?>, <?php echo $product['variant_price']; ?>)">
-                                        <i class="fa fa-shopping-bag"></i>
-                                    </a>
-                                <?php }  ?>
-                            </li>
+                            <li><a href="javascript:void(0)"  title="<?php echo display('add_to_cart') ?>" onclick="add_to_cart(<?php echo $product['product_id'] . ', \'' . remove_space($product['product_name']) . '\','; echo ($product['default_variant']) ? '\'' . $product['default_variant'] . '\'' : '\'nai\''; ?>)"><i
+                                            class="fa fa-shopping-bag"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -504,34 +476,16 @@ if ($block['block_style'] == 1) {
                             <div class="hover-box">
                                 <ul class="nav">
                                     <li>
-                                        <a href="javascript:void(0)"
-                                            onclick="comparison_btn(<?php echo html_escape($product['product_id']) ?>)"
-                                            title="<?php echo display('compare') ?>" >
-                                            <i class="lnr lnr-chart-bars"></i>
-                                        </a>
-                                    </li>
-                                    <li>
                                         <a href="#" class="wishlist"
                                            name="<?php echo $cat_pro[$i]['product_id'] ?>"
-                                           title="<?php echo display('add_to_wishlist') ?>">
-                                           <i class="fa fa-heart"></i>
-                                       </a>
+                                           title="<?php echo display('add_to_wishlist') ?>"><i
+                                                    class="fa fa-heart"></i></a>
                                     </li>
                                     <li>
-                                       <?php if($is_aff){ 
-                                            if($cat_pro[$i]['is_affiliate'] == 1 ){ ?>
-                                                <a id="affiliate_btn" href="<?php echo html_escape( $cat_pro[$i]['affiliate_url']) ?>" target="0" title="<?php echo display('buy_now') ?>">
-                                                    <i class="fa fa-shopping-bag"></i>
-                                                </a>
-                                        <?php }else{ ?> 
-                                            <a href="javascript:void(0)" title="<?php echo display('add_to_cart') ?>" onclick="add_to_cart_item(<?php echo $cat_pro[$i]['product_id'] . ', \'' . remove_space($cat_pro[$i]['product_name']) . '\','; echo ($cat_pro[$i]['default_variant']) ? '\'' . $cat_pro[$i]['default_variant'] . '\'' : '\'nai\''; ?>, <?php echo $cat_pro[$i]['variant_price']; ?>)">
-                                                <i class="fa fa-shopping-bag"></i>
-                                            </a>
-                                        <?php } }else{ ?>
-                                            <a href="javascript:void(0)" title="<?php echo display('add_to_cart') ?>" onclick="add_to_cart_item(<?php echo $cat_pro[$i]['product_id'] . ', \'' . remove_space($cat_pro[$i]['product_name']) . '\','; echo ($cat_pro[$i]['default_variant']) ? '\'' . $cat_pro[$i]['default_variant'] . '\'' : '\'nai\''; ?>, <?php echo $cat_pro[$i]['variant_price']; ?>)">
-                                                <i class="fa fa-shopping-bag"></i>
-                                            </a>
-                                        <?php }  ?>
+                                        <a href="javascript:void(0)"
+                                           onclick="add_to_cart(<?php echo $cat_pro[$i]['product_id'] . ', \'' . remove_space($cat_pro[$i]['product_name']) . '\',';
+                                           echo ($cat_pro[$i]['default_variant']) ? '\'' . $cat_pro[$i]['default_variant'] . '\'' : '\'nai\''; ?>)"><i
+                                                    class="fa fa-shopping-bag"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -704,14 +658,12 @@ endforeach;
 }
 ?>
 
-<?php if(!empty($brands)){ ?>
 <div class="brand-cat-content">
 <div class="container-full">
 <div class="brand-logo">
 <div class="row">
 <div class="brand_slider owl-carousel nav-style2">
-<?php 
-foreach ($brands as $brand) { ?>
+<?php foreach ($brands as $brand) { ?>
 <div class="item logo-item">
 <a href="<?php echo base_url() . "brand_product/list/" . $brand['brand_id']; ?>"
    target="_blank">
@@ -724,5 +676,4 @@ foreach ($brands as $brand) { ?>
 </div>
 </div>
 </div>
-<?php } ?>
 </div>

@@ -1,5 +1,5 @@
 <!-- dynamic template color  -->
-<?php $colors = $this->color_frontends->retrieve_color_editdata('isshue_classic'); ?>
+<?php $colors = $this->color_frontends->retrieve_color_editdata(); ?>
 <style>
     .color1 {
         background: <?php echo $colors->color1;?> !important;

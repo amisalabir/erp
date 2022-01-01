@@ -71,18 +71,20 @@
             <div class="col-lg-6 col-md-5 b_footer_left">
                 <h6><?php if($Web_settings[0]['footer_text']){echo htmlspecialchars_decode($Web_settings[0]['footer_text']);}?></h6>
             </div>
-            <?php if( 1 == $Web_settings[0]['pay_with_status']){
-                if($pay_withs){
-                    ?>
+            <?php if( 1 == $Web_settings[0]['pay_with_status']){?>
             <div class="col-lg-6 col-md-7 b_footer_right">
                 <ul class="justify-content-end">
                     <li><h6><?php echo display('pay_with')?> :</h6></li>
-                    <?php  foreach($pay_withs as $pay_with):?>
+                    <?php 
+                    if($pay_withs){
+                    foreach($pay_withs as $pay_with):?>
                         <li><a href="<?php echo htmlspecialchars_decode($pay_with['link']); ?>" target="_blank"><img src="<?php echo base_url()?>my-assets/image/pay_with/<?php echo html_escape($pay_with['image']);?>" alt="#"></a></li>
-                    <?php endforeach; ?>
+                    <?php endforeach;
+                        }
+                    ?>
                 </ul>
             </div>
-             <?php } } ?>
+             <?php }?>
         </div>
     </div>
 </section>

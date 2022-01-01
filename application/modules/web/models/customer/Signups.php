@@ -18,7 +18,6 @@ class Signups extends CI_Model
             $this->send_sms("Registration", $mobile);
         }
         $result = $this->db->insert('customer_information', $data);
-        
         if ($result) {
             $this->db->select('*');
             $this->db->from('customer_information');

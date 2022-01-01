@@ -6,15 +6,15 @@ class Cpay_with extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        $this->auth->check_user_auth();
         $this->load->library('dashboard/lpay_with');
         $this->load->model('dashboard/pay_withs');
+        $this->auth->check_admin_auth();
     }
 
     //show all item list 
     public function index()
     {
-        $this->permission->check_label('manage_pay_with')->read()->redirect();
+        
         $content = $this->lpay_with->pay_with_list();       
         $this->template_lib->full_admin_html_view($content);
     }
@@ -23,8 +23,6 @@ class Cpay_with extends MX_Controller
     //insert pay with image in to  the database
     public function create()
     {
-        $this->permission->check_label('manage_pay_with')->create()->redirect();
-
         $this->form_validation->set_rules('title', display('title'), 'required');
         if(empty($_FILES['image']['name'])){
 
@@ -73,8 +71,6 @@ class Cpay_with extends MX_Controller
 
     public function edit($id)
     {
-        $this->permission->check_label('manage_pay_with')->update()->redirect();
-
         $this->form_validation->set_rules('title', display('title'), 'required');
         if(empty($_FILES['image']['name']) && empty($this->input->post('old_image'))) {
 
@@ -125,8 +121,6 @@ class Cpay_with extends MX_Controller
 
     public function delete($id)
     {
-        $this->permission->check_label('manage_pay_with')->delete()->redirect();
-
         $this->pay_withs->delete($id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('dashboard/Cpay_with');

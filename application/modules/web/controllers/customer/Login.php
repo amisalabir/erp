@@ -55,19 +55,51 @@ class Login extends MX_Controller
             'currency' => $currency_details[0]['currency_icon'],
             'position' => $currency_details[0]['currency_position'],
         );
-
         $theme = $this->Themes->get_theme();
         $content = $this->parser->parse('web/themes/'.$theme.'/login',$data,true);
         $this->template_lib->full_website_html_view($content);
 
     }
 
+    #============User login=========#
+    public function login()
+    {
+        if ($this->auth->is_logged()) {
+            $this->output->set_header("Location: " . base_url('customer/customer_dashboard'), TRUE, 302);
+        }
+
+        $parent_category_list = $this->Logins->parent_category_list();
+        $pro_category_list = $this->Logins->category_list();
+        $best_sales = $this->Logins->best_sales();
+        $footer_block = $this->Logins->footer_block();
+        $slider_list = $this->web_settings->slider_list();
+        $block_list = $this->Blocks->block_list();
+        $currency_details = $this->Soft_settings->retrieve_currency_info();
+
+        $data = array(
+            'title' => display('home'),
+            'category_list' => $parent_category_list,
+            'pro_category_list' => $pro_category_list,
+            'slider_list' => $slider_list,
+            'block_list' => $block_list,
+            'best_sales' => $best_sales,
+            'footer_block' => $footer_block,
+            'currency' => $currency_details[0]['currency_icon'],
+            'position' => $currency_details[0]['currency_position'],
+        );
+        $data['company_info'] = $this->Companies->company_list();
+        $data['setting'] = $this->Template_model->setting();
+        $data['module'] = "web";
+        $data['page'] = 'customer/login';
+        $this->load->view('themes/' . $data['theme'] . '/website_html_template', $data);
+
+    }
 
     #==============Do Login=======#
     public function do_login()
     {
-        $error    = '';
-        $email    = $this->input->post('email',TRUE);
+        $error = '';
+        $email = $this->input->post('email',TRUE);
         $password = $this->input->post('password',TRUE);
 
         if ($email == '' || $password == '' || $this->user_auth->login($email, $password) === FALSE) {
@@ -76,6 +108,7 @@ class Login extends MX_Controller
 
         if ($error != '') {
             $this->session->set_userdata(array('error_message' => $error));
+            $theme = $this->db->select('name')->from('themes')->where('status', 1)->get()->row();
 
             $this->output->set_header("Location: " . base_url('login'), TRUE, 302);
 
@@ -86,38 +119,38 @@ class Login extends MX_Controller
         }
     }
 
-      //Customer checkout login
+    //Customer checkout login
     public function checkout_login()
     {
-        $error       = '';
-        $logresult   = FALSE;
-        $email       = $this->input->post('login_email',TRUE);
-        $password    = $this->input->post('login_password',TRUE);
+        $error = '';
+        $email = $this->input->post('login_email',TRUE);
+        $password = $this->input->post('login_password',TRUE);
         $remember_me = $this->input->post('remember_me',TRUE);
         if ($remember_me == 1) {
             $email_cookie = array(
-                'name'   => 'email',
-                'value'  => $email,
+                'name' => 'email',
+                'value' => $email,
                 'expire' => '86500',
             );
             $this->input->set_cookie($email_cookie);
 
             $pass_cookie = array(
-                'name'   => 'password',
-                'value'  => $password,
+                'name' => 'password',
+                'value' => $password,
                 'expire' => '86500',
             );
             $this->input->set_cookie($pass_cookie);
         }
-        if (($email == '') || ($password == '')) {
-            echo FALSE;
-            exit();
+        if ($email == '' || $password == '' || $this->user_auth->login($email, $password) === FALSE) {
+            $error = display('wrong_username_or_password');
         }
 
-        if ($this->user_auth->login($email, $password)== TRUE) {
-            echo TRUE;
+        if ($error != '') {
+            $this->session->set_userdata(array('error_message' => $error));
+            echo "false";
         } else {
-            echo FALSE;
+            $this->session->set_userdata(array('message' => display('login_successfully')));
+            echo "true";
         }
     }
 
@@ -127,7 +160,7 @@ class Login extends MX_Controller
         $number = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "N", "M", "O", "P", "Q", "R", "S", "U", "V", "T", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
 
         for ($i = 0; $i < $lenth; $i++) {
-            $rand_value  = rand(0, 34);
+            $rand_value = rand(0, 34);
             $rand_number = $number["$rand_value"];
 
             if (empty($con)) {
@@ -149,13 +182,13 @@ class Login extends MX_Controller
         $message = 'To reset your password, Click the link bellow...' .'<br>' .'<a href="'. base_url('password_reset/' . $ptoken).'"> Reset Password</a>';
 
         $config = array(
-            'protocol'  => $setting_detail[0]['protocol'],
+            'protocol' => $setting_detail[0]['protocol'],
             'smtp_host' => $setting_detail[0]['smtp_host'],
             'smtp_port' => $setting_detail[0]['smtp_port'],
             'smtp_user' => $setting_detail[0]['sender_email'],
             'smtp_pass' => $setting_detail[0]['password'],
-            'mailtype'  => $setting_detail[0]['mailtype'],
-            'charset'   => 'utf-8'
+            'mailtype' => $setting_detail[0]['mailtype'],
+            'charset' => 'utf-8'
         );
 
         $CI->load->library('email');

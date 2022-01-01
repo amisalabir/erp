@@ -8,7 +8,7 @@ class Cterminal extends MX_Controller
         parent::__construct();
         $this->load->library('lterminal');
         $this->load->model('Terminals');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
 
     //Default loading for terminal system.

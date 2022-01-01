@@ -10,32 +10,19 @@
 <!--========== End Page Header Area ==========-->
 
 <div class="lost-password">
-    
-    <?php 
+    <?php
+    if ($this->session->userdata('message')) {
         $message = $this->session->userdata('message');
-        if (!empty($message)) {
-        ?>
-        <div class="alert alert-info alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <?php echo $message ?>                    
-        </div>
-        <?php 
-        $this->session->unset_userdata('message');
+        if ($message) {
+            ?>
+            <div class="alert alert-success">
+                <strong><?php echo  display('success')?></strong> <?php echo $message?>
+            </div>
+            <?php
         }
-        $error_message = $this->session->userdata('error_message');
-        $validation_errors = validation_errors();
-        if (!empty($error_message) || !empty($validation_errors)) {
-        ?>
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <?php echo $error_message ?>                    
-            <?php echo $validation_errors ?>                    
-        </div>
-        <?php 
-        $this->session->unset_userdata('error_message');
-         } ?>
-
-
+        $this->session->unset_userdata('message');
+    }
+    ?>
     <h4 class="mb-25 text-center"><?php echo display('create_your_account')?></h4>
         <?php echo form_open(base_url().'user_signup') ?>
         <div class="form-group">
@@ -65,7 +52,7 @@
             <input type="password" id="user_pw" class="form-control" name="password" placeholder="<?php echo display('password')?>" required>
         </div>
         <div class="form-group">
-            <button type="submit" class="base_button btn btn-warning color4 color46" id="create_account_btn"><?php echo display('create_account')?></button>
+            <button type="submit" class="base_button btn btn-warning color4" id="create_account_btn"><?php echo display('create_account')?></button>
             <p class="d-inline-block pull-right mt-8 already_member"><?php echo display('already_member')?><a href="<?php echo base_url('login')?>">
                     <?php echo display('login')?></a></p>
         </div>

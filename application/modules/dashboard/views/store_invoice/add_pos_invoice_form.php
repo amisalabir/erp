@@ -275,7 +275,8 @@
 
                 <div class="form-group">
                     <input type="text" name="product_name" class="form-control" placeholder='<?php echo display('barcode_qrcode_scan_here') ?>' id="add_item" >
-                    <?php date_default_timezone_set(DEF_TIMEZONE); $date = date('m-d-Y'); ?>
+                    <?php 
+date_default_timezone_set(DEF_TIMEZONE); $date = date('m-d-Y'); ?>
                 </div>
 
                 <?php echo form_open_multipart('Store_invoice/insert_invoice',array('class' => 'form-vertical', 'id' => 'validate'))?>
@@ -335,6 +336,10 @@
                 <div class="table-responsive total-price">
                     <table class="table">
                         <tbody>
+
+
+
+
                             <tr>
                                 <th scope="row"><?php echo display('item') ?></th>
                                 <td id="item-number">0</td>

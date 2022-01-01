@@ -6,10 +6,11 @@ class Cinvoice extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        $this->auth->check_user_auth();
         $this->load->model(array('dashboard/Invoices'));
         $this->load->library('dashboard/linvoice');
         $this->load->library('dashboard/occational');
+        $this->auth->check_admin_auth();
+
     }
 
     //Default invoice add from loading
@@ -21,14 +22,13 @@ class Cinvoice extends MX_Controller
     //Add new invoice
     public function new_invoice()
     {
-        $this->permission->check_label('new_sale')->create()->redirect();
-
         $this->load->model(array(
             'dashboard/Stores',
             'dashboard/Variants',
             'dashboard/Customers',
             'dashboard/Shipping_methods'
         ));
+
         $store_list = $this->Stores->store_list();
         $variant_list = $this->Variants->variant_list();
         $shipping_methods = $this->Shipping_methods->shipping_method_list();
@@ -49,38 +49,39 @@ class Cinvoice extends MX_Controller
 
     public function manage_invoice()
     {
-        $this->permission->check_label('manage_sale')->read()->redirect();
-
         $filter = array(
-            'invoice_no' => $this->input->get('invoice_no', TRUE),
-            'customer_id' => $this->input->get('customer_id', TRUE),
-            'date' => $this->input->get('date', TRUE),
-            'invoice_status' => $this->input->get('invoice_status', TRUE)
+            'invoice_no' => $this->input->get('invoice_no'),
+            'customer_id' => $this->input->get('customer_id'),
+            'date' => $this->input->get('date'),
+            'invoice_status' => $this->input->get('invoice_status')
         );
-        $config["base_url"]    = base_url('dashboard/Cinvoice/manage_invoice');
-        $config["total_rows"]  = $this->Invoices->count_invoice_list($filter);
-        $config["per_page"]    = 20;
+        $config["base_url"] = base_url('dashboard/Cinvoice/manage_invoice');
+        $config["total_rows"] = $this->Invoices->count_invoice_list($filter);
+
+        $config["per_page"] = 20;
         $config["uri_segment"] = 4;
-        $config["num_links"]   = 5;
+        $config["num_links"] = 5;
         /* This Application Must Be Used With BootStrap 3 * */
-        $config['full_tag_open']    = "<ul class='pagination'>";
-        $config['full_tag_close']   = "</ul>";
-        $config['num_tag_open']     = '<li>';
-        $config['num_tag_close']    = '</li>';
-        $config['cur_tag_open']     = "<li class='disabled'><li class='active'><a href='#'>";
-        $config['cur_tag_close']    = "<span class='sr-only'></span></a></li>";
-        $config['next_tag_open']    = "<li>";
-        $config['next_tag_close']   = "</li>";
-        $config['prev_tag_open']    = "<li>";
-        $config['prev_tagl_close']  = "</li>";
-        $config['first_tag_open']   = "<li>";
+        $config['full_tag_open'] = "<ul class='pagination'>";
+        $config['full_tag_close'] = "</ul>";
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+        $config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+        $config['next_tag_open'] = "<li>";
+        $config['next_tag_close'] = "</li>";
+        $config['prev_tag_open'] = "<li>";
+        $config['prev_tagl_close'] = "</li>";
+        $config['first_tag_open'] = "<li>";
         $config['first_tagl_close'] = "</li>";
-        $config['last_tag_open']    = "<li>";
-        $config['last_tagl_close']  = "</li>";
+        $config['last_tag_open'] = "<li>";
+        $config['last_tagl_close'] = "</li>";
         /* ends of bootstrap */
         $this->pagination->initialize($config);
         $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
         $links = $this->pagination->create_links();
+
+
         $invoices_list = $this->Invoices->get_invoice_list($filter, $page, $config["per_page"]);
         if (!empty($invoices_list)) {
             foreach ($invoices_list as $k => $v) {
@@ -95,15 +96,15 @@ class Cinvoice extends MX_Controller
         $this->load->model(array('dashboard/Soft_settings','dashboard/Customers'));
         $currency_details = $this->Soft_settings->retrieve_currency_info();
         $data = array(
-            'title'         => display('manage_invoice'),
+            'title' => display('manage_invoice'),
             'invoices_list' => $invoices_list,
-            'currency'      => $currency_details[0]['currency_icon'],
-            'position'      => $currency_details[0]['currency_position'],
-            'links'         => $links
+            'currency' => $currency_details[0]['currency_icon'],
+            'position' => $currency_details[0]['currency_position'],
+            'links' => $links
         );
 
         $data['module'] = "dashboard";
-        $data['page']   = "invoice/invoice";
+        $data['page'] = "invoice/invoice";
         echo Modules::run('template/layout', $data);
 
     }
@@ -111,21 +112,17 @@ class Cinvoice extends MX_Controller
     //Insert new invoice
     public function insert_invoice()
     {
-
         $invoice_id = $this->Invoices->invoice_entry();
+        $this->invoice_inserted_data($invoice_id);
         $this->session->set_userdata(array('message' => display('successfully_added')));
         if ($this->input->post('pos',TRUE) === 'pos') {
             redirect('dashboard/Cinvoice/pos_invoice_inserted_data_redirect/' . $invoice_id . '?place=pos');
-        }else{
-            redirect('dashboard/Cinvoice/invoice_inserted_data/'. $invoice_id);
         }
     }
 
     //Invoice Update Form
     public function invoice_update_form($invoice_id)
     {
-        $this->permission->check_label('manage_sale')->update()->redirect();
-
         $content = $this->linvoice->invoice_edit_data($invoice_id);
         $this->template_lib->full_admin_html_view($content);
 
@@ -134,7 +131,7 @@ class Cinvoice extends MX_Controller
     // Invoice Update
     public function invoice_update()
     {
-        $this->permission->check_label('manage_sale')->update()->redirect();
+        $this->auth->check_admin_auth();
 
         $invoice_id = $this->Invoices->update_invoice();
         $this->session->set_userdata(array('message' => display('successfully_updated')));
@@ -144,18 +141,17 @@ class Cinvoice extends MX_Controller
     //Retrive right now inserted data to cretae html
     public function invoice_inserted_data($invoice_id)
     {
-        $this->permission->check_label('new_sale')->redirect();
-
         $content = $this->linvoice->invoice_html_data($invoice_id);
         $this->template_lib->full_admin_html_view($content);
+        
+        //$backtrace = debug_backtrace();
+        //print_r( $backtrace );
 
     }
 
     //POS invoice page load
     public function pos_invoice()
     {
-        $this->permission->check_label('pos_sale')->read()->redirect();
-
          $content = $this->linvoice->pos_invoice_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -163,6 +159,7 @@ class Cinvoice extends MX_Controller
     //Insert pos invoice
     public function insert_pos_invoice()
     {
+        $this->auth->check_admin_auth();
 
         $product_id = $this->input->post('product_id',TRUE);
         $stok_report = $this->Invoices->stock_report_bydate_pos($product_id);
@@ -170,22 +167,25 @@ class Cinvoice extends MX_Controller
         if ($stok_report > 0) {
             $product_details = $this->Invoices->get_total_product($product_id);
             $html = "";
-            if (!empty($product_details['variant'])) {
-                $html = $product_details['variant'];
-            }
+            if ($product_details['variant_id']) {
+                $exploded = explode(',', $product_details['variant_id']);
+                $html .= "<option>Select Variant</option>";
+                foreach ($exploded as $elem) {
+                    $this->db->select('*');
+                    $this->db->from('variant');
+                    $this->db->where('variant_id', $elem);
+                    $this->db->order_by('variant_name', 'asc');
+                    $result = $this->db->get()->row();
 
+                    $html .= "<option value=" . $result->variant_id . ">" . $result->variant_name . "</option>";
+                }
+            }
 
             $tr = " ";
             $order = " ";
             $bill = " ";
             if (!empty($product_details)) {
                 $product_id = $this->auth->generator(5);
-
-                 $colorhtml = '';
-                if (!empty($product_details['colorhtml'])) {
-                    $colorhtml = "<select name=\"color_variant[]\" id=\"variant_color_" . $product_id . "\" class=\"form-control variant_color width_80\" >" . $product_details['colorhtml'] . "</select>";
-                }
-
                 $tr .= "<tr id='" . $product_id . "'>
 				<th id=\"product_name_" . $product_id . "\">" . $product_details['product_name'] . "</th>
 
@@ -198,8 +198,7 @@ class Cinvoice extends MX_Controller
 					</script>
 					<input type=\"hidden\" class=\"sl\" value=" . $product_id . ">
 					<input type=\"hidden\" class=\"product_id_" . $product_id . "\" value=" . $product_details['product_id'] . ">
-					<select name=\"variant_id[]\" id=\"variant_id_" . $product_id . "\" class=\"form-control variant_id width_80\" required=\"\">" . $html . "</select> 
-                    ".$colorhtml."
+					<select name=\"variant_id[]\" id=\"variant_id_" . $product_id . "\" class=\"form-control variant_id width_80\" required=\"\">" . $html . "</select>
 					</td>
 					<td>
 					<input type=\"text\" name=\"available_quantity[]\" id=\"avl_qntt_" . $product_id . "\" 
@@ -311,16 +310,13 @@ class Cinvoice extends MX_Controller
     //Retrive right now inserted data to cretae html
     public function pos_invoice_inserted_data($invoice_id)
     {
-        $this->permission->check_label('pos_sale')->read()->redirect();
-
         $content = $this->linvoice->pos_invoice_html_data($invoice_id);
         $this->template_lib->full_admin_html_view($content);
     }
 
     public function pos_invoice_inserted_data_redirect($invoice_id)
     {
-        $this->permission->check_label('pos_sale')->read()->redirect();
-
+        $this->auth->check_admin_auth();
         $this->load->library('dashboard/linvoice');
         $this->linvoice->pos_invoice_html_data_redirect($invoice_id);
 
@@ -329,6 +325,8 @@ class Cinvoice extends MX_Controller
     // Retrieve product data
     public function retrieve_product_data()
     {
+        $this->auth->check_admin_auth();
+
         $product_id = $this->input->post('product_id',TRUE);
         $product_info = $this->Invoices->get_total_product($product_id);
         echo json_encode($product_info);
@@ -337,7 +335,7 @@ class Cinvoice extends MX_Controller
     // Invoice Delete
     public function invoice_delete($invoice_id)
     {
-        $this->permission->check_label('manage_sale')->delete()->redirect();
+        $this->auth->check_admin_auth();
 
         $result = $this->Invoices->delete_invoice($invoice_id);
         if ($result) {
@@ -351,6 +349,7 @@ class Cinvoice extends MX_Controller
     //AJAX INVOICE STOCK Check
     public function product_stock_check($product_id)
     {
+        $this->auth->check_admin_auth();
 
         $purchase_stocks = $this->Invoices->get_total_purchase_item($product_id);
         $total_purchase = 0;
@@ -374,6 +373,8 @@ class Cinvoice extends MX_Controller
     //Search product by product name and category
     public function search_product()
     {
+        $this->auth->check_admin_auth();
+
         $product_name = $this->input->post('product_name',TRUE);
         $category_id = $this->input->post('category_id',TRUE);
         $product_search = $this->Invoices->product_search($product_name, $category_id);
@@ -398,6 +399,7 @@ class Cinvoice extends MX_Controller
     //Insert new customer
     public function insert_customer()
     {
+        $this->auth->check_admin_auth();
 
         $customer_id = generator(15);
         //Customer  basic information adding.
@@ -422,6 +424,7 @@ class Cinvoice extends MX_Controller
     //Update status
     public function update_status($invoice_id)
     {
+        $this->auth->check_admin_auth();
 
         $this->load->model('dashboard/Soft_settings');
 
@@ -556,6 +559,7 @@ class Cinvoice extends MX_Controller
                     $this->Homes->send_sms($order_no, $customer_id, $invoice_status_text);//$invoice_status is type in send_sms method
                 }
             }
+
             $subject = display("invoice_status");
             $message = $this->input->post('add_note',TRUE);
 
@@ -674,4 +678,6 @@ class Cinvoice extends MX_Controller
 
 
     }
+
+
 }

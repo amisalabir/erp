@@ -192,6 +192,31 @@ $this->session->unset_userdata('error_message');
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group row">
+                                    <label for="onsale" class="col-sm-3 col-form-label"><?php echo display('onsale') ?></label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select2 width_100p" id="onsale" name="onsale">
+                                            <option value=""><?php echo display('select_one') ?></option>
+                                            <option value="1" <?php if ($onsale == 1) {
+                                                echo "selected";}?>><?php echo display('yes') ?></option>
+                                            <option value="0" <?php if ($onsale == 0) {
+                                                echo "selected";}?>><?php echo display('no') ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group row onsale_price" style="<?php if ($onsale == 0) { echo "display: none"; }?>">
+                                    <label for="onsale_price" class="col-sm-3 col-form-label"><?php echo display('onsale_price')?> <i class="text-danger">*</i></label>
+                                    <div class="col-md-9">
+                                        <input class="form-control text-right" name="onsale_price" type="number" required="" placeholder="<?php echo display('onsale_price') ?>" min="0" id="onsale_price" value="<?php echo html_escape($onsale_price); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group row">
                                     <label for="best_sale" class="col-sm-3 col-form-label"><?php echo display('best_sale') ?></label>
                                     <div class="col-md-9">
                                         <select class="form-control select2 width_100p" id="best_sale" name="best_sale">
@@ -245,7 +270,6 @@ $this->session->unset_userdata('error_message');
 
 
                     <div class="tab-pane" id="tab3">
-
                         <div class="form-group row">
                             <label for="sell_price" class="col-sm-4 col-form-label"><?php echo display('sell_price') ?> <span class="color-red">*</span></label>
                             <div class="col-sm-4">
@@ -256,25 +280,6 @@ $this->session->unset_userdata('error_message');
                             <label for="supplier_price" class="col-sm-4 col-form-label"><?php echo display('supplier_price') ?> <span class="color-red">*</span></label>
                             <div class="col-sm-4">
                                 <input type="number" tabindex="4" class="form-control text-right" value="<?php echo html_escape($supplier_price); ?>" name="supplier_price" placeholder="<?php echo display('supplier_price') ?>"  required min="0"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="onsale" class="col-sm-4 col-form-label"><?php echo display('onsale') ?></label>
-                            <div class="col-md-4">
-                                <select class="form-control select2 width_100p" id="onsale" name="onsale">
-                                    <option value=""><?php echo display('select_one') ?></option>
-                                    <option value="1" <?php if ($onsale == 1) {
-                                        echo "selected";}?>><?php echo display('yes') ?></option>
-                                    <option value="0" <?php if ($onsale == 0) {
-                                        echo "selected";}?>><?php echo display('no') ?></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row onsale_price" style="<?php if ($onsale == 0) { echo "display: none"; }?>">
-                            <label for="onsale_price" class="col-sm-4 col-form-label"><?php echo display('onsale_price')?> <i class="text-danger">*</i></label>
-                            <div class="col-md-4">
-                                <input class="form-control text-right" name="onsale_price" type="number" required="" placeholder="<?php echo display('onsale_price') ?>" min="0" id="onsale_price" value="<?php echo html_escape($onsale_price); ?>">
                             </div>
                         </div>
 
@@ -290,28 +295,19 @@ $this->session->unset_userdata('error_message');
                             <label for="supplier" class="col-sm-4 col-form-label"><?php echo display('supplier') ?> <span class="color-red">*</span></label>
                             <div class="col-sm-4">
                                 <select name="supplier_id" class="form-control select2" required=""  id="supplier"  style="width:100%">
+
                                     <?php  if ($supplier_list){ 
                                         foreach($supplier_list as $supplier){
                                         ?>                                                   
                                         <option value="<?php echo html_escape($supplier['supplier_id']) ?>" <?php if($supplier['supplier_id'] == $supplier_selected){ echo 'selected';} ?>><?php echo html_escape($supplier['supplier_name']); ?></option>                                                   
                                     <?php } } ?>
+
+
+                                   
                                 </select>
                             </div>
                         </div>
 
-                        <?php
-                        $exploded = $vresult = [];
-                        if ($variants) {
-                            $exploded = explode(',', $variants);
-
-                            $this->db->select('*');
-                            $this->db->from('variant');
-                            $this->db->where_in('variant_id',$exploded);
-                            $this->db->order_by('variant_name','asc');
-                            $vresult = $this->db->get()->result();
-                        }
-
-                        ?>
                         <div class="form-group row">
                             <label for="variant" class="col-sm-4 col-form-label"><?php echo display('variant') ?> <span class="color-red">*</span></label>
                             <div class="col-sm-4">
@@ -319,146 +315,49 @@ $this->session->unset_userdata('error_message');
                                     <option value="">Select</option>
                                     <?php if ($variant_list){
                                         foreach($variant_list as $variant){
-                                            if($variant['variant_type'] == 'size'){
                                      ?>                                                   
-                                        <option value="<?php echo html_escape($variant['variant_id']) ?>" <?php echo (in_array($variant['variant_id'], $exploded)?'selected':'') ?>><?php echo html_escape($variant['variant_name']); ?></option> 
-                                    <?php } } } ?>
+                                        <option value="<?php echo html_escape($variant['variant_id']) ?>"><?php echo html_escape($variant['variant_name']); ?></option>
+                                        
+                                    <?php } } ?>
+
+                                    <?php
+                                    if ($variants) {
+                                        $exploded = explode(',', $variants);
+                                        foreach ($exploded as $elem) {
+                                            $this->db->select('*');
+                                            $this->db->from('variant');
+                                            $this->db->where('variant_id',$elem);
+                                            $this->db->order_by('variant_name','asc');
+                                            $result = $this->db->get()->row();
+                                            ?>
+                                            <option value="<?php echo html_escape($result->variant_id)?>" selected="" ><?php echo html_escape($result->variant_name)?></option>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
+                        <?php
+                        $this->db->select('*');
+                        $this->db->from('variant');
+                        $this->db->where_in('variant_id',$exploded);
+                        $this->db->order_by('variant_name','asc');
+                        $result = $this->db->get()->result();
 
+                        ?>
                         <div class="form-group row">
                             <label for="default_variant" class="col-sm-4 col-form-label"><?php echo display('default_variant') ?></label>
                             <div class="col-sm-4">
                                 <select name="default_variant" class="form-control select2"   id="default_variant"  style="width:100%">
                                     <option value="">Select</option>
-                                    <?php if ($vresult){
-                                        foreach ($vresult as $v_item){ ?>
+                                    <?php if ($result){
+                                        foreach ($result as $v_item){                                                    ?>
                                             <option value="<?php echo html_escape($v_item->variant_id)  ?>" <?php if($v_item->variant_id == $default_variant){echo "selected";}  ?>><?php echo html_escape($v_item->variant_name);  ?></option>
                                         <?php } }?>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="variant_colors" class="col-sm-4 col-form-label"><?php echo display('color') ?></label>
-                            <div class="col-sm-4">
-                                <select name="variant_colors[]" class="form-control select2" multiple id="variant_colors" style="width:100%">
-                                    <option value="">Select</option>
-                                    <?php if ($variant_list){
-                                        foreach($variant_list as $variant){
-                                            if($variant['variant_type'] == 'color'){
-                                     ?>                                                   
-                                        <option value="<?php echo html_escape($variant['variant_id']) ?>" <?php echo (in_array($variant['variant_id'], $exploded)?'selected':'') ?>><?php echo html_escape($variant['variant_name']); ?></option> 
-                                    <?php } } } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div  id="variant_price_area" style="<?php echo (($onsale == 0)?"display: block":"display: none");?>">
-                            <div class="form-group row">
-                                <div class="col-sm-4 col-sm-offset-4">
-                                   <div class="checkbox checkbox-success">
-                                        <input type="checkbox" name="variant_prices" value="1" id="variant_prices"  <?php echo (!empty($variant_price)?'checked':'') ?>>
-                                        <label class="" for="variant_prices" ><?php echo display('set_variant_wise_price') ?></label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row  <?php echo (!empty($variant_price)?'':'none') ?>" id="set_variant_price">
-                                <div class="col-sm-6 col-sm-offset-4">
-                                  <div >
-                                      
-                                      <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th><?php echo display('size') ?><span class="color-red">*</span></th>
-                                                <th><?php echo display('color') ?></th>
-                                                <th><?php echo display('price') ?><span class="color-red">*</span></th>
-                                                <th><?php echo display('action') ?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="variant_area">
-                                            <?php $ckey=(count($provar_prices)>0?count($provar_prices):0); ?>
-                                            <tr>
-                                                <td>
-                                                    <select name="variant_1" id="size_var" class="form-control select2"   style="width:100%">
-                                                        <option value=""></option>
-                                                        <?php if ($variant_list){
-                                                            foreach ($variant_list as $v_item){
-
-                                                                if (($v_item['variant_type']=='size') && (in_array($v_item['variant_id'], $exploded))) { 
-
-                                                             ?>
-                                                                <option value="<?php echo html_escape($v_item['variant_id']) ?>"><?php echo html_escape($v_item['variant_name']);  ?></option>
-                                                            <?php } } }?>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select name="variant_2" id="color_var" class="form-control select2"   style="width:100%">
-                                                        <option value=""></option>
-                                                        <?php 
-                                                        if ($variant_list){
-                                                            foreach ($variant_list as $v_item){
-                                                            if(($v_item['variant_type']=='color') && (in_array($v_item['variant_id'], $exploded))) {  ?>
-                                                                <option value="<?php echo html_escape($v_item['variant_id']) ?>"><?php echo html_escape($v_item['variant_name']);  ?></option>
-                                                            <?php  } } }?>
-                                                    </select>
-
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="var_price_1"  id="var_price"  class="form-control" placeholder="0.00">
-                                                </td>
-                                                <td>
-                                                     <input type="button" value="Add" class="btn btn-info" id="variant-row-add" data-key="<?php echo $ckey; ?>">
-
-                                                </td>
-                                            </tr>
-
-                                            <?php
-                                            if(count($provar_prices) > 0) {
-                                             for($i=0;$i<count($provar_prices);$i++){ ?>
-
-                                            <tr id="row_<?php echo $i; ?>">
-                                                <td>
-                                                    <select name="size_variant[<?php echo $i; ?>]" class="form-control select2"   style="width:100%">
-                                                        <option value="">Select</option>
-                                                        <?php if ($variant_list){
-                                                            foreach ($variant_list as $v_item){
-                                                            if($v_item['variant_type']=='size'){  ?>
-                                                                <option value="<?php echo html_escape($v_item['variant_id']) ?>" <?php if(!empty($provar_prices[$i]->var_size_id) && ($provar_prices[$i]->var_size_id == $v_item['variant_id'])){
-                                                                    echo 'selected';
-                                                                } ?>><?php echo html_escape($v_item['variant_name']);  ?></option>
-                                                            <?php } } }?>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select name="color_variant[<?php echo $i; ?>]" class="form-control select2"   style="width:100%">
-                                                        <option value="">Select</option>
-                                                        <?php if ($variant_list){
-                                                            foreach ($variant_list as $v_item){
-                                                            if($v_item['variant_type']=='color'){  ?>
-                                                                <option value="<?php echo html_escape($v_item['variant_id']) ?>"  <?php if(!empty($provar_prices[$i]->var_color_id) && ($provar_prices[$i]->var_color_id == $v_item['variant_id'])){
-                                                                    echo 'selected';
-                                                                } ?>><?php echo html_escape($v_item['variant_name']);  ?></option>
-                                                            <?php } } }?>
-                                                    </select>
-
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="variant_price_amt[<?php echo $i; ?>]"  class="form-control" placeholder="0.00" value="<?php if(isset($provar_prices[$i]->price) && !empty($provar_prices[$i]->price)){  echo $provar_prices[$i]->price; } ?>">
-                                                </td>
-                                                <td><input type="button" value="-" onclick="deleteVariantRow(<?php echo $i; ?>);" class="btn btn-danger" id="variant-row-remove"></td>
-                                            </tr>
-                                            <?php } } ?>
-
-
-                                        </tbody>
-                                          
-                                      </table>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="form-group row">
                             <label for="video" class="col-sm-4 col-form-label"><?php echo display('video_link') ?> </label>
                             <div class="col-sm-4">
@@ -540,8 +439,5 @@ $this->session->unset_userdata('error_message');
 </div>
 </section>
 </div>
-
-
-
 <!-- Edit Product End -->
 <script src="<?php echo MOD_URL.'dashboard/assets/js/edit_product_form.js'; ?>"></script>

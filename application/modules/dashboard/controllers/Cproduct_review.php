@@ -6,15 +6,14 @@ class Cproduct_review extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        $this->auth->check_user_auth();
         $this->load->library('dashboard/lproduct_review');
         $this->load->model('dashboard/Product_reviews');
+        $this->auth->check_admin_auth();
     }
 
     //Default loading for product_review system.
     public function index()
     {
-        $this->permission->check_label('product_review')->read()->redirect();
         $content =$this->lproduct_review->product_review_list();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -22,15 +21,12 @@ class Cproduct_review extends MX_Controller
     //Manage product_review
     public function manage_product_review()
     {
-        $this->permission->check_label('product_review')->read()->redirect();
         $content =$this->lproduct_review->product_review_list();
         $this->template_lib->full_admin_html_view($content);;
     }
     //product_review Update Form
     public function product_review_update_form($product_review_id)
     {   
-        $this->permission->check_label('product_review')->update()->redirect();
-
         $content = $this->lproduct_review->product_review_edit_data($product_review_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -38,7 +34,6 @@ class Cproduct_review extends MX_Controller
     // product_review Update
     public function product_review_update($product_review_id = null)
     {
-        $this->permission->check_label('product_review')->update()->redirect();
 
         $this->form_validation->set_rules('product_id', display('product_name'), 'trim|required');
         $this->form_validation->set_rules('comments', display('comments'), 'trim|required');
@@ -74,8 +69,6 @@ class Cproduct_review extends MX_Controller
     // product_review Delete
     public function product_review_delete()
     {
-        $this->permission->check_label('product_review')->delete()->redirect();
-
         $product_review_id = $this->input->post('product_review_id',TRUE);
         $this->Product_reviews->delete_product_review($product_review_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
@@ -86,8 +79,6 @@ class Cproduct_review extends MX_Controller
     //Inactive
     public function inactive($id)
     {
-        $this->permission->check_label('product_review')->update()->redirect();
-
         $this->db->set('status', 0);
         $this->db->where('product_review_id', $id);
         $this->db->update('product_review');
@@ -98,8 +89,6 @@ class Cproduct_review extends MX_Controller
     //Active
     public function active($id)
     {
-        $this->permission->check_label('product_review')->update()->redirect();
-
         $this->db->set('status', 1);
         $this->db->where('product_review_id', $id);
         $this->db->update('product_review');

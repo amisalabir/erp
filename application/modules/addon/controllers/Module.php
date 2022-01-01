@@ -19,7 +19,7 @@ class Module extends MX_Controller
             'addons_model'
         ));
 
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
 
     public function index()

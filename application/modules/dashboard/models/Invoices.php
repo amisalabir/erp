@@ -64,6 +64,7 @@ class Invoices extends CI_Model {
 		$this->db->from('invoice a');
 		$this->db->join('customer_information b','b.customer_id = a.customer_id');
 		$this->db->join('order c','c.order_id = a.order_id','left');
+
 		if(!empty($filter['invoice_no'])){
 			$this->db->where('a.invoice', $filter['invoice_no']);
 		}
@@ -76,6 +77,7 @@ class Invoices extends CI_Model {
 		if(!empty($filter['invoice_status'])){
 			$this->db->where('a.invoice_status', $filter['invoice_status']);
 		}
+
 		$this->db->order_by('a.invoice','desc');
 		$this->db->limit($limit, $start);
 		$query = $this->db->get();
@@ -84,6 +86,9 @@ class Invoices extends CI_Model {
 		}
 		return false;
 	}
+
+
+
 	//POS customer setup
 	public function pos_customer_setup(){
 		$query= $this->db->select('a.customer_id,a.customer_name')
@@ -283,7 +288,6 @@ class Invoices extends CI_Model {
 		$total_amount = $this->input->post('total_price',TRUE);
 		$discount 	= $this->input->post('discount',TRUE);
 		$variants 	= $this->input->post('variant_id',TRUE);
-		$color_variants   = $this->input->post('color_variant',TRUE);
 
 		//Invoice details for invoice
 		for ($i=0, $n=count($quantity); $i < $n; $i++) {
@@ -293,7 +297,6 @@ class Invoices extends CI_Model {
 			$discount_rate    = $discount[$i];
 			$total_price      = $total_amount[$i];
 			$variant_id       = $variants[$i];
-			$variant_color    = $color_variants[$i];
 			$supplier_rate	  = $this->supplier_rate($product_id);
 			
 			$invoice_details = array(
@@ -301,7 +304,6 @@ class Invoices extends CI_Model {
 				'invoice_id'			=>	$invoice_id,
 				'product_id'			=>	$product_id,
 				'variant_id'			=>	$variant_id,
-				'variant_color'			=>	$variant_color,
 				'store_id'				=>	$this->input->post('store_id',TRUE),
 				'quantity'				=>	$product_quantity,
 				'rate'					=>	$product_rate,
@@ -313,26 +315,19 @@ class Invoices extends CI_Model {
 
 			if(!empty($quantity))
 			{
-				$this->db->select('*');
-				$this->db->from('invoice_details');
-				$this->db->where('invoice_id',$invoice_id);
-				$this->db->where('product_id',$product_id);
-				$this->db->where('variant_id',$variant_id);
-				if(!empty($variant_color)){
-                    $this->db->where('variant_color',$variant_color);
-                }
-				$query = $this->db->get();
-				$result = $query->num_rows();
-
+				$result = $this->db->select('*')
+									->from('invoice_details')
+									->where('invoice_id',$invoice_id)
+									->where('product_id',$product_id)
+									->where('variant_id',$variant_id)
+									->get()
+									->num_rows();
 				if ($result > 0) {
 					$this->db->set('quantity', 'quantity+'.$product_quantity, FALSE);
 					$this->db->set('total_price', 'total_price+'.$total_price, FALSE);
 					$this->db->where('invoice_id', $invoice_id);
 					$this->db->where('product_id', $product_id);
 					$this->db->where('variant_id', $variant_id);
-					if(!empty($variant_color)){
-	                    $this->db->where('variant_color',$variant_color);
-	                }
 					$this->db->update('invoice_details');
 				}else{
 					$this->db->insert('invoice_details',$invoice_details);
@@ -677,7 +672,6 @@ if(!empty($igst)){
 		$total_amount 	= $this->input->post('total_price',TRUE);
 		$discount 		= $this->input->post('discount',TRUE);
 		$variants 		= $this->input->post('variant_id',TRUE);
-		$color_variants   = $this->input->post('color_variant',TRUE);
 
 		//Invoice details for invoice
 		if(!empty($p_id)){
@@ -688,7 +682,6 @@ if(!empty($igst)){
 				$discount_rate 	  = $discount[$i];
 				$total_price 	  = $total_amount[$i];
 				$variant_id 	  = $variants[$i];
-				$variant_color    = (!empty($color_variants[$i])?$color_variants[$i]:NULL);
 				$invoice_detail_id= (!empty($invoice_d_id[$i])?$invoice_d_id[$i]:null);
 				$supplier_rate    = $this->supplier_rate($product_id);
 				
@@ -697,7 +690,6 @@ if(!empty($igst)){
 					'invoice_id'			=>	$invoice_id,
 					'product_id'			=>	$product_id,
 					'variant_id'			=>	$variant_id,
-					'variant_color' 		=>  $variant_color,
 					'store_id'				=>	$this->input->post('store_id',TRUE),
 					'quantity'				=>	$product_quantity,
 					'rate'					=>	$product_rate,
@@ -709,26 +701,19 @@ if(!empty($igst)){
 
 				if(!empty($p_id))
 				{
-						$this->db->select('invoice_details_id');
-						$this->db->from('invoice_details');
-						$this->db->where('invoice_id',$invoice_id);
-						$this->db->where('product_id',$product_id);
-						$this->db->where('variant_id',$variant_id);
-						if(!empty($variant_color)){
-		                    $this->db->where('variant_color',$variant_color);
-		                }
-						$query = $this->db->get();
-						$result = $query->num_rows();
-
+					$result = $this->db->select('*')
+										->from('invoice_details')
+										->where('invoice_id',$invoice_id)
+										->where('product_id',$product_id)
+										->where('variant_id',$variant_id)
+										->get()
+										->num_rows();
 					if ($result > 0) {
 						$this->db->set('quantity', 'quantity+'.$product_quantity, FALSE);
 						$this->db->set('total_price', 'total_price+'.$total_price, FALSE);
 						$this->db->where('invoice_id', $invoice_id);
 						$this->db->where('product_id', $product_id);
 						$this->db->where('variant_id', $variant_id);
-						if(!empty($variant_color)){
-		                    $this->db->where('variant_color',$variant_color);
-		                }
 						$this->db->update('invoice_details');
 					}else{
 						$this->db->insert('invoice_details',$invoice_details);
@@ -1131,11 +1116,13 @@ if(!empty($igst)){
 			g.state as ship_state,
 			g.country as ship_country,
 			g.zip as ship_zip,
-			g.company as ship_company
+			g.company as ship_company,
+			h.*
 			');
 		$this->db->from('invoice a');
 		$this->db->join('customer_information b','b.customer_id = a.customer_id');
 		$this->db->join('invoice_details c','c.invoice_id = a.invoice_id');
+		$this->db->join('store_set h','h.store_id = a.store_id');
         if(empty($direct_invoice[0]['order_id'])) {
             $this->db->join('customer_information g','g.customer_id = a.customer_id','left');
         }else{
@@ -1263,33 +1250,19 @@ if(!empty($igst)){
 		$this->db->where(array('product_id' => $product_id,'status' => 1)); 
 		$product_information = $this->db->get()->row();
 
-		$html = $colorhtml = "";
+		$html = "";
 		if (!empty($product_information->variants)) {
 			$exploded = explode(',',$product_information->variants);
+			$html .="<option>".display('select_variant')."</option>";
+	        foreach ($exploded as $elem) {
+		        $this->db->select('*');
+		        $this->db->from('variant');
+		        $this->db->where('variant_id',$elem);
+		        $this->db->order_by('variant_name','asc');
+		        $result = $this->db->get()->row();
 
-			$this->db->select('*');
-            $this->db->from('variant');
-            $this->db->where_in('variant_id',$exploded);
-            $this->db->order_by('variant_name','asc');
-            $variant_list = $this->db->get()->result();
-            $var_types = array_column($variant_list, 'variant_type');
-
-            $html .= '<option value=""></option>';
-            foreach ($variant_list as $varitem) {
-
-                if($varitem->variant_type=='size'){
-                    $html .="<option value=".$varitem->variant_id.">".$varitem->variant_name."</option>";
-                }
-            }
-
-            if(in_array('color',$var_types)) {
-                $colorhtml .="<option value=''></option>";
-                foreach ($variant_list as $varitem2) {
-                    if($varitem2->variant_type=='color'){
-                        $colorhtml .="<option value=".$varitem2->variant_id.">".$varitem2->variant_name."</option>";
-                    }
-                }
-            }
+		        $html .="<option value='".$result->variant_id."'>".$result->variant_name."</option>";
+	    	}
 	    }
 
 		$this->db->select('tax.*,tax_product_service.product_id,tax_percentage');
@@ -1347,7 +1320,6 @@ if(!empty($igst)){
 			'product_model' => @$product_information->product_model, 
 			'product_id' 	=> @$product_information->product_id, 
 			'variant' 		=> @$html, 
-			'colorhtml' 	=> @$colorhtml, 
 			'discount' 		=> @$discount, 
 			'sgst_tax' 		=> (!empty($tax['sgst_tax'])?$tax['sgst_tax']:null), 
 			'cgst_tax' 		=> (!empty($tax['cgst_tax'])?$tax['cgst_tax']:null), 

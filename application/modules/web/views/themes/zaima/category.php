@@ -4,7 +4,7 @@
 
 <div class="container py-4">
     <div class="row">
-        <div class="<?php echo (!empty($after_search)?'col-md-3':'col-md-3') ?> d-none d-lg-block leftSidebar mb-3 pr-xl-4">
+        <div class="<?php echo (!empty($after_search)?'display_none':'col-md-3') ?> d-none d-lg-block leftSidebar mb-3 pr-xl-4">
             <?php
                 $sub_category = $this->Homes->get_sub_category($category_id);
                 if (!empty($sub_category)) { ?>
@@ -129,7 +129,7 @@
 
 
         </div>
-        <div class="<?php echo (!empty($after_search)?'col-md-9':'col-md-9') ?> mainContent category-content">
+        <div class="<?php echo (!empty($after_search)?'col-md-12':'col-md-9') ?> mainContent category-content">
 
             <div class="filter-row d-flex align-items-center justify-content-between mb-2">
                 <div class="filter-title">

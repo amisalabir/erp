@@ -143,7 +143,7 @@
                                             </div>
                                             <?php } ?>
                                         </div>
-                                        <a href="javascript:void(0)" class="btn btn-soft-primary btn-pill add-to-cart font-weight-500 d-inline-flex align-items-center mt-2 color412" onclick="add_to_cart_item('<?php echo $product->product_id;?>', '<?php echo remove_space($product->product_name);?>', '<?php echo $product->default_variant; ?>', <?php echo $product->variant_price; ?>)">
+                                        <a href="javascript:void(0)" class="btn btn-soft-primary btn-pill add-to-cart font-weight-500 d-inline-flex align-items-center mt-2 color412" onclick="add_to_cart_item('<?php echo $product->product_id;?>', 'p', '<?php echo $product->default_variant; ?>')">
                                             <i data-feather="shopping-cart" class="mr-2"></i><?php echo display('add_to_cart'); ?>
                                         </a>	
                                     </div>

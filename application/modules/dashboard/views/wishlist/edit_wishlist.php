@@ -52,30 +52,30 @@
                         </div>
                     </div>
                     <?php echo form_open_multipart('dashboard/Cwishlist/wishlist_update/{wishlist_id}',array('class' => 'form-vertical', 'id' => 'validate'))?>
-                        <div class="panel-body">
-                            
-                            <div class="form-group row">
-                                <label for="product_name" class="col-sm-3 col-form-label"><?php echo display('product_name')?> <i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <select class="form-control" id="product_name" name="product_id">
-                                        <option></option>
-                                        {product_list}
-                                        <option value="{product_id}">{product_name} - ({product_model})</option>
-                                        {/product_list}
-                                        {selected_product}
-                                        <option value="{product_id}" selected="">{product_name} - ({product_model})</option>
-                                        {/selected_product}
-                                    </select>
-                                </div>
-                            </div>
-                    
-                            <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-4 col-form-label"></label>
-                                <div class="col-sm-6">
-                                    <input type="submit" id="add-wishlist" class="btn btn-success btn-large" name="add-wishlist" value="<?php echo display('save_changes') ?>" />
-                                </div>
+                    <div class="panel-body">
+                        
+                        <div class="form-group row">
+                            <label for="product_name" class="col-sm-3 col-form-label"><?php echo display('product_name')?> <i class="text-danger">*</i></label>
+                            <div class="col-sm-6">
+                                <select class="form-control" id="product_name" name="product_id">
+                                    <option></option>
+                                    {product_list}
+                                    <option value="{product_id}">{product_name} - ({product_model})</option>
+                                    {/product_list}
+                                    {selected_product}
+                                    <option value="{product_id}" selected="">{product_name} - ({product_model})</option>
+                                    {/selected_product}
+                                </select>
                             </div>
                         </div>
+                
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-6">
+                                <input type="submit" id="add-wishlist" class="btn btn-success btn-large" name="add-wishlist" value="<?php echo display('save_changes') ?>" />
+                            </div>
+                        </div>
+                    </div>
                     <?php echo form_close()?>
                 </div>
             </div>

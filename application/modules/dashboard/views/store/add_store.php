@@ -47,13 +47,11 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('manage_store')->read()->access()){ ?>
+                
                   <a href="<?php echo base_url('dashboard/Cstore/manage_store')?>" class="btn -btn-info color4 color5 m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_store')?></a>
-                <?php }if($this->permission->check_label('store_transfer')->update()->access()){ ?>
                   <a href="<?php echo base_url('dashboard/Cstore/store_transfer')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('store_transfer')?></a>
-                <?php }if($this->permission->check_label('manage_store_product')->update()->access()){?>
                   <a href="<?php echo base_url('dashboard/Cstore/manage_store_product')?>" class="btn btn-warning m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_store_product')?></a>
-                <?php } ?>
+
                    <button type="button" class="btn btn-danger m-b-5 m-r-2"><?php echo display('you_must_have_a_default_store')?></button>
 
                 </div>

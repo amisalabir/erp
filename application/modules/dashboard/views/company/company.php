@@ -79,11 +79,7 @@
 										<td>
 											<center>
 											<?php echo form_open() ?>
-											<?php if($this->permission->check_label('manage_company')->update()->access()){ ?>
-												<a href="<?php echo base_url().'dashboard/Company_setup/company_update_form/{company_id}'; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('update') ?>">
-													<i class="fa fa-pencil" aria-hidden="true"></i>
-												</a>
-											<?php } ?>
+												<a href="<?php echo base_url().'dashboard/Company_setup/company_update_form/{company_id}'; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 											<?php echo form_close()?>
 											</center>
 										</td>

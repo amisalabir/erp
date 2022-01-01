@@ -111,16 +111,9 @@ date_default_timezone_set(DEF_TIMEZONE); $date = date('m-d-Y');
                                 <input type="hidden" class="baseUrl" value="<?php echo base_url();?>" />
                             </td>
                             <td class="text-center">
-                                <div class="variant_id_div">
-                                    <select name="variant_id[]" id="variant_id_1" class="form-control variant_id width_100p" required="">
-                                        <option value=""></option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <select name="color_variant[]" id="variant_color_id_1" class="form-control color_variant width_100p">
-                                        <option value=""></option>
-                                    </select>
-                                </div>
+                                <select name="variant_id[]" id="variant_id_1" class="form-control variant_id width_100p" required="">
+                                    <option value=""></option>
+                                </select>
                             </td> 
                             <td>
                                 <input type="text" name="available_quantity[]" id="avl_qntt_1" class="form-control text-right available_quantity_1" value="0" readonly="1" readonly="" />

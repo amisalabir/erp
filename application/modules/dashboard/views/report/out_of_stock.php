@@ -21,12 +21,9 @@
 		<div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                	<?php if($this->permission->check_label('stock_report_supplier_wise')->read()->access()){ ?>
                   <a href="<?php echo base_url('dashboard/Creport/stock_report_supplier_wise')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"></i> <?php echo display('stock_report_supplier_wise')?></a>  
-                  	<?php }?>
-                  	<?php if($this->permission->check_label('stock_report_product_wise')->read()->access()){ ?>
+
                   <a href="<?php echo base_url('dashboard/Creport/stock_report_product_wise')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"></i> <?php echo display('stock_report_product_wise')?></a>  
-	                <?php }?>
                 </div>
             </div>
         </div>

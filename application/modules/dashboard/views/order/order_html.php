@@ -142,29 +142,18 @@ $Soft_settings = $CI->Soft_settings->retrieve_setting_editdata();
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <?php if(!empty($order_all_data)){ foreach($order_all_data as $order){ ?>
+                                    {order_all_data}
                                     <tr>
-                                        <td><?php echo html_escape($order['sl']); ?></td>
-                                        <td><strong><?php echo html_escape($order['product_name']); ?> - (<?php echo html_escape($order['product_model']); ?>)</strong></td>
-                                        <td><?php echo html_escape($order['variant_name']); 
-                                        if(!empty($order['variant_color'])){
-                                            $cvarinfo = $this->db->select('variant_name')->from('variant')->where('variant_id', $order['variant_color'])->get()->row();
-                                            if(!empty($cvarinfo)){
-                                                echo ', '.$cvarinfo->variant_name;
-                                            }
-                                        }
-
-                                        ?>
-                                        </td>
-                                        <td><?php echo html_escape($order['unit_short_name']); ?></td>
-                                        <td><?php echo html_escape($order['quantity']); ?></td>
-                                        <td><?php echo(($position == 0) ? $currency." ".$order['rate'] : $order['rate']." ".$currency) ?></td>
-                                        <td><?php echo(($position == 0) ? $currency." ".$order['discount'] : $order['discount']." ".$currency) ?></td>
-                                        <td><?php echo(($position == 0) ? $currency." ".$order['total_price'] : $order['total_price']." ".$currency) ?></td>
-
-
+                                        <td>{sl}</td>
+                                        <td><strong>{product_name} - ({product_model})</strong></td>
+                                        <td>{variant_name}</td>
+                                        <td>{unit_short_name}</td>
+                                        <td>{quantity}</td>
+                                        <td><?php echo(($position == 0) ? "$currency {rate}" : "{rate} $currency") ?></td>
+                                        <td><?php echo(($position == 0) ? "$currency {discount}" : "{discount} $currency") ?></td>
+                                        <td><?php echo(($position == 0) ? "$currency {total_price}" : "{total_price} $currency") ?></td>
                                     </tr>
-                                    <?php } } ?>
+                                    {/order_all_data}
                                     </tbody>
                                 </table>
                             </div>

@@ -56,9 +56,9 @@ if (validation_errors()) {
 <div class="row">
     <div class="col-sm-12">
         <div class="column">
-            <?php if($this->permission->check_label('advertisement')->create()->access()){ ?>
+
             <a href="<?php echo base_url('dashboard/Cweb_setting/submit_add')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_advertise')?></a>
-            <?php } ?>
+
         </div>
     </div>
 </div>
@@ -104,34 +104,31 @@ if (validation_errors()) {
                                     <td><?php echo  htmlspecialchars_decode($value['adv_code3'])?></td>
                                     <td><?php echo  htmlspecialchars_decode(($value['status']?display('active'):display('inactive'))); ?></td>
                                     <td width="10%">
-                                        <?php if($this->permission->check_label('advertisement')->update()->access()){
-                                            #----status change start---#
-                                            $status=$value['status'];
-                                            if ($status==1) {
-                                                ?>
-                                                <a href="<?php echo  base_url();?>dashboard/cweb_setting/inactive_add/<?php echo  html_escape($value['adv_id'])?>">
-                                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('inactive')?>"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                                </a>
-                                                <?php
-                                            }else{
-                                                ?>
-                                                <a href="<?php echo  base_url();?>dashboard/cweb_setting/active_add/<?php echo  $value['adv_id']?>"  class="btn btn-success" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('active')?>">
-                                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                                </a>
-                                                <?php
-                                            }
-                                            #----status change end---#
+                                        <?php
+                                        #----status change start---#
+                                        $status=$value['status'];
+                                        if ($status==1) {
+                                            ?>
+                                            <a href="<?php echo  base_url();?>dashboard/cweb_setting/inactive_add/<?php echo  html_escape($value['adv_id'])?>">
+                                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('inactive')?>"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                            </a>
+                                            <?php
+                                        }else{
+                                            ?>
+                                            <a href="<?php echo  base_url();?>dashboard/cweb_setting/active_add/<?php echo  $value['adv_id']?>"  class="btn btn-success" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('active')?>">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                            </a>
+                                            <?php
                                         }
+                                        #----status change end---#
                                         ?>
-                                        <?php if($this->permission->check_label('advertisement')->update()->access()){ ?>
-                                        <a href="<?php echo  base_url('dashboard/cweb_setting/edit_add_form/'.$value['adv_id'])?>" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('update')?>"> 
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+
+                                           <a href="<?php echo  base_url('dashboard/cweb_setting/edit_add_form/'.$value['adv_id'])?>" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('update')?>"> <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
-                                        <?php }if($this->permission->check_label('advertisement')->delete()->access()){ ?>
-                                        <a href="<?php echo  base_url()?>dashboard/cweb_setting/delete_add/<?php echo  $value['adv_id']?>" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');"  class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete')?> "> 
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+
+
+                                        <a href="<?php echo  base_url()?>dashboard/cweb_setting/delete_add/<?php echo  $value['adv_id']?>" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');"  class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete')?> "> <i class="fa fa-trash-o" aria-hidden="true"></i>
                                         </a>
-                                        <?php } ?>
                                     </td>
                                 </tr>
                                 <?php

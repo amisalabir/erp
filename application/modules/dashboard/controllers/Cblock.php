@@ -8,7 +8,7 @@ class Cblock extends MX_Controller
         parent::__construct();
         $this->load->library('dashboard/lblock');
         $this->load->model('dashboard/Blocks');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
 
 
     }
@@ -16,15 +16,11 @@ class Cblock extends MX_Controller
     //Default loading for block system.
     public function index()
     {
-        $this->permission->check_label('block')->read()->redirect();
-
         $content =$this->lblock->block_list();
         $this->template_lib->full_admin_html_view($content);
     }
     public function block_add()
     {
-        $this->permission->check_label('block')->create()->redirect();
-
         $this->form_validation->set_rules('block_cat_id', display('category'), 'trim|required');
         $this->form_validation->set_rules('block_position', display('block_position'), 'trim|required');
         $this->form_validation->set_rules('block_style', display('block_style'), 'trim|required');
@@ -83,8 +79,6 @@ class Cblock extends MX_Controller
     //block Update Form
     public function block_update_form($block_id)
     {   
-        $this->permission->check_label('block')->update()->redirect();
-
         $content = $this->lblock->block_edit_data($block_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -92,8 +86,6 @@ class Cblock extends MX_Controller
     // block Update
     public function block_update($block_id = null)
     {
-        $this->permission->check_label('block')->update()->redirect();
-
 
         $this->form_validation->set_rules('block_cat_id', display('category'), 'trim|required');
         $this->form_validation->set_rules('block_position', display('block_position'), 'trim|required');
@@ -147,8 +139,6 @@ class Cblock extends MX_Controller
     // block Delete
     public function block_delete($block_id)
     {
-        $this->permission->check_label('block')->delete()->redirect();
-
         $binfo = $this->db->where('block_id', $block_id)->get('block')->row();
 
         $result = $this->Blocks->delete_block($block_id);
@@ -164,8 +154,6 @@ class Cblock extends MX_Controller
     //Inactive
     public function inactive($id)
     {
-        $this->permission->check_label('block')->update()->redirect();
-
         $this->db->set('status', 0);
         $this->db->where('block_id', $id);
         $this->db->update('block');
@@ -176,8 +164,6 @@ class Cblock extends MX_Controller
     //Active
     public function active($id)
     {
-        $this->permission->check_label('block')->update()->redirect();
-
         $this->db->set('status', 1);
         $this->db->where('block_id', $id);
         $this->db->update('block');

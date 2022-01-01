@@ -75,30 +75,22 @@
 										<td>
 											<center>
 											<?php
-											if($this->permission->check_label('subscriber')->update()->access()){
-			                                    $status=$subscriber['status'];
-			                                    if ($status==1) {
-			                                    ?>
-	                                                <a href="<?php echo  base_url();?>dashboard/Csubscriber/inactive/<?php echo  $subscriber['subscriber_id']?>" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="left" data-original-title="<?php echo display('inactive')?>"><i class="fa fa-times" aria-hidden="true"></i>
-	                                                </a>
-	                                                <?php
-	                                            }else{
-	                                                ?>
-	                                                <a href="<?php echo  base_url();?>dashboard/Csubscriber/active/<?php echo  $subscriber['subscriber_id']?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('active')?>"><i class="fa fa-check" aria-hidden="true"></i>
-	                                                </a>
-		                                        <?php
-		                                        }
+		                                    $status=$subscriber['status'];
+		                                    if ($status==1) {
+		                                    ?>
+                                                <a href="<?php echo  base_url();?>dashboard/Csubscriber/inactive/<?php echo  $subscriber['subscriber_id']?>" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="left" data-original-title="<?php echo display('inactive')?>"><i class="fa fa-times" aria-hidden="true"></i>
+                                                </a>
+                                                <?php
+                                            }else{
+                                                ?>
+                                                <a href="<?php echo  base_url();?>dashboard/Csubscriber/active/<?php echo  $subscriber['subscriber_id']?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="" data-original-title="<?php echo display('active')?>"><i class="fa fa-check" aria-hidden="true"></i>
+                                                </a>
+	                                        <?php
 	                                        }
 	                                        ?>
-	                                        <?php if($this->permission->check_label('subscriber')->update()->access()){ ?>
-												<a href="<?php echo base_url().'dashboard/Csubscriber/subscriber_update_form/'.$subscriber['subscriber_id']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>">
-													<i class="fa fa-pencil" aria-hidden="true"></i>
-												</a>
-											<?php }if($this->permission->check_label('subscriber')->delete()->access()){ ?>
-												<a href="<?php echo base_url('dashboard/Csubscriber/subscriber_delete/'.$subscriber['subscriber_id'])?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');"  data-toggle="tooltip" data-placement="right" data-original-title="<?php echo display('delete') ?> ">
-													<i class="fa fa-trash-o" aria-hidden="true"></i>
-												</a>
-											<?php } ?>
+												<a href="<?php echo base_url().'dashboard/Csubscriber/subscriber_update_form/'.$subscriber['subscriber_id']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+												<a href="<?php echo base_url('dashboard/Csubscriber/subscriber_delete/'.$subscriber['subscriber_id'])?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');"  data-toggle="tooltip" data-placement="right" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											</center>
 										</td>
 									</tr>

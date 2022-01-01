@@ -58,6 +58,13 @@ class Lstore {
 		$CI->load->model('dashboard/Stores');
 		$store_product_list = $CI->Stores->store_product_list(); 
 
+		$i=0;
+		if(!empty($store_product_list)){	
+			foreach($store_product_list as $k=>$v){$i++;
+			   $store_product_list[$k]['sl']=$i;
+			}
+		}
+
 		$data = array(
 				'title' => display('manage_store_product'),
 				'store_product_list' => $store_product_list,

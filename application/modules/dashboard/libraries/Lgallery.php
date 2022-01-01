@@ -23,6 +23,13 @@ class Lgallery {
 		$CI->load->model('dashboard/Galleries');
 		$image_list = $CI->Galleries->image_list(); 
 
+		$i=0;
+		if(!empty($image_list)){	
+			foreach($image_list as $k=>$v){$i++;
+			   $image_list[$k]['sl']=$i;
+			}
+		}
+
 		$data = array(
 				'title' => display('manage_image'),
 				'image_list' => $image_list,

@@ -53,20 +53,20 @@ class Orders extends CI_Model {
 		    if($v < $quantity[$k])
 		    {
 		       $this->session->set_userdata(array('error_message'=>display('you_can_not_buy_greater_than_available_cartoon')));
-		       redirect('customer/order');
+		       redirect('dashboard/Corder');
 		    }
 		}
 
 		//Product existing check
 		if ($product_id == null) {
 			$this->session->set_userdata(array('error_message'=>display('please_select_product')));
-			redirect('customer/order');
+			redirect('dashboard/Corder');
 		}
 
 		//Customer existing check
 		if (($this->input->post('customer_name_others',TRUE) == null) && ($this->input->post('customer_id',TRUE) == null )) {
 			$this->session->set_userdata(array('error_message'=>display('please_select_customer')));
-			redirect(base_url().'customer/order');
+			redirect(base_url().'dashboard/Corder');
 		}
 		
 		//Customer data Existence Check.
@@ -86,7 +86,7 @@ class Orders extends CI_Model {
 			$result = $this->Customers->customer_entry($data);
 			if ($result == false) {
 				$this->session->set_userdata(array('error_message'=>display('already_exists')));
-				redirect('customer/order/manage_order');
+				redirect('Corder/manage_order');
 			}
 		  	//Previous balance adding -> Sending to customer model to adjust the data.
 			$this->Customers->previous_balance_add(0,$customer_id);
@@ -118,7 +118,6 @@ class Orders extends CI_Model {
 		$total_amount = $this->input->post('total_price',TRUE);
 		$discount 	= $this->input->post('discount',TRUE);
 		$variants 	= $this->input->post('variant_id',TRUE);
-		$color_variants   = $this->input->post('color_variant',TRUE);
 
 		//Order details entry
 		for ($i=0, $n=count($p_id); $i < $n; $i++) {
@@ -128,7 +127,6 @@ class Orders extends CI_Model {
 			$discount_rate    = $discount[$i];
 			$total_price      = $total_amount[$i];
 			$variant_id       = $variants[$i];
-			$variant_color    = $color_variants[$i];
 			$supplier_rate    = $this->supplier_rate($product_id);
 			
 			$order_details = array(
@@ -136,7 +134,6 @@ class Orders extends CI_Model {
 				'order_id'			=>	$order_id,
 				'product_id'		=>	$product_id,
 				'variant_id'		=>	$variant_id,
-				'variant_color'     =>  $variant_color,
 				'store_id'			=>	$this->input->post('store_id',TRUE),
 				'quantity'			=>	$product_quantity,
 				'rate'				=>	$product_rate,
@@ -148,31 +145,23 @@ class Orders extends CI_Model {
 
 			if(!empty($quantity))
 			{
-
-				$this->db->select('*');
-                $this->db->from('order_details');
-                $this->db->where('order_id',$order_id);
-                $this->db->where('product_id',$product_id);
-                $this->db->where('variant_id',$variant_id);
-                if(!empty($variant_color)){
-                    $this->db->where('variant_color',$variant_color);
-                }
-                $query = $this->db->get();
-                $result = $query->num_rows();
-                if ($result > 0) {
-                    $this->db->set('quantity', 'quantity+'.$product_quantity, FALSE);
-                    $this->db->set('total_price', 'total_price+'.$total_price, FALSE);
-                    $this->db->where('order_id', $order_id);
-                    $this->db->where('product_id', $product_id);
-                    $this->db->where('variant_id', $variant_id);
-                    if(!empty($variant_color)){
-                        $this->db->where('variant_color',$variant_color);
-                    }
-                    $this->db->update('order_details');
-                }else{
-                    $this->db->insert('order_details',$order_details);
-                }
-
+				$result = $this->db->select('*')
+									->from('order_details')
+									->where('order_id',$order_id)
+									->where('product_id',$product_id)
+									->where('variant_id',$variant_id)
+									->get()
+									->num_rows();
+				if ($result > 0) {
+					$this->db->set('quantity', 'quantity+'.$product_quantity, FALSE);
+					$this->db->set('total_price', 'total_price+'.$total_price, FALSE);
+					$this->db->where('order_id', $order_id);
+					$this->db->where('product_id', $product_id);
+					$this->db->where('variant_id', $variant_id);
+					$this->db->update('order_details');
+				}else{
+					$this->db->insert('order_details',$order_details);
+				}
 			}
 		}
 
@@ -470,35 +459,20 @@ class Orders extends CI_Model {
 		$this->db->where(array('product_id' => $product_id,'status' => 1)); 
 		$product_information = $this->db->get()->row();
 
-        $html = $colorhtml = "";
-        if (!empty($product_information->variants)) {
-            $exploded = explode(',',$product_information->variants);
+		$html = "";
+		if (!empty($product_information->variants)) {
+			$exploded = explode(',',$product_information->variants);
+			$html .="<option>".display('select_variant')."</option>";
+	        foreach ($exploded as $elem) {
+		        $this->db->select('*');
+		        $this->db->from('variant');
+		        $this->db->where('variant_id',$elem);
+		        $this->db->order_by('variant_name','asc');
+		        $result = $this->db->get()->row();
 
-            $this->db->select('*');
-            $this->db->from('variant');
-            $this->db->where_in('variant_id',$exploded);
-            $this->db->order_by('variant_name','asc');
-            $variant_list = $this->db->get()->result();
-            $var_types = array_column($variant_list, 'variant_type');
-
-            $html .= '<option value=""></option>';
-            foreach ($variant_list as $varitem) {
-
-                if($varitem->variant_type=='size'){
-                    $html .="<option value=".$varitem->variant_id.">".$varitem->variant_name."</option>";
-                }
-            }
-
-            if(in_array('color',$var_types)) {
-                $colorhtml .="<option value=''></option>";
-                foreach ($variant_list as $varitem2) {
-                    if($varitem2->variant_type=='color'){
-                        $colorhtml .="<option value=".$varitem2->variant_id.">".$varitem2->variant_name."</option>";
-                    }
-                }
-            }
-
-        }
+		        $html .="<option value=".$result->variant_id.">".$result->variant_name."</option>";
+	    	}
+	    }
 
 		$this->db->select('tax.*,tax_product_service.product_id,tax_percentage');
 		$this->db->from('tax_product_service');
@@ -552,8 +526,7 @@ class Orders extends CI_Model {
 			'product_name' 	=> $product_information->product_name, 
 			'product_model' => $product_information->product_model, 
 			'product_id' 	=> $product_information->product_id, 
-			'variant' 		=> $html,
-            'colorhtml'     => $colorhtml, 
+			'variant' 		=> $html, 
 			'discount' 		=> $discount, 
 			'sgst_tax' 		=> (!empty($tax['sgst_tax'])?$tax['sgst_tax']:null), 
 			'cgst_tax' 		=> (!empty($tax['cgst_tax'])?$tax['cgst_tax']:null), 
@@ -595,78 +568,4 @@ class Orders extends CI_Model {
 		}
 		return $order_no;		
 	}
-
-	// Get variant stock info
-	public function check_variant_wise_stock($product_id, $store_id, $variant_id, $variant_color = false)
-	{
-
-		$this->db->select("SUM(quantity) as totalPurchaseQnty");
-		$this->db->from('transfer');
-		$this->db->where('product_id',$product_id);
-		$this->db->where('variant_id',$variant_id);
-        if(!empty($variant_color)){
-             $this->db->where('variant_color',$variant_color);
-        }
-		$this->db->where('store_id',$store_id);
-		$purchase = $this->db->get()->row();
-
-		$this->db->select("SUM(quantity) as totalSalesQnty");
-		$this->db->from('invoice_details');
-		$this->db->where('product_id',$product_id);
-		$this->db->where('variant_id',$variant_id);
-        if(!empty($variant_color)){
-             $this->db->where('variant_color',$variant_color);
-        }
-		$this->db->where('store_id',$store_id);
-		$sales = $this->db->get()->row();
-
-		$stock = $purchase->totalPurchaseQnty - $sales->totalSalesQnty;
-        return $stock;
-	}
-
-	// check variant wise product price
-	public function check_variant_wise_price($product_id, $variant_id, $variant_color = false)
-    {
-        $pinfo = $this->db->select('price, onsale, onsale_price, variant_price')
-                ->from('product_information')
-                ->where('product_id', $product_id)
-                ->get()->row();
-
-        if($pinfo->variant_price){
-
-            $this->db->select('price');
-            $this->db->from('product_variants');
-            $this->db->where('product_id', $product_id);
-            $this->db->where('var_size_id', $variant_id);
-            if(!empty($variant_color)){
-                $this->db->where('var_color_id', $variant_color);
-            }else{
-                $this->db->where("var_color_id IS NULL");
-            }
-            $varprice = $this->db->get()->row();
-
-            if(!empty($varprice)){
-                $price_arr['price'] = $varprice->price;
-                $price_arr['regular_price'] = $pinfo->price;
-            }else{
-                 if(!empty($pinfo->onsale) && !empty($pinfo->onsale_price)){
-                    $price_arr['price'] = $pinfo->onsale_price;
-                    $price_arr['regular_price'] = $pinfo->price;
-                }else{
-                    $price_arr['price'] = $price_arr['regular_price'] = $pinfo->price;
-                }
-            }
-
-
-        } else{
-
-            if(!empty($pinfo->onsale) && !empty($pinfo->onsale_price)){
-                $price_arr['price'] = $pinfo->onsale_price;
-                $price_arr['regular_price'] = $pinfo->price;
-            }else{
-                $price_arr['price'] = $price_arr['regular_price'] = $pinfo->price;
-            }
-        }
-        return $price_arr;
-    }
 } 

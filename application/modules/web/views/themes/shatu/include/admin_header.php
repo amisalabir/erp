@@ -31,7 +31,6 @@ foreach ($category_list as $parent_category) {
 $sub_parent_cat = $this->db->select('*')
 ->from('product_category')
 ->where('parent_category_id', $parent_category->category_id)
-->where('status','1')
 ->order_by('menu_pos')
 ->get()
 ->result();
@@ -47,7 +46,6 @@ if ($sub_parent_cat) {
         $sub_category = $this->db->select('*')
             ->from('product_category')
             ->where('parent_category_id', $sub_p_cat->category_id)
-            ->where('status','1')
             ->order_by('menu_pos')
             ->get()
             ->result();
@@ -75,8 +73,7 @@ if ($sub_parent_cat) {
 }
 }
 ?>
-<li><a href="<?php  echo base_url('login'); ?>"><?php echo display('login');?></a></li>
-<li><a href="<?php  echo base_url('track_my_order'); ?>"><?php echo display('track_my_order');?></a></li>
+<li><a href="<?php  echo base_url('login'); ?>"><?php echo display('login');?></li>
 </ul>
 </nav>
 <!-- /.End of mobile menu side bar -->
@@ -91,12 +88,8 @@ if ($sub_parent_cat) {
 </li>
 <?php if (!$this->session->userdata('customer_name')) { ?>
 <li><a href="<?php echo base_url('login') ?>"><?php echo display('login') ?></a></li>
-<li><a href="<?php echo base_url('signup') ?>"><?php echo display('sign_up') ?></a></li>
-<?php }else{ ?>
-<li><a href="<?php echo base_url('customer/customer_dashboard') ?>"><?php echo display('dashboard') ?></a></li>
-<li><a href="<?php echo base_url('logout') ?>"><?php echo display('logout') ?></a></li>
+<li><a href="<?php echo base_url('sign_up') ?>"><?php echo display('sign_up') ?></a></li>
 <?php } ?>
-<li><a href="<?php echo base_url('track_my_order') ?>"><?php echo display('track_my_order') ?></a></li>
 </ul>
 <ul class="list-inline pull-right social_topBar">
 <li>
@@ -151,7 +144,10 @@ echo form_dropdown('language', $languages, $user_lang, $css);
     </button>
 </div>
 <div class="header-logo">
-    <a href="<?php echo base_url() ?>"> <img src="<?php if (isset($Web_settings[0]['logo'])) { echo base_url() . $Web_settings[0]['logo']; } ?>" class="img-responsive" alt="logo"></a>
+    <a href="<?php echo base_url() ?>"> <img
+                src="<?php if (isset($Web_settings[0]['logo'])) {
+                    echo base_url() . $Web_settings[0]['logo'];
+                } ?>" class="img-responsive" alt="logo"></a>
 </div>
 </div>
 </div>
@@ -170,51 +166,6 @@ echo form_dropdown('language', $languages, $user_lang, $css);
 </div>
 <div class="col-xs-4 col-sm-2 col-md-2 col-lg-3 text-right" id="tab_up_cart">
 <ul class="header-nav pull-right">
-<li class="dropdown hnav-li" id="tab_up_comparison">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
-       data-close-others="false"> <i class="lnr lnr-chart-bars extra-icon color44"></i>
-        <div class="nav-label">
-            <span class="icon-tips color4"><?php if ($this->session->userdata('comparison_ids')) {echo count($this->session->userdata('comparison_ids'));} else{echo 0;}?></span>
-        </div>
-    </a>
-    
-        <?php
-            $total_comparison_ids = 0;
-            if ($this->session->userdata('comparison_ids')) {
-            $comparisons = $this->session->userdata('comparison_ids');
-            $total_comparison_ids = count($this->session->userdata('comparison_ids'));
-
-            $this->db->from('product_information');
-            $this->db->where_in('product_id', $comparisons);
-            $query = $this->db->get();
-            $comparison_products = $query->result();
-        ?>
-        <ul class="dropdown-menu cart w-250 shopping-cart" role="menu">
-        <?php  
-            foreach ($comparison_products as $comparison):  
-        ?>
-                <li class="clearfix">
-                    <img src="<?php echo base_url().$comparison->image_thumb ?>"
-                         alt="item1"/>
-                    <span class="item-name"><?php echo html_escape($comparison->product_name); ?></span>
-                    <span class="item-price">
-                        <?php echo(($position == 0) ? $currency->currency_icon . ' ' . $this->cart->format_number($comparison->price) : $this->cart->format_number($comparison->price) . ' ' . $currency->currency_icon) ?>
-                        
-                    </span>
-                    <span class="remove_cart_product pull-right">
-                        <a href="#" class="delete_comparison_item" name="<?php echo $comparison->product_id ?>">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                    </span>
-                </li>
-            <?php endforeach; ?>
-        <li class="text-center">
-            <a href="<?php echo base_url('comparison') ?>"
-               class="shopping-cart-btn btn-block color4"><?php echo display('compare') ?></a>
-        </li>
-    </ul>
-    <?php } ?>
-</li>
 <?php
 $total_wishlist = 0;
 if ($this->session->userdata('customer_name')) {
@@ -357,7 +308,6 @@ if ($this->session->userdata('customer_name')) {
                 ->from('product_category')
                 ->where('parent_category_id', $parent_category->category_id)
                 ->order_by('menu_pos')
-                ->where('status','1')
                 ->get()
                 ->result();
             if (10 == $i) {

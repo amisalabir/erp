@@ -6,13 +6,11 @@ class Csubscriber extends MX_Controller
       parent::__construct();
         $this->load->library('dashboard/lsubscriber');
         $this->load->model('dashboard/Subscribers');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
     //Default loading for subscriber system.
     public function index()
     {
-        $this->permission->check_label('subscriber')->read()->redirect();
-
         $content =$this->lsubscriber->subscriber_list();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -21,7 +19,6 @@ class Csubscriber extends MX_Controller
     //Insert subscriber
     public function insert_subscriber()
     {
-        $this->permission->check_label('subscriber')->create()->redirect();
 
         $this->form_validation->set_rules('email', display('email'), 'trim|required|valid_email');
 
@@ -61,16 +58,12 @@ class Csubscriber extends MX_Controller
     //Manage subscriber
     public function manage_subscriber()
     {
-        $this->permission->check_label('subscriber')->read()->redirect();
-
         $content =$this->lsubscriber->subscriber_list();
         $this->template_lib->full_admin_html_view($content);
     }
     //subscriber Update Form
     public function subscriber_update_form($subscriber_id)
     {   
-        $this->permission->check_label('subscriber')->update()->redirect();
-
         $content = $this->lsubscriber->subscriber_edit_data($subscriber_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -78,7 +71,6 @@ class Csubscriber extends MX_Controller
     // subscriber Update
     public function subscriber_update($subscriber_id = null)
     {
-        $this->permission->check_label('subscriber')->update()->redirect();
 
         $this->form_validation->set_rules('email', display('email'), 'trim|required|valid_email');
         if ($this->form_validation->run() == FALSE) {
@@ -108,8 +100,6 @@ class Csubscriber extends MX_Controller
     // subscriber Delete
     public function subscriber_delete($subscriber_id)
     {
-        $this->permission->check_label('subscriber')->delete()->redirect();
-
         $this->Subscribers->delete_subscriber($subscriber_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('dashboard/Csubscriber/manage_subscriber');
@@ -118,8 +108,6 @@ class Csubscriber extends MX_Controller
     //Inactive
     public function inactive($id)
     {
-        $this->permission->check_label('subscriber')->update()->redirect();
-
         $this->db->set('status', 0);
         $this->db->where('subscriber_id', $id);
         $this->db->update('subscriber');
@@ -130,8 +118,6 @@ class Csubscriber extends MX_Controller
     //Active
     public function active($id)
     {
-        $this->permission->check_label('subscriber')->update()->redirect();
-
         $this->db->set('status', 1);
         $this->db->where('subscriber_id', $id);
         $this->db->update('subscriber');

@@ -103,15 +103,18 @@
                     } ?></div>
             </div>
             <div class="col-sm-6">
-                <?php if (1 == $Web_settings[0]['pay_with_status']) {
-                if ($pay_withs) { ?>
+                <?php if (1 == $Web_settings[0]['pay_with_status']) { ?>
                     <ul class="list-inline pull-right">
                         <li><h6><?php echo display('pay_with') ?> :</h6></li>
-                        <?php foreach ($pay_withs as $pay_with):?>
+                        <?php
+                        if ($pay_withs) {
+                            foreach ($pay_withs as $pay_with):?>
                                 <li><a href="<?php echo html_escape($pay_with['link']); ?>" target="_blank"><img width="30" height="30" src="<?php echo base_url() ?>my-assets/image/pay_with/<?php echo html_escape($pay_with['image']); ?>" alt="#"></a></li>
-                            <?php endforeach; ?>
+                            <?php endforeach;
+                        }
+                        ?>
                     </ul>
-                <?php } } ?>
+                <?php } ?>
             </div>
         </div>
     </div>

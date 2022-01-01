@@ -64,8 +64,6 @@
     <!-- Lightbox CSS -->
     <link href="<?php echo base_url('application/modules/web/views/themes/' . $theme . '/assets/website/vendor/lightbox/css/lightbox.min.css')
     ?>" rel="stylesheet">
-    <!-- magnific-Popup -->
-    <link href="<?php echo base_url('assets/plugins/magnific-Popup/magnific-popup.min.css') ?>" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="<?php echo base_url('application/modules/web/views/themes/' . $theme . '/assets/website/css/style.css') ?>"
@@ -147,9 +145,6 @@ if (!empty($this->session->userdata('language'))) {
             <div class="col-lg-7">
                 <div class="row changing_area justify-content-end justify-content-center-sm">
                     <div class="l_change">
-                        <a class="track_order" href="<?php  echo base_url('track_my_order'); ?>"><?php echo display('track_my_order');?></a>
-                    </div>
-                    <div class="l_change">
                         <span class="hidden-md-down"><?php echo display('language'); ?>: </span>
                         <?php
                         $user_lang = $this->session->userdata('language');
@@ -229,8 +224,6 @@ echo $content;
 <!-- EasyZoom -->
 <script src="<?php echo base_url('application/modules/web/views/themes/' . $theme . '/assets/website/vendor/easyzoom/easyzoom.min.js') ?>"
         type="text/javascript"></script>
-<!-- Video Popup -->
-<script src="<?php echo base_url('assets/plugins/magnific-Popup/jquery.magnific-popup.min.js') ?>"></script>
 
 <!-- DSCount JS -->
 <script src="<?php echo base_url('/assets/plugins/dscountdown/dscountdown.min.js') ?>" type="text/javascript"></script>

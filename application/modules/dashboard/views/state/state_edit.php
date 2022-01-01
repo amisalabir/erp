@@ -44,9 +44,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('manage_states')->read()->access()){ ?>
-                <a href="<?php echo base_url('dashboard/cstate')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('states')?></a>
-                <?php } ?>
+                
+                  <a href="<?php echo base_url('dashboard/cstate')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('states')?></a>
                 </div>
             </div>
         </div>

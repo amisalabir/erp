@@ -46,11 +46,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('wishlist')->create()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Cwishlist')?>" class="btn btn-success m-b-5 m-r-2">
-                  		<i class="ti-plus"> </i> <?php echo display('add_wishlist')?>
-                  	</a>
-                <?php } ?>
+                
+                  <a href="<?php echo base_url('dashboard/Cwishlist')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_wishlist')?></a>
+
                 </div>
             </div>
         </div>
@@ -86,11 +84,10 @@
 										<td class="text-center"><?php echo html_escape($wishlist['first_name'].' '.$wishlist['last_name'])?></td>
 										<td>
 											<center>
-												<?php if($this->permission->check_label('wishlist')->read()->access()){ ?>
+
 												<a href="<?php echo base_url().'dashboard/Cwishlist/wishlist_update_form/'.$wishlist['wishlist_id']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-												<?php }if($this->permission->check_label('wishlist')->read()->access()){ ?>
+
 												<a href="<?php echo base_url('dashboard/Cwishlist/wishlist_delete/'.$wishlist['wishlist_id'])?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');"  data-toggle="tooltip" data-placement="right" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-												<?php } ?>
 											</center>
 										</td>
 									</tr>

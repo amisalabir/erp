@@ -12,13 +12,11 @@ class Data_synchronizer extends MX_Controller
             'synchronizer/SyncManager',
         ));
         $this->load->model(array('synchronizer_model'));
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
 
     public function form($id = null)
     {
-        $this->permission->check_label('backup_and_restore')->update()->redirect();
-
         $data['title'] = display('ftp_setting');
         #----------------------------------#
         $this->form_validation->set_rules('hostname', display('hostname'), 'required|max_length[100]');
@@ -67,8 +65,6 @@ class Data_synchronizer extends MX_Controller
 
     public function synchronize()
     {
-        $this->permission->check_label('backup_and_restore')->read()->redirect();
-
         $data['title'] = display('data_synchronize');
         $data['module'] = "dashboard";
         $data['page'] = "synchronizer/synchronizer";
@@ -80,8 +76,6 @@ class Data_synchronizer extends MX_Controller
 
     public function ftp_upload()
     {
-        $this->permission->check_label('backup_and_restore')->update()->redirect();
-
         if ($this->synchronizer_model->check_exists()) {
 
             $ftp = $this->synchronizer_model->read();
@@ -108,8 +102,6 @@ class Data_synchronizer extends MX_Controller
 
     public function ftp_download()
     {
-        $this->permission->check_label('backup_and_restore')->update()->redirect();
-        
         if (!$this->checkIncoming()) {
 
             if ($this->synchronizer_model->check_exists()) {

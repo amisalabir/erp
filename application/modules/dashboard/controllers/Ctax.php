@@ -8,13 +8,12 @@ class Ctax extends MX_Controller
         parent::__construct();
         $this->load->library('dashboard/ltax');
         $this->load->model('dashboard/Taxs');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
 
     //Default loading for tax system.
     public function index()
     {
-        $this->permission->check_label('tax_product_service')->create()->redirect();
         $data = array(
             'title' => display('add_tax')
         );
@@ -25,8 +24,6 @@ class Ctax extends MX_Controller
     //Insert tax product service
     public function insert_tax_product_service()
     {
-         $this->permission->check_label('manage_product_tax')->create()->redirect();
-
         $this->form_validation->set_rules('tax_id', display('tax_name'), 'trim|required');
         $this->form_validation->set_rules('product_id', display('product_name'), 'trim|required');
         $this->form_validation->set_rules('tax_percentage', display('tax_percentage'), 'trim|required');
@@ -66,16 +63,12 @@ class Ctax extends MX_Controller
     //Manage tax
     public function manage_tax()
     {
-        $this->permission->check_label('manage_product_tax')->read()->redirect();
-
         $content =$this->ltax->tax_list();
         $this->template_lib->full_admin_html_view($content);
     }
     //tax Update Form
     public function tax_product_update_form($tax_id)
     {
-        $this->permission->check_label('manage_product_tax')->update()->redirect();
-
         $content = $this->ltax->tax_product_update_form($tax_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -84,7 +77,6 @@ class Ctax extends MX_Controller
     // tax Update
     public function tax_update($t_p_s_id = null)
     {
-        $this->permission->check_label('manage_product_tax')->update()->redirect();
 
         $this->form_validation->set_rules('tax_id', display('tax_name'), 'trim|required');
         $this->form_validation->set_rules('product_id', display('product_name'), 'trim|required');
@@ -119,8 +111,6 @@ class Ctax extends MX_Controller
 
     //Tax product service
     public function tax_product_service(){
-        $this->permission->check_label('manage_product_tax')->read()->redirect();
-
         $content =$this->ltax->tax_product_service();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -128,8 +118,6 @@ class Ctax extends MX_Controller
     // tax Delete
     public function tax_delete($t_p_s_id)
     {
-        $this->permission->check_label('manage_product_tax')->delete()->redirect();
-
         $this->Taxs->delete_tax($t_p_s_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('dashboard/Ctax/manage_tax');
@@ -137,9 +125,6 @@ class Ctax extends MX_Controller
 
     //Tax setting
     public function tax_setting(){
-        
-        $this->permission->check_label('tax_setting')->read()->redirect();
-
         $content =$this->ltax->tax_setting();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -147,8 +132,6 @@ class Ctax extends MX_Controller
     //Tax inactive
     public function inactive_tax()
     {
-        $this->permission->check_label('tax_setting')->read()->redirect();
-
         $tax_id = $this->input->post('tax_id',TRUE);
         $tax_name = $this->input->post('tax_name',TRUE);
 
@@ -165,8 +148,6 @@ class Ctax extends MX_Controller
     //Tax active
     public function active_tax()
     {
-        $this->permission->check_label('tax_setting')->read()->redirect();
-
         $tax_id = $this->input->post('tax_id',TRUE);
         $tax_name = $this->input->post('tax_name',TRUE);
 
@@ -183,8 +164,6 @@ class Ctax extends MX_Controller
     //Tax update
     public function update_tax()
     {
-        $this->permission->check_label('tax_setting')->read()->redirect();
-        
         $tax_id = $this->input->post('id',TRUE);
         $tax_name = $this->input->post('value',TRUE);
 

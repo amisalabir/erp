@@ -9,27 +9,6 @@ class User_auth {
 		$result = $this->check_valid_user($email,$password);
         if ($result)
 		{
-			//customer activity data start
-			$CI->db->select('*');
-	        $CI->db->from('customer_activities');
-	        $CI->db->where('customer_id', $result[0]['customer_id']);
-	        $activities = $CI->db->get();
-	        $customer_activities = $activities->result_array();
-
-	        if(!empty($customer_activities)){
-	        	$customer_activities_data = array(
-					'login_count'   => ($customer_activities[0]['login_count']+1),
-		        	);
-	        	$ca_result = $CI->db->update('customer_activities',$customer_activities_data, array('customer_id' => $result[0]['customer_id']));
-	        }else{
-	        	$customer_activities_data = array(
-					'customer_id' 	=> $result[0]['customer_id'],
-					'login_count'   => 1,
-		        	);
-	        	$ca_result = $CI->db->insert('customer_activities',$customer_activities_data);
-	        }
-	        //customer activity data end
-
 			$key = md5(time());
 			$key = str_replace("1", "z", $key);
 			$key = str_replace("2", "J", $key);
@@ -45,7 +24,7 @@ class User_auth {
 			
 			// codeigniter session stored data			
 			$user_data = array(
-				'customer_sid_web' 	=> $customer_sid_web,
+				'customer_sid_web' 		=> $customer_sid_web,
 				'customer_id' 	=> $result[0]['customer_id'],
 				'customer_name' => $result[0]['first_name']." ".$result[0]['last_name'],
 				//customer shipping info
@@ -109,7 +88,6 @@ class User_auth {
 				'customer_sid_web','customer_id','customer_name','customer_email','first_name','last_name','customer_address_1','customer_address_2','city','state','country','zip','company','customer_mobile','customer_email','password'
 			);
         $CI->session->unset_userdata($user_data);
-        $CI->session->sess_destroy();
 		return true;
 	}
 

@@ -50,66 +50,66 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('manage_pay_with')->read()->access()){ ?>    
-                    <a href="<?php echo base_url('dashboard/Cpay_with')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_pay_with')?></a>
-                <?php } ?>
+                    
+                  <a href="<?php echo base_url('dashboard/Cpay_with')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_pay_with')?></a>
+
               </div>
           </div>
-        </div>
+      </div>
 
-        <!-- New customer -->
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="panel panel-bd lobidrag">
-                    <div class="panel-heading">
-                        <div class="panel-title">
-                            <h4><?php echo display('add_pay_with') ?> </h4>
-                        </div>
+      <!-- New customer -->
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-bd lobidrag">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4><?php echo display('add_pay_with') ?> </h4>
                     </div>
-                    <?php echo form_open_multipart('dashboard/Cpay_with/create', array('class' => 'form-vertical','id' => 'validate'))?>
-                    <div class="panel-body">
-
-                       <div class="form-group row">
-                            <label for="category_name" class="col-sm-3 col-form-label"><?php echo display('title')?><span class="text-danger">*</span></label>
-                            <div class="col-sm-6">
-                                <input class="form-control" name ="title" id="title" type="text" placeholder="<?php echo display('title') ?>"  required="">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="image" class="col-sm-3 col-form-label"><?php echo display('image')?><span class="text-danger">*</span> </label>
-                            <div class="col-sm-6">
-                                <input class="form-control" name ="image" id="image" type="file">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="link" class="col-sm-3 col-form-label"><?php echo display('link')?> </label>
-                            <div class="col-sm-6">
-                                <input class="form-control" name ="link" id="link" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="top_menu" class="col-sm-3 col-form-label"><?php echo display('status')?></label>
-                            <div class="col-sm-6">
-                                <select class="form-control" name="status" id="status">
-                                    <option value=""></option>
-                                    <option value="1"><?php echo display('active')?></option>
-                                    <option value="0"><?php echo display('inactive')?></option>
-                                </select>
-                            </div>
-                        </div>  
-                        <div class="form-group row">
-                            <label for="top_menu" class="col-sm-3 col-form-label"></label>
-                            <div class="col-sm-6">
-                                <button type="submit" class="btn btn-success">Save</button>
-                            </div>
-                        </div>
-                    </div>
-                <?php echo form_close()?>
                 </div>
-            </div>
-        </div>
-    </section>
+                <?php echo form_open_multipart('dashboard/Cpay_with/create', array('class' => 'form-vertical','id' => 'validate'))?>
+                <div class="panel-body">
+
+                   <div class="form-group row">
+                    <label for="category_name" class="col-sm-3 col-form-label"><?php echo display('title')?><span class="text-danger">*</span></label>
+                    <div class="col-sm-6">
+                        <input class="form-control" name ="title" id="title" type="text" placeholder="<?php echo display('title') ?>"  required="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="image" class="col-sm-3 col-form-label"><?php echo display('image')?><span class="text-danger">*</span> </label>
+                    <div class="col-sm-6">
+                        <input class="form-control" name ="image" id="image" type="file">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="link" class="col-sm-3 col-form-label"><?php echo display('link')?> </label>
+                    <div class="col-sm-6">
+                        <input class="form-control" name ="link" id="link" type="text">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="top_menu" class="col-sm-3 col-form-label"><?php echo display('status')?></label>
+                    <div class="col-sm-6">
+                        <select class="form-control" name="status" id="status">
+                            <option value=""></option>
+                            <option value="1"><?php echo display('active')?></option>
+                            <option value="0"><?php echo display('inactive')?></option>
+                        </select>
+                    </div>
+                </div>  
+                <div class="form-group row">
+                    <label for="top_menu" class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-6">
+                     <button type="submit" class="btn btn-success">Save</button>
+                 </div>
+             </div>
+         </div>
+         <?php echo form_close()?>
+     </div>
+ </div>
+</div>
+</section>
 </div>
 <!-- Add new customer end -->
 

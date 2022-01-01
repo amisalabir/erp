@@ -54,20 +54,6 @@
                     <div class="panel-body">
 
                         <div class="form-group row">
-                            <label for="theme_name" class="col-sm-3 col-form-label"><?php echo display('themes') ?> </label>
-                            <div class="col-sm-6">
-                                <select name="theme_name" id="theme_name" class="form-control">
-                                    <option value="default"><?php echo display('select') ?></option>
-                                    <?php if(!empty($themelist)){
-                                        foreach ($themelist as $item) {
-                                     ?>
-                                        <option value="<?php echo $item->name; ?>" <?php echo (($active_theme==$item->name)?'selected':'') ?>><?php echo ucwords(str_replace('_', ' ', $item->name)); ?></option>
-                                    <?php } } ?>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="color1" class="col-sm-3 col-form-label"><?php echo display('color1') ?> </label>
                             <div class="col-sm-6">
                                 <input class="form-control" name ="color1" value="{color1}" id="color1" type="color">
@@ -106,7 +92,7 @@
 
 
                         <div class="form-group row">
-                            <label for="example-text-input" class="col-sm-3 col-form-label"></label>
+                            <label for="example-text-input" class="col-sm-4 col-form-label"></label>
                             <div class="col-sm-6">
                                 <input type="submit" id="add-customer" class="btn btn-success btn-large" name="add-customer" value="<?php echo display('save_changes') ?>" />
                             </div>
@@ -119,6 +105,6 @@
     </section>
 </div>
 <!-- Add new customer end -->
-<script src="<?php echo MOD_URL.'dashboard/assets/js/color_frontend.js'; ?>"></script>
+
 
 

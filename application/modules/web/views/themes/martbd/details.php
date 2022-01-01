@@ -128,7 +128,6 @@ endforeach;
                             }
                         }
                         ?>
-                    </div>
                 </li>
                 <li class="meta-sku"><?php echo display('product_model') ?> : <span
                             class="meta-value"> <?php echo html_escape($product_model); ?> </span></li>
@@ -209,12 +208,6 @@ endforeach;
                         }
                         ?>
                     </div>
-                    <?php if ($video) { ?>
-                        <div class="product-video-btn">
-                            <a class="popup-youtube"
-                               href="<?php echo html_escape($video); ?>"><span><?php echo display('watch_video'); ?></span></a>
-                        </div>
-                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -305,7 +298,6 @@ endforeach;
             if ($onsale) {
                 ?>
                 <div class="product-price">
-                    <span class="var_amount">
 
                     <?php
 
@@ -319,7 +311,6 @@ endforeach;
                         echo(($position1 == 0) ? $currency1 . " " . number_format($onsale_price, 2, '.', ',') : number_format($onsale_price, 2, '.', ',') . " " . $currency1);
                     }
                     ?>
-                    </span>
                     <input type="hidden" id="price" name="price"
                            value="<?php echo html_escape($onsale_price) ?>">
                 </div>
@@ -327,7 +318,7 @@ endforeach;
             } else {
                 ?>
                 <div class="product-price">
-                    <span class="var_amount">
+
                     <?php
                     if ($target_con_rate > 1) {
                         $price = $price * $target_con_rate;
@@ -339,7 +330,6 @@ endforeach;
                         echo(($position1 == 0) ? $currency1 . " " . number_format($price, 2, '.', ',') : number_format($price, 2, '.', ',') . " " . $currency1);
                     }
                     ?>
-                    </span>
                     <input type="hidden" id="price" name="price" value="<?php echo html_escape($price) ?>">
                 </div>
 
@@ -348,22 +338,20 @@ endforeach;
             ?>
         </div>
         <ul class="summary-header">
+
             <li>
-                <?php if(!($is_affiliate == 1)){ ?>
-                    <p class="stock">
-                        <label><?php echo display('status') ?>:</label>
-                        <input type="hidden" value="<?php echo html_escape($stok) ?>" id="stok">
-                        <?php if ($stok > 0) { ?>
-                        <span>
-                            <?php echo display('in_stock'); ?>
-                        </span>
-                        <?php  } else { ?>
-                        <span class="required">
-                            <?php echo display('out_of_stock'); ?>
-                        </span>
-                        <?php } ?>
-                    </p>    
-                <?php } ?>
+                <p class="stock"><label><?php echo display('status') ?>:</label>
+                    <input type="hidden" value="<?php echo html_escape($stok) ?>" id="stok">
+                    <?php if ($stok > 0) { ?>
+                    <span>
+                        <?php echo display('in_stock'); ?>
+                    </span>
+                    <?php  } else { ?>
+                    <span class="required">
+                        <?php echo display('out_of_stock'); ?>
+                    </span>
+                    <?php } ?>
+                </p>
             </li>
         </ul>
         <div class="short-description">
@@ -371,20 +359,6 @@ endforeach;
             <p><?php echo character_limiter(strip_tags($product_details), 200); ?></p>
             <!--  /.End of product color selector -->
             <?php if ($variant) { ?>
-                <?php
-                    $var_types = [];
-                    if (!empty($variant)) {
-                        $exploded = explode(',', $variant);
-                        $this->db->select('*');
-                        $this->db->from('variant');
-                        $this->db->where_in('variant_id', $exploded);
-                        $this->db->order_by('variant_name', 'asc');
-                        $vresult = $this->db->get()->result();
-
-                        $var_types = array_column($vresult, 'variant_type');
-                    }
-                 ?>
-
                 <div class="product_size p_1e">
                 <?php echo form_open('#', array('class' => 'form-inline')); ?>
 
@@ -398,77 +372,71 @@ endforeach;
                             </div>
 
                             <div class="dis_inbl">
-                                <select id="select_size1" onchange="select_variant(<?php echo html_escape($product_id) ?>)" required="" class="form-control select">
+                                <select id="select_size1"
+                                        onchange="select_variant(<?php echo html_escape($product_id) ?>)"
+                                        required="" class="form-control select">
                                     <option value="0"><?php echo display('select') ?></option>
-                                     <?php
-                                        foreach ($vresult as $vitem) {
-                                            if($vitem->variant_type=='size'){
-                                    ?>
-                                    <option value="<?php echo html_escape($vitem->variant_id) ?>" <?php echo (($vitem->variant_id == $default_variant)?"selected":"") ?>><?php echo html_escape($vitem->variant_name) ?></option>
+                                    <?php
+                                    if ($variant) {
+                                        $exploded = explode(',', $variant);
+                                        foreach ($exploded as $elem) {
+                                            $this->db->select('*');
+                                            $this->db->from('variant');
+                                            $this->db->where('variant_id', $elem);
+                                            $this->db->order_by('variant_name', 'asc');
+                                            $result = $this->db->get()->row();
+                                            ?>
+                                            <option value="<?php echo html_escape($result->variant_id) ?>" <?php if ($result->variant_id == $default_variant) {
+                                                echo "selected";
+                                            } ?>><?php echo html_escape($result->variant_name) ?></option>
 
-                                    <?php } } ?>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
                     <?php echo form_close(); ?>
                 </div>
-
-                 <?php if(in_array('color', $var_types)){ ?>
-                    <div class="product-color mb-3">
-                        <?php 
-                            foreach ($vresult as $vitem) {
-                                if($vitem->variant_type=='color'){
-                                    if(empty($default_color)){
-                                        $default_color = $vitem->variant_id;  // Set default color if not getting
-                                    }
-                                    ?>
-                            <input type="radio" class="product_colors" name="select_color" id="color_<?php echo $vitem->variant_id; ?>" value="<?php echo $vitem->variant_id; ?>" onclick="select_color_variant(<?php echo html_escape($product_id) ?>,'<?php echo  html_escape($vitem->variant_id) ?>', '<?php echo html_escape($default_variant); ?>')" <?php echo (($vitem->variant_id == $default_color)?'checked="checked"':"") ?>>
-                            <label class="mb-0" for="color_<?php echo $vitem->variant_id; ?>"><span class="color_code" style="background: <?php echo (!empty($vitem->color_code)?$vitem->color_code:strtolower($vitem->variant_name)) ?>"></span></label>
-
-                        <?php } }?>
-
-                    </div>
-                <?php  }  ?>
-
-
-
-
-                <?php } ?>
+                <?php
+            }
+            ?>
             <!--  /.End of product Size -->
         </div>
         <?php echo form_open('', array('class' => 'cart-row')); ?>
-            <?php if(!($is_affiliate == 1)){ ?>
-                <div class="cart_counter">
-                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 1 ) result.value--;return false;"
-                            class="reduced items-count" type="button">
-                        <span class="qty qty-minus" data-dir="dwn">-</span>
-                    </button>
-                    <input type="text" name="qty" id="sst" maxlength="12" value="1"
-                           title="<?php echo display('quantity') ?>"
-                           class="input-text qty form-control text-center" min="1">
-                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                            class="increase items-count" type="button">
-                        <span class="qty qty-plus" data-dir="up">+</span>
-                    </button>
-                </div>
-            <?php } ?>
 
+            <div class="cart_counter">
 
-            <?php if ($stok > 0) { ?>
-            <a href="javascript:void(0)" onclick="cart_btn(<?php echo html_escape($product_id) ?>)" class="cart-btn" type="submit"><?php echo display('add_to_cart') ?>
-            </a>
-            <?php }if($is_affiliate == 1){ ?>
-            <a href="<?php echo html_escape($affiliate_url) ?>" target ="0" class="cart-btn" type="submit"><?php echo display('buy_now') ?>
+                <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 1 ) result.value--;return false;"
+                        class="reduced items-count" type="button">
+
+                    <span class="qty qty-minus" data-dir="dwn">-</span>
+                </button>
+                <input type="text" name="qty" id="sst" maxlength="12" value="1"
+                       title="<?php echo display('quantity') ?>"
+                       class="input-text qty form-control text-center" min="1">
+                <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                        class="increase items-count" type="button">
+
+                    <span class="qty qty-plus" data-dir="up">+</span>
+                </button>
+            </div>
+
+            <?php
+            if ($stok > 0) {
+                ?>
+                <a href="javascript:void(0)" onclick="cart_btn(<?php echo html_escape($product_id) ?>)" class="cart-btn"
+                   type="submit"><?php echo display('add_to_cart') ?></a>
             <?php } ?>
-            <a href="javascript:void(0)" class="add-wishlist wishlist" data-toggle="tooltip" data-placement="top" title="<?php echo display('wishlist') ?>" name="<?php echo html_escape($product_id) ?>">
-               <i class="lnr lnr-heart"></i>
-            </a>
-            <p class="add-wishlist" onclick="comparison_btn(<?php echo html_escape($product_id) ?>)" title="<?php echo display('compare') ?>" >
-               <i class="lnr lnr-chart-bars"></i>
-            </p>
+            <a href="javascript:void(0)" class="add-wishlist wishlist" data-toggle="tooltip"
+               data-placement="top"
+               title="<?php echo display('wishlist') ?>" name="<?php echo html_escape($product_id) ?>"><i
+                        class="lnr lnr-heart"></i></a>
         <?php echo form_close(); ?>
-            
         <input type="hidden" id="product_id" name="product_id" value="<?php echo html_escape($product_id) ?>">
+
+
     </div>
 </div>
 </div>
@@ -704,17 +672,13 @@ if ($related_product) {
                 </div>
                 <div class="box-bottom">
                     <div class="btn-add-cart">
-                        <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>', <?php echo $product->variant_price; ?>);">
+                        <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>');">
+
                             <img src="<?php echo base_url() . '/assets/website/image/add-cart.png' ?>"
                                  alt=""><?php echo display('add_to_cart') ?>
                         </a>
                     </div>
                     <div class="compare-wishlist">
-                        <a href="javascript:void(0)"
-                               onclick="comparison_btn(<?php echo html_escape($product->product_id) ?>)"
-                               title="<?php echo display('compare') ?>" >
-                               <i class="lnr lnr-chart-bars"></i> <?php echo display('compare') ?>
-                        </a>
                         <a href="javascript:void(0)" class="wishlist" title=""
                            name="<?php echo html_escape($product->product_id) ?>">
                             <img src="<?php echo base_url() .'/assets/website/image/wishlist.png' ?>"
@@ -1189,20 +1153,20 @@ if ($best_sales_category) {
                     </div><!-- Rating -->
                 </div><!-- /.price-add-to-cart -->
                 <div class="box-bottom">
-                    
+                    <?php
+
+                    ?>
                     <div class="btn-add-cart">
-                        <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>', <?php echo $product->variant_price; ?>);">
+                            <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>');">
+
                             <img src="<?php echo base_url('assets/website/image/add-cart.png') ?>"
                                  alt=""><?php echo display('add_to_cart') ?>
                         </a>
                     </div>
-                    
+                    <?php
+
+                    ?>
                     <div class="compare-wishlist">
-                        <a href="javascript:void(0)"
-                           onclick="comparison_btn(<?php echo html_escape($product->product_id) ?>)"
-                           title="<?php echo display('compare') ?>" >
-                           <i class="lnr lnr-chart-bars"></i> <?php echo display('compare') ?>
-                        </a>
                         <a href="javascript:void(0)" class="wishlist" title=""
                            name="<?php echo html_escape($product->product_id) ?>">
                             <img src="<?php echo base_url('assets/website/image/wishlist.png') ?>"
@@ -1273,4 +1237,3 @@ if (4 == $ads->adv_position && !empty($ads->adv_code) && empty($ads->adv_code2) 
 endforeach;
 } ?>
 
-<input type="hidden" id="color_variant_id" value="<?php echo @$default_color; ?>">

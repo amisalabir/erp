@@ -132,15 +132,10 @@
 
                     <button class="btn -btn-info color4 color5 md-trigger m-b-5 m-r-2" data-modal="modal-2"><i class="ti-plus"></i> <?php echo display('add_category')?></button>
 
-                    <?php if($this->permission->check_label('manage_product')->read()->access()){ ?>
-                        <a href="<?php echo base_url('dashboard/Cproduct/manage_product')?>" class="btn btn-primary m-b-5 m-r-2">
-                            <i class="ti-align-justify"></i>  <?php echo display('manage_product')?>
-                        </a>
-                    <?php }if($this->permission->check_label('manage_product')->read()->access()){ ?>
-                        <a href="<?php echo base_url('dashboard/Cproduct/product_details_single')?>" class="btn btn-warning m-b-5 m-r-2">
-                            <i class="ti-align-justify"> </i><?php echo display('product_ledger')?>
-                        </a>
-                    <?php } ?>
+                    <a href="<?php echo base_url('dashboard/Cproduct/manage_product')?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"></i>  <?php echo display('manage_product')?></a>
+
+                    <a href="<?php echo base_url('dashboard/Cproduct/product_details_single')?>" class="btn btn-warning m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('product_ledger')?></a>
+
                     
                     <!-- the overlay element -->
                     <div class="md-overlay"></div>

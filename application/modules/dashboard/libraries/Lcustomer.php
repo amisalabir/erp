@@ -215,7 +215,7 @@ class Lcustomer {
 		return $chapterList;
 	}	
 	//Customer ledger Report
-	public function customer_ledger_report($customer_id=false)
+	public function customer_ledger_report($customer_id)
 	{
 		$CI =& get_instance();
 		$CI->load->model('dashboard/Customers');
@@ -227,7 +227,7 @@ class Lcustomer {
 
 		$customers_list = $CI->Customers->customer_list(); 
 		$balance = 0;
-		if(!empty($ledger)){
+			if(!empty($ledger)){
 			foreach($ledger as $index=>$value){
 				$ledger[$index]['final_date'] = $CI->occational->dateConvert($ledger[$index]['date']);
 				

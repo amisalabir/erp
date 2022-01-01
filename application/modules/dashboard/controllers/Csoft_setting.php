@@ -13,14 +13,18 @@ class Csoft_setting extends MX_Controller
             'dashboard/Color_frontends',
             'dashboard/Color_backends',
         ));
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
+
+        //User validation check
+        if ($this->session->userdata('user_type') == '2') {
+            $this->session->set_userdata(array('error_message' => display('you_are_not_access_this_part')));
+            redirect('dashboard/Admin_dashboard');
+        }
     }
 
     //Default loading for Category system.
     public function index()
     {
-        $this->permission->check_label('software_settings')->update()->redirect();
-
         $content = $this->lsoft_setting->setting_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -29,9 +33,16 @@ class Csoft_setting extends MX_Controller
     // Setting Update
     public function update_setting()
     {
-        $this->permission->check_label('software_settings')->update()->redirect();
-
         $captcha =  $this->input->post('captcha',TRUE);
+        $site_key =  $this->input->post('site_key',TRUE);
+        $secret_key =  $this->input->post('secret_key',TRUE);
+
+        // Captcha inactive if site key or secret key not exist
+        if(empty($site_key) || empty($secret_key)){
+            $captcha = 1;
+            $this->session->set_userdata(array('error_message' => 'Please enter valid site and secret key for google reCaptcha activation!'));
+        }
+
 
 
         if ($_FILES['logo']['name']) {
@@ -106,6 +117,8 @@ class Csoft_setting extends MX_Controller
             'language' => $language,
             'rtr' => $this->input->post('rtr',TRUE),
             'captcha' => $captcha,
+            'site_key' => $site_key,
+            'secret_key' => $secret_key,
             'sms_service' => $this->input->post('sms_service',TRUE),
             'country_id' => $this->input->post('country',TRUE)
         );
@@ -118,7 +131,7 @@ class Csoft_setting extends MX_Controller
     
     //Email Configuration
     public function email_configuration(){
-        $this->permission->check_label('email_configuration')->read()->redirect();
+
         $content = $this->lsoft_setting->email_configuration_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -126,7 +139,7 @@ class Csoft_setting extends MX_Controller
     //Update email configuration
     public function update_email_configuration()
     {
-        $this->permission->check_label('email_configuration')->update()->redirect();
+
         $data = array(
             'protocol' => $this->input->post('protocol',TRUE),
             'mailtype' => $this->input->post('mailtype',TRUE),
@@ -144,8 +157,6 @@ class Csoft_setting extends MX_Controller
     // Send Test Email
     public function send_test_email()
     {
-        $this->permission->check_label('email_configuration')->update()->redirect();
-
         $this->form_validation->set_rules('receiver_email', display('receiver_email'), 'trim|required|valid_email');
         if($this->form_validation->run() == TRUE) {
 
@@ -187,8 +198,6 @@ class Csoft_setting extends MX_Controller
 
     //Payment Configuration
     public function payment_gateway_setting(){
-        $this->permission->check_label('payment_gateway_setting')->read()->redirect();
-
         $content = $this->lsoft_setting->payment_configuration_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -197,8 +206,6 @@ class Csoft_setting extends MX_Controller
     //Update payment configuration
     public function update_payment_gateway_setting($id = null)
     {
-        $this->permission->check_label('payment_gateway_setting')->update()->redirect();
-
         if ($id == 3) {
             $data = array(
                 'public_key' => $this->input->post('public_key',TRUE),
@@ -256,7 +263,6 @@ class Csoft_setting extends MX_Controller
     //shwo fronted template color edit form
     public function color_setting_frontend()
     {
-        $this->permission->check_label('color_setting_frontend')->update()->redirect();
 
         $content = $this->lsoft_setting->color_frontend_edit_form();
         $this->template_lib->full_admin_html_view($content);
@@ -264,9 +270,6 @@ class Csoft_setting extends MX_Controller
     //update fronend templete color
     public function update_frontend_color()
     {
-        $this->permission->check_label('color_setting_frontend')->update()->redirect();
-
-        $theme_name = $this->input->post('theme_name',TRUE);
         $data =
             [
                 'color1' => $this->input->post('color1',TRUE),
@@ -276,7 +279,7 @@ class Csoft_setting extends MX_Controller
                 'color5' => $this->input->post('color5',TRUE),
             ];
 
-        $result = $this->Color_frontends->update_color($data, $theme_name);
+        $result = $this->Color_frontends->update_color($data);
         if ($result) {
             $this->session->set_userdata(array('message' => display('successfully_updated')));
         }else{
@@ -287,33 +290,12 @@ class Csoft_setting extends MX_Controller
      //show backend template color edit form
     public function color_setting_backend()
     {
-        $this->permission->check_label('color_setting_backend')->update()->redirect();
-
         $content = $this->lsoft_setting->color_backend_edit_form();
         $this->template_lib->full_admin_html_view($content);
     }
 
-    // Get theme frontend color
-    public function ajax_theme_color(){
-        $this->load->model('dashboard/Color_frontends');
-        $theme_name = $this->input->post('theme_name', TRUE);
-        $theme_name = (!empty($theme_name)?$theme_name:'default');
-        $colors = $this->Color_frontends->retrieve_color_editdata($theme_name);
-        $data = array(          
-            'color1'        => $colors->color1,
-            'color2'        => $colors->color2,
-            'color3'        => $colors->color3,         
-            'color4'        => $colors->color4,         
-            'color5'        => $colors->color5     
-        );
-        echo json_encode($data);
-
-    }
-
     public function update_backend_color()
     {
-        $this->permission->check_label('color_setting_backend')->update()->redirect();
-        
         $data =
             [
                 'color1' => $this->input->post('color1',TRUE),

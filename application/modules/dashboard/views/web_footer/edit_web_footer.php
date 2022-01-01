@@ -52,36 +52,36 @@
                         </div>
                     </div>
                     <?php echo form_open_multipart('dashboard/Cweb_footer/web_footer_update/{footer_section_id}',array('class' => 'form-vertical', 'id' => 'validate'))?>
-                        <div class="panel-body">
-                            
-                            <div class="form-group row">
-                                <label for="headlines" class="col-sm-3 col-form-label"><?php echo display('headlines')?> <i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" name ="headlines" id="headlines" type="text" placeholder="<?php echo display('headlines') ?>"  required="" value="{headlines}">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                  <label for="content4" class="col-sm-3 col-form-label"><?php echo display('details')?> <i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <textarea name="details" class="form-control summernote" placeholder="<?php echo display('details')?>" id="content4" required row="3">{details}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="position" class="col-sm-3 col-form-label"><?php echo display('position')?> <i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" name ="position" id="position" type="number" placeholder="<?php echo display('position') ?>"  required="" value="{position}">
-                                </div>
-                            </div>
-                    
-                            <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-4 col-form-label"></label>
-                                <div class="col-sm-6">
-                                    <input type="submit" id="add-web_footer" class="btn btn-success btn-large" name="add-web_footer" value="<?php echo display('save_changes') ?>" />
-                                </div>
+                    <div class="panel-body">
+                        
+                        <div class="form-group row">
+                            <label for="headlines" class="col-sm-3 col-form-label"><?php echo display('headlines')?> <i class="text-danger">*</i></label>
+                            <div class="col-sm-6">
+                                <input class="form-control" name ="headlines" id="headlines" type="text" placeholder="<?php echo display('headlines') ?>"  required="" value="{headlines}">
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                              <label for="content4" class="col-sm-3 col-form-label"><?php echo display('details')?> <i class="text-danger">*</i></label>
+                            <div class="col-sm-6">
+                                <textarea name="details" class="form-control summernote" placeholder="<?php echo display('details')?>" id="content4" required row="3">{details}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="position" class="col-sm-3 col-form-label"><?php echo display('position')?> <i class="text-danger">*</i></label>
+                            <div class="col-sm-6">
+                                <input class="form-control" name ="position" id="position" type="number" placeholder="<?php echo display('position') ?>"  required="" value="{position}">
+                            </div>
+                        </div>
+                
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-6">
+                                <input type="submit" id="add-web_footer" class="btn btn-success btn-large" name="add-web_footer" value="<?php echo display('save_changes') ?>" />
+                            </div>
+                        </div>
+                    </div>
                     <?php echo form_close()?>
                 </div>
             </div>

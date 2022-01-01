@@ -14,7 +14,7 @@ class Welcome extends MX_Controller
 
     public function index()
     {
-    $content = $this->lhome->home_page();
+        $content = $this->lhome->home_page();
        $this->template_lib->full_website_html_view($content);
     }
 

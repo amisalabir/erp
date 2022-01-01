@@ -10,15 +10,17 @@ class Csettings extends MX_Controller
         $this->load->library('auth');
         $this->load->library('dashboard/session');
         $this->load->model('dashboard/Settings');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
         $this->template_lib->current_menu = 'settings';
 
+        if ($this->session->userdata('user_type') == '2') {
+            $this->session->set_userdata(array('error_message' => display('you_are_not_access_this_part')));
+            redirect('dashboard/Admin_dashboard');
+        }
     }
 
     public function index()
     {
-        $this->permission->check_label('add_new_bank')->create()->redirect();
-
         $data=array('title'=> display('add_new_bank'));
         $content = $this->parser->parse('dashboard/settings/new_bank',$data,true);
         $this->template_lib->full_admin_html_view($content);
@@ -28,8 +30,6 @@ class Csettings extends MX_Controller
     #================Add new bank==============#
     public function add_new_bank()
     {
-        $this->permission->check_label('add_new_bank')->create()->redirect();
-
         $data = array(
             'bank_id' => $this->auth->generator(10),
             'bank_name' => $this->input->post('bank_name',TRUE),
@@ -51,24 +51,18 @@ class Csettings extends MX_Controller
     #==============Bank list============#
     public function bank_list()
     {
-        $this->permission->check_label('manage_bank')->read()->redirect();
-
         $content = $this->lsettings->bank_list( );
         $this->template_lib->full_admin_html_view($content);
     }
     #=============Bank edit==============#
     public function edit_bank($bank_id)
     {
-        $this->permission->check_label('manage_bank')->update()->redirect();
-
         $content = $this->lsettings->bank_show_by_id($bank_id);
         $this->template_lib->full_admin_html_view($content);
     }
     #============Update Bank=============#
     public function update_bank($bank_id)
     {
-        $this->permission->check_label('manage_bank')->update()->redirect();
-
         $bank_list = $this->Settings->bank_update_by_id($bank_id);
         $this->session->set_userdata(array('message' => display('successfully_updated')));
         redirect('dashboard/Csettings/bank_list');

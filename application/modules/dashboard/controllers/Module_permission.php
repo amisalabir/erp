@@ -14,7 +14,7 @@ class Module_permission extends MX_Controller
             'template/Template_model',
         ));
 
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
 
     public function index()

@@ -47,11 +47,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('manage_currency')->read()->access()){ ?>
-                    <a href="<?php echo base_url('dashboard/Ccurrency/manage_currency')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_currency')?>
-                    </a>
-                <?php } ?>
-                    <button type="button" class="btn btn-danger m-b-5 m-r-2"><?php echo display('you_must_have_a_default_currency')?></button>
+                
+                  <a href="<?php echo base_url('dashboard/Ccurrency/manage_currency')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_currency')?></a>
+                  <button type="button" class="btn btn-danger m-b-5 m-r-2"><?php echo display('you_must_have_a_default_currency')?></button>
                 </div>
             </div>
         </div>

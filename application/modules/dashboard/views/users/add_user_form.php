@@ -47,11 +47,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                    <?php if($this->permission->check_label('manage_users')->read()->access()){ ?>
-                        <a href="<?php echo base_url('dashboard/User/manage_user')?>" class="btn btn-success m-b-5 m-r-2">
-                            <i class="ti-align-justify"> </i> <?php echo display('manage_users')?>
-                        </a>
-                    <?php } ?>
+                  <a href="<?php echo base_url('dashboard/User/manage_user')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_users')?></a>
                 </div>
             </div>
         </div>
@@ -102,7 +98,7 @@
                                 <select class="form-control" tabindex="6" name="user_type" id="user_type" required>
                                     <option value="0"><?php echo display('select_one') ?></option>
                                     <option value="1"><?php echo display('admin') ?></option>
-                                    <option value="2"><?php echo display('role_user') ?></option>
+                                    <option value="2"><?php echo display('User') ?></option>
                                     <option value="4"><?php echo display('store_keeper') ?></option>
                                   </select>
                             </div>
@@ -125,6 +121,7 @@
                             <label for="example-text-input" class="col-sm-4 col-form-label"></label>
                             <div class="col-sm-6">
                                 <input type="submit" id="add-customer" class="btn btn-primary btn-large" name="add-user" value="<?php echo display('save') ?>" tabindex="7" />
+
 								<input type="submit" value="<?php echo display('save_and_add_another') ?>" name="add-user-another" class="btn btn-success" id="add-customer-another">
                             </div>
                         </div>

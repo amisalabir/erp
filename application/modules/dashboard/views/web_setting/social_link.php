@@ -50,52 +50,52 @@
                             <h4><?php echo display('social_link') ?> </h4>
                         </div>
                     </div>
-                    <?php echo form_open_multipart('dashboard/Cweb_setting/update_social_link', array('class' => 'form-vertical','id' => 'validate'))?>
-                        <div class="panel-body">
-                            
-                            <div class="form-group row">
-                                <label for="facebook" class="col-sm-3 col-form-label"><?php echo display('facebook') ?> <i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" name ="facebook" id="facebook" type="text" placeholder="<?php echo display('facebook') ?>" value="{facebook}" required>
-                                </div>
-                            </div> 
-
-                            <div class="form-group row">
-                                <label for="instagram" class="col-sm-3 col-form-label"><?php echo display('instagram') ?> <i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" name ="instagram" id="instagram" type="text" placeholder="<?php echo display('instagram') ?>" value="{instagram}" required>
-                                </div>
+                  <?php echo form_open_multipart('dashboard/Cweb_setting/update_social_link', array('class' => 'form-vertical','id' => 'validate'))?>
+                    <div class="panel-body">
+                        
+                        <div class="form-group row">
+                            <label for="facebook" class="col-sm-3 col-form-label"><?php echo display('facebook') ?> <i class="text-danger">*</i></label>
+                            <div class="col-sm-6">
+                                <input class="form-control" name ="facebook" id="facebook" type="text" placeholder="<?php echo display('facebook') ?>" value="{facebook}" required>
                             </div>
+                        </div> 
 
-                            <div class="form-group row">
-                                <label for="linkedin" class="col-sm-3 col-form-label"><?php echo display('linkedin') ?> <i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" name ="linkedin" id="linkedin" type="text" placeholder="<?php echo display('linkedin') ?>" value="{linkedin}" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="twitter" class="col-sm-3 col-form-label"><?php echo display('twitter') ?> <i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" name ="twitter" id="twitter" type="text" placeholder="<?php echo display('twitter') ?>" value="{twitter}" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="youtube" class="col-sm-3 col-form-label"><?php echo display('youtube') ?> <i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" name ="youtube" id="youtube" type="text" placeholder="<?php echo display('youtube') ?>" value="{youtube}" required>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-4 col-form-label"></label>
-                                <div class="col-sm-6">
-                                    <input type="submit" id="add-customer" class="btn btn-success btn-large" name="add-customer" value="<?php echo display('save_changes') ?>" required />
-                                </div>
+                        <div class="form-group row">
+                            <label for="instagram" class="col-sm-3 col-form-label"><?php echo display('instagram') ?> <i class="text-danger">*</i></label>
+                            <div class="col-sm-6">
+                                <input class="form-control" name ="instagram" id="instagram" type="text" placeholder="<?php echo display('instagram') ?>" value="{instagram}" required>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="linkedin" class="col-sm-3 col-form-label"><?php echo display('linkedin') ?> <i class="text-danger">*</i></label>
+                            <div class="col-sm-6">
+                                <input class="form-control" name ="linkedin" id="linkedin" type="text" placeholder="<?php echo display('linkedin') ?>" value="{linkedin}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="twitter" class="col-sm-3 col-form-label"><?php echo display('twitter') ?> <i class="text-danger">*</i></label>
+                            <div class="col-sm-6">
+                                <input class="form-control" name ="twitter" id="twitter" type="text" placeholder="<?php echo display('twitter') ?>" value="{twitter}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="youtube" class="col-sm-3 col-form-label"><?php echo display('youtube') ?> <i class="text-danger">*</i></label>
+                            <div class="col-sm-6">
+                                <input class="form-control" name ="youtube" id="youtube" type="text" placeholder="<?php echo display('youtube') ?>" value="{youtube}" required>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-6">
+                                <input type="submit" id="add-customer" class="btn btn-success btn-large" name="add-customer" value="<?php echo display('save_changes') ?>" required />
+                            </div>
+                        </div>
+                    </div>
                     <?php echo form_close()?>
                 </div>
             </div>

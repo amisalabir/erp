@@ -127,7 +127,6 @@ function add_to_cart(id) {
 function cart_btn(product_id) {
     var qnty = $('#sst').val();
     var variant = $('#select_size1').val();
-     var variant_color = $('#color_variant_id').val();
     var product_quantity = qnty;
     if (product_id == 0) {
         Swal({
@@ -159,7 +158,7 @@ function cart_btn(product_id) {
         type: "post",
         async: true,
         url: base_url + "web/Product/check_quantity_wise_stock",
-        data: {"csrf_test_name": CSRF_TOKEN, "product_quantity": product_quantity, "product_id": product_id,'variant':variant, 'variant_color':variant_color},
+        data: {"csrf_test_name": CSRF_TOKEN, "product_quantity": product_quantity, "product_id": product_id,'variant':variant},
         success: function (data) {
             if (data == 'no') {
                 Swal({
@@ -173,7 +172,7 @@ function cart_btn(product_id) {
                     type: "post",
                     async: true,
                     url: base_url + "web/Home/add_to_cart_details",
-                    data: {"csrf_test_name": CSRF_TOKEN, "product_id": product_id, "qnty": qnty, "variant": variant, 'variant_color':variant_color},
+                    data: {"csrf_test_name": CSRF_TOKEN, "product_id": product_id, "qnty": qnty, "variant": variant},
                     success: function (data) {
                         $("#tab_up_cart").load(location.href + " #tab_up_cart>*", "");
 
@@ -424,8 +423,7 @@ $.ajax({
 });
 });
 
-$('body').on('click', '.customer_login', function (e) {
-    e.preventDefault();
+$('body').on('click', '.customer_login', function () {
     let login_email = $('#login_email').val();
     let login_password = $('#login_password').val();
     let remember_me = $('#remember_me').val();
@@ -448,11 +446,12 @@ $('body').on('click', '.customer_login', function (e) {
             "remember_me": remember_me
         },
         success: function (data) {
-            if (data) {
+            if (data === 'true') {
                 swal(display('login_successfully'), "", "success");
                 location.reload();
             } else {
                 swal(display('wrong_username_or_password'), "", "warning");
+                location.reload();
             }
         },
         error: function () {
@@ -793,34 +792,23 @@ if (uri_segment === "contact_us") {
 function select_variant(product_id) {
 
     var variant_id = $('#select_size1').val();
-    var variant_color = $('[name="select_color"]:checked').val();
 
     $.ajax({
         type: "post",
         async: true,
-        url: base_url + 'web/Product/check_2d_variant_info',
-        data: {'csrf_test_name': CSRF_TOKEN, 'variant_id': variant_id, 'product_id': product_id, 'variant_color': variant_color},
-        success: function (res) {
-
-             var result = JSON.parse(res);
-            if(result[0] == 'yes'){
-                $('.var_amount').html(result[1]);
-                if(parseInt(result[3])>0){
-                    $('.regular_price').html(result[2]);
-                    $('.save_perct').html(result[3]);
-                    $('.price_discount').show();
-                }else{
-                    $('.price_discount').hide();
-                }
-                return true;
-            }else {
+        url: base_url + 'web/Product/check_variant_wise_stock',
+        data: {'csrf_test_name': CSRF_TOKEN, 'variant_id': variant_id, 'product_id': product_id},
+        success: function (data) {
+            if (data == '2') {
                 Swal({
                     type: 'warning',
                     title: display('variant_not_available')
                 });
+                $(".product_size").load(location.href + " .product_size>*", "");
                 return false;
+            } else {
+                return true;
             }
-
         },
         error: function () {
             Swal({
@@ -832,68 +820,18 @@ function select_variant(product_id) {
 
 }
 
-// Select stock via color variant
-function select_color_variant(product_id, variant_color, default_variant) {
-    var variant_id = $('#select_size1').val();
-    if(variant_id==''){
-        variant_id = default_variant;
-    }
-    $.ajax({
-        type: "post",
-        async: true,
-        url: base_url + 'web/Product/check_2d_variant_info',
-        data: {'csrf_test_name': CSRF_TOKEN, 'product_id': product_id, 'variant_id': variant_id, 'variant_color': variant_color},
-        success: function (res) {
-
-            var result = JSON.parse(res);
-            if(result[0] == 'yes'){
-                $('.var_amount').html(result[1]);
-                 if(parseInt(result[3])>0){
-                    $('.regular_price').html(result[2]);
-                    $('.save_perct').html(result[3]);
-                    $('.price_discount').show();
-                }else{
-                    $('.price_discount').hide();
-                }
-                return true;
-            }else {
-                Swal({
-                    type: 'warning',
-                    title: display('variant_not_available')
-                });
-                return false;
-            }
-            
-        },
-        error: function () {
-            Swal({
-                type: 'warning',
-                title: display('request_failed')
-            });
-        }
-    });
-
-}
-
-// SEt color variant ID
-$('.product_colors').on('change',function(){
-    var variant_id = $(this).val();
-    $('#color_variant_id').val(variant_id);
-    $('#color_'+variant_id).attr('checked','checked');
-});
 
 //Check product quantity in stock
 $('#sst,.reduced,.increase').on("change click", function () {
     var product_quantity = $('#sst').val();
     var product_id = $('#product_id').val();
     var variant = $('#select_size1').val();
-    var variant_color = $('#color_variant_id').val();
 
     $.ajax({
         type: "post",
         async: true,
         url: base_url + "web/Product/check_quantity_wise_stock",
-        data: {"csrf_test_name": CSRF_TOKEN, "product_quantity": product_quantity, "product_id": product_id,"variant":variant, "variant_color":variant_color},
+        data: {"csrf_test_name": CSRF_TOKEN, "product_quantity": product_quantity, "product_id": product_id,"variant":variant},
         success: function (data) {
             if (data == 'no') {
                 Swal({
@@ -1135,10 +1073,10 @@ $("#validateForm").validate({
 });
 
 //Add to cart by ajax
-function add_to_cart_item(product_id, product_name='p', default_variant = '', variant_price = '') {
+function add_to_cart_item(product_id, product_name='p', default_variant = '') {
 
-    if ((default_variant == '') || (variant_price != '')) {
-        window.location.replace(base_url + "product/" + product_name + "/" + product_id);
+    if (default_variant == '') {
+        window.location.replace(base_url + "product_details/" + product_name + "/" + product_id);
         return false;
     }
 
@@ -1210,79 +1148,3 @@ function add_to_cart_item(product_id, product_name='p', default_variant = '', va
     });
 }
 
-// compsrison btn start
-function comparison_btn(product_id) {
-    if (product_id == 0) {
-        Swal({
-            type: 'warning',
-            title: display('ooops_something_went_wrong')
-        });
-        return false;
-    }
-    $.ajax({
-        type: "POST",
-        async: true,
-        url: base_url + 'web/Home/add_to_comparison_details',
-        data: {'csrf_test_name': CSRF_TOKEN, 'product_id': product_id},
-        success: function (data) {
-            $("#tab_up_comparison").load(location.href + " #tab_up_comparison>*", "");
-
-            Swal({
-                type: 'success',
-                title: display('product_added_to_compare')
-            })
-        },
-        error: function () {
-            Swal({
-                type: 'warning',
-                title: display('request_failed')
-            })
-        }
-    });
-}
-
-$("body").on("click", ".delete_comparison_item", function (e) {
-    e.preventDefault();
-    if (!confirm(display("are_you_sure_want_to_delete"))) {
-        return false;
-    }
-    var comparison_id = $(this).attr("name");
-    $.ajax({
-        type: "post",
-        async: true,
-        url: base_url + "web/Home/delete_comparison/",
-        data: {comparison_id: comparison_id, csrf_test_name: CSRF_TOKEN},
-        success: function (data) {
-            $("#tab_up_comparison").load(location.href + " #tab_up_comparison>*", "");
-        },
-        error: function () {
-            Swal({
-                type: "warning",
-                title: display('request_failed')
-            });
-        }
-    });
-});
-
-$("body").on("click", ".delete_comparison", function (e) {
-    e.preventDefault();
-    if (!confirm(display("are_you_sure_want_to_delete"))) {
-        return false;
-    }
-    var comparison_id = $(this).attr("name");
-    $.ajax({
-        type: "post",
-        async: true,
-        url: base_url + "web/Home/delete_comparison/",
-        data: {comparison_id: comparison_id, csrf_test_name: CSRF_TOKEN},
-        success: function (data) {
-            window.location.reload();
-        },
-        error: function () {
-            Swal({
-                type: "warning",
-                title: display('request_failed')
-            });
-        }
-    });
-});

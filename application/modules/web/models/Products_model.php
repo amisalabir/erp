@@ -168,24 +168,29 @@ class Products_model extends CI_Model {
 	//Stock Report By Store
 	public function stock_report_single_item_by_store($p_id)
 	{
+
 		$result = $this->db->select('*')
 		->from('store_set')
 		->where('default_status','1')
 		->get()
 		->row();
+
 		if ($result) {
+
 			$purchase = $this->db->select("SUM(quantity) as totalPurchaseQnty")
 			->from('transfer')
 			->where('product_id',$p_id)
 			->where('store_id',$result->store_id)
 			->get()
 			->row();
+
 			$sales = $this->db->select("SUM(quantity) as totalSalesQnty")
 			->from('invoice_details')
 			->where('product_id',$p_id)
 			->where('store_id',$result->store_id)
 			->get()
 			->row();
+
 			return $stock = $purchase->totalPurchaseQnty - $sales->totalSalesQnty;
 		}else{
 			return "none";
@@ -193,7 +198,7 @@ class Products_model extends CI_Model {
 	}		
 
 	//Check variant wise stock
-	public function check_variant_wise_stock($variant_id, $product_id, $variant_color = false)
+	public function check_variant_wise_stock($variant_id,$product_id)
 	{
 		$result = $this->db->select('*')
 		->from('store_set')
@@ -201,31 +206,27 @@ class Products_model extends CI_Model {
 		->get()
 		->row();
 
-		$this->db->select("SUM(quantity) as totalPurchaseQnty");
-		$this->db->from('transfer');
-		$this->db->where('product_id',$product_id);
-		$this->db->where('variant_id',$variant_id);
-        if(!empty($variant_color)){
-             $this->db->where('variant_color',$variant_color);
-        }
-		$this->db->where('store_id',$result->store_id);
-		$purchase = $this->db->get()->row();
+		$purchase = $this->db->select("SUM(quantity) as totalPurchaseQnty")
+		->from('transfer')
+		->where('product_id',$product_id)
+		->where('variant_id',$variant_id)
+		->where('store_id',$result->store_id)
+		->get()
+		->row();
 
-		$this->db->select("SUM(quantity) as totalSalesQnty");
-		$this->db->from('invoice_details');
-		$this->db->where('product_id',$product_id);
-		$this->db->where('variant_id',$variant_id);
-        if(!empty($variant_color)){
-             $this->db->where('variant_color',$variant_color);
-        }
-		$this->db->where('store_id',$result->store_id);
-		$sales = $this->db->get()->row();
+		$sales = $this->db->select("SUM(quantity) as totalSalesQnty")
+		->from('invoice_details')
+		->where('product_id',$product_id)
+		->where('variant_id',$variant_id)
+		->where('store_id',$result->store_id)
+		->get()
+		->row();
 
 		$stock = $purchase->totalPurchaseQnty - $sales->totalSalesQnty;
         return $stock;
 	}	
 
-    public function get_product_cart_quantity($product_id, $variant, $variant_color=false)
+    public function get_product_cart_quantity($product_id, $variant)
     {
         $cart_qnty = 0;
         if ($this->cart->contents()) {
@@ -239,57 +240,9 @@ class Products_model extends CI_Model {
 
     }
 
-    //variant wise price
-    public function check_variant_wise_price($product_id, $variant_id, $variant_color = false)
-    {
-        $pinfo = $this->db->select('price, onsale, onsale_price, variant_price')
-                ->from('product_information')
-                ->where('product_id', $product_id)
-                ->get()->row();
-
-        if($pinfo->variant_price){
-
-            $this->db->select('price');
-            $this->db->from('product_variants');
-            $this->db->where('product_id', $product_id);
-            $this->db->where('var_size_id', $variant_id);
-            if(!empty($variant_color)){
-                $this->db->where('var_color_id', $variant_color);
-            }else{
-                $this->db->where("var_color_id IS NULL");
-            }
-            $varprice = $this->db->get()->row();
-
-            if(!empty($varprice)){
-                $price_arr['price'] = $varprice->price;
-                $price_arr['regular_price'] = $pinfo->price;
-            }else{
-                 if(!empty($pinfo->onsale) && !empty($pinfo->onsale_price)){
-                    $price_arr['price'] = $pinfo->onsale_price;
-                    $price_arr['regular_price'] = $pinfo->price;
-                }else{
-                    $price_arr['price'] = $price_arr['regular_price'] = $pinfo->price;
-                }
-            }
-
-
-        } else{
-
-            if(!empty($pinfo->onsale) && !empty($pinfo->onsale_price)){
-                $price_arr['price'] = $pinfo->onsale_price;
-                $price_arr['regular_price'] = $pinfo->price;
-            }else{
-                $price_arr['price'] = $price_arr['regular_price'] = $pinfo->price;
-            }
-        }
-
-        return $price_arr;
-
-    }
-
 
 	//Check product Quantity wise stock
-	public function check_quantity_wise_stock($quantity, $product_id, $variant, $variant_color = false)
+	public function check_quantity_wise_stock($quantity, $product_id, $variant)
 	{
 
 		$result = $this->db->select('*')
@@ -298,27 +251,23 @@ class Products_model extends CI_Model {
 		->get()
 		->row();
 
-		$this->db->select("SUM(quantity) as totalPurchaseQnty");
-		$this->db->from('transfer');
-		$this->db->where('product_id',$product_id);
-		$this->db->where('store_id',$result->store_id);
-        $this->db->where('variant_id',$variant);
-        if(!empty($variant_color)){
-            $this->db->where('variant_color', $variant_color);
-        }
-		$purchase = $this->db->get()->row();
+		$purchase = $this->db->select("SUM(quantity) as totalPurchaseQnty")
+		->from('transfer')
+		->where('product_id',$product_id)
+		->where('store_id',$result->store_id)
+        ->where('variant_id',$variant)
+		->get()
+		->row();
 
-		$this->db->select("SUM(quantity) as totalSalesQnty");
-		$this->db->from('invoice_details');
-		$this->db->where('product_id',$product_id);
-		$this->db->where('store_id',$result->store_id);
-        $this->db->where('variant_id',$variant);
-        if(!empty($variant_color)){
-            $this->db->where('variant_color', $variant_color);
-        }
-		$order = $this->db->get()->row();
+		$order = $this->db->select("SUM(quantity) as totalSalesQnty")
+		->from('invoice_details')
+		->where('product_id',$product_id)
+		->where('store_id',$result->store_id)
+        ->where('variant_id',$variant)
+		->get()
+		->row();
 
-        $cart_qnty = $quantity;
+        $cart_qnty = $this->get_product_cart_quantity($product_id, $variant);
         $result = ($purchase->totalPurchaseQnty - ($order->totalSalesQnty + $cart_qnty));
 
 		return $result;
@@ -450,53 +399,5 @@ class Products_model extends CI_Model {
         $this->db->where('a.brand_id',$brand_id);
         $query = $this->db->get();
         return $query->row();
-    }
-
-    // Comparison
-    public function comparison(){
-        $comparisons = $this->session->userdata('comparison_ids');
-        if (!empty($comparisons)) {
-            $this->db->select('a.*, b.category_name, c.brand_name');
-            $this->db->from('product_information a');
-            $this->db->join('product_category b', 'b.category_id=a.category_id','left');
-            $this->db->join('brand c', 'c.brand_id=a.brand_id','left');
-            $this->db->where_in('a.product_id', $comparisons);
-            $this->db->group_by('a.product_id');
-            $result = $this->db->get()->result_array();
-            
-            return $result;
-        }
-        return false;
-    }
-
-    // Variant Prices
-    public function get_variant_prices($pid, $variants,  $def_size_bar = false)
-    {
-        $exploded = explode(',', $variants);
-        $this->db->select('*');
-        $this->db->from('variant');
-        $this->db->where_in('variant_id', $exploded);
-        $this->db->order_by('variant_name', 'asc');
-        $vresult = $this->db->get()->result_array();
-        $var_types = array_column($vresult, 'variant_type');
-
-        $def_color_var = '';
-        foreach ($vresult as $vitem) {
-            if(empty($def_size_bar) && ($vitem['variant_type']=='size')) {
-                $def_size_bar = $vitem['variant_id'];
-            }
-
-            if(empty($def_color_var) && ($vitem['variant_type']=='color')) {
-                $def_color_var = $vitem['variant_id'];
-            }
-        }
-
-        $this->db->where('product_id', $pid);
-        $this->db->where('var_size_id', $def_size_bar);
-        if(!empty($def_color_var)){
-            $this->db->where('var_color_id', $def_color_var);
-        }
-        $result = $this->db->get('product_variants')->row_array();
-        return $result;
     }
 }

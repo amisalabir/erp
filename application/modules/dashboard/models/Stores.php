@@ -56,9 +56,6 @@ class Stores extends CI_Model {
 		$this->db->where('store_id',$store_id);
 		$this->db->where('product_id',$product_id);
 		$this->db->where('variant_id',$variant_id);
-		if(!empty($data['variant_color'])){
-			$this->db->where('variant_color',$data['variant_color']);
-		}
 		$query = $this->db->get()->row();
 
 		if ($query->total_quantity > 0) {
@@ -102,14 +99,12 @@ class Stores extends CI_Model {
 				SUM(b.quantity) as quantity,
 				c.product_name,
 				c.product_model,
-				d.variant_name,
-				e.variant_name as variant_color_name
+				d.variant_name
 			');
 		$this->db->from('store_set a');
 		$this->db->join('transfer b','a.store_id= b.store_id','left');
 		$this->db->join('product_information c','c.product_id = b.product_id');
 		$this->db->join('variant d','d.variant_id = b.variant_id');
-		$this->db->join('variant e','e.variant_id = b.variant_color','left');
 		$this->db->group_by('b.product_id');
 		$this->db->group_by('b.variant_id');
 		$this->db->group_by('a.store_id');

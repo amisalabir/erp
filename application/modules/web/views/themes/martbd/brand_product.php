@@ -1,10 +1,4 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php 
-    $is_aff = false;
-    if(check_module_status('affiliate_products') == 1){
-        $is_aff = true;
-    }
- ?>
 <?php
 $CI =& get_instance();
 ?>
@@ -417,27 +411,20 @@ $CI =& get_instance();
                                             </div><!-- Rating -->
                                         </div><!-- /.price-add-to-cart -->
                                         <div class="box-bottom">
+
                                             <div class="btn-add-cart">
+                                                <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product['product_id']; ?>', '<?php echo remove_space($product['product_name']); ?>', '<?php echo $product['default_variant']; ?>');">
 
-                                                <?php if($is_aff){ if($product['is_affiliate'] == 1 ){ ?>
-                                                        <a href="<?php echo html_escape($product['affiliate_url']) ?>" target="0">
-                                                            <img src="<?php echo base_url('assets/website/image/add-cart.png') ?>" alt=""><?php echo display('buy_now') ?>
-                                                        </a>
-                                                <?php }else{ ?> 
-                                                    <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product['product_id']; ?>', '<?php echo remove_space($product['product_name']); ?>', '<?php echo $product['default_variant']; ?>', <?php echo $product['variant_price']; ?>);">
-                                                        <img src="<?php echo base_url('assets/website/image/add-cart.png') ?>" alt=""><?php echo display('add_to_cart') ?>
-                                                    </a>
-                                                <?php } }else{ ?>
-                                                    <a  href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product['product_id']; ?>', '<?php echo remove_space($product['product_name']); ?>', '<?php echo $product['default_variant']; ?>', <?php echo $product['variant_price']; ?>);">
-                                                        <img src="<?php echo base_url('assets/website/image/add-cart.png') ?>" alt=""><?php echo display('add_to_cart') ?>
-                                                    </a>
-                                                <?php }  ?>
-
+                                                    <img src="<?php echo base_url('assets/website/image/add-cart.png') ?>"
+                                                         alt=""><?php echo display('add_to_cart') ?>
+                                                </a>
                                             </div>
+
                                             <div class="compare-wishlist">
                                                 <a href="javascript:void(0)" class="wishlist" title=""
                                                    name="<?php echo html_escape($product['product_id']) ?>">
-                                                    <img src="<?php echo base_url('assets/website/image/wishlist.png') ?>" alt=""><?php echo display('wishlist') ?>
+                                                    <img src="<?php echo base_url('assets/website/image/wishlist.png') ?>"
+                                                         alt=""><?php echo display('wishlist') ?>
                                                 </a>
                                             </div>
                                         </div><!-- /.box-bottom -->

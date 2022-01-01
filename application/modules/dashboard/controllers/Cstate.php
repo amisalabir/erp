@@ -4,12 +4,18 @@ class Cstate extends MX_Controller{
     function __construct() {
         parent::__construct();
         $this->load->model('dashboard/States');
-        $this->auth->check_user_auth();
+
+        $this->auth->check_admin_auth();
+
+        //User validation check
+        if ($this->session->userdata('user_type') == '2') {
+            $this->session->set_userdata(array('error_message'=>display('you_are_not_access_this_part')));
+            redirect('Admin_dashboard');
+        }
+
     }
     public function index($page = 0)
     {
-        $this->permission->check_label('manage_states')->read()->redirect();
-
         $filter = array(
             'country' => $this->input->get('country', TRUE),
             'state' => $this->input->get('state', TRUE)
@@ -55,8 +61,6 @@ class Cstate extends MX_Controller{
     }
     // State add
     public function state_add(){
-        $this->permission->check_label('add_state')->create()->redirect();
-
         $this->form_validation->set_rules('country', display('country'), 'trim|required');
         $this->form_validation->set_rules('state', display('state'), 'trim|required');
 
@@ -90,8 +94,6 @@ class Cstate extends MX_Controller{
 
     // State add
     public function state_edit($state_id){
-        $this->permission->check_label('manage_states')->update()->redirect();
-
         $this->form_validation->set_rules('country', display('country'), 'trim|required');
         $this->form_validation->set_rules('state', display('state'), 'trim|required');
 
@@ -122,7 +124,6 @@ class Cstate extends MX_Controller{
 
     public function state_delete($state_id)
     {
-        $this->permission->check_label('manage_states')->delete()->redirect();
         
         $result = $this->db->delete('states', array('id' => $state_id));
 

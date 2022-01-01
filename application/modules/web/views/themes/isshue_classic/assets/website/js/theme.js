@@ -223,18 +223,6 @@
     
     //  WoW JS 
     new WOW().init();
-
-
-     /*------------------------------------
-     00. Popup Video
-     -------------------------------------- */
-    $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
-        type: 'iframe',
-        mainClass: 'mfp-fade',
-        removalDelay: 160,
-        preloader: false,
-        fixedContentPos: false
-    });
         
     
 })(jQuery);   

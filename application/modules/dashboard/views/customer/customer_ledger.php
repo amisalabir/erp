@@ -44,13 +44,9 @@
 
 	    <div class="row">
             <div class="col-sm-12">
-
                 <div class="column">
-                	<?php if($this->permission->check_label('manage_customer')->read()->access()){ ?>
-                  		<a href="<?php echo base_url('dashboard/Ccustomer/manage_customer')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_customer')?></a>
-              		<?php }if($this->permission->check_label('customer_ledger')->read()->access()){?>
-                  		<a href="<?php echo base_url('dashboard/Ccustomer/customer_ledger_report')?>" class="btn btn-warning m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('customer_ledger')?></a>
-                  	<?php } ?>
+                  <a href="<?php echo base_url('dashboard/Ccustomer/manage_customer')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_customer')?></a>
+                  <a href="<?php echo base_url('dashboard/Ccustomer/customer_ledger_report')?>" class="btn btn-warning m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('customer_ledger')?></a>
                 </div>
             </div>
         </div>
@@ -132,12 +128,11 @@
 									<tr>
 										<td><?php echo html_escape($v_ledger['final_date']);?></td>
 										<td>
-                                           <?php if($this->permission->check_label('new_sale')->access()){
-                                            if ($v_ledger['invoice_no'] !='NA'){ ?>
+                                           <?php if ($v_ledger['invoice_no'] !='NA'){ ?>
 											<a href="<?php echo base_url().'dashboard/Cinvoice/invoice_inserted_data/'.$v_ledger['invoice_no']; ?>">
 												<?php echo  html_escape($v_ledger['invoice_no']);?>  <i class="fa fa-tasks pull-right" aria-hidden="true"></i>
 											</a>
-                                           <?php } } ?>
+                                           <?php } ?>
 										</td>
 										<td>
 											<?php echo html_escape($v_ledger['receipt_no']); ?>

@@ -43,9 +43,8 @@
 	    <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                  	<?php if($this->permission->check_label('closing')->read()->access()){ ?>
-                  		<a href="<?php echo base_url('dashboard/Caccounts/closing')?>" class="btn btn-success color4 m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('closing')?></a>
-                  	<?php } ?>
+                  
+                  <a href="<?php echo base_url('dashboard/Caccounts/closing')?>" class="btn btn-success color4 m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('closing')?></a>
                 </div>
             </div>
         </div>

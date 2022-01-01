@@ -55,11 +55,8 @@ $this->session->unset_userdata('error_message');
 <div class="row">
 <div class="col-sm-12">
     <div class="column">
-        <?php if($this->permission->check_label('manage_sale')->read()->access()){?>
         <a href="<?php echo base_url('Cinvoice/manage_invoice')?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_invoice')?></a>
-        <?php }if($this->permission->check_label('pos_sale')->read()->access()){ ?>
         <a href="<?php echo base_url('Cinvoice/pos_invoice')?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('pos_invoice')?></a>
-        <?php } ?>
     </div>
 </div>
 </div>
@@ -121,7 +118,9 @@ $this->session->unset_userdata('error_message');
                     <div class="form-group row">
                         <label for="date" class="col-sm-4 col-form-label"><?php echo display('date') ?> <i class="text-danger">*</i></label>
                         <div class="col-sm-8">
-                           <?php date_default_timezone_set(DEF_TIMEZONE); $date = date('m-d-Y'); ?>
+                           <?php 
+date_default_timezone_set(DEF_TIMEZONE); 
+$date = date('m-d-Y'); ?>
                             <input class="form-control datepicker" type="text" size="50" name="invoice_date" id="date" required value="<?php echo $date; ?>" />
                         </div>
                     </div>
@@ -181,52 +180,52 @@ $this->session->unset_userdata('error_message');
                             </td>
 
                             <td>
-                                <?php
-                                //Tax basic info
-                                $this->db->select('*');
-                                $this->db->from('tax');
-                                $this->db->order_by('tax_name','asc');
-                                $tax_information = $this->db->get()->result();
+<?php
+//Tax basic info
+$this->db->select('*');
+$this->db->from('tax');
+$this->db->order_by('tax_name','asc');
+$tax_information = $this->db->get()->result();
 
-                                if(!empty($tax_information)){
-                                foreach($tax_information as $k=>$v){
-                                if ($v->tax_id == 'H5MQN4NXJBSDX4L') {
-                                    $tax['cgst_name']= $v->tax_name; 
-                                    $tax['cgst_id']  = $v->tax_id; 
-                                    $tax['cgst_status']  = $v->status; 
-                                }elseif($v->tax_id == '52C2SKCKGQY6Q9J'){
-                                    $tax['sgst_name']= $v->tax_name; 
-                                    $tax['sgst_id']  = $v->tax_id; 
-                                    $tax['sgst_status']  = $v->status; 
-                                }elseif($v->tax_id == '5SN9PRWPN131T4V'){
-                                    $tax['igst_name']   = $v->tax_name; 
-                                    $tax['igst_id']     = $v->tax_id; 
-                                    $tax['igst_status'] = $v->status; 
-                                }
-                                }
-                                }
-                                ?>
+if(!empty($tax_information)){
+foreach($tax_information as $k=>$v){
+if ($v->tax_id == 'H5MQN4NXJBSDX4L') {
+    $tax['cgst_name']= $v->tax_name; 
+    $tax['cgst_id']  = $v->tax_id; 
+    $tax['cgst_status']  = $v->status; 
+}elseif($v->tax_id == '52C2SKCKGQY6Q9J'){
+    $tax['sgst_name']= $v->tax_name; 
+    $tax['sgst_id']  = $v->tax_id; 
+    $tax['sgst_status']  = $v->status; 
+}elseif($v->tax_id == '5SN9PRWPN131T4V'){
+    $tax['igst_name']   = $v->tax_name; 
+    $tax['igst_id']     = $v->tax_id; 
+    $tax['igst_status'] = $v->status; 
+}
+}
+}
+?>
 
-                                <!-- Tax calculate start-->
-                                <?php if ($tax['cgst_status'] ==1) { ?>
-                                <input type="hidden" id="cgst_1" class="cgst"/> 
-                                <input type="hidden" id="total_cgst_1" class="total_cgst" name="cgst[]" /> 
-                                <input type="hidden" name="cgst_id[]" id="cgst_id_1">
-                                <?php } if ($tax['sgst_status'] ==1) { ?>  
-                                <input type="hidden" id="sgst_1" class="sgst"/>
-                                <input type="hidden" id="total_sgst_1" class="total_sgst" name="sgst[]"/>
-                                <input type="hidden" name="sgst_id[]" id="sgst_id_1">
-                                <?php } if ($tax['igst_status'] ==1) { ?>   
-                                <input type="hidden" id="igst_1" class="igst"/>
-                                <input type="hidden" id="total_igst_1" class="total_igst" name="igst[]"/>
-                                <input type="hidden" name="igst_id[]" id="igst_id_1">
-                                <?php } ?>
-                                <!-- Tax calculate end -->
+<!-- Tax calculate start-->
+<?php if ($tax['cgst_status'] ==1) { ?>
+<input type="hidden" id="cgst_1" class="cgst"/> 
+<input type="hidden" id="total_cgst_1" class="total_cgst" name="cgst[]" /> 
+<input type="hidden" name="cgst_id[]" id="cgst_id_1">
+<?php } if ($tax['sgst_status'] ==1) { ?>  
+<input type="hidden" id="sgst_1" class="sgst"/>
+<input type="hidden" id="total_sgst_1" class="total_sgst" name="sgst[]"/>
+<input type="hidden" name="sgst_id[]" id="sgst_id_1">
+<?php } if ($tax['igst_status'] ==1) { ?>   
+<input type="hidden" id="igst_1" class="igst"/>
+<input type="hidden" id="total_igst_1" class="total_igst" name="igst[]"/>
+<input type="hidden" name="igst_id[]" id="igst_id_1">
+<?php } ?>
+<!-- Tax calculate end -->
 
-                                <!-- Discount calculate start-->
-                                <input type="hidden" id="total_discount_1" class="" />
-                                <input type="hidden" id="all_discount_1" class="total_discount"/>
-                                <!-- Discount calculate end -->
+<!-- Discount calculate start-->
+<input type="hidden" id="total_discount_1" class="" />
+<input type="hidden" id="all_discount_1" class="total_discount"/>
+<!-- Discount calculate end -->
 
                                 <button  class="btn btn-danger text-right" type="button" value="<?php echo display('delete')?>" onclick="deleteRow(this)"><?php echo display('delete')?>
                                 </button>

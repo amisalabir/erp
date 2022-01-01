@@ -13,7 +13,9 @@ class Customer_dashboard extends MX_Controller
         $this->load->model('dashboard/Wishlists');
         $this->load->model('dashboard/soft_settings');
         $this->user_auth->check_customer_auth();
+
     }
+
 
     //Default customer index load.
     public function index()
@@ -36,9 +38,10 @@ class Customer_dashboard extends MX_Controller
         );
          $content = $this->parser->parse('web/customer/include/customer_home', $data, true);
         $this->template_lib->full_customer_html_view($content);
+
     }
 
-    #========Logout=======#
+    #===============Logout=======#
     public function logout()
     {
         if ($this->user_auth->logout())
@@ -73,7 +76,7 @@ class Customer_dashboard extends MX_Controller
             'state_list' => $state_list,
             'country_list' => $country_list,
         );
-        
+
         $data['Soft_settings'] = $this->soft_settings->retrieve_setting_editdata();
         $data['module'] = "web";
         $data['page'] = "customer/edit_profile";
@@ -93,6 +96,7 @@ class Customer_dashboard extends MX_Controller
     #=============Change Password Form=========#
     public function change_password_form()
     {
+
         $data['Soft_settings'] = $this->soft_settings->retrieve_setting_editdata();
         $data['title'] = display('change_password');
         $data['module'] = "web";
@@ -156,6 +160,7 @@ class Customer_dashboard extends MX_Controller
         echo $html;
     }
 
+
     // show wishlist
 
     public function wishlist()
@@ -178,9 +183,11 @@ class Customer_dashboard extends MX_Controller
             'wishlists' => $wishlists
         ];
 
-        $content = $this->parser->parse('web/customer/wishlist', $data, true);
+         $content = $this->parser->parse('web/customer/wishlist', $data, true);
         $this->template_lib->full_customer_html_view($content);
+
     }
+
 
     //delete wishlist
     public function wishlist_delete($wishlist_id)
@@ -189,6 +196,8 @@ class Customer_dashboard extends MX_Controller
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('web/customer/customer_dashboard/wishlist');
     }
+
+
 }
 
 

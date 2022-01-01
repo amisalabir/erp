@@ -45,11 +45,10 @@
 	    <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('add_supplier')->create()->access()){ ?>
+                
                   <a href="<?php echo base_url('dashboard/Csupplier')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_supplier')?></a>  
-                <?php }if($this->permission->check_label('manage_supplier')->read()->access()){ ?>
+
                   <a href="<?php echo base_url('dashboard/Csupplier/manage_supplier')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_supplier')?></a>
-                <?php } ?>
 
                 </div>
             </div>
@@ -73,7 +72,7 @@
 			                        </select>
 	                            </div>
 	                            <div class="col-sm-2">
-	                            	<button type="submit" class="btn btn-success"><?php echo display('search')?></button>
+	                            <button type="submit" class="btn btn-success"><?php echo display('search')?></button>
 	                        	</div>
 	                        </div>
 		               <?php echo form_close(); ?>		            

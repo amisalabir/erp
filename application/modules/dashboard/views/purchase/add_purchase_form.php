@@ -46,9 +46,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                    <?php if($this->permission->check_label('manage_purchase')->read()->access()){ ?>
-                        <a href="<?php echo base_url('dashboard/Cpurchase/manage_purchase')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_purchase')?></a>  
-                    <?php } ?>
+                  <a href="<?php echo base_url('dashboard/Cpurchase/manage_purchase')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_purchase')?></a>  
                 </div>
             </div>
         </div>
@@ -207,18 +205,11 @@
                                         </td>
 
                                         <td class="text-center">
-                                            <div class="variant_id_div">
-                                                <select name="variant_id[]" id="variant_id_1" class="form-control variant_id width_100p" required="">
-                                                    <?php foreach($variant_list as $variant):?>
-                                                    <option value="<?php echo html_escape($variant['variant_id'])?>"><?php echo html_escape($variant['variant_name'])?></option>
-                                                <?php endforeach;?>
-                                                </select>
-                                            </div>
-                                            <div id="color_variant_area_1">
-                                                 <select name="color_variant[]" id="color_variant_1" class="form-control color_variant width_100p">
-                                                    <option value=""></option>
-                                                 </select>
-                                            </div>
+                                            <select name="variant_id[]" id="variant_id_1" class="form-control variant_id width_100p" required="">
+                                                <?php foreach($variant_list as $variant):?>
+                                                <option value="<?php echo html_escape($variant['variant_id'])?>"><?php echo html_escape($variant['variant_name'])?></option>
+                                            <?php endforeach;?>
+                                            </select>
                                         </td>  
 
                                         <td class="text-right">

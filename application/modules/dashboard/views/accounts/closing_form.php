@@ -44,9 +44,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('closing_report')->read()->redirect()){ ?>
-                      <a href="<?php echo base_url('dashboard/Caccounts/closing_report')?>" class="btn btn-success color4 m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('closing_report')?></a>
-                <?php } ?>
+                  
+                  <a href="<?php echo base_url('dashboard/Caccounts/closing_report')?>" class="btn btn-success color4 m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('closing_report')?></a>
                 </div>
             </div>
         </div>

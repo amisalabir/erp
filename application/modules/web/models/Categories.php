@@ -355,8 +355,8 @@ class Categories extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('product_information');
-        $this->db->where('category_id',$cat_id);
-        $this->db->limit($per_page,$page);
+        $this->db->where('category_id', $cat_id);
+        $this->db->limit($per_page, $page);
         $this->db->order_by('product_name');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {

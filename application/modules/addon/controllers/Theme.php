@@ -15,7 +15,7 @@ class Theme extends MX_Controller {
 	function __construct() {
       	parent::__construct();
       	$this->load->model(array('themes_model', 'addons_model'));
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
     public function index()
     {
@@ -46,7 +46,7 @@ class Theme extends MX_Controller {
         $this->db->set('status', 1)->where('name', $name)->update('themes');
         $this->db->set('status', 0)->where('name !=', $name)->update('themes');
         $sdata['message'] = display("theme_active_successfully");
-        $this->session->set_flashdata($sdata);
+        $this->session->set_userdata($sdata);
         redirect('addon/theme');
     }
 
@@ -119,7 +119,7 @@ class Theme extends MX_Controller {
                 } else {
                     $sdata['exception'] = display("there_was_a_problem_with_the_upload");
                 }
-                $this->session->set_flashdata($sdata);
+                $this->session->set_userdata($sdata);
                 redirect('addon/theme');
             }
           }else{

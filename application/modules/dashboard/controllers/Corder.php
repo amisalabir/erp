@@ -6,7 +6,6 @@ class Corder extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        $this->auth->check_user_auth();
         $this->load->model(array(
             'dashboard/Orders',
             'web/Homes',
@@ -27,16 +26,15 @@ class Corder extends MX_Controller
 
     public function index()
     {
-        $this->permission->check_label('new_order')->create()->redirect();
-
+        $this->auth->check_admin_auth();
         $content = $this->lorder->order_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
 
     public function new_order()
     {
-        $this->permission->check_label('new_order')->create()->redirect();
-
+        $this->auth->check_admin_auth();
+        $this->load->library('dashboard/lorder');
         $content = $this->lorder->order_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -46,8 +44,7 @@ class Corder extends MX_Controller
     //Insert product and upload
     public function insert_order()
     {
-        $this->permission->check_label('new_order')->create()->redirect();
-
+        $this->auth->check_admin_auth();
         $customer_id = $this->input->post('customer_id',TRUE);
         $customer = $this->db->select('*')->from('customer_information')->where('customer_id', $customer_id)->get()->row();
 
@@ -116,7 +113,7 @@ class Corder extends MX_Controller
     //Retrive right now inserted data to cretae html
     public function order_inserted_data($order_id)
     {
-        
+        $this->auth->check_admin_auth();
         $content = $this->lorder->order_html_data($order_id);
 
         $this->template_lib->full_admin_html_view($content);
@@ -124,9 +121,9 @@ class Corder extends MX_Controller
     //Retrive right now inserted data to cretae html
     public function order_details_data($order_id)
     {   
-        $this->permission->check_label('manage_order')->read()->redirect();
-
         $CI =& get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('dashboard/lorder');
         $content = $CI->lorder->order_details_data($order_id);  
         $this->template_lib->full_admin_html_view($content);
     }
@@ -135,8 +132,6 @@ class Corder extends MX_Controller
     //Retrive order PDF Page
     public function order_details_pdf($order_id)
     {
-        $this->permission->check_label('manage_order')->read()->redirect();
-
         $order_detail = $this->Orders->retrieve_order_html_data($order_id);
         $payinfo = $this->Orders->get_order_payinfo($order_id);
         $subTotal_quantity = 0;
@@ -188,52 +183,34 @@ class Corder extends MX_Controller
 
     public function manage_order()
     {   
-        $this->permission->check_label('manage_order')->read()->redirect();
-
-        $filter = array(
-            'order_no' => $this->input->get('order_no', TRUE),
-            'customer_name' => $this->input->get('customer_name', TRUE),
-            'order_date' => $this->input->get('date', TRUE),
-            'invoice_status' => $this->input->get('invoice_status', TRUE)
-        );
-
-        $config["base_url"] = base_url('dashboard/Corder/manage_order');
-        $config["total_rows"] = $this->Orders->count_order_list($filter);
-
-        $config["per_page"] = 20;
-        $config["uri_segment"] = 4;
-        $config["num_links"] = 5;
-        /* This Application Must Be Used With BootStrap 3 * */
-        $config['full_tag_open'] = "<ul class='pagination'>";
-        $config['full_tag_close'] = "</ul>";
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
-        $config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
-        $config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-        $config['next_tag_open'] = "<li>";
-        $config['next_tag_close'] = "</li>";
-        $config['prev_tag_open'] = "<li>";
-        $config['prev_tagl_close'] = "</li>";
-        $config['first_tag_open'] = "<li>";
-        $config['first_tagl_close'] = "</li>";
-        $config['last_tag_open'] = "<li>";
-        $config['last_tagl_close'] = "</li>";
-        /* ends of bootstrap */
-        $this->pagination->initialize($config);
-        $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-        $links = $this->pagination->create_links();
-
-        $content = $this->lorder->order_list($filter, $page, $config["per_page"], $links);
+        $CI =& get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->library('dashboard/lorder');
+        $CI->load->model('dashboard/Orders');
+        $CI->load->model('dashboard/Reports');
+        $content = $CI->lorder->order_list();
+        
         $this->template_lib->full_admin_html_view($content);
     }
-
+    public function manage_due_order()
+    {   
+        $CI =& get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->library('dashboard/lorder');
+        $CI->load->model('dashboard/Orders');
+        $CI->load->model('dashboard/Reports');
+        $content = $CI->lorder->due_order_list();
+        
+        $this->template_lib->full_admin_html_view($content);
+    }
 
     //order Update Form
     public function order_update_form($order_id)
     {   
-        $this->permission->check_label('manage_order')->update()->redirect();
-        
-        $content = $this->lorder->order_edit_data($order_id);
+        $CI =& get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('dashboard/lorder');
+        $content = $CI->lorder->order_edit_data($order_id);
         $this->template_lib->full_admin_html_view($content);
     }
 
@@ -241,8 +218,7 @@ class Corder extends MX_Controller
     // order Update
     public function order_update()
     {
-        $this->permission->check_label('manage_order')->update()->redirect();
-
+        $this->auth->check_admin_auth();
         $order_id = $this->Orders->update_order();
         //pdf generate start
         $order_detail = $this->Orders->retrieve_order_html_data($order_id);
@@ -305,6 +281,8 @@ class Corder extends MX_Controller
     //Search Inovoice Item
     public function search_inovoice_item()
     {
+        $this->auth->check_admin_auth();
+
         $customer_id = $this->input->post('customer_id',TRUE);
         $content = $this->lorder->search_inovoice_item($customer_id);
         $this->template_lib->full_admin_html_view($content);
@@ -314,6 +292,7 @@ class Corder extends MX_Controller
     public function order_paid_data($order_id)
     {
 
+        $this->auth->check_admin_auth();
         $order_id = $this->Orders->order_paid_data($order_id);
         $this->session->set_userdata(array('message' => display('successfully_added')));
         redirect('dashboard/Corder/manage_order');
@@ -330,8 +309,7 @@ class Corder extends MX_Controller
     // product_delete
     public function order_delete($order_id)
     {
-        $this->permission->check_label('manage_order')->delete()->redirect();
-
+        $this->auth->check_admin_auth();
         $result = $this->Orders->delete_order($order_id);
         if ($result) {
             $this->session->set_userdata(array('message' => display('successfully_delete')));
@@ -344,6 +322,7 @@ class Corder extends MX_Controller
     //AJAX order STOCKs
     public function product_stock_check($product_id)
     {
+        $this->auth->check_admin_auth();
         $purchase_stocks = $this->Orders->get_total_purchase_item($product_id);
         $total_purchase = 0;
         if (!empty($purchase_stocks)) {
@@ -366,6 +345,7 @@ class Corder extends MX_Controller
     //Search product by product name and category
     public function search_product()
     {
+        $this->auth->check_admin_auth();
         $product_name = $this->input->post('product_name',TRUE);
         $category_id = $this->input->post('category_id',TRUE);
         $product_search = $this->Orders->product_search($product_name, $category_id);
@@ -390,6 +370,7 @@ class Corder extends MX_Controller
     public function insert_customer()
     {
 
+        $this->auth->check_admin_auth();
         $customer_id = generator(15);
         //Customer  basic information adding.
         $data = array(

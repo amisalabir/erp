@@ -224,6 +224,7 @@ class Customers extends CI_Model {
 	{
 		$this->db->select('*');
 		$this->db->from('customer_ledger');
+		$this->db->order_by('invoice_no','DESC');
 		$this->db->where(array('customer_id'=>$customer_id,'status'=>1));
 		$query = $this->db->get();
 		if ($query->num_rows() > 0) {

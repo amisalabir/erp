@@ -10,13 +10,12 @@ class Cweb_footer extends MX_Controller
         $this->load->model(array(
             'dashboard/Web_footers'
         ));
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
 
     //Default loading for web_footer system.
     public function index()
     {
-        $this->permission->check_label('web_footer')->create()->redirect();
 
         $content = $this->lweb_footer->web_footer_add_form();
         $this->template_lib->full_admin_html_view($content);
@@ -25,8 +24,7 @@ class Cweb_footer extends MX_Controller
     //Insert web_footer
     public function insert_web_footer()
     {
-        $this->permission->check_label('web_footer')->create()->redirect();
-        
+
         $this->form_validation->set_rules('headlines', display('headlines'), 'trim|required');
         $this->form_validation->set_rules('details', display('details'), 'trim|required');
         $this->form_validation->set_rules('position', display('position'), 'trim|required');
@@ -71,15 +69,12 @@ class Cweb_footer extends MX_Controller
     //Manage web_footer
     public function manage_web_footer()
     {
-        $this->permission->check_label('web_footer')->read()->redirect();
-
         $content =$this->lweb_footer->web_footer_list();
         $this->template_lib->full_admin_html_view($content);;
     }
     //web_footer Update Form
     public function web_footer_update_form($footer_section_id)
-    { 
-        $this->permission->check_label('web_footer')->update()->redirect();  
+    {   
         $content = $this->lweb_footer->web_footer_edit_data($footer_section_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -87,8 +82,6 @@ class Cweb_footer extends MX_Controller
     // web_footer Update
     public function web_footer_update($footer_section_id = null)
     {
-
-        $this->permission->check_label('web_footer')->update()->redirect();
 
         $this->form_validation->set_rules('headlines', display('headlines'), 'trim|required');
         $this->form_validation->set_rules('details', display('details'), 'trim|required');
@@ -123,8 +116,6 @@ class Cweb_footer extends MX_Controller
     // web_footer Delete
     public function web_footer_delete($footer_section_id)
     {
-        $this->permission->check_label('web_footer')->delete()->redirect();
-
         $this->Web_footers->delete_web_footer($footer_section_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('dashboard/Cweb_footer/manage_web_footer');
@@ -133,8 +124,6 @@ class Cweb_footer extends MX_Controller
     //Inactive
     public function inactive($id)
     {
-        $this->permission->check_label('web_footer')->update()->redirect();
-
         $this->db->set('status', 0);
         $this->db->where('footer_section_id', $id);
         $this->db->update('web_footer');
@@ -145,8 +134,6 @@ class Cweb_footer extends MX_Controller
     //Active
     public function active($id)
     {
-        $this->permission->check_label('web_footer')->update()->redirect();
-
         $this->db->set('status', 1);
         $this->db->where('footer_section_id', $id);
         $this->db->update('web_footer');

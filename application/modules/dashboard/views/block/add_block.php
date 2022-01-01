@@ -47,9 +47,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                    <?php if($this->permission->check_label('block')->read()->access()){ ?>
-                        <a href="<?php echo base_url('dashboard/Cblock')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_block')?></a>
-                    <?php } ?>
+                
+                  <a href="<?php echo base_url('dashboard/Cblock')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_block')?></a>
+
                 </div>
             </div>
         </div>

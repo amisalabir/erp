@@ -45,14 +45,12 @@
 	    <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('add_product')->create()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Cproduct')?>" class="btn -btn-info color4 color5 m-b-5 m-r-2"><i class="ti-plus"> </i><?php echo display('add_product')?></a>
-                <?php }if($this->permission->check_label('import_product_csv')->create()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Cproduct/add_product_csv')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i><?php echo display('import_product_csv')?></a>
-                <?php } ?>
-                <?php if($this->permission->check_label('manage_product')->read()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Cproduct/manage_product')?>" class="btn btn-warning m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('manage_product')?></a>
-                <?php } ?>
+                
+                  <a href="<?php echo base_url('dashboard/Cproduct')?>" class="btn -btn-info color4 color5 m-b-5 m-r-2"><i class="ti-plus"> </i><?php echo display('add_product')?></a>
+
+                  <a href="<?php echo base_url('dashboard/Cproduct/add_product_csv')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i><?php echo display('import_product_csv')?></a>
+
+                  <a href="<?php echo base_url('dashboard/Cproduct/manage_product')?>" class="btn btn-warning m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('manage_product')?></a>
 
                 </div>
             </div>

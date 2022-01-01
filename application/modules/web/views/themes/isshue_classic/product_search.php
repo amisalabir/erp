@@ -1,10 +1,4 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php 
-    $is_aff = false;
-    if(check_module_status('affiliate_products') == 1){
-        $is_aff = true;
-    }
- ?>
 <!--========== Page Header Area ==========-->
 <?php if (!empty($select_category_adds)) {
     foreach ($select_category_adds as $ads):
@@ -220,12 +214,6 @@ if (!(empty($category_product))) {
                                         <div class="item_hover">
                                             <ul class="nav">
                                                 <li>
-                                                    <a href="javascript:void(0)" class="compare"
-                                                        onclick="comparison_btn(<?php echo html_escape($product->product_id) ?>)">
-                                                        <i class="fa fa-balance-scale"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
                                                     <a href="#" class="wishlist"
                                                        name="<?php echo html_escape($product->product_id) ?>"><i
                                                                 class="fa fa-heart"></i></a>
@@ -240,26 +228,13 @@ if (!(empty($category_product))) {
                                                 </li>
                                             </ul>
                                             <div class="addtocard">
-                                                <?php if($is_aff){ 
-                                                    if($product->is_affiliate == 1 ){ ?>
-                                                        <a href="<?php echo html_escape($product->affiliate_url) ?>" target="0">
-                                                            <button type="button" class="cart_button color2"><?php echo display('buy_now') ?></button>
-                                                        </a>
-                                                <?php }else{ ?> 
-                                                    <?php echo form_open('');?>
-                                                        <input type="hidden" id="sst" value="1">
-                                                        <a href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>', <?php echo $product->variant_price; ?>);">
-                                                            <button type="button" class="cart_button color2"><?php echo display('add_to_cart') ?></button>
-                                                        </a>
-                                                    <?php echo form_close(); ?>
-                                                <?php } }else{ ?>
-                                                    <?php echo form_open('');?>
-                                                        <input type="hidden" id="sst" value="1">
-                                                        <a href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>', <?php echo $product->variant_price; ?>);">
-                                                            <button type="button" class="cart_button color2"><?php echo display('add_to_cart') ?></button>
-                                                        </a>
-                                                    <?php echo form_close(); ?>
-                                                <?php }  ?>
+                                                <?php echo form_open('');?>
+                                                    <input type="hidden" id="sst" value="1">
+                                                    <a href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>');">
+
+                                                        <button type="button" class="cart_button color2"><?php echo display('add_to_cart') ?></button>
+                                                    </a>
+                                                <?php echo form_close(); ?>
                                             </div>
                                         </div>
                                     </div>

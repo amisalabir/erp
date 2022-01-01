@@ -44,12 +44,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('add_state')->create()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/cstate/state_add')?>" class="btn -btn-info color4 color5 m-b-5 m-r-2">
-                  		<i class="ti-plus"> </i> <?php echo display('add')." ".display('state'); ?>
-              		</a>
-              	<?php } ?>
-
+                
+                  <a href="<?php echo base_url('dashboard/cstate/state_add')?>" class="btn -btn-info color4 color5 m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add')." ".display('state'); ?></a>
                 </div>
             </div>
         </div>
@@ -121,13 +117,9 @@
 										<td class="text-center"><?php echo html_escape($state['name'])?></td>
 										<td>
 											<center>
-												<?php if($this->permission->check_label('manage_states')->update()->access()){ ?>
 												<a href="<?php echo base_url().'dashboard/cstate/state_edit/'.$state['id']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-												<?php }if($this->permission->check_label('manage_states')->delete()->access()){ ?>
-												<a href="<?php echo base_url('dashboard/cstate/state_delete/'.$state['id'])?>" class="delete_store_product btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo display('delete') ?> ">
-													<i class="fa fa-trash-o" aria-hidden="true"></i>
-												</a>
-												<?php } ?>
+
+												<a href="<?php echo base_url('dashboard/cstate/state_delete/'.$state['id'])?>" class="delete_store_product btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											</center>
 										</td>
 									</tr>

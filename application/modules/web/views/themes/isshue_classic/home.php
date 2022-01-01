@@ -1,10 +1,4 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php 
-    $is_aff = false;
-    if(check_module_status('affiliate_products') == 1){
-        $is_aff = true;
-    }
- ?>
 <!--========= Slider Area =======-->
 <section class="slider_area">
     <div class="container"> 
@@ -282,14 +276,9 @@ if ($block['block_style'] == 1) {
                         </div>
                     <?php } ?>
                 </div>
+
                 <div class="item_hover">
                     <ul class="nav">
-                        <li>
-                            <a href="javascript:void(0)" class="compare"
-                                onclick="comparison_btn(<?php echo html_escape($cat_pro[$i]['product_id']) ?>)">
-                                <i class="fa fa-balance-scale"></i>
-                            </a>
-                        </li>
                         <li>
                             <a href="#" class="wishlist"
                                name="<?php echo html_escape($cat_pro[$i]['product_id']) ?>"
@@ -308,30 +297,15 @@ if ($block['block_style'] == 1) {
                                         class="fa fa-arrows"></i></a>
                         </li>
                     </ul>
-                    
                     <div class="addtocard">
-                        <?php if($is_aff){ 
-                            if($cat_pro[$i]['is_affiliate'] == 1 ){ ?>
-                                <a href="<?php echo html_escape($cat_pro[$i]['affiliate_url']) ?>" target="0">
-                                    <button type="button" class="cart_button color2"><?php echo display('buy_now') ?></button>
-                                </a>
-                        <?php }else{ ?> 
-                            <?php echo form_open('');?>
-                                <input type="hidden" id="sst" value="1">
-                                <a href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $cat_pro[$i]['product_id']; ?>', '<?php echo remove_space($cat_pro[$i]['product_name']); ?>', '<?php echo $cat_pro[$i]['default_variant']; ?>', <?php echo $cat_pro[$i]['variant_price']; ?>);">
-                                    <button type="button" class="cart_button color2"><?php echo display('add_to_cart') ?></button>
-                                </a>
-                            <?php echo form_close(); ?>
-                        <?php } }else{ ?>
-                            <?php echo form_open('');?>
-                                <input type="hidden" id="sst" value="1">
-                                <a href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $cat_pro[$i]['product_id']; ?>', '<?php echo remove_space($cat_pro[$i]['product_name']); ?>', '<?php echo $cat_pro[$i]['default_variant']; ?>', <?php echo $cat_pro[$i]['variant_price']; ?>);">
-                                    <button type="button" class="cart_button color2"><?php echo display('add_to_cart') ?></button>
-                                </a>
-                            <?php echo form_close(); ?>
-                        <?php }  ?>
+                        <?php echo form_open('')?>
+                            <input type="hidden" value="1">
+                            <a href="<?php echo base_url('product_details/' . remove_space($cat_pro[$i]['product_name']) . '/' . $cat_pro[$i]['product_id']) ?>">
+                                <button type="button"
+                                        class="cart_button color2"><?php echo display('add_to_cart') ?></button>
+                            </a>
+                        <?php echo form_close(); ?>
                     </div>
-                    
                 </div>
             </div>
         </div>
@@ -535,12 +509,6 @@ if ($block['block_style'] == 1) {
                         <div class="item_hover">
                             <ul class="nav">
                                 <li>
-                                    <a href="javascript:void(0)" class="compare"
-                                        onclick="comparison_btn(<?php echo html_escape($cat_pro[$i]['product_id']) ?>)">
-                                        <i class="fa fa-balance-scale"></i>
-                                    </a>
-                                </li>
-                                <li>
                                     <a href="#" class="wishlist"
                                        name="<?php echo html_escape($cat_pro[$i]['product_id']) ?>"
                                        title="<?php echo display('add_to_wishlist') ?>"><i
@@ -560,26 +528,13 @@ if ($block['block_style'] == 1) {
                             </ul>
                             <div class="addtocard">
                                 <div class="addtocard">
-                                    <?php if($is_aff){ 
-                                        if($cat_pro[$i]['is_affiliate'] == 1 ){ ?>
-                                            <a href="<?php echo html_escape($cat_pro[$i]['affiliate_url']) ?>" target="0">
-                                                <button type="button" class="cart_button color2"><?php echo display('buy_now') ?></button>
-                                            </a>
-                                    <?php }else{ ?> 
-                                        <?php echo form_open('');?>
-                                            <input type="hidden" id="sst" value="1">
-                                            <a href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $cat_pro[$i]['product_id']; ?>', '<?php echo remove_space($cat_pro[$i]['product_name']); ?>', '<?php echo $cat_pro[$i]['default_variant']; ?>', <?php echo $cat_pro[$i]['variant_price']; ?>);">
-                                                <button type="button" class="cart_button color2"><?php echo display('add_to_cart') ?></button>
-                                            </a>
-                                        <?php echo form_close(); ?>
-                                    <?php } }else{ ?>
-                                        <?php echo form_open('');?>
-                                            <input type="hidden" id="sst" value="1">
-                                            <a href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $cat_pro[$i]['product_id']; ?>', '<?php echo remove_space($cat_pro[$i]['product_name']); ?>', '<?php echo $cat_pro[$i]['default_variant']; ?>', <?php echo $cat_pro[$i]['variant_price']; ?>);">
-                                                <button type="button" class="cart_button color2"><?php echo display('add_to_cart') ?></button>
-                                            </a>
-                                        <?php echo form_close(); ?>
-                                    <?php }  ?>
+                                <?php echo form_open('')?>
+                                        <input type="hidden" value="1">
+                                        <a href="<?php echo base_url('product_details/' . remove_space($cat_pro[$i]['product_name']) . '/' . $cat_pro[$i]['product_id']) ?>">
+                                            <button type="button"
+                                                    class="cart_button color2"><?php echo display('add_to_cart') ?></button>
+                                        </a>
+                                    <?php echo form_close(); ?>
                                 </div>
                             </div>
                         </div>

@@ -9,14 +9,12 @@ class Cabout_us extends MX_Controller
 
         $this->load->library('dashboard/labout_us');
         $this->load->model('dashboard/About_us');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
 
     //Default loading for about_us system.
     public function index()
     {
-        $this->permission->check_label('why_choose_us')->create()->redirect();
-
         $content = $this->labout_us->about_us_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -24,7 +22,6 @@ class Cabout_us extends MX_Controller
     //Insert about_us
     public function insert_about_us()
     {
-        $this->permission->check_label('why_choose_us')->create()->redirect();
 
         $favicon = $this->input->post('favicon',TRUE);
         $lang_id = $this->input->post('language_id',TRUE);
@@ -80,16 +77,12 @@ class Cabout_us extends MX_Controller
     //Manage about_us
     public function manage_about_us()
     {
-        $this->permission->check_label('why_choose_us')->read()->redirect();
-
         $content =$this->labout_us->about_us_list();
         $this->template_lib->full_admin_html_view($content);;
     }
     //about_us Update Form
     public function about_us_update_form($content_id)
     {   
-        $this->permission->check_label('why_choose_us')->update()->redirect();
-
         $content = $this->labout_us->about_us_edit_data($content_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -98,7 +91,6 @@ class Cabout_us extends MX_Controller
     // about_us Update
     public function about_us_update($position = null)
     {
-        $this->permission->check_label('why_choose_us')->update()->redirect();
 
         $favicon = $this->input->post('favicon',TRUE);
         $lang_id = $this->input->post('language_id',TRUE);
@@ -151,8 +143,6 @@ class Cabout_us extends MX_Controller
     // about_us Delete
     public function about_us_delete($about_us_id)
     {
-        $this->permission->check_label('why_choose_us')->delete()->redirect();
-
         $this->About_us->delete_about_us($about_us_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('dashboard/Cabout_us/manage_about_us');
@@ -162,8 +152,6 @@ class Cabout_us extends MX_Controller
     //Inactive
     public function inactive($id)
     {
-        $this->permission->check_label('why_choose_us')->update()->redirect();
-
         $this->db->set('status', 0);
         $this->db->where('content_id', $id);
         $this->db->update('about_us');
@@ -175,7 +163,6 @@ class Cabout_us extends MX_Controller
     //Active
     public function active($id)
     {
-        $this->permission->check_label('why_choose_us')->update()->redirect();
         $this->db->set('status', 1);
         $this->db->where('content_id', $id);
         $this->db->update('about_us');

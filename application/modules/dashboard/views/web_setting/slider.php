@@ -44,9 +44,8 @@
 	    <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                	<?php if($this->permission->check_label('slider')->create()->access()){?>
-                  	<a href="<?php echo base_url('dashboard/Cweb_setting/add_slider')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_slider')?></a>
-                  	<?php } ?>
+                  <a href="<?php echo base_url('dashboard/Cweb_setting/add_slider')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_slider')?></a>
+
                 </div>
             </div>
         </div>
@@ -88,28 +87,22 @@
 											<center>
 											<?php echo form_open()?>
 												<?php
-												if($this->permission->check_label('slider')->update()->access()){
-													$status = html_escape($slider['status']);
-													if ($status == 1) {
-													?>
-														<a href="<?php echo base_url().'dashboard/Cweb_setting/inactive/'.$slider['slider_id']; ?>" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('inactive') ?>"><i class="fa fa-times" aria-hidden="true"></i></a>
-													<?php
-													}else{
-													?>
-														<a href="<?php echo base_url().'dashboard/Cweb_setting/active/'.$slider['slider_id']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('active') ?>"><i class="fa fa-check" aria-hidden="true"></i></a>
-													<?php
-													}
+												$status = html_escape($slider['status']);
+												if ($status == 1) {
+												?>
+													<a href="<?php echo base_url().'dashboard/Cweb_setting/inactive/'.$slider['slider_id']; ?>" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('inactive') ?>"><i class="fa fa-times" aria-hidden="true"></i></a>
+												<?php
+												}else{
+												?>
+													<a href="<?php echo base_url().'dashboard/Cweb_setting/active/'.$slider['slider_id']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('active') ?>"><i class="fa fa-check" aria-hidden="true"></i></a>
+												<?php
 												}
 												?>
-												<?php if($this->permission->check_label('slider')->update()->access()){ ?>
-												<a href="<?php echo base_url().'dashboard/Cweb_setting/slider_update_form/'.$slider['slider_id']; ?>" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>">
-													<i class="fa fa-pencil" aria-hidden="true"></i>
-												</a>
-												<?php }if($this->permission->check_label('slider')->delete()->redirect()){ ?>
-												<a href="<?php echo base_url('dashboard/Cweb_setting/slider_delete/'.$slider['slider_id'])?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete') ?> ">
-													<i class="fa fa-trash-o" aria-hidden="true"></i>
-												</a>
-												<?php }?>
+											
+												<a href="<?php echo base_url().'dashboard/Cweb_setting/slider_update_form/'.$slider['slider_id']; ?>" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+												<a href="<?php echo base_url('dashboard/Cweb_setting/slider_delete/'.$slider['slider_id'])?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+
 											<?php echo form_close()?>
 											</center>
 										</td>

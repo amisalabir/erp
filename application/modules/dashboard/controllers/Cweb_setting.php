@@ -7,17 +7,19 @@ class Cweb_setting extends MX_Controller
     {
         parent::__construct();
 
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
         $this->load->library('dashboard/lweb_setting');
         $this->load->model(array('dashboard/web_settings'));
+        if ($this->session->userdata('user_type') == '2') {
+            $this->session->set_userdata(array('error_message' => display('you_are_not_access_this_part')));
+            redirect('Admin_dashboard');
+        }
 
     }
 
     //Default loading for Category system.
     public function index()
     {
-        
-        $this->permission->check_label('web_settings')->update()->redirect();
         $content = $this->lweb_setting->setting();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -25,8 +27,6 @@ class Cweb_setting extends MX_Controller
     //Default loading for Category system.
     public function contact()
     {
-        $this->permission->check_label('contact_form')->create()->redirect();
-
         $content = $this->lweb_setting->contact_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -34,8 +34,6 @@ class Cweb_setting extends MX_Controller
     //Submit contact form
     public function submit_contact_form()
     {
-        $this->permission->check_label('contact_form')->create()->redirect();
-
         $data = array(
             'first_name' => $this->input->post('first_name',TRUE),
             'last_name' => $this->input->post('last_name',TRUE),
@@ -52,8 +50,6 @@ class Cweb_setting extends MX_Controller
     //Manage contact form 
     public function manage_contact_form()
     {
-        $this->permission->check_label('contact_form')->update()->redirect();
-
         $content = $this->lweb_setting->manage_contact_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -61,8 +57,6 @@ class Cweb_setting extends MX_Controller
     //Update contact form
     public function contact_update_form($id)
     {
-        $this->permission->check_label('contact_form')->update()->redirect();
-
         $content = $this->lweb_setting->contact_update_form($id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -71,8 +65,6 @@ class Cweb_setting extends MX_Controller
     //Update contact form
     public function update_contact_form($id)
     {
-        $this->permission->check_label('contact_form')->update()->redirect();
-
         $data = array(
             'first_name' => $this->input->post('first_name',TRUE),
             'last_name' => $this->input->post('last_name',TRUE),
@@ -89,8 +81,6 @@ class Cweb_setting extends MX_Controller
     // Contact Delete
     public function contact_delete($id)
     {
-        $this->permission->check_label('contact_form')->delete()->redirect();
-
         $this->web_settings->delete_contact($id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('dashboard/Cweb_setting/manage_contact_form');
@@ -99,16 +89,14 @@ class Cweb_setting extends MX_Controller
     //Setting 
     public function setting()
     {
-        $this->permission->check_label('setting')->update()->redirect();
-
         $content = $this->lweb_setting->setting();
         $this->template_lib->full_admin_html_view($content);
     }
 
+
     //Update social link
     public function update_web_settings($id)
-    {   
-        $this->permission->check_label('web_settings')->update()->redirect();
+    {
 
         $this->load->model('web_settings');
         $setting = $this->web_settings->setting();
@@ -240,8 +228,6 @@ class Cweb_setting extends MX_Controller
    //Add Slider 
     public function add_slider()
     {
-        $this->permission->check_label('slider')->create()->redirect();
-
         $content = $this->lweb_setting->add_slider();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -249,8 +235,6 @@ class Cweb_setting extends MX_Controller
     //Insert slider
     public function submit_slider()
     {
-        $this->permission->check_label('slider')->create()->redirect();
-
         $this->form_validation->set_rules('slider_link', display('slider_link'), 'trim|required');
         $this->form_validation->set_rules('slider_position', display('slider_position'), 'trim|required');
 
@@ -313,8 +297,6 @@ class Cweb_setting extends MX_Controller
     //Manage Slider
     public function manage_slider()
     {
-        $this->permission->check_label('slider')->read()->redirect();
-
         $content =$this->lweb_setting->slider_list();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -322,8 +304,6 @@ class Cweb_setting extends MX_Controller
     //Slider Update Form
     public function slider_update_form($slider_id)
     {   
-        $this->permission->check_label('slider')->update()->redirect();
-
         $content = $this->lweb_setting->slider_edit_data($slider_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -331,7 +311,6 @@ class Cweb_setting extends MX_Controller
     // Slider Update
     public function update_slider($slider_id = null)
     {
-        $this->permission->check_label('slider')->update()->redirect();
 
         $this->form_validation->set_rules('slider_link', display('slider_link'), 'trim|required');
         $this->form_validation->set_rules('slider_position', display('slider_position'), 'trim|required');
@@ -387,8 +366,6 @@ class Cweb_setting extends MX_Controller
     //Inactive slider
     public function inactive($slider_id)
     {
-        $this->permission->check_label('slider')->update()->redirect();
-
         $this->db->set('status', 0);
         $this->db->where('slider_id', $slider_id);
         $this->db->update('slider');
@@ -399,8 +376,6 @@ class Cweb_setting extends MX_Controller
     //Active slider
     public function active($slider_id)
     {
-        $this->permission->check_label('slider')->update()->redirect();
-
         $this->db->set('status', 1);
         $this->db->where('slider_id', $slider_id);
         $this->db->update('slider');
@@ -411,8 +386,6 @@ class Cweb_setting extends MX_Controller
     //Delete slider
     public function slider_delete($slider_id)
     {
-        $this->permission->check_label('slider')->delete()->redirect();
-
         $sliderinfo = $this->db->where('slider_id', $slider_id)->get('slider')->row();
         $this->db->where('slider_id', $slider_id);
         $result = $this->db->delete('slider');
@@ -428,7 +401,6 @@ class Cweb_setting extends MX_Controller
     #----------------Submit Add------------#
     public function submit_add()
     {
-        $this->permission->check_label('advertisement')->create()->redirect();
 
         $this->form_validation->set_rules('add_page', display('add_page'), 'trim|required');
         $this->form_validation->set_rules('ads_position', display('ads_position'), 'trim|required');
@@ -536,15 +508,11 @@ class Cweb_setting extends MX_Controller
 
     #----------------Manage Add--------------------#
     public function manage_add(){
-        $this->permission->check_label('advertisement')->read()->redirect();
-
         $content =$this->lweb_setting->add_list();
         $this->template_lib->full_admin_html_view($content);
     }
     #---------------Edit User----------#
     public function edit_add_form($id){
-        $this->permission->check_label('advertisement')->update()->redirect();
-
         $content = $this->lweb_setting->add_edit_data($id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -553,8 +521,6 @@ class Cweb_setting extends MX_Controller
     #--------------Update Add---------------#
     public function update_add($id)
     {
-
-        $this->permission->check_label('advertisement')->update()->redirect();
 
         $this->form_validation->set_rules('add_page', display('add_page'), 'trim|required');
         $this->form_validation->set_rules('ads_position', display('ads_position'), 'trim|required');
@@ -616,8 +582,6 @@ class Cweb_setting extends MX_Controller
     #=====Delete Advertisement======#
     public function delete_add($id)
     {
-        $this->permission->check_label('advertisement')->delete()->redirect();
-
         $advinfo = $this->db->where('adv_id', $id)->get('advertisement')->row();
         $this->db->where('adv_id', $id);
         $result = $this->db->delete('advertisement');
@@ -640,8 +604,6 @@ class Cweb_setting extends MX_Controller
     //Inactive advertisement
     public function inactive_add($id)
     {
-        $this->permission->check_label('advertisement')->update()->redirect();
-
         $this->db->set('status', 0);
         $this->db->where('adv_id', $id);
         $this->db->update('advertisement');
@@ -653,8 +615,6 @@ class Cweb_setting extends MX_Controller
     //Active advertisement
     public function active_add($id)
     {
-        $this->permission->check_label('advertisement')->update()->redirect();
-
         $this->db->set('status', 1);
         $this->db->where('adv_id', $id);
         $this->db->update('advertisement');
@@ -663,18 +623,16 @@ class Cweb_setting extends MX_Controller
     }
 
 
-    public function android_apps_view()
+     public function android_apps_view()
     {
-        $this->permission->check_label('android_apps')->read()->redirect();
-
+        /*
         $content = $this->lweb_setting->android_apps_view();
         $this->template_lib->full_admin_html_view($content);
+        */
     }
 
     public function update_android_apps_update()
     {
-        $this->permission->check_label('android_apps')->update()->redirect();
-
         $url = $this->input->post('apps_url');
         $data=['apps_url'=>$url];
         $this->db->update('web_setting',$data);

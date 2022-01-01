@@ -47,11 +47,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('wishlist')->read()->access()){ ?>
-                    <a href="<?php echo base_url('dashboard/Cwishlist/manage_wishlist')?>" class="btn btn-success m-b-5 m-r-2">
-                        <i class="ti-align-justify"></i> <?php echo display('manage_wishlist')?>
-                    </a>
-                <?php }?>
+                
+                  <a href="<?php echo base_url('dashboard/Cwishlist/manage_wishlist')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_wishlist')?></a>
+
                 </div>
             </div>
         </div>
@@ -66,28 +64,28 @@
                         </div>
                     </div>
                     <?php echo form_open_multipart('dashboard/Cwishlist/insert_wishlist', array('class' => 'form-vertical','id' => 'validate'))?>
-                        <div class="panel-body">
+                    <div class="panel-body">
 
-                        	<div class="form-group row">
-                                <label for="product_name" class="col-sm-3 col-form-label"><?php echo display('product_name')?> <i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <select class="form-control" id="product_name" name="product_id" required="">
-                                        <option></option>
-                                        {product_list}
-                                        <option value="{product_id}">{product_name} - ({product_model})</option>
-                                        {/product_list}
-                                    </select>
-                                </div>
-                            </div>
-                    
-                            <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-4 col-form-label"></label>
-                                <div class="col-sm-6">
-                                    <input type="submit" id="add-wishlist" class="btn btn-success btn-large" name="add-wishlist" value="<?php echo display('save') ?>" />
-                                    <input type="submit" id="add-wishlist-another" class="btn btn-primary btn-large" name="add-wishlist-another" value="<?php echo display('save_and_add_another') ?>" />
-                                </div>
+                    	<div class="form-group row">
+                            <label for="product_name" class="col-sm-3 col-form-label"><?php echo display('product_name')?> <i class="text-danger">*</i></label>
+                            <div class="col-sm-6">
+                                <select class="form-control" id="product_name" name="product_id" required="">
+                                    <option></option>
+                                    {product_list}
+                                    <option value="{product_id}">{product_name} - ({product_model})</option>
+                                    {/product_list}
+                                </select>
                             </div>
                         </div>
+                
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-6">
+                                <input type="submit" id="add-wishlist" class="btn btn-success btn-large" name="add-wishlist" value="<?php echo display('save') ?>" />
+                                <input type="submit" id="add-wishlist-another" class="btn btn-primary btn-large" name="add-wishlist-another" value="<?php echo display('save_and_add_another') ?>" />
+                            </div>
+                        </div>
+                    </div>
                     <?php echo form_close()?>
                 </div>
             </div>

@@ -20,11 +20,7 @@
 		<div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                	<?php if($this->permission->check_label('sales_report')->read()->access()){ ?>
-	                	<a href="<?php echo base_url('Admin_dashboard/todays_sales_report')?>" class="btn btn-info m-b-5 m-r-2">
-	                		<i class="ti-align-justify"> </i><?php echo display('sales_report')?>
-	                	</a>
-	                <?php } ?>
+                	<a href="<?php echo base_url('Admin_dashboard/todays_sales_report')?>" class="btn btn-info m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('sales_report')?></a>
                 </div>
             </div>
         </div>
@@ -35,7 +31,8 @@
 		        <div class="panel panel-default">
 		            <div class="panel-body"> 
 		                <?php echo form_open('Admin_dashboard/warehouse_to_warehouse_transfer',array('class' => ''))?>
-		               		<?php date_default_timezone_set(DEF_TIMEZONE); $today = date('m-d-Y'); ?>
+		               		<?php 
+date_default_timezone_set(DEF_TIMEZONE); $today = date('m-d-Y'); ?>
 
 	                        <div class="form-group row">
 	                            <label for="wearhouse" class="col-sm-2 col-form-label"><?php echo display('wearhouse') ?>:</label>

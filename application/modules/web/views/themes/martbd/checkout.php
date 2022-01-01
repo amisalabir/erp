@@ -37,9 +37,7 @@
             </div>
             <?php 
             $this->session->unset_userdata('error_message');
-             }
-
-              ?>
+             } ?>
 
 
                 <div class="panel-group" id="accordion">
@@ -89,30 +87,13 @@
                                             <a href="<?php echo base_url() . 'forget_password_form'; ?>"
                                                class="lost-pass"><?php echo display('i_have_forgotten_my_password') ?></a>
                                         </div>
-                                        <div class="col-sm-12 social_login">
-                                            
-                                        <?php if((check_module_status('facebooklogin') == 1)){
-                                            ?>&nbsp; OR &nbsp;
-                                            <a class="btn btn-facebook btn-sm  search text-white" href="<?php echo base_url('facebooklogin/facebooklogin/index/1')?>"><i class="fa fa-facebook mr-5"></i> <?php echo display('facebook_login')?></a>
-                                        <?php }?>  
-                                        <?php if((check_module_status('linkedinlogin') == 1)){ ?>
-                                            &nbsp; OR &nbsp;
-                                            <a class="btn btn-linkedin btn-sm  search text-white" href="<?php echo base_url('linkedinlogin/linkedinlogin/login/1')?>"><i class="fa fa-linkedin mr-5"></i> <?php echo display('linkedin_login')?></a>
-                                        <?php }?>
-                                        <?php if(check_module_status('googlelogin') == 1){ 
-                                            ?>&nbsp; OR &nbsp;
-                                            <a class="btn btn-google btn-sm  search text-white" href="<?php echo base_url('googlelogin/googlelogin/login')?>"><i class="fa fa-google mr-5"></i> <?php echo display('google_login')?></a>
-                                        <?php }?>
-                                            
-                                        </div>
-                                        <?php } else { ?>
+                                    <?php } else { ?>
                                         <div class="col-sm-12">
-                                            <a href="<?php echo base_url('logout') ?>" class="btn btn-danger"><?php echo display('logout') ?></a>
+                                            <a href="<?php echo base_url('logout') ?>"
+                                               class="btn btn-danger"><?php echo display('logout') ?></a>
                                         </div>
-                                        <?php } ?>
-                                        
+                                    <?php } ?>
                                 </div>
-                                
                             </div>
                         </div>
 
@@ -245,7 +226,7 @@
                                 <label class="control-label"
                                        for="phone"><?php echo display('customer_mobile') ?> <abbr
                                             class="required" title="required">*</abbr></label>
-                                <input type="number" id="customer_mobile" class="form-control"
+                                <input type="text" id="customer_mobile" class="form-control"
                                        name="customer_mobile"
                                        placeholder="<?php echo display('customer_mobile') ?>" required
                                        value="<?php echo $this->session->userdata('customer_mobile') ?>"
@@ -399,11 +380,11 @@
                                                    class="control-label"><?php echo display('mobile') ?> <abbr
                                                         class="required" title="required">*</abbr> :</label>
                                             <input type="text" name="ship_mobile" id="ship_mobile"
-                                                    placeholder="<?php echo display('mobile') ?>"
-                                                    class="form-control" required
-                                                    value="<?php echo $this->session->userdata('ship_mobile') ?>"
-                                                    data-toggle="tooltip" data-placement="bottom"
-                                                    title="<?php echo display('add_country_code') ?>"><span
+                                                   placeholder="<?php echo display('mobile') ?>"
+                                                   class="form-control" required
+                                                   value="<?php echo $this->session->userdata('ship_mobile') ?>"
+                                                   data-toggle="tooltip" data-placement="bottom"
+                                                   title="<?php echo display('add_country_code') ?>"><span
                                                     class="color5 padfont" ><?php echo display('add_country_code') ?></span>
                                         </div>
                                     </div>
@@ -578,7 +559,7 @@
                                     <input type="radio" class="shipping_cost" name="shipping_cost"
                                            id="<?php echo html_escape($shipping_method->method_id) ?>"
                                            value="<?php echo html_escape($shipping_method->charge_amount) ?>"
-                                           alt="<?php echo display('service_charge') ?>" <?php if ($this->session->userdata('method_id') == $shipping_method->method_id) {
+                                           alt="<?php echo html_escape($shipping_method->details) ?>" <?php if ($this->session->userdata('method_id') == $shipping_method->method_id) {
                                         echo "checked";
                                     } ?>>
                                     <?php
@@ -683,3 +664,6 @@
 <input type="hidden" name="coupon_amnt" id="coupon_amnt" value="<?php echo @$this->session->userdata('coupon_amnt')?>">
 <input type="hidden" name="coupon_message" id="coupon_message" value="<?php echo @$this->session->userdata('message')?>">
 <input type="hidden" name="coupon_error_message" id="coupon_error_message" value="<?php echo @$this->session->userdata('error_message')?>">
+
+
+

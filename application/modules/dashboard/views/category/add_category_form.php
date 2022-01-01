@@ -45,9 +45,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('manage_category')->read()->access()){ ?>
+                
                   <a href="<?php echo base_url('dashboard/Ccategory/manage_category')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_category')?></a>
-                <?php }?>
+
                 </div>
             </div>
         </div>

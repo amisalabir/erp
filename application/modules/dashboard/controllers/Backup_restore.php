@@ -9,14 +9,12 @@ class Backup_restore extends MX_Controller {
  	public function __construct()
  	{
  		parent::__construct();
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
 
     }
  
 	public function index()
 	{
-		$this->permission->check_label('backup_and_restore')->read()->redirect();
-
 		$data['title']  = display('backup_and_restore');
 		$data['module'] = "dashboard";  
 		$data['page']   = "home/backup_and_restore"; 
@@ -29,8 +27,6 @@ class Backup_restore extends MX_Controller {
 
 	public function process()
 	{
-		$this->permission->check_label('backup_and_restore')->create()->redirect();
-
 		$input  = $this->input->post('input',TRUE); 
 		if ($input==1) {
 			if ($this->backup()) {
@@ -78,8 +74,6 @@ class Backup_restore extends MX_Controller {
  
     public function backup()
     { 
-    	$this->permission->check_label('backup_and_restore')->read()->redirect();
-
         $this->load->helper('file');
         $this->load->dbutil();  
 
@@ -100,8 +94,6 @@ class Backup_restore extends MX_Controller {
 
     public function restore()
     {
-    	$this->permission->check_label('backup_and_restore')->update()->redirect();
-
         $isi_file     = file_get_contents($this->savePath.$this->fileName);
         $string_query = rtrim( $isi_file, "\n;" );
         $array_query  = explode(";", $string_query);
@@ -120,8 +112,6 @@ class Backup_restore extends MX_Controller {
 
     public function download()
     {
-    	$this->permission->check_label('backup_and_restore')->read()->redirect();
-
     	if (file_exists($this->savePath.$this->fileName)) {
 
     		$this->load->helper('download');
@@ -139,8 +129,6 @@ class Backup_restore extends MX_Controller {
 
     public function delete()
     {
-    	$this->permission->check_label('backup_and_restore')->delete()->redirect();
-
     	if (file_exists($this->savePath.$this->fileName)) {
     		if (@unlink($this->savePath.$this->fileName)) {
     			$this->session->set_flashdata('message', display('delete_successfully'));

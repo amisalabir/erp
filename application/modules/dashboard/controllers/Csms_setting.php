@@ -8,7 +8,13 @@ class Csms_setting extends MX_Controller
         parent::__construct();
         $this->load->library('dashboard/lsoft_setting');
         $this->load->model('dashboard/Sms_setting_model');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
+
+        //User validation check
+        if ($this->session->userdata('user_type') == '2') {
+            $this->session->set_userdata(array('error_message'=>display('you_are_not_access_this_part')));
+            redirect('Admin_dashboard');
+        }
 
     }
 
@@ -16,8 +22,6 @@ class Csms_setting extends MX_Controller
     //sms Configuration
     public function sms_configuration()
     {
-        $this->permission->check_label('sms_configuration')->update()->redirect();
-
         $content = $this->lsoft_setting->sms_configuration_form();
         $this->template_lib->full_admin_html_view($content);
 
@@ -26,7 +30,6 @@ class Csms_setting extends MX_Controller
     //Update sms configuration
     public function update_sms_configuration()
     {
-        $this->permission->check_label('sms_configuration')->update()->redirect();
 
         $status = $this->input->post('status',TRUE);
 
@@ -52,7 +55,6 @@ class Csms_setting extends MX_Controller
 */
     public function sms_template()
     {
-        $this->permission->check_label('sms_template')->read()->redirect();
 
         $data['template'] = $this->Sms_setting_model->template_list();
         $data['title'] = display('sms_template');
@@ -65,8 +67,6 @@ class Csms_setting extends MX_Controller
     //save sms template
     public function save_sms_template()
     {
-        $this->permission->check_label('sms_template')->create()->redirect();
-
         $data = array(
             'template_name' => $this->input->post('template_name',TRUE),
             'type' => $this->input->post('type',TRUE),
@@ -81,7 +81,6 @@ class Csms_setting extends MX_Controller
     //delete template
     public function delete_template($id)
     {
-        $this->permission->check_label('sms_template')->delete()->redirect();
 
         $this->db->where('id', $id)->delete('sms_template');
         $this->session->set_flashdata('message', display('delete_successfully'));
@@ -90,8 +89,6 @@ class Csms_setting extends MX_Controller
 
     public function template_update()
     {
-        $this->permission->check_label('sms_template')->update()->redirect();
-        
         $data = array(
             'template_name' => $this->input->post('template_name',TRUE),
             'type' => $this->input->post('type',TRUE),

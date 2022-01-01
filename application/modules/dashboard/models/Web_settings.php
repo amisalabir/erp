@@ -247,17 +247,4 @@ class Web_settings extends CI_Model {
 		$result = $this->db->get('product_category')->result_array();
 		return $result;
 	}
-
-	// Get popular products analytics
-	public function get_popular_products()
-	{	
-		$this->db->select('a.*,b.product_name, c.category_name');
-		$this->db->from('site_analytics a');
-		$this->db->join('product_information b', 'a.product_id=b.product_id','left');
-		$this->db->join('product_category c', 'b.category_id=c.category_id','left');
-		$this->db->order_by('a.clicks','desc');
-		$this->db->group_by('a.product_id');
-		$result = $this->db->get('site_analytics')->result_array();
-		return $result;
-	}
 }

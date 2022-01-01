@@ -47,9 +47,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('why_choose_us')->read()->access()){ ?>
+                
                   <a href="<?php echo base_url('dashboard/Cabout_us/manage_about_us')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('list')?></a>
-                <?php }?>
+
                 </div>
             </div>
         </div>

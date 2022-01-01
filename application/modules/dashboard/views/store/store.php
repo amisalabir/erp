@@ -45,13 +45,11 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('store_add')->create()->access()){ ?>
+                
                   <a href="<?php echo base_url('dashboard/Cstore')?>" class="btn -btn-info color4 color5 m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_store')?></a>
-                <?php } if($this->permission->check_label('store_transfer')->update()->access()){?>
                   <a href="<?php echo base_url('dashboard/Cstore/store_transfer')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('store_transfer')?></a>
-                <?php }if($this->permission->check_label('manage_store_product')->update()->access()){?>
                   <a href="<?php echo base_url('dashboard/Cstore/manage_store_product')?>" class="btn btn-warning m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_store_product')?></a>
-                <?php }?>
+
                   <button type="button" class="btn btn-danger m-b-5 m-r-2"><?php echo display('you_must_have_a_default_store')?></button>
 
                 </div>
@@ -102,11 +100,9 @@
 										</td>
 										<td>
 											<center>
-												<?php if($this->permission->check_label('manage_store')->update()->access()){?>
 												<a href="<?php echo base_url().'dashboard/Cstore/store_update_form/'.$store['store_id']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-												<?php }if($this->permission->check_label('manage_store')->delete()->access()){ ?>
+
 												<a href="<?php echo base_url('dashboard/Cstore/store_delete/'.$store['store_id'])?>" class="delete_store_product btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-												<?php } ?>
 											</center>
 										</td>
 									</tr>

@@ -10,7 +10,6 @@ if ($category_list) {
         $sub_parent_cat = $this->db->select('*')
             ->from('product_category')
             ->where('parent_category_id', $parent_category->category_id)
-            ->where('status','1')
             ->order_by('menu_pos')
             ->get()
             ->result();
@@ -26,7 +25,6 @@ if ($category_list) {
                         $sub_category = $this->db->select('*')
                             ->from('product_category')
                             ->where('parent_category_id', $sub_p_cat->category_id)
-                            ->where('status','1')
                             ->order_by('menu_pos')
                             ->get()
                             ->result();
@@ -54,8 +52,6 @@ if ($category_list) {
     }
 }
 ?>
-<li><a class="menu-link" href="<?php  echo base_url('login'); ?>"><?php echo display('login');?></a></li>
-<li><a class="menu-link" href="<?php  echo base_url('track_my_order'); ?>"><?php echo display('track_my_order');?></a></li>
 </ul>
 </nav>
 <!-- /.End of mobile menu side bar -->
@@ -101,55 +97,6 @@ if ($category_list) {
     </div>
     <div class="col-xs-5 col-sm-2 col-md-2 col-lg-3 vertical-align text-right">
         <ul class="header-nav pull-right">
-            <li class="dropdown hnav-li" id="tab_up_comparison">
-                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
-                   data-close-others="false"> <i class="lnr lnr-chart-bars extra-icon"></i>
-                   <div class="nav-label">
-                        <span class="icon-tips color3">
-                            <b class="bb-tri"></b>
-                            <strong><?php if ($this->session->userdata('comparison_ids')) {echo count($this->session->userdata('comparison_ids'));} else{echo 0;}?></strong>
-                        </span>
-                    </div>
-                </a>
-                <?php
-                    $total_comparison_ids = 0;
-                    if ($this->session->userdata('comparison_ids')) {
-                        $comparisons = $this->session->userdata('comparison_ids');
-                        $total_comparison_ids = count($this->session->userdata('comparison_ids'));
-
-                        $this->db->from('product_information');
-                        $this->db->where_in('product_id', $comparisons);
-                        $query = $this->db->get();
-                        $comparison_products = $query->result();
-                ?>
-                <ul class="dropdown-menu comparison w-250 product-comparison" role="menu">
-                    
-                    <?php  
-                        foreach ($comparison_products as $comparison):  
-                    ?>
-                        <li class="clearfix">
-                            <img src="<?php echo base_url().$comparison->image_thumb ?>"
-                                 alt="item1"/>
-                            <div class="product-comparison-info">
-                                <span class="item-name"><?php echo html_escape($comparison->product_name); ?></span>
-                                <span class="item-price">
-                                    <?php echo(($position == 0) ? $currency . ' ' . $this->cart->format_number($comparison->price) : $this->cart->format_number($comparison->price) . ' ' . $currency) ?>     
-                                </span>
-                                <span class="remove_comparison_product">
-                                    <a href="#" class="delete_comparison_item" name="<?php echo $comparison->product_id ?>"><i class="fa fa-trash"></i></a>
-                                </span>
-                            </div>
-                        </li>
-                    <?php endforeach;?>
-
-                    <li class="text-center">
-                        <a href="<?php echo base_url('comparison') ?>"
-                           class="shopping-cart-btn btn-block"><?php echo display('compare') ?></a>
-                    </li>
-                </ul>
-                <?php } ?>
-                <!--/. End of Product Compare -->
-            </li>
             <li class="hnav-li dropdown">
                 <?php
                 $total_wishlist = 0;
@@ -330,7 +277,8 @@ if ($category_list) {
     <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
             <li class="text-uppercase <?php echo (($this->uri->segment(2) == '')? 'active':'')?>"><a class=""
-                    href="<?php echo base_url(); ?>"><?php echo display('home')?></a></li>
+                                                 href="<?php echo base_url(); ?>"><?php echo display('home')
+                    ?></a></li>
             <?php
 
             if (!empty($category_list)):

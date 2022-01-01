@@ -20,6 +20,7 @@ class Home extends MX_Controller
         ));
         $this->qrgenerator();
 
+
     }
 
     //Default loading for Home Index.
@@ -84,7 +85,6 @@ class Home extends MX_Controller
         $product_id = $this->input->post('product_id',TRUE);
         $qnty = $this->input->post('qnty',TRUE);
         $variant = $this->input->post('variant',TRUE);
-        $variant_color = $this->input->post('variant_color',TRUE);
 
         $discount = 0;
         $onsale_price = 0;
@@ -99,68 +99,68 @@ class Home extends MX_Controller
 
         if ($product_id) {
             $product_details = $this->Homes->product_details($product_id);
-             $this->load->model('web/Products_model');
-             $price_arr =  $this->Products_model->check_variant_wise_price($product_id, $variant, $variant_color);
-             $final_price = $price_arr['price'];
-
 
             if ($product_details->onsale) {
+                $price = $product_details->onsale_price;
                 $onsale_price = $product_details->onsale_price;
-                $discount = $product_details->price - $final_price;
-                $discount = (($discount > 0)?$discount:0);
+                $discount = $product_details->price - $product_details->onsale_price;
+            } else {
+                $price = $product_details->price;
             }
 
             //CGST product tax
             $tax_info = $this->Homes->get_product_tax_info($product_details->product_id, 'H5MQN4NXJBSDX4L');
 
             if (!empty($tax_info) && !empty($tax_info->tax_status)) {
-                $cgst = ($tax_info->tax_percentage * $final_price) / 100;
-                $cgst_id = $tax_info->tax_id;
+                if (($product_details->onsale == 1)) {
+                    $cgst = ($tax_info->tax_percentage * $product_details->onsale_price) / 100;
+                    $cgst_id = $tax_info->tax_id;
+                } else {
+                    $cgst = ($tax_info->tax_percentage * $product_details->price) / 100;
+                    $cgst_id = $tax_info->tax_id;
+                }
             }
 
             //SGST product tax
             $tax_info = $this->Homes->get_product_tax_info($product_details->product_id, '52C2SKCKGQY6Q9J');
 
             if (!empty($tax_info) && !empty($tax_info->tax_status)) {
-                 $sgst = ($tax_info->tax_percentage * $final_price) / 100;
-                $sgst_id = $tax_info->tax_id;
+                if (($product_details->onsale == 1)) {
+                    $sgst = ($tax_info->tax_percentage * $product_details->onsale_price) / 100;
+                    $sgst_id = $tax_info->tax_id;
+                } else {
+                    $sgst = ($tax_info->tax_percentage * $product_details->price) / 100;
+                    $sgst_id = $tax_info->tax_id;
+                }
             }
 
             //IGST product tax
             $tax_info = $this->Homes->get_product_tax_info($product_details->product_id, '5SN9PRWPN131T4V');
 
             if (!empty($tax_info) && !empty($tax_info->tax_status)) {
-                $igst = ($tax_info->tax_percentage * $final_price) / 100;
-                $igst_id = $tax_info->tax_id;
+                if (($product_details->onsale == 1)) {
+                    $igst = ($tax_info->tax_percentage * $product_details->onsale_price) / 100;
+                    $igst_id = $tax_info->tax_id;
+                } else {
+                    $igst = ($tax_info->tax_percentage * $product_details->price) / 100;
+                    $igst_id = $tax_info->tax_id;
+                }
             }
 
             //Shopping cart validation
             $flag = TRUE;
             $dataTmp = $this->cart->contents();
-            foreach ($dataTmp as $item) {
 
-                if(!empty($variant_color)){
-                  if (($item['product_id'] == $product_id) && ($item['variant'] == $variant) && ($item['variant_color'] == $variant_color)) {
-                        $data = array(
-                            'rowid' => $item['rowid'],
-                            'qty' => $item['qty'] + $qnty
-                        );
-                        $this->cart->update($data);
-                        $flag = FALSE;
-                        break;
-                    }  
-                }else{
-                    if (($item['product_id'] == $product_id) && ($item['variant'] == $variant)) {
-                        $data = array(
-                            'rowid' => $item['rowid'],
-                            'qty' => $item['qty'] + $qnty
-                        );
-                        $this->cart->update($data);
-                        $flag = FALSE;
-                        break;
-                    }
+            foreach ($dataTmp as $item) {
+                if (($item['product_id'] == $product_id) && ($item['variant'] == $variant)) {
+                    $data = array(
+                        'rowid' => $item['rowid'],
+                        'qty' => $item['qty'] + $qnty
+                    );
+                    $this->cart->update($data);
+                    $flag = FALSE;
+                    break;
                 }
-                
             }
 
             if ($flag) {
@@ -168,14 +168,13 @@ class Home extends MX_Controller
                     'id' => $this->generator(15),
                     'product_id' => $product_details->product_id,
                     'qty' => $qnty,
-                    'price' => $final_price,
-                    'actual_price' => $final_price,
+                    'price' => $price,
+                    'actual_price' => $product_details->price,
                     'supplier_price' => $product_details->supplier_price,
                     'onsale_price' => $onsale_price,
                     'name' => clean($product_details->product_name),
                     'discount' => $discount,
                     'variant' => $variant,
-                    'variant_color' => $variant_color,
                     'options' => array(
                         'image' => $product_details->image_thumb,
                         'model' => $product_details->product_model,
@@ -191,31 +190,6 @@ class Home extends MX_Controller
             }
             echo "1";
         }
-    }
-    
-    //Add to comparison for details
-    public function add_to_comparison_details()
-    {
-        $product_id = $this->input->post('product_id',TRUE);
-        $com_ids    = $this->session->userdata('comparison_ids');
-        if (isset($com_ids) && !empty($com_ids)){
-            array_push($com_ids,$product_id);
-            $this->session->set_userdata(array('comparison_ids' => array_unique($com_ids)));
-        }else{
-            $this->session->set_userdata(array('comparison_ids' => array($product_id)));   
-        }
-        
-        echo TRUE;
-    }
-
-    //Delete item on your comparison
-    public function delete_comparison()
-    {
-        $comparison_id = $this->input->post('comparison_id',TRUE);
-        $com_ids       = $this->session->userdata('comparison_ids');
-        unset($com_ids[array_search($comparison_id, $com_ids)]);    
-        $this->session->set_userdata(array('comparison_ids' => array_unique($com_ids)));
-        echo "1"; 
     }
 
     //Delete item on your cart
@@ -1639,9 +1613,11 @@ class Home extends MX_Controller
         return $content = $this->lhome->order_html_data($order_id);
     }
 
+
     //Send Customer Email with invoice
     public function setmail($email, $file_path)
     {
+
         $setting_detail = $this->Soft_settings->retrieve_email_editdata();
 
         $subject = display("order_information");
@@ -1675,6 +1651,7 @@ class Home extends MX_Controller
         }
     }
 
+
     //QR-Code Generator
     public function qrgenerator()
     {
@@ -1697,6 +1674,7 @@ class Home extends MX_Controller
         $this->ciqrcode->generate($params);
         return true;
     }
+
     //This function is used to Generate Key
     public function generator($lenth)
     {
@@ -1747,25 +1725,6 @@ class Home extends MX_Controller
         $product_info = $this->Products_model->product_info($product_id);
         $stock = $this->Products_model->stock_report_single_item_by_store($product_id);
 
-
-        $cur_price    = $product_info->price;
-        $onsale       = $product_info->onsale;
-        $onsale_price = $product_info->onsale_price;
-        $default_color = '';
-
-        if($product_info->variant_price){
-            $varprices = $this->Products_model->get_variant_prices($product_id, $product_info->variants, $product_info->default_variant);
-            if(!empty($varprices)){
-                $cur_price        = $varprices['price'];
-                $default_color = $varprices['var_color_id'];
-            }
-        }
-
-        $is_affiliate = 0;
-        if(check_module_status('affiliate_products') == 1){
-            $is_affiliate = 1;
-        }
-
         $html = '';
         $html .= '<div class="modal-dialog">
                             <div class="modal-content">
@@ -1773,7 +1732,6 @@ class Home extends MX_Controller
                                     <a href="#" data-dismiss="modal" class="class pull-right"><span
                                                 class="glyphicon glyphicon-remove"></span></a>
                                     <h3 class="modal-title">' . html_escape($product_info->product_name) . '</h3>
-                                    <input type="hidden" name="product_id" id="product_id" value="'.$product_id.'">
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
@@ -1783,30 +1741,30 @@ class Home extends MX_Controller
                                         <div class="col-xs-7">
                                             <div class="product-summary-content">
                                                 <div class="product-summary">';
-        if ($onsale == 1 && !empty(@$onsale_price)) {
+        if ($product_info->onsale == 1 && !empty(@$product_info->onsale_price)) {
             $html .= '<span class="product-price">
                                                 <span class="price-amount">
-                                                    <span class="amount-details var_amount">';
+                                                    <span class="amount-details">';
 
             if ($target_con_rate > 1) {
-                $price1 = $onsale_price * $target_con_rate;
+                $price1 = $product_info->onsale_price * $target_con_rate;
                 $html .= ($product_info->position1 == 0) ? $currency1 . " " . number_format($price1, 2, ".", ",") : number_format($price1, 2, ".", ",") . " " . $currency1;
             }
             if ($target_con_rate <= 1) {
-                $price2 = $onsale_price * $target_con_rate;
+                $price2 = $product_info->onsale_price * $target_con_rate;
                 $html .= ($position1 == 0) ? $currency1 . " " . number_format($price2, 2, ".", ",") : number_format($price2, 2, ".", ",") . " " . $currency1;
             }
 
             $html .= '</span>
-            <del><span class="amount2 regular_price">';
+            <del><span class="amount2">';
 
             if ($target_con_rate > 1) {
-                $price = $cur_price * $target_con_rate;
+                $price = $product_info->price * $target_con_rate;
                 $html .= (($position1 == 0) ? $currency1 . " " . number_format($price, 2, ".", ",") : number_format($price, 2, ".", ",") . " " . $currency1);
             }
 
             if ($target_con_rate <= 1) {
-                $price = $cur_price * $target_con_rate;
+                $price = $product_info->price * $target_con_rate;
                 $html .= (($position1 == 0) ? $currency1 . " " . number_format($price, 2, ".", ",") : number_format($price, 2, ".", ",") . " " . $currency1);
             }
 
@@ -1819,15 +1777,15 @@ class Home extends MX_Controller
 
             $html .= '<span class="product-price">
                                                 <span class="price-amount">
-                                                    <ins><span class="amount-details var_amount">';
+                                                    <ins><span class="amount-details">';
 
             if ($target_con_rate > 1) {
-                $price = $cur_price * $target_con_rate;
+                $price = $product_info->price * $target_con_rate;
                 $html .= (($position1 == 0) ? $currency1 . " " . number_format($price, 2, ".", ",") : number_format($price, 2, ".", ",") . " " . $currency1);
             }
 
             if ($target_con_rate <= 1) {
-                $price = $cur_price * $target_con_rate;
+                $price = $product_info->price * $target_con_rate;
                 $html .= (($position1 == 0) ? $currency1 . " " . number_format($price, 2, ".", ",") : number_format($price, 2, ".", ",") . " " . $currency1);
             }
 
@@ -1839,82 +1797,62 @@ class Home extends MX_Controller
         }
 
         $html .= '</div>
-                <ul class="summary-header">
-                    <li>';
+                                                <ul class="summary-header">
+                                                    <li>
+                                                      <p class="stock"><label>' . display("status") . ':</label>
+                                        <input type="hidden" value="' . $stock . '" id="stok">
+                                        <span>';
 
-                   if(!($is_affiliate == 1)){ 
-                        $html .= '<p class="stock"><label>'.display('status').':</label>
-                            <input type="hidden" value="'.html_escape($stock).'" id="stok">';
-                            if ($stock > 0) {
-                                $html .= '<span>'.display('in_stock').'</span>';
-                            } else {
-                                $html .= '<span class="required">'.display('out_of_stock').'</span>';
-                            }
-                        $html .= '</p>';
-                    }
+        if ($stock > 0) {
 
-                $html .= '</li>
-                            </ul>
-                            <div class="short-description">' . htmlspecialchars_decode($product_info->product_details);
+            $html .= display("in_stock");
 
-                            if (!empty($product_info->variants)) {
+        } else {
 
-                        $html .= '<div class="product_size">';
-                            $var_types = [];
-                            $exploded = explode(',', $product_info->variants);
-                            $this->db->select('*');
-                            $this->db->from('variant');
-                            $this->db->where_in('variant_id', $exploded);
-                            $this->db->order_by('variant_name', 'asc');
-                            $vresult = $this->db->get()->result();
+            $html .= display("out_of_stock");
+        }
 
-                            $var_types = array_column($vresult, 'variant_type');
+        $html .= '</span>
+                                    </p>
+                                                    </li>
+                                                </ul>
+                                                <div class="short-description">' . htmlspecialchars_decode($product_info->product_details) . '
+                                                    <div class="product_size">
+                              <div class="form-group">
+                                                <div style="display: inline-block; vertical-align: top;">
+                                                    <label for="select_size1" class="variant-label">' . display("product_size") . '<span
+                                                            style="color: red;font-size: 1.8em;"
+                                                        >*</span> :
+                                                    </label>
+                                                </div>
+                                                 <div style="display: inline-block">'.
+                            form_open('#').'
+                                <select id="select_size1" required="" class="form-control select">
+                                    <option value="0">Select</option>';
 
-                            $html .= '<div class="form-group">
-                                <div style="display: inline-block; vertical-align: top;">
-                                    <label for="select_size1" class="variant-label">' . display("product_size") . '<span
-                                            style="color: red;font-size: 1.8em;"
-                                        >*</span> :
-                                    </label>
-                                </div>
-                                 <div style="display: inline-block">'.
-                                    form_open('#').'
-                                        <select id="select_size1" required="" class="form-control select">
-                                            <option value="0">Select</option>';
+        if ($product_info->variants) {
+            $exploded = explode(",", $product_info->variants);
+            foreach ($exploded as $elem) {
+                $this->db->select("*");
+                $this->db->from("variant");
+                $this->db->where("variant_id", $elem);
+                $this->db->order_by("variant_name", "asc");
+                $result = $this->db->get()->row();
 
-                                            foreach ($vresult as $vitem) {
-                                                if($vitem->variant_type=='size'){
-                                            
+                $html .= '<option value="' . $result->variant_id . '"';
+                if ($result->variant_id == $product_info->default_variant) {
+                    $html .= "selected";
+                }
+                $html .= '>' . html_escape($result->variant_name) . '</option>';
 
-                                                    $html .= '<option value="' . $vitem->variant_id . '" '.(($vitem->variant_id == $product_info->default_variant)?"selected":""); 
-                                                    $html .= '>' . html_escape($vitem->variant_name) . '</option>';
+            }
+        }
 
-                                                }
-                                            }
-
-                                    $html .= '</select>'.form_close().'
-                                </div>
-                            </div>
-                        </div>';
-
-                        if(in_array('color', $var_types)){
-                            $html .= '<div class="product-color mb-3">';
-                                    foreach ($vresult as $vitem) {
-                                        if($vitem->variant_type=='color'){
-
-                                            if(empty($default_color)){
-                                                $default_color = $vitem->variant_id;  // Set default color if not getting
-                                            }
-                                            
-                                    $html .= '<input type="radio" class="product_colors" name="select_color" id="color_'.$vitem->variant_id.'" value="'.$vitem->variant_id.'" onclick="select_color_variant(\''.html_escape($product_id).'\',\''.html_escape($vitem->variant_id).'\', \''.html_escape($product_info->default_variant).'\')" '.(($vitem->variant_id == $default_color)?'checked="checked"':"").'>
-                                    <label class="mb-0" for="color_'.$vitem->variant_id.'"><span class="color_code" style="background: '.(!empty($vitem->color_code)?$vitem->color_code:strtolower($vitem->variant_name)).'"></span></label>';
-
-                                  } }
-
-                            $html .= '</div>';
-                            } }
-                        $html .= '<input type="hidden" name="color_variant_id" id="color_variant_id" value="'.@$default_color.'"></div>'.
-                        form_open('', array('class'=>'cart-row')).'
+        $html .= '</select>'.form_close().'
+                        </div>
+                        </div>
+                                                </div>'.
+                                                form_open('', array('class'=>'cart-row')).'
                                 <div class="cart_counter">                                   
                                     <button onclick="var result = document.getElementById(\'sst\'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 1 ) result.value--;return false;"
                                             class="reduced items-count" type="button">                                        
@@ -1930,14 +1868,11 @@ class Home extends MX_Controller
 
 
         if ($stock > 0) {
-            $html .= '<a href="javascript:void(0)" onclick="cart_btn(' . $product_id . ')" class="cart-btn" type="submit">' . display("add_to_cart") . '</a>';
+            $html .= '<a href="#" onclick="cart_btn(' . $product_id . ')" class="cart-btn" type="submit">' . display("add_to_cart") . '</a>';
         }
         $html .= '<a href="javascript:void(0)" class="add-wishlist wishlist" data-toggle="tooltip"
                                    data-placement="top"
                                    title="' . display("wishlist") . '" name="' . $product_id . '"><i class="lnr lnr-heart"></i></a>
-                                   <a href="javascript:void(0)" class="add-compare comparison" onclick="comparison_btn('. $product_id .')" title="Compare">
-                                    <i class="lnr lnr-chart-bars"></i>
-                                </a>
                             '.form_close().'
                                             </div>
                                             </div>
@@ -1952,40 +1887,11 @@ class Home extends MX_Controller
     //Delete all cart data
     public function clear_cart()
     {
+
         $this->session->unset_userdata(array('coupon_id','coupon_amnt'));
         $this->cart->destroy();
         $this->session->set_userdata(array('message' => display('successfully_updated')));
         redirect('view_cart');
     }
 
-    // Track order
-    public function track_my_order()
-    {
-        $this->form_validation->set_rules('order_email', display('email'), 'trim|required|valid_email');
-        $this->form_validation->set_rules('order_number', display('order_no'), 'trim|required');
-
-        $order_detail = [];
-        if($this->form_validation->run() == TRUE)
-        {
-            $this->load->model('dashboard/Orders');
-            $this->load->model('web/Homes');
-            $this->load->model('dashboard/Soft_settings');
-            $this->load->library('dashboard/occational');
-            $order_email = $this->input->post('order_email', TRUE);
-            $order_number = $this->input->post('order_number', TRUE);
-            $order_detail = $this->Homes->get_order_html_data($order_email, $order_number);
-        }
-        $content = $this->lhome->track_my_order($order_detail);
-        $this->template_lib->full_website_html_view($content);
-    }
-
-    public function comparison(){
-        $this->load->model('dashboard/Themes');
-        $this->load->model('web/Products_model');
-        $theme   = $this->Themes->get_theme();
-        $data    = $this->Products_model->comparison();
-        $content = $this->lhome->compare_product($data);
-        $this->template_lib->full_website_html_view($content);
-    }
- 
 }

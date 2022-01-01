@@ -106,7 +106,9 @@
 										<td class="text-right pr_20"><?php echo (($position==0)?"$currency {total_amount}":"{total_amount} $currency") ?></td>
 									</tr>
 								{/purchase_all_data}
-									<?php } ?>
+								<?php
+									}
+								?>
 								</tbody>
 								<tfoot>
 									<tr>

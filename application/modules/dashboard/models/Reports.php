@@ -141,7 +141,49 @@ class reports extends CI_Model
         $this->db->join('store_set h', 'h.store_id = b.store_id');
         $this->db->where('b.store_id !=', null);
         $this->db->group_by('a.product_id');
-        $this->db->order_by('a.product_name', 'asc');
+        $this->db->order_by('c.category_name', 'asc');
+
+        if (empty($product_id)) {
+            $this->db->where(array('a.status' => 1));
+        } else {
+            //Single product information
+            $this->db->where(array('a.status' => 1, 'e.purchase_date <= ' => $date, 'a.product_id' => $product_id));
+        }
+
+        $this->db->limit($limit, $page);
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+    
+    //Stock Report by  category
+    public function stock_report_category($product_id, $date, $limit, $page)
+    {
+
+        $this->db->select("
+			a.product_name,
+			a.unit,
+			a.product_id,
+			a.price,
+			a.supplier_price,
+			a.product_model,
+			c.category_name,
+			sum(b.quantity) as totalPurchaseQnty,
+			e.purchase_date as purchase_date,
+			e.purchase_id,
+			f.unit_name
+			");
+
+        $this->db->from('product_information a');
+        $this->db->join('product_purchase_details b', 'b.product_id = a.product_id', 'left');
+        $this->db->join('product_category c', 'c.category_id = a.category_id');
+        $this->db->join('product_purchase e', 'e.purchase_id = b.purchase_id');
+        $this->db->join('unit f', 'f.unit_id = a.unit', 'left');
+        $this->db->join('variant g', 'g.variant_id = b.variant_id', 'left');
+        $this->db->join('store_set h', 'h.store_id = b.store_id');
+        $this->db->where('b.store_id !=', null);
+       // $this->db->group_by('a.product_id');
+        $this->db->group_by('c.category_name', 'asc');
 
         if (empty($product_id)) {
             $this->db->where(array('a.status' => 1));
@@ -360,6 +402,7 @@ class reports extends CI_Model
 //get stock report store wise
     public function stock_report_by_store($from_date, $to_date, $store_id, $perpage, $page, $product_id = false)
     {
+
         $this->db->select("
 			a.product_name,
 			a.unit,
@@ -369,10 +412,8 @@ class reports extends CI_Model
 			a.product_model,
 			c.category_name,
 			b.date_time as purchase_date,
-            g.variant_name,
+			g.variant_name,
 			g.variant_id,
-            ga.variant_id as variant_color,
-            ga.variant_name as variant_color_name,
 			h.store_name,
 			h.store_id,
 			");
@@ -383,7 +424,6 @@ class reports extends CI_Model
         $this->db->join('product_category c', 'c.category_id = a.category_id');
         $this->db->join('unit f', 'f.unit_id = a.unit', 'left');
         $this->db->join('variant g', 'g.variant_id = b.variant_id', 'left');
-        $this->db->join('variant ga', 'ga.variant_id = b.variant_color', 'left');
         $this->db->join('store_set h', 'h.store_id = b.store_id');
         $this->db->group_by('a.product_id');
         $this->db->group_by('g.variant_id');
@@ -885,7 +925,7 @@ class reports extends CI_Model
     }
 
     //Tax report product wise
-    public function tax_report_invoice_wise($from_date=false, $to_date=false)
+    public function tax_report_invoice_wise($from_date, $to_date)
     {
 
         $today = date("m-d-Y");

@@ -6,17 +6,15 @@ class Ccustomer extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        $this->auth->check_user_auth();
         $this->load->library('dashboard/lcustomer');
         $this->load->model('dashboard/Customers');
+        $this->auth->check_admin_store_auth();
 
     }
 
     //Default loading for Customer System.
     public function index()
     {
-        $this->permission->check_label('add_customer')->create()->redirect();
-
         $content = $this->lcustomer->customer_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -24,7 +22,6 @@ class Ccustomer extends MX_Controller
     //customer_search_item
     public function customer_search_item()
     {
-
         $customer_id = $this->input->post('customer_id',TRUE);           
         $content = $this->lcustomer->customer_search_item($customer_id);
         $this->template_lib->full_admin_html_view($content);
@@ -33,8 +30,6 @@ class Ccustomer extends MX_Controller
     //Manage customer
     public function manage_customer()
     {
-        $this->permission->check_label('manage_customer')->read()->redirect();
-
         $this->load->model('dashboard/Customers');
         $content = $this->lcustomer->customer_list();
         $this->template_lib->full_admin_html_view($content);;
@@ -43,8 +38,6 @@ class Ccustomer extends MX_Controller
     //Insert Product and upload
     public function insert_customer()
     {
-        $this->permission->check_label('add_customer')->create()->redirect();
-
         $customer_id = generator(15);
         //Customer  basic information adding.
         $data = array(
@@ -82,7 +75,6 @@ class Ccustomer extends MX_Controller
     //customer Update Form
     public function customer_update_form($customer_id)
     {
-        $this->permission->check_label('manage_customer')->update()->redirect();
 
         $content = $this->lcustomer->customer_edit_data($customer_id);
         $this->template_lib->full_admin_html_view($content);
@@ -92,7 +84,6 @@ class Ccustomer extends MX_Controller
     // customer Update
     public function customer_update()
     {
-        $this->permission->check_label('manage_customer')->update()->redirect();
 
         $customer_id = $this->input->post('customer_id',TRUE);
 
@@ -161,8 +152,6 @@ class Ccustomer extends MX_Controller
     //Customer Ledger Report
     public function customer_ledger_report()
     {   
-        $this->permission->check_label('customer_ledger')->read()->redirect();
-
         $customer_id = $this->input->post('customer_id', TRUE);
         $content = $this->lcustomer->customer_ledger_report($customer_id);
         $this->template_lib->full_admin_html_view($content);
@@ -180,11 +169,9 @@ class Ccustomer extends MX_Controller
         $content = $this->lcustomer->previous_balance_form();
         $this->template_lib->full_admin_html_view($content);
     }
-    // customer delete
+    // product_delete
     public function customer_delete($customer_id)
     {   
-        $this->permission->check_label('manage_customer')->delete()->redirect();
-
         $this->load->model('dashboard/Customers');
         $this->Customers->delete_customer($customer_id);
         $this->session->set_userdata(array('message'=>display('successfully_delete')));

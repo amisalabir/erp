@@ -87,21 +87,6 @@
                                                 <a href="<?php echo base_url() . 'forget_password_form'; ?>"
                                                    class="lost-pass"><?php echo display('i_have_forgotten_my_password') ?></a>
                                             </div>
-                                            <div class="col-sm-12 social_login">
-                                            
-                                            <?php if((check_module_status('facebooklogin') == 1)){?>&nbsp; OR &nbsp;
-                                                <a class="btn btn-facebook btn-sm  search text-white" href="<?php echo base_url('facebooklogin/facebooklogin/index/1')?>"><i class="fa fa-facebook mr-2"></i> <?php echo display('facebook_login')?></a>
-                                            <?php }?>  
-                                            <?php if((check_module_status('linkedinlogin') == 1)){ ?>
-                                                &nbsp; OR &nbsp;
-                                                <a class="btn btn-linkedin btn-sm  search text-white" href="<?php echo base_url('linkedinlogin/linkedinlogin/login/1')?>"><i class="fa fa-linkedin mr-2"></i> <?php echo display('linkedin_login')?></a>
-                                            <?php }?>
-                                            <?php if(check_module_status('googlelogin') == 1){ 
-                                                ?>&nbsp; OR &nbsp;
-                                                <a class="btn btn-google btn-sm  search text-white" href="<?php echo base_url('googlelogin/googlelogin/login')?>"><i class="fa fa-google mr-2"></i> <?php echo display('google_login')?></a>
-                                            <?php }?>
-                                                
-                                            </div>
                                         <?php } else { ?>
                                             <div class="col-sm-12">
                                                 <a href="<?php echo base_url('logout') ?>"
@@ -149,7 +134,8 @@
                                     <label class="control-label" for="first_name"><?php echo display('first_name')
                                         ?><abbr class="required" title="required">*</abbr></label>
                                     <input type="text" id="first_name" class="form-control" name="first_name"
-                                           placeholder="<?php echo display('first_name') ?>"  value="<?php echo $this->session->userdata('first_name'); ?>" required>
+                                           placeholder="<?php echo display('first_name') ?>" value="<?php echo
+                                    $this->session->userdata('first_name') ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="last_name"><?php echo display('last_name')
@@ -262,7 +248,7 @@
                                     <label class="control-label"
                                            for="phone"><?php echo display('customer_mobile') ?> <abbr
                                                 class="required" title="required">*</abbr></label>
-                                    <input type="number" id="customer_mobile" class="form-control"
+                                    <input type="text" id="customer_mobile" class="form-control"
                                            name="customer_mobile"
                                            placeholder="000-00000000000" required
                                            value="<?php echo $this->session->userdata('customer_mobile') ?>"

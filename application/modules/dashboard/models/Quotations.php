@@ -7,7 +7,7 @@ class Quotations extends CI_Model {
 		$this->load->library('lcustomer');
 		$this->load->library('session');
 		$this->load->model('Customers');
-		$this->auth->check_user_auth();
+		$this->auth->check_admin_auth();
 	}
 	//Count quotation
 	public function count_quotation()

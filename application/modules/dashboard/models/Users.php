@@ -26,48 +26,6 @@ class Users extends CI_Model {
 		}
 		return false;
 	}
-
-	// Get User Permission
-	public function getUserPermission($id = null)
-	{
-		$acc_tbl = $this->db->select('*')->from('sec_user_access_tbl')->where('fk_user_id',$id)->get()->result();
-
-		if($acc_tbl!=NULL){
-			$role_id = [];
-			foreach ($acc_tbl as $key => $value) {
-				$role_id[] = $value->fk_role_id;
-			}
-
-			return	$result = $this->db->select("
-					sec_role_permission.role_id, 
-					sec_role_permission.menu_id, 
-					IF(SUM(sec_role_permission.can_create)>=1,1,0) AS 'create', 
-					IF(SUM(sec_role_permission.can_access)>=1,1,0) AS 'read', 
-					IF(SUM(sec_role_permission.can_edit)>=1,1,0) AS 'update', 
-					IF(SUM(sec_role_permission.can_delete)>=1,1,0) AS 'delete',
-					sec_menu_item.menu_title,
-					sec_menu_item.page_url,
-					sec_menu_item.module
-					")
-					->from('sec_role_permission')
-					->join('sec_menu_item', 'sec_menu_item.menu_id = sec_role_permission.menu_id', 'full')
-					->where_in('sec_role_permission.role_id', $role_id)
-					->group_by('sec_role_permission.menu_id')
-					->group_start()
-						->where('can_create', 1)
-						->or_where('can_access', 1)
-						->or_where('can_edit', 1)
-						->or_where('can_delete', 1)
-					->group_end()
-					->get()
-					->result();
-			}
-		else {
-			return 0;
-		}
-	}
-
-
 	/*
 	**User registration
 	*/

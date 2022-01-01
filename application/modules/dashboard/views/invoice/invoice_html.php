@@ -21,6 +21,7 @@
     <section class="content">
         <!-- Alert Message -->
         <?php
+     
         $message = $this->session->userdata('message');
         if (isset($message)) {
             ?>
@@ -46,16 +47,33 @@
             <div class="col-sm-12">
                 <div class="panel panel-bd">
                     <div id="printableArea">
+                        <style type="text/css" media="print">
+                            @page 
+                            { size: auto;   /* auto is the initial value */
+                                margin: 0mm 5mm 0mm 5mm;  /* this affects the margin in the printer settings */
+                            }
+                        </style>
                         <link href="<?php echo MOD_URL.'dashboard/assets/css/print.css'; ?>" rel="stylesheet" type="text/css"/>
-                        <div class="panel-body">
-                            <div class="row">
-                               
-                                <div class="col-sm-9 cominfo_div" >
-                                    <img src="<?php if (isset($Soft_settings[0]['invoice_logo'])) {
+                        <div class="panel-body" style="padding-top:50px;">
+                            <div class="row">  
+                                    <div class="col-sm-12" >
+                                            <!--<img src="<?php if (isset($Soft_settings[0]['invoice_logo'])) {
                                         echo base_url() . $Soft_settings[0]['invoice_logo'];
                                     } ?>" class="img img-responsive inv_logo" alt="logo">
-                                    <br>
-                                    <span class="label label-success-outline m-r-15 p-10"><?php echo display('billing_from') ?></span>
+                                -->
+                                      <!-- <span class="label label-success-outline m-r-15 p-10"><?php echo display('billing_from') ?></span> -->
+                                    <address class="text-center">
+                                        <strong style="font-size:x-large;"> <?php echo html_escape($store_info[0]['store_name']); ?></strong>
+                                        <?php echo $store_info[0]['store_address']; ?><br>
+                                        <abbr><?php echo display('website') ?>:</abbr>
+                                        <?php echo html_escape($company_info[0]['website']); ?>
+                                    </address>
+                                    </div>
+                            </div>
+                            <hr style="border:solid .75px; color: black;">
+                            <div class="row">                   
+                                <div class="col-sm-10 cominfo_div" >
+                                 <!--   
                                     <address class="mt_10">
                                         <strong> <?php echo html_escape($company_info[0]['company_name']); ?></strong><br>
                                         <?php echo html_escape($company_info[0]['address']); ?><br>
@@ -66,11 +84,30 @@
                                         <abbr><?php echo display('website') ?>:</abbr>
                                         <?php echo html_escape($company_info[0]['website']); ?>
                                     </address>
+                                    -->
+                                    <strong><?php echo html_escape($customer_name); ?> </strong><br>
+                                        <abbr><?php echo display('address') ?>:</abbr>
+                                        <?php if ($customer_address) { ?>
+                                            <c class="ctext"><?php echo html_escape($customer_address) ?></c>
+                                        <?php } ?><br>
+                                        <abbr><?php echo display('mobile') ?>
+                                            :</abbr>
+                                            <?php if ($customer_mobile) { ?>
+                                                <?php echo html_escape($customer_mobile) ?>
+                                            <?php }
+                                        if ($customer_email) { ?>
+                                            <br>
+                                            <abbr><?php echo display('email') ?>:</abbr>
+                                            <?php echo html_escape($customer_email); ?>
+                                            
+                                        <?php } ?>
+                          
                                 </div>
                                
-                                <div class="col-sm-2 text-left cus_div">
+                                <div class="col-sm-2 text-right cus_div">
+                                    
                                     <h4 class="m-t-0">
-
+                                        <!--
                                         <?php if ($total_amount == $paid_amount) { ?>
                                             <span class="label label-success-outline "><?php echo display('paid') ?></span>
                                         <?php } elseif (($paid_amount > 0) && ($paid_amount < $total_amount)) { ?>
@@ -79,15 +116,16 @@
                                             ?>
                                             <span class="label label-danger-outline"><?php echo display('unpaid') ?></span>
                                         <?php } ?>
-
+                                       
                                     </h4>
-                                    <h2 class="m-t-0"><?php echo display('invoice') ?></h2>
+                                    <h2 class="m-t-0"><?php  echo display('invoice') ?></h2>  -->
                                     <div><?php echo display('invoice_no') ?>: <?php echo html_escape($invoice_no); ?></div>
                                     <div class="m-b-15"><?php echo display('billing_date') ?>: <?php echo html_escape($final_date) ?></div>
-                                    <span class="label label-success-outline m-r-15"><?php echo display('billing_to') ?></span>
+                                    <span class="label label-success-outline m-r-15"><?php // echo display('billing_to') ?></span>
 
                                     <?php if (!strcmp($customer_mobile, $ship_customer_mobile)){ ?>
                                     <address class="mt_10">
+                                        <!--
                                         <strong><?php echo html_escape($customer_name); ?> </strong><br>
                                         <abbr><?php echo display('address') ?>:</abbr>
                                         <?php if ($customer_address) { ?>
@@ -103,9 +141,11 @@
                                             <abbr><?php echo display('email') ?>:</abbr>
                                             <?php echo html_escape($customer_email); ?>
                                         <?php } ?>
+                                        -->
                                     </address>
                                     <?php } else { ?>
                                         <address class="mt_10">
+                                        
                                             <strong><?php echo html_escape($ship_customer_name) ?> </strong><br>
                                             <abbr><?php echo display('address') ?>:</abbr>
                                             <?php if ($ship_customer_short_address) { ?>
@@ -119,16 +159,17 @@
                                                 <br>
                                                 <abbr><?php echo display('email') ?>:</abbr><?php echo html_escape($ship_customer_email); ?>
                                             <?php } ?>
+                                            
                                         </address>
                                     <?php } ?>
 
-
+                                
                                 </div>
                             </div>
                             <hr>
 
                             <div class="table-responsive m-b-20">
-                                <table class="table table-striped">
+                                <table border="1" class="table">
                                     <thead>
                                     <tr>
                                         <th><?php echo display('sl') ?></th>
@@ -147,16 +188,7 @@
                                     <tr>
                                         <td><?php echo html_escape($invoice['sl']); ?></td>
                                         <td><strong><?php echo html_escape($invoice['product_name']); ?> - (<?php echo html_escape($invoice['product_model']); ?>)</strong></td>
-                                        <td><?php echo html_escape($invoice['variant_name']); 
-                                        if(!empty($invoice['variant_color'])){
-                                            $cvarinfo = $this->db->select('variant_name')->from('variant')->where('variant_id', $invoice['variant_color'])->get()->row();
-                                            if(!empty($cvarinfo)){
-                                                echo ', '.$cvarinfo->variant_name;
-                                            }
-                                        }
-
-                                        ?>
-                                        </td>
+                                        <td><?php echo html_escape($invoice['variant_name']); ?></td>
                                         <td><?php echo html_escape($invoice['unit_short_name']); ?></td>
                                         <td><?php echo html_escape($invoice['quantity']); ?></td>
                                         <td><?php echo(($position == 0) ? $currency." ".$invoice['rate'] : $invoice['rate']." ".$currency) ?></td>
@@ -173,7 +205,7 @@
                                         <p><strong><?php echo htmlspecialchars_decode($invoice_details) ?></strong></p>
                                     </div>
 
-                                    <div class="width_30p ft_left">
+                                    <div class="width_30p ft_right">
 
                                         <table class="table">
 
@@ -290,7 +322,7 @@
                                             <?php } ?>
                                         </table>
 
-                                        <div class="auth_by">
+                                        <div class="auth_by" style="float:right;width:90%;text-align:center;border-top:1px solid #000;margin-top: 100px;font-weight: bold;">
                                             <?php echo display('authorised_by') ?>
                                         </div>
                                     </div>
@@ -300,10 +332,9 @@
                     </div>
 
                     <div class="panel-footer text-left">
-                        <?php if($this->permission->check_label('manage_sale')->read()->access()){ ?>
-                        <a class="btn btn-danger" href="<?php echo base_url('dashboard/Cinvoice/manage_invoice'); ?>"><?php echo display('cancel') ?></a>
-                        <?php }?>
-                        <a class="btn btn-info" href="<?php echo current_url(); ?>" onclick="printPageDiv('printableArea')"><span class="fa fa-print"></span>
+                        <a class="btn btn-danger"
+                           href="<?php echo base_url('dashboard/Cinvoice/manage_invoice'); ?>"><?php echo display('cancel') ?></a>
+                        <a class="btn btn-info" href="#" onclick="printPageDiv('printableArea')"><span class="fa fa-print"></span>
                         </a>
                     </div>
                 </div>

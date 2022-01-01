@@ -2,23 +2,18 @@
 <!-- Add Product Form Start -->
 <div class="content-wrapper">
 <section class="content-header">
-    <div class="header-icon">
-        <i class="pe-7s-note2"></i>
-    </div>
-    <div class="header-title">
-        <h1><?php echo display('new_product') ?></h1>
-        <small><?php echo display('add_new_product') ?></small>
-        <ol class="breadcrumb">
-            <li>
-                <a href="<?php echo base_url('')?>">
-                    <i class="pe-7s-home"></i> <?php echo display('home') ?></a>
-                </li>
-            <li>
-                <a href="<?php echo base_url('dashboard/Cproduct')?>"><?php echo display('product') ?></a>
-            </li>
-            <li class="active"><?php echo display('new_product') ?></li>
-        </ol>
-    </div>
+<div class="header-icon">
+<i class="pe-7s-note2"></i>
+</div>
+<div class="header-title">
+<h1><?php echo display('new_product') ?></h1>
+<small><?php echo display('add_new_product') ?></small>
+<ol class="breadcrumb">
+<li><a href="<?php echo base_url('')?>"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
+<li><a href="<?php echo base_url('dashboard/Cproduct')?>"><?php echo display('product') ?></a></li>
+<li class="active"><?php echo display('new_product') ?></li>
+</ol>
+</div>
 </section>
 
 <!-- Main content -->
@@ -139,14 +134,15 @@ $this->session->unset_userdata('error_message');
 </div>
 <button class="btn btn-success md-trigger m-b-5 m-r-2" data-modal="modal-1">
     <i class="ti-plus"></i><span> <?php echo display('add_supplier') ?></span></button>
+
 <button class="btn btn-info color4 color5 md-trigger m-b-5 m-r-2" data-modal="modal-2"><i class="ti-plus"></i> <?php echo display('add_category')?></button>
-<?php if($this->permission->check_label('manage_product')->read()->access()){ ?>
+
 <a href="<?php echo base_url('dashboard/Cproduct/manage_product')?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"></i>  <?php echo display('manage_product')?></a>
-<?php }if($this->permission->check_label('import_product_csv')->create()->access()){ ?>
+
 <a href="<?php echo base_url('dashboard/Cproduct/add_product_csv')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"></i>  <?php echo display('import_product_csv')?></a>
-<?php }if($this->permission->check_label('manage_product')->read()->access()){ ?>
+
 <a href="<?php echo base_url('dashboard/Cproduct/product_details_single')?>" class="btn btn-warning m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('product_ledger')?></a>
-<?php } ?>
+
 
 <!-- the overlay element -->
 <div class="md-overlay"></div>
@@ -308,6 +304,28 @@ $this->session->unset_userdata('error_message');
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group row">
+                            <label for="onsale" class="col-sm-3 col-form-label"><?php echo display('onsale') ?> <span class="color-red">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control select2 width_100p" id="onsale" name="onsale" required="">
+                                    <option value="0"><?php echo display('no') ?></option>
+                                    <option value="1"><?php echo display('yes') ?></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group row onsale_price none">
+                            <label for="onsale_price" class="col-sm-3 col-form-label"><?php echo display('onsale_price')?> <i class="text-danger">*</i></label>
+                            <div class="col-md-9">
+                                <input class="form-control text-right" name="onsale_price" type="number" required="" placeholder="<?php echo display('onsale_price') ?>" min="0" id="onsale_price">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group row">
                             <label for="best_sale" class="col-sm-3 col-form-label"><?php echo display('best_sale') ?></label>
                             <div class="col-md-9">
                                 <select class="form-control select2 width_100p" id="best_sale" name="best_sale" >
@@ -370,25 +388,10 @@ $this->session->unset_userdata('error_message');
                 </div>
 
                 <div class="form-group row">
-                    <label for="onsale" class="col-sm-4 col-form-label"><?php echo display('onsale') ?> <span class="color-red">*</span></label>
-                    <div class="col-md-4">
-                        <select class="form-control select2 width_100p" id="onsale" name="onsale" required="">
-                            <option value="0"><?php echo display('no') ?></option>
-                            <option value="1"><?php echo display('yes') ?></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row onsale_price none">
-                    <label for="onsale_price" class="col-sm-4 col-form-label"><?php echo display('onsale_price')?> <i class="text-danger">*</i></label>
-                    <div class="col-md-4">
-                        <input class="form-control text-right" name="onsale_price" type="number" required="" placeholder="<?php echo display('onsale_price') ?>" min="0" id="onsale_price">
-                    </div>
-                </div>
-
-                <div class="form-group row">
                     <label for="model" class="col-sm-4 col-form-label"><?php echo display('model') ?> <span class="color-red">*</span></label>
                     <div class="col-sm-4">
                         <input type="text" tabindex="5" class="form-control" name="model" placeholder="<?php echo display('model') ?>" value="<?php echo set_value('model')?>"  required  id="model"/>
+
                     </div>
                 </div>
 
@@ -411,12 +414,11 @@ $this->session->unset_userdata('error_message');
                     <div class="col-sm-4">
                         <select name="variant[]" class="form-control select2" multiple required="" style="width: 100%" id="variant">
                             <option></option>
-                            <?php if ($variant_list){
-                                foreach($variant_list as $variant){
-                                    if($variant['variant_type'] == 'size'){
-                             ?>                                                   
-                                <option value="<?php echo html_escape($variant['variant_id']) ?>"><?php echo html_escape($variant['variant_name']); ?></option> 
-                            <?php } } } ?>
+                            <?php if ($variant_list){ ?>
+                                {variant_list}
+                                <option value="{variant_id}">{variant_name}</option>
+                                {/variant_list}
+                            <?php } ?>
                         </select>
                     </div>
                 </div>
@@ -427,101 +429,44 @@ $this->session->unset_userdata('error_message');
 
                         </select>
                     </div>
+
                 </div>
-                   <div class="form-group row">
-                        <label for="variant_colors" class="col-sm-4 col-form-label"><?php echo display('color') ?></label>
-                        <div class="col-sm-4">
-                            <select name="variant_colors[]" class="form-control select2" multiple id="variant_colors" style="width:100%">
-                                <option value="">Select</option>
-                                <?php if ($variant_list){
-                                    foreach($variant_list as $variant){
-                                        if($variant['variant_type'] == 'color'){
-                                 ?>                                                   
-                                    <option value="<?php echo html_escape($variant['variant_id']) ?>"><?php echo html_escape($variant['variant_name']); ?></option> 
-                                <?php } } } ?>
-                            </select>
-                        </div>
+                <div class="form-group row">
+                    <label for="video" class="col-sm-4 col-form-label"><?php echo display('video_link') ?> </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="video"  class="form-control"/>
+                        <p class="color4 color5 demo-notice">Demo Video Link : <b>https://www.youtube.com/watch?v=nQZvbmaO0ws</b></p>
                     </div>
-
-                    <div id="variant_price_area">
-
-                        <div class="form-group row">
-                            <div class="col-sm-4 col-sm-offset-4">
-                               <div class="checkbox checkbox-success">
-                                    <input type="checkbox" name="variant_prices" value="1" id="variant_prices" >
-                                    <label class="" for="variant_prices" ><?php echo display('set_variant_wise_price') ?></label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row none" id="set_variant_price">
-                            <div class="col-sm-6 col-sm-offset-4">
-                              <div >
-                                  
-                                  <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th><?php echo display('size') ?><span class="color-red">*</span></th>
-                                            <th><?php echo display('color') ?></th>
-                                            <th><?php echo display('price') ?><span class="color-red">*</span></th>
-                                            <th><?php echo display('action') ?></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="variant_area">
-                                        <?php $i=0; ?>
-                                        <tr>
-                                            <td>
-                                                <select name="variant_1" id="size_var" class="form-control select2"   style="width:100%">
-                                                    <option value=""></option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select name="variant_2" id="color_var" class="form-control select2"   style="width:100%">
-                                                    <option value=""></option>
-                                                </select>
-
-                                            </td>
-                                            <td>
-                                                <input type="text" name="var_price_1"  id="var_price"  class="form-control" placeholder="0.00" value="">
-                                            </td>
-                                            <td>
-                                                 <input type="button" value="Add" class="btn btn-info" id="variant-row-add" data-key="<?php echo $i; ?>">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                      
-                                  </table>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="video" class="col-sm-4 col-form-label"><?php echo display('video_link') ?> </label>
-                        <div class="col-sm-4">
-                            <input type="text" name="video"  class="form-control"/>
-                            <p class="color4 color5 demo-notice">Demo Video Link : <b>https://www.youtube.com/watch?v=nQZvbmaO0ws</b></p>
-                        </div>
-                    </div>
-
+                </div>
             </div>
+
             <div class="tab-pane" id="tab4">
                 <div class="col-md-12">
-                    <div class="form-group row">
-                        <label for="image_thumb" class="col-sm-2 col-form-label"><?php echo display('default_image') ?></label>
-                        <div class="col-sm-4">
-                            <input type="file" name="image_thumb" class="form-control" id="image_thumb">
-                        </div>
+                <div class="form-group row">
+                    <label for="image_thumb" class="col-sm-2 col-form-label"><?php echo display('default_image') ?></label>
+                    <div class="col-sm-4">
+                        <input type="file" name="image_thumb" class="form-control" id="image_thumb">
                     </div>
                 </div>
+
+
+                </div>
+
                 <div id="image_row">
                     <div id="image_row_0">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label for="imageUpload" class="col-sm-4 col-form-label"><?php echo display('image') ?></label>
+                                    <label for="imageUpload"
+                                           class="col-sm-4 col-form-label"><?php echo display('image') ?>
+                                        </label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" name="imageUpload[]" type="file"id="imageUpload" data-toggle="tooltip"
-                                            data-placement="top" title="" aria-required="true" data-original-title="<?php echo display('image_size_width_3000_height_3000') ?>"/>
+                                        <input class="form-control" name="imageUpload[]"
+                                                type="file"
+                                               id="imageUpload" data-toggle="tooltip"
+                                               data-placement="top" title=""
+                                               aria-required="true"
+                                               data-original-title="<?php echo display('image_size_width_3000_height_3000') ?>"/>
                                     </div>
                                 </div>
                             </div>
@@ -557,4 +502,6 @@ $this->session->unset_userdata('error_message');
 </div>
 <!-- Add Product Form End -->
 
-<script src="<?php echo MOD_URL.'dashboard/assets/js/add_product_form.js';?>"></script>
+<script src="<?php echo MOD_URL.'dashboard/assets/js/add_product_form.js'; ?>"></script>
+
+

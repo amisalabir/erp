@@ -47,11 +47,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                    <?php if($this->permission->check_label('manage_variant')->read()->redirect()){ ?>
-                    <a href="<?php echo base_url('dashboard/Cvariant/manage_variant')?>" class="btn btn-success m-b-5 m-r-2">
-                        <i class="ti-align-justify"> </i> <?php echo display('manage_variant')?>
-                    </a>
-                    <?php } ?>
+                  <a href="<?php echo base_url('dashboard/Cvariant/manage_variant')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_variant')?></a>
                 </div>
             </div>
         </div>
@@ -68,32 +64,12 @@
                   <?php echo form_open_multipart('dashboard/Cvariant/insert_variant', array('class' => 'form-vertical','id' => 'validate'))?>
                     <div class="panel-body">
 
-                        
-
                     	<div class="form-group row">
                             <label for="variant_name" class="col-sm-3 col-form-label"><?php echo display('variant_name')?> <i class="text-danger">*</i></label>
                             <div class="col-sm-6">
                                 <input class="form-control" name ="variant_name" id="variant_name" type="text" placeholder="<?php echo display('variant_name') ?>"  required="">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="variant_type" class="col-sm-3 col-form-label"><?php echo display('variant_type')?> <i class="text-danger">*</i></label>
-                            <div class="col-sm-6">
-                                <select name="variant_type" id="variant_type" class="form-control" required="">
-                                    <option value=""></option>
-                                    <option value="size" ><?php echo display('size')?></option>
-                                    <option value="color" ><?php echo display('color')?></option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row" id="color_code_area" style="display: none">
-                            <label for="color_code" class="col-sm-3 col-form-label"><?php echo display('color_code') ?> <i class="text-danger">*</i></label>
-                            <div class="col-sm-6">
-                                <input class="form-control" name ="color_code" id="color_code" type="color" placeholder="<?php echo display('color_code') ?>"  required="" value="{color_code}">
-                            </div>
-                        </div>
-
                         <div class="form-group row">
                             <label for="category_id" class="col-sm-3 col-form-label"><?php echo display('category')?> <i class="text-danger">*</i></label>
                             <div class="col-sm-6">
@@ -122,5 +98,5 @@
 </div>
 <!-- Add new customer end -->
 
-<script src="<?php echo MOD_URL.'dashboard/assets/js/add_variant.js'; ?>"></script>
+
 

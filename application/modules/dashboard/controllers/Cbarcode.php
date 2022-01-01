@@ -7,14 +7,11 @@ class Cbarcode extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
         $this->load->model('dashboard/Products');
         $this->load->model('dashboard/Invoices');
         $this->load->model('dashboard/Soft_settings');
         $this->load->model('template/Template_model');
-        
-        $this->permission->check_label('manage_sale')->read()->redirect();
-
     }
 
     //Barcode print page

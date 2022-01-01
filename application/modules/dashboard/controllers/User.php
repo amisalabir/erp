@@ -10,14 +10,12 @@ class User extends MX_Controller
         $this->load->library('dashboard/lusers');
         $this->load->library('session');
         $this->load->model('dashboard/Userm');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
 
     #==============User page load============#
     public function index()
     {
-        $this->permission->check_label('add_user')->create()->redirect();
-
         $content = $this->lusers->user_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -33,8 +31,6 @@ class User extends MX_Controller
     #================Manage User===============#
     public function manage_user()
     {
-        $this->permission->check_label('manage_users')->read()->redirect();
-
         $content = $this->lusers->user_list();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -43,8 +39,6 @@ class User extends MX_Controller
 #==============Insert User==============#
     public function insert_user()
     {
-        $this->permission->check_label('add_user')->create()->redirect();
-
         $this->form_validation->set_rules('first_name', display('first_name'), 'trim|required');
         $this->form_validation->set_rules('last_name', display('last_name'), 'trim|required');
         $this->form_validation->set_rules('email', display('email'), 'trim|required');
@@ -98,8 +92,6 @@ class User extends MX_Controller
 
     public function form($id = null)
     {
-        $this->permission->check_label('add_user')->redirect();
-
         $data['title'] = display('add_user');
         /*-----------------------------------*/
         $this->form_validation->set_rules('firstname', display('firstname'), 'required|max_length[50]');
@@ -187,8 +179,6 @@ class User extends MX_Controller
 
     public function delete($id = null)
     {
-        $this->permission->check_label('manage_users')->delete()->redirect();
-
         if ($this->user_model->delete($id)) {
             $this->session->set_flashdata('message', display('delete_successfully'));
         } else {
@@ -201,8 +191,6 @@ class User extends MX_Controller
     #===============User update form================#
     public function user_update_form($user_id)
     {
-        $this->permission->check_label('manage_users')->update()->redirect();
-
         $this->form_validation->set_rules('first_name', display('first_name'), 'trim|required');
         $this->form_validation->set_rules('last_name', display('last_name'), 'trim|required');
         $this->form_validation->set_rules('username', display('email'), 'trim|required');
@@ -225,8 +213,6 @@ class User extends MX_Controller
     #============User delete===========#
     public function user_delete($user_id)
     {
-        $this->permission->check_label('manage_users')->create()->redirect();
-
         $this->Userm->delete_user($user_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('dashboard/User/manage_user');

@@ -110,14 +110,10 @@ class Lsoft_setting {
 	public function color_frontend_edit_form(){
 		$CI =& get_instance();
 		$CI->load->model('dashboard/Color_frontends');
-		$CI->load->model('dashboard/Themes');
-		$themes = $CI->Themes->get_themes();
-		$active_theme = $CI->Themes->get_theme();
-		$colors = $CI->Color_frontends->retrieve_color_editdata($active_theme);
+		$colors = $CI->Color_frontends->retrieve_color_editdata();
 
+		
 		$data = array(			
-			'themelist' 	=> $themes,
-			'active_theme' 	=> $colors->theme,
 			'color1' 		=> $colors->color1,
 			'color2' 		=> $colors->color2,
 			'color3' 		=> $colors->color3,			

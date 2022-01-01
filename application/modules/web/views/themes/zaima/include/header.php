@@ -34,8 +34,7 @@
             <a class="topbar-link" href="tel:<?php echo html_escape($company_info[0]['mobile']) ?>"><?php echo html_escape($company_info[0]['mobile']) ?></a>
         </div>
         <div class="d-flex justify-content-between justify-content-md-end w-100">
-            <a class="topbar-link d-flex align-items-center" href="#" data-toggle="modal" data-target="#trackingModal">
-                <i data-feather="user" class="mr-2"></i><?php echo display('track_my_order') ?></a> &nbsp;
+
             <?php 
             if ($this->session->userdata('customer_name')) { ?>
             <div class="topbar-text dropdown disable-autohide ml-3">
@@ -164,60 +163,7 @@
                     <span class="navbar-tool-tooltip">Expand menu</span>
                     <div class="navbar-tool-icon-box"><i data-feather="grid" class="navbar-tool-icon"></i></div>
                 </a>
-
-                <div class="dropdown ml-3" id="tab_up_comparison">
-                    <div class="navbar-tool dropdown-toggle" data-toggle="dropdown">
-                        <a class="navbar-tool-icon-box bg-secondary" href="javascript:void(0)">
-                            <span class="navbar-tool-label"><?php if ($this->session->userdata('comparison_ids')) {echo count($this->session->userdata('comparison_ids'));}else{echo 0;}?>
-                            </span>  
-                            <i class="fas fa-retweet navbar-tool-icon"></i>
-                        </a>
-                        <a class="navbar-tool-text"  href="javascript:void(0)">
-                            <small><?php echo display('product') ?></small> 
-                            <?php echo display('compare'); ?>
-                        </a>
-                    </div>
-                    <?php
-                        $total_comparison_ids = 0;
-                        if ($this->session->userdata('comparison_ids')) {
-                            $comparisons = $this->session->userdata('comparison_ids');
-                            $total_comparison_ids = count($this->session->userdata('comparison_ids'));
-
-                            $this->db->from('product_information');
-                            $this->db->where_in('product_id', $comparisons);
-                            $query = $this->db->get();
-                            $comparison_products = $query->result();
-                    ?>
-                    <!-- Comparison dropdown-->
-                    <div class="comparison-dropdown dropdown-menu dropdown-menu-right shadow border-0 rounded px-3 pt-2 pb-3">
-                        <?php  foreach ($comparison_products as $comparison):  ?>
-                        <div class="dropdown-product-item media py-2">
-                            <a class="dropdown-product-thumb overflow-hidden bg-gray d-block" href="<?php echo base_url('product/'.remove_space($comparison->product_name).'/'.$comparison->product_id) ?>">
-                                <img src="<?php echo base_url().$comparison->image_thumb ?>" alt="Product" />
-                            </a>
-                            <div class="dropdown-product-info media-body pl-3 pr-2">
-                                <a class="dropdown-product-title cart-product-item fs-15" href="<?php echo base_url('product/'.remove_space($comparison->product_name).'/'.$comparison->product_id) ?>">
-                                    <?php echo html_escape($comparison->product_name); ?>
-                                </a>
-                                <span class="dropdown-product-details fs-14 text-muted">
-                                    <?php 
-                                        $comparison_price = (($position == 0) ? $currency1 . ' ' . number_format($comparison->price, 2, '.', ',') : number_format($comparison->price, 2, '.', ',') . ' ' . $currency1);
-                                        echo $comparison_price;
-                                    ?>
-                                    
-                                </span>
-                            </div>
-                            <span class="dropdown-product-remove align-self-center text-primary remove_cart_product"> <a href="#" class="delete_comparison_item"  name="<?php echo $comparison->product_id ?>"><i class="ti-close"></i></a></span>
-                        </div>
-                        <?php endforeach; ?>
-                        
-                        <div class="row no-gutters toolbar-dropdown-group">
-                            <div class="col pl-2"><a class="btn btn-block btn-success color4 color46" href="<?php echo base_url('comparison') ?>"><?php echo display('compare') ?></a></div>
-                        </div>
-                    </div>
-                    <?php } ?>
-                </div>
-
+                
                 <div class="dropdown ml-3" id="wishlist_area">
                     <?php
                     $total_wishlist = 0;
@@ -339,7 +285,6 @@
                                 $sub_parent_cat = $this->db->select('*')
                                     ->from('product_category')
                                     ->where('parent_category_id', $parent_category->category_id)
-                                    ->where('status','1')
                                     ->order_by('menu_pos')
                                     ->get()
                                     ->result();
@@ -370,7 +315,6 @@
                                                     $sub_cat = $this->db->select('*')
                                                         ->from('product_category')
                                                         ->where('parent_category_id', $parent_cat->category_id)
-                                                        ->where('status','1')
                                                         ->order_by('menu_pos')
                                                         ->get()
                                                         ->result();
@@ -418,32 +362,6 @@
                         </li>
                     <?php } } } ?>
                 </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal register-modal" id="trackingModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content border-0">
-            <div class="modal-body">
-                <button type="button" class="close position-absolute" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-
-                <div class="form-title_wrap mb-3">
-                    <h4 class="form-title mb-0"><?php echo display('track_my_order') ?></h4>
-                </div>
-                <!--Login Form-->
-                <?php echo form_open('track_my_order'); ?>
-                    <div class="form-group">
-                        <input type="email" class="form-control" name="order_email" placeholder="<?php echo display('email') ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="order_number" placeholder="<?php echo display('order_no') ?>" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block"><?php echo display('track_my_order') ?></button>
-                <?php echo form_close(); ?>
             </div>
         </div>
     </div>

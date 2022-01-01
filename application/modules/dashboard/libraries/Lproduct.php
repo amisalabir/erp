@@ -43,15 +43,13 @@ class Lproduct {
     }
 
     //Retrive product list
-    public function product_list($filter,$links,$per_page,$page)
+    public function product_list($links,$per_page,$page)
     {
         $CI =& get_instance();
         $CI->load->model('dashboard/Products');
         $CI->load->model('dashboard/Soft_settings');
-        $products_list 	   = $CI->Products->product_list($filter,$per_page,$page);
-        $all_supplier_list = $CI->Products->all_supplier_list();
-        $all_category_list = $CI->Products->all_category_list();
-        $all_unit_list     = $CI->Products->all_unit_list();
+        $products_list 	  = $CI->Products->product_list($per_page,$page);
+        $all_product_list = $CI->Products->all_product_list();
 
         $i=$page;
         if(!empty($products_list)){
@@ -61,14 +59,12 @@ class Lproduct {
         }
         $currency_details = $CI->Soft_settings->retrieve_currency_info();
         $data = array(
-            'title' 	        => display('manage_product'),
-            'products_list'     => $products_list,
-            'links' 	        => $links,
-            'all_supplier_list' => $all_supplier_list,
-            'all_category_list' => $all_category_list,
-            'all_unit_list'     => $all_unit_list,
-            'currency' 	        => $currency_details[0]['currency_icon'],
-            'position' 	        => $currency_details[0]['currency_position'],
+            'title' 	=> display('manage_product'),
+            'products_list' => $products_list,
+            'links' 	=> $links,
+            'all_product_list' 	=> $all_product_list,
+            'currency' 	=> $currency_details[0]['currency_icon'],
+            'position' 	=> $currency_details[0]['currency_position'],
         );
 
         $productList = $CI->parser->parse('dashboard/product/product',$data,true);
@@ -117,7 +113,6 @@ class Lproduct {
         $CI->load->model("dashboard/Galleries");
 
         $product_detail = $CI->Products->retrieve_product_editdata($product_id);
-        $provar_prices = $CI->Products->get_product_variant_prices($product_id);
 
         @$supplier_id 	= $product_detail[0]['supplier_id'];
         @$category_id	= $product_detail[0]['category_id'];
@@ -148,8 +143,6 @@ class Lproduct {
             'brand_id' 				=> $product_detail[0]['brand_id'],
             'variants' 				=> $product_detail[0]['variants'],
             'default_variant' 		=> $product_detail[0]['default_variant'],
-            'variant_price'         => $product_detail[0]['variant_price'],
-            'provar_prices'         => $provar_prices,
             'video' 		        => $product_detail[0]['video'],
             'type' 					=> $product_detail[0]['type'],
             'best_sale' 			=> $product_detail[0]['best_sale'],
@@ -214,20 +207,20 @@ class Lproduct {
 
         $currency_details = $CI->Soft_settings->retrieve_currency_info();
         $data = array(
-            'title'				 => display('product_details'),
-            'product_name' 		 => $details_info[0]['product_name'],
-            'product_model' 	 => $details_info[0]['product_model'],
-            'price'				 => $details_info[0]['price'],
+            'title'				=> display('product_details'),
+            'product_name' 		=> $details_info[0]['product_name'],
+            'product_model' 	=> $details_info[0]['product_model'],
+            'price'				=> $details_info[0]['price'],
             'purchaseTotalAmount'=> number_format($totalPrcsAmnt, 2, '.', ','),
-            'salesTotalAmount'	 => number_format($totaSalesAmt, 2, '.', ','),
-            'total_purchase'	 => $totalPurchase,
-            'total_sales'		 => $totalSales,
-            'purchaseData'		 => $purchaseData,
-            'salesData'			 => $salesData,
-            'stock'				 => $stock,
-            'product_statement'  => 'dashboard/Cproduct/product_sales_supplier_rate/'.$product_id,
-            'currency' 			 => $currency_details[0]['currency_icon'],
-            'position' 			 => $currency_details[0]['currency_position'],
+            'salesTotalAmount'	=> number_format($totaSalesAmt, 2, '.', ','),
+            'total_purchase'	=> $totalPurchase,
+            'total_sales'		=> $totalSales,
+            'purchaseData'		=> $purchaseData,
+            'salesData'			=> $salesData,
+            'stock'				=> $stock,
+            'product_statement' => 'dashboard/Cproduct/product_sales_supplier_rate/'.$product_id,
+            'currency' 			=> $currency_details[0]['currency_icon'],
+            'position' 			=> $currency_details[0]['currency_position'],
         );
         $productList = $CI->parser->parse('dashboard/product/product_details',$data,true);
         return $productList;

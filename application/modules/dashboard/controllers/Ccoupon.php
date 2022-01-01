@@ -9,15 +9,13 @@ class Ccoupon extends MX_Controller
 
         $this->load->library('dashboard/lcoupon');
         $this->load->model('dashboard/Coupons');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
 
     }
 
     //Default loading for coupon system.
     public function index()
     {
-        $this->permission->check_label('coupon')->create()->redirect();
-
         $content = $this->lcoupon->coupon_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -25,7 +23,6 @@ class Ccoupon extends MX_Controller
     //Insert coupon
     public function insert_coupon()
     {
-        $this->permission->check_label('coupon')->create()->redirect();
 
         $this->form_validation->set_rules('coupon_name', display('coupon_name'), 'trim|required');
         $this->form_validation->set_rules('discount_type', display('discount_type'), 'trim|required');
@@ -93,16 +90,12 @@ class Ccoupon extends MX_Controller
     //Manage coupon
     public function manage_coupon()
     {
-        $this->permission->check_label('coupon')->read()->redirect();
-
         $content =$this->lcoupon->coupon_list();
         $this->template_lib->full_admin_html_view($content);;
     }
     //coupon Update Form
     public function coupon_update_form($coupon_id)
     {   
-        $this->permission->check_label('coupon')->update()->redirect();
-
         $content = $this->lcoupon->coupon_edit_data($coupon_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -110,7 +103,6 @@ class Ccoupon extends MX_Controller
     // coupon Update
     public function coupon_update($coupon_id = null)
     {
-        $this->permission->check_label('coupon')->update()->redirect();
 
         $this->form_validation->set_rules('coupon_name', display('coupon_name'), 'trim|required');
         $this->form_validation->set_rules('discount_type', display('discount_type'), 'trim|required');
@@ -166,8 +158,6 @@ class Ccoupon extends MX_Controller
     // coupon Delete
     public function coupon_delete($coupon_id)
     {
-        $this->permission->check_label('coupon')->delete()->redirect();
-
         $this->Coupons->delete_coupon($coupon_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('dashboard/Ccoupon/manage_coupon');
@@ -176,8 +166,6 @@ class Ccoupon extends MX_Controller
     //Inactive
     public function inactive($id)
     {
-        $this->permission->check_label('coupon')->update()->redirect();
-
         $this->db->set('status', 0);
         $this->db->where('coupon_id', $id);
         $this->db->update('coupon');
@@ -188,8 +176,6 @@ class Ccoupon extends MX_Controller
     //Active
     public function active($id)
     {
-        $this->permission->check_label('coupon')->update()->redirect();
-        
         $this->db->set('status', 1);
         $this->db->where('coupon_id', $id);
         $this->db->update('coupon');

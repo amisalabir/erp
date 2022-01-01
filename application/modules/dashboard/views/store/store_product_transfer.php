@@ -47,13 +47,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                    <?php if($this->permission->check_label('store_add')->create()->access()){ ?>
+
                     <a href="<?php echo base_url('dashboard/Cstore')?>" class="btn -btn-info color4 color5 m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('add_store')?></a>
-                    <?php }if($this->permission->check_label('manage_store')->read()->access()){ ?>
                     <a href="<?php echo base_url('dashboard/Cstore/manage_store')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_store')?></a>
-                    <?php }if($this->permission->check_label('manage_store_product')->update()->access()){ ?>
                     <a href="<?php echo base_url('dashboard/Cstore/manage_store_product')?>" class="btn btn-warning m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_store_product')?></a>
-                    <?php } ?>
 
                 </div>
             </div>
@@ -104,14 +101,6 @@
                             <label for="variant" class="col-sm-3 col-form-label"><?php echo display('variant')?> <i class="text-danger">*</i></label>
                             <div class="col-sm-6">
                                 <select class="form-control" id="variant" name="variant_id" required="">
-                                                                
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="variant_color" class="col-sm-3 col-form-label"><?php echo display('color')?></label>
-                            <div class="col-sm-6">
-                                <select class="form-control" id="variant_color" name="variant_color">
                                                                 
                                 </select>
                             </div>

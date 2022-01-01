@@ -177,64 +177,50 @@ $currency1 = $cur_info->currency_icon;
                 <!-- Product Images &amp; Alternates -->
                 <div class="product-images">
                     <div class="row">
-                        <div class="col-xs-3 col-sm-2">
-                            <ul class="thumb-nav">
-                                <li><img src="<?php echo base_url() . $image_thumb; ?>" alt="product image">
-                                </li>
-                                <?php
-                                if ($product_gallery_img) {
-                                    foreach ($product_gallery_img as $gallery) {
-                                        ?>
-                                        <li><img src="<?php echo base_url() . $gallery->image_url ?>"
-                                                 alt="<?php echo display('image') ?>"></li>
-                                        <?php
-                                    }
-                                }
-                                ?>
-                            </ul>
-                        </div>
-                        <div class="col-xs-9 col-sm-10">
-                            <!-- Begin Product Images Slider -->
-                            <div class="main-img-slider">
-                                <figure>
-                                    <a href="<?php echo base_url() . $image_large_details; ?>"
-                                       data-size="1400x1400">
-                                        <img class="" src="<?php echo base_url() . $image_large_details; ?>"
-                                             data-lazy="<?php echo base_url() . $image_large_details; ?>"
-                                             data-zoom-image="<?php echo base_url() . $image_large_details; ?>"
-                                             alt="<?php echo display('image') ?>"/>
-                                    </a>
-                                </figure>
-                                <?php
-
-                                if ($product_gallery_img) {
-                                    foreach ($product_gallery_img as $gallery_tab_img) {
-                                        ?>
-                                        <figure>
-                                            <a href="<?php echo base_url() . $gallery_tab_img->img_thumb ?>"
-                                               data-size="1400x1400">
-                                                <img class=""
-                                                     src="<?php echo base_url() . $gallery_tab_img->image_url ?>"
-                                                     data-lazy="<?php echo base_url() . $gallery_tab_img->image_url ?>"
-                                                     data-zoom-image="<?php echo base_url() . $gallery_tab_img->image_url ?>"
-                                                     alt="<?php echo display('image') ?>"/>
-                                            </a>
-                                        </figure>
-
-                                        <?php
-                                    }
-                                }
-                                ?>
-                            </div>
-                            <?php if ($video) { ?>
-                                <div class="product-video-btn">
-                                    <a class="popup-youtube"
-                                       href="<?php echo html_escape($video); ?>"><span><?php echo display('watch_video'); ?></span></a>
+                        <div class="col-xs-12 -col-sm-10">
+                            <div class="product-media media-horizontal">
+                                <div class="image_preview_container images-large">
+                                    <img id="img_zoom"
+                                         data-zoom-image="<?php echo base_url() . $image_large_details ?>"
+                                         src="<?php echo base_url() . $image_large_details ?>" alt="">
+                                    <button class="btn-zoom open_qv"><span>zoom</span></button>
                                 </div>
-                            <?php } ?>
+                                <div class="product_preview images-small">
+                                    <div class="product-slider owl-carousel thumbnails_carousel" id="thumbnails"
+                                         data-nav="true" data-dots="false" data-margin="10"
+                                         data-responsive='{"0":{"items":6},"480":{"items":6},"600":{"items":6},"768":{"items":6}}'>
+                                        <a href="#" data-image="<?php echo base_url() . $image_large_details ?>"
+                                           data-zoom-image="<?php echo base_url() . $image_large_details ?>">
+                                            <img src="<?php echo base_url() . $image_large_details ?>"
+                                                 data-large-image="<?php echo base_url() . $image_large_details ?>"
+                                                 alt="image">
+                                        </a>
+                                        <?php
+                                        if ($product_gallery_img) {
+                                            foreach ($product_gallery_img as $gallery) {
+                                                ?>
+                                                <a href="#"
+                                                   data-image="<?php echo base_url() . $gallery->image_url; ?>"
+                                                   data-zoom-image="<?php echo base_url() . $gallery->image_url; ?>">
+                                                    <img src="<?php echo base_url() . $gallery->image_url; ?>"
+                                                         data-large-image="<?php echo base_url() . $gallery->image_url; ?>"
+                                                         alt="image">
+                                                </a>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
+                    <?php if ($video) { ?>
+                        <div class="product-video-btn">
+                            <a class="popup-youtube"
+                               href="<?php echo html_escape($video); ?>"><span><?php echo display('watch_video'); ?></span></a>
+                        </div>
+                    <?php } ?>
                 </div><!-- End Product Images &amp; Alternates -->
                 <!-- Begin Product Image Zoom -->
                 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
@@ -293,7 +279,7 @@ $currency1 = $cur_info->currency_icon;
                     <?php if ($onsale == 1 && !empty($onsale_price)) { ?>
                         <span class="product-price">
                                         <span class="price-amount">
-                                            <span class="amount-details var_amount">
+                                            <span class="amount-details">
                                             <?php
                                             if ($target_con_rate > 1) {
                                                 $price1 = $onsale_price * $target_con_rate;
@@ -305,7 +291,7 @@ $currency1 = $cur_info->currency_icon;
                                             }
                                             ?>
                                             </span>
-                                            <del class="price_discount"><span class="amount2 regular_price">
+                                            <del><span class="amount2">
                                             <?php
                                             if ($target_con_rate > 1) {
                                                 $price = $price * $target_con_rate;
@@ -326,7 +312,7 @@ $currency1 = $cur_info->currency_icon;
                         ?>
                         <span class="product-price">
                                 <span class="price-amount">
-                                    <ins><span class="amount-details var_amount">
+                                    <ins><span class="amount-details">
                                        <?php
                                        if ($target_con_rate > 1) {
                                            $price = $price * $target_con_rate;
@@ -350,40 +336,23 @@ $currency1 = $cur_info->currency_icon;
 
                 <ul class="summary-header">
                     <li>
-                        <?php if(!($is_affiliate == 1)){ ?>
-                            <p class="stock"><label><?php echo display('status') ?>:</label>
-                                <input type="hidden" value="<?php echo html_escape($stok) ?>" id="stok">
-                                <?php if ($stok > 0) { ?>
-                                <span>
-                                    <?php echo display('in_stock'); ?>
-                                </span>
-                                <?php  } else { ?>
-                                <span class="required">
-                                    <?php echo display('out_of_stock'); ?>
-                                </span>
-                                <?php } ?>
-                            </p>
-                        <?php } ?>
+                        <p class="stock"><label><?php echo display('status') ?>:</label>
+                            <input type="hidden" value="<?php echo html_escape($stok) ?>" id="stok">
+                            <?php if ($stok > 0) { ?>
+                            <span>
+                                <?php echo display('in_stock'); ?>
+                            </span>
+                            <?php  } else { ?>
+                            <span class="required">
+                                <?php echo display('out_of_stock'); ?>
+                            </span>
+                            <?php } ?>
+                        </p>
                     </li>
                 </ul>
                 <div class="short-description">
                     <p><?php echo character_limiter(strip_tags($product_details), 200); ?></p>
                     <?php if ($variant) { ?>
-                         <?php
-                            $var_types = [];
-                            if (!empty($variant)) {
-                                $exploded = explode(',', $variant);
-                                $this->db->select('*');
-                                $this->db->from('variant');
-                                $this->db->where_in('variant_id', $exploded);
-                                $this->db->order_by('variant_name', 'asc');
-                                $vresult = $this->db->get()->result();
-
-                                $var_types = array_column($vresult, 'variant_type');
-                            }
-                         ?>
-
-
                         <div class="product_size p_1e">
                             <?php echo form_open('#', array( 'class' => 'form-inline')); ?> 
                                 <div class="form-group">
@@ -396,79 +365,62 @@ $currency1 = $cur_info->currency_icon;
                                     <div class="dis_inbl">
                                         <select id="select_size1" required="" class="form-control select">
                                             <option value="0"><?php echo display('select') ?></option>
-
                                             <?php
-                                                foreach ($vresult as $vitem) {
-                                                if($vitem->variant_type=='size'){
+                                            if ($variant) {
+                                                $exploded = explode(',', $variant);
+                                                foreach ($exploded as $elem) {
+                                                    $this->db->select('*');
+                                                    $this->db->from('variant');
+                                                    $this->db->where('variant_id', $elem);
+                                                    $this->db->order_by('variant_name', 'asc');
+                                                    $result = $this->db->get()->row();
+                                                    ?>
+                                                    <option value="<?php echo html_escape($result->variant_id) ?>" <?php if ($result->variant_id == $default_variant) {
+                                                        echo "selected";
+                                                    } ?>><?php echo html_escape($result->variant_name) ?></option>
+
+                                                    <?php
+                                                }
+                                            }
                                             ?>
-
-                                            <option value="<?php echo html_escape($vitem->variant_id) ?>" <?php if ($vitem->variant_id == $default_variant) { echo "selected"; } ?>><?php echo html_escape($vitem->variant_name) ?></option>
-
-                                            <?php } } ?>
                                         </select>
                                     </div>
                                 </div>
                             <?php echo form_close(); ?>
                         </div>
-
-                        <?php if(in_array('color', $var_types)){ ?>
-                            <div class="product-color mb-3">
-                                <?php 
-                                    foreach ($vresult as $vitem) {
-                                        if($vitem->variant_type=='color'){
-
-                                            if(empty($default_color)){
-                                                $default_color = $vitem->variant_id;  // Set default color if not getting
-                                            }
-                                            ?>
-                                    <input type="radio" class="product_colors" name="select_color" id="color_<?php echo $vitem->variant_id; ?>" value="<?php echo $vitem->variant_id; ?>" onclick="select_color_variant(<?php echo html_escape($product_id) ?>,'<?php echo  html_escape($vitem->variant_id) ?>', '<?php echo html_escape($default_variant); ?>')" <?php echo (($vitem->variant_id == $default_color)?'checked="checked"':"") ?>>
-                                    <label class="mb-0" for="color_<?php echo $vitem->variant_id; ?>"><span class="color_code" style="background: <?php echo (!empty($vitem->color_code)?$vitem->color_code:strtolower($vitem->variant_name)) ?>"></span></label>
-
-                                <?php } }?>
-
-                            </div>
-                        <?php  }  ?>
-
-
-                        <?php } ?>
+                        <?php
+                    }
+                    ?>
                     <!--  /.End of product Size -->
                 </div>
                 <form class="cart-row">
-                    <?php if(!($is_affiliate == 1)){ ?>
-                    <div class="cart_counter" >
+                    <div class="cart_counter">
                         <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 1 ) result.value--;return false;"
                                 class="reduced items-count" type="button">
-                                <span class="qty qty-minus" data-dir="dwn">-</span>
+                            <span class="qty qty-minus" data-dir="dwn">-</span>
                         </button>
                         <input type="text" name="qty" id="sst" maxlength="12" value="1"
                                title="<?php echo display('quantity') ?>"
                                class="input-text qty form-control text-center" min="1">
                         <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
                                 class="increase items-count" type="button">
-                                <span class="qty qty-plus" data-dir="up">+</span>
+
+                            <span class="qty qty-plus" data-dir="up">+</span>
                         </button>
                     </div>
-                    <?php } ?>
 
                     <?php
                     if ($stok > 0) {
                         ?>
                         <a href="javascript:void(0)" onclick="cart_btn(<?php echo html_escape($product_id) ?>)" class="cart-btn"><?php echo display('add_to_cart') ?></a>
-                        <a href="javascript:void(0)" onclick="buy_now(<?php echo html_escape($product_id) ?>)" class="cart-btn"><?php echo display('order_now') ?></a>
-                    <?php }if($is_affiliate == 1){ ?>
-                        <a href="<?php echo html_escape($affiliate_url) ?>" target="0" class="cart-btn"><?php echo display('buy_now') ?></a>
-                    <?php } ?>
+                        <a href="javascript:void(0)" onclick="buy_now(<?php echo html_escape($product_id) ?>)"
+                           class="cart-btn"><?php echo display('order_now') ?></a>
 
+                    <?php } ?>
                     <a href="javascript:void(0)" class="add-wishlist wishlist" data-toggle="tooltip"
                        data-placement="top"
                        title="<?php echo display('wishlist') ?>" name="<?php echo html_escape($product_id) ?>"><i
                                 class="lnr lnr-heart"></i></a>
-                    <a class="add-wishlist comparison" href="javascript:void(0)"
-                       onclick="comparison_btn(<?php echo html_escape($product_id) ?>)"
-
-                       title="<?php echo display('compare') ?>" >
-                       <i class="lnr lnr-chart-bars"></i>
-                    </a>
                 <?php echo form_close(); ?>
                 <input type="hidden" id="product_id" name="product_id" value="<?php echo html_escape($product_id) ?>">
                 <div class="product-meta">
@@ -505,7 +457,9 @@ $currency1 = $cur_info->currency_icon;
                         </div>
                     </div>
                 </div>
+
             <?php } else if (2 == $ads->adv_position && !empty($ads->adv_code) && !empty($ads->adv_code2) && empty($ads->adv_code3)) { ?>
+
                 <div class="my-10">
                     <div class="container">
                         <div class="row">
@@ -518,7 +472,9 @@ $currency1 = $cur_info->currency_icon;
                         </div>
                     </div>
                 </div>
+
             <?php } else if (2 == $ads->adv_position && !empty($ads->adv_code) && !empty($ads->adv_code2) && !empty($ads->adv_code3)) { ?>
+
                 <div class="my-10">
                     <div class="container">
                         <div class="row">
@@ -991,15 +947,9 @@ endforeach;
                                 ?>
                                 <div class="hover_content">
                                     <ul class="nav">
-                                        <li>
-                                            <a href="javascript:void(0)"
-                                                onclick="comparison_btn(<?php echo html_escape($product->product_id) ?>)"
-                                                title="<?php echo display('compare') ?>" >
-                                                <i class="lnr lnr-chart-bars"></i>
-                                            </a>
-                                        </li>
                                         <li><a href="#" class="wishlist"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="javascript:void(0)"  onclick="add_to_cart_item('<?php echo $product->product_id; ?>','<?php echo  remove_space($product->product_name);?>', '<?php echo html_escape($product->default_variant); ?>', <?php echo $product->variant_price; ?>)"><i class="fa fa-shopping-bag"></i></a></li>
+                                        <li><a href="javascript:void(0)"  onclick="add_to_cart(<?php echo html_escape($product->product_id) . ', \'' . remove_space($product->product_name) . '\',';
+                                               echo ($product->default_variant) ? '\'' . $product->default_variant . '\'' : '\'nai\''; ?>)"><i class="fa fa-shopping-bag"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -1061,4 +1011,3 @@ foreach ($select_details_adds as $ads):
 endforeach;
 } ?>
 </div>
-<input type="hidden" id="color_variant_id" value="<?php echo @$default_color; ?>">

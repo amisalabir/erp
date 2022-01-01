@@ -22,9 +22,8 @@
 		<div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('sales_report')->read()->access()){ ?>
+
                   <a href="<?php echo base_url('dashboard/Admin_dashboard/todays_sales_report')?>" class="btn -btn-info color4 color5 m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('sales_report')?></a>
-                <?php } ?>
                 </div>
             </div>
         </div>
@@ -36,12 +35,12 @@
 		                <?php echo form_open('dashboard/Admin_dashboard/tax_report_invoice_wise',array('class' => 'form-inline'))?>
 		                    <div class="form-group">
 		                        <label for="from_date"><?php echo display('start_date') ?>:</label>
-		                        <input type="text" name="from_date" class="form-control datepicker" id="from_date" placeholder="<?php echo display('start_date') ?>"  autocomplete="off">
+		                        <input type="text" name="from_date" class="form-control datepicker" id="from_date" placeholder="<?php echo display('start_date') ?>" >
 		                    </div> 
 
 		                    <div class="form-group">
 		                        <label for="to_date"><?php echo display('end_date') ?>:</label>
-		                        <input type="text" name="to_date" class="form-control datepicker" id="to_date" placeholder="<?php echo display('end_date') ?>" autocomplete="off">
+		                        <input type="text" name="to_date" class="form-control datepicker" id="to_date" placeholder="<?php echo display('end_date') ?>">
 		                    </div>  
 
 		                    <button type="submit" class="btn btn-success"><?php echo display('search') ?></button>
@@ -74,18 +73,18 @@
 								<?php
 									if($tax_report_invoice_wise) {
 								?>
-								{tax_report_invoice_wise}
-									<tr>
-										<td>{date}</td>
-										<td>
-											<a href="<?php echo base_url().'dashboard/Cinvoice/invoice_inserted_data/{invoice_id}'; ?>">
-												{invoice_id} <i class="fa fa-tasks pull-right" aria-hidden="true"></i>
-											</a>
-										</td>
-										<td>{tax_name}</td>
-										<td class="text-right"><?php echo (($position==0)?"$currency {tax_amount}":"{tax_amount} $currency") ?></td>
-									</tr>
-								{/tax_report_invoice_wise}
+									{tax_report_invoice_wise}
+										<tr>
+											<td>{date}</td>
+											<td>
+												<a href="<?php echo base_url().'dashboard/Cinvoice/invoice_inserted_data/{invoice_id}'; ?>">
+													{invoice_id} <i class="fa fa-tasks pull-right" aria-hidden="true"></i>
+												</a>
+											</td>
+											<td>{tax_name}</td>
+											<td class="text-right"><?php echo (($position==0)?"$currency {tax_amount}":"{tax_amount} $currency") ?></td>
+										</tr>
+									{/tax_report_invoice_wise}
 								<?php
 									}
 								?>

@@ -45,13 +45,12 @@
 	    <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                	<?php if($this->permission->check_label('add_supplier')->create()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Csupplier')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_supplier')?></a>  
-                	<?php }if($this->permission->check_label('manage_supplier')->read()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Csupplier/manage_supplier')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_supplier')?></a>
-                  	<?php }if($this->permission->check_label('supplier_ledger')->read()->access()){?>
-                  	<a href="<?php echo base_url('dashboard/Csupplier/supplier_ledger_report')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('supplier_ledger')?></a>
-                  	<?php } ?>
+                
+                  <a href="<?php echo base_url('dashboard/Csupplier')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_supplier')?></a>  
+
+                  <a href="<?php echo base_url('dashboard/Csupplier/manage_supplier')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_supplier')?></a>
+
+                  <a href="<?php echo base_url('dashboard/Csupplier/supplier_ledger_report')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('supplier_ledger')?></a>
 
                 </div>
             </div>

@@ -11,7 +11,7 @@ class Message extends MX_Controller
         $this->load->model(array(
             'message_model'
         ));
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
 
     public function index()

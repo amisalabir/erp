@@ -39,6 +39,7 @@
             $this->session->unset_userdata('error_message');
             }
         ?>
+
         <!-- New customer -->
         <div class="row">
             <div class="col-sm-12">
@@ -50,6 +51,7 @@
                     </div>
                   <?php echo form_open_multipart('dashboard/Cweb_setting/update_android_apps_update', array('class' => 'form-vertical','id' => 'validate'))?>
                     <div class="panel-body">
+
                         <div class="form-group row">
                             <label for="color1" class="col-sm-3 col-form-label"><?php echo display('put_your_apps_link') ?> </label>
                             <div class="col-sm-6">
@@ -57,6 +59,9 @@
                                  <small><?php echo display('apps_url')?></small>
                             </div>
                         </div>
+
+
+
                         <div class="form-group row">
                             <label for="example-text-input" class="col-sm-4 col-form-label"></label>
                             <div class="col-sm-6">
@@ -73,10 +78,8 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <p class="mob_app_txt">
-                            <i class="fa fa-android" aria-hidden="true"></i> Download ISSHUE android apps from play store to check our apps demo. click
-                            <a class="btn btn-success color4" href="https://play.google.com/store/apps/details?id=com.bdtask.isshues&site=<?php echo base_url() ?>&valid=Isshue" target="_blank">here</a>
-                        </p>
+                        <p class="mob_app_txt"><i class="fa fa-android" aria-hidden="true"></i> Download ISSHUE android apps from play store to check our apps demo. click
+                            <a class="btn btn-success color4" href="https://play.google.com/store/apps/details?id=com.bdtask.isshues&site=<?php echo base_url() ?>&valid=Isshue" target="_blank">here</a></p>
                     </div>
                 </div>
             </div>

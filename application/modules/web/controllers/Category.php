@@ -24,9 +24,11 @@ class Category extends MX_Controller
 
     }
 
+
     //Single category product
     public function category_product($cat_id, $brand = null)
     {
+
         if (is_numeric($brand)) {
             $brand = '';
         }
@@ -308,7 +310,6 @@ class Category extends MX_Controller
             'brand' => $this->input->get('brand',TRUE)
         );
         $content = $this->lcategory->category_product_search($product_name, $filter);
-        
         $this->template_lib->full_website_html_view($content);
 
     }

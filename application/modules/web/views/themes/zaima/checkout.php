@@ -54,7 +54,6 @@
                                         <?php
                                         if ($this->user_auth->is_logged() != 1) {
                                             ?>
-                                            
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label class="control-label" for="login_email"><?php echo display('email') ?><abbr class="required" title="required">*</abbr></label>
@@ -74,26 +73,9 @@
                                                     <input id="remember_me" type="checkbox" name="remember_me" value="1">
                                                     <label for="remember_me"><?php echo  display('remember_me') ?></label>
                                                 </div>
-                                                <a href="#" class="btn btn-success color4 color46 customer_login"><?php echo display('login') ?></a>
+                                                <a href="#" class="btn btn-success color3 color36 customer_login"><?php echo display('login') ?></a>
                                                 <a href="<?php echo base_url() . 'forget_password_form'; ?>"
                                                    class="lost-pass"><?php echo display('i_have_forgotten_my_password') ?></a>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="col-sm-12 social_login">
-                                                <?php if((check_module_status('facebooklogin') == 1)){
-                                                    ?>&nbsp; OR &nbsp;
-                                                    <a class="btn btn-facebook btn-sm  search text-white" href="<?php echo base_url('facebooklogin/facebooklogin/index/1')?>"><i class="fab fa-facebook-square"></i> <?php echo display('facebook_login')?></a>
-                                                <?php }?>  
-                                                <?php if((check_module_status('linkedinlogin') == 1)){ ?>
-                                                    &nbsp; OR &nbsp;
-                                                    <a class="btn btn-linkedin btn-sm  search text-white" href="<?php echo base_url('linkedinlogin/linkedinlogin/login/1')?>"><i class="fab fa-linkedin"></i> <?php echo display('linkedin_login')?></a>
-                                                <?php }?>
-                                                <?php if(check_module_status('googlelogin') == 1){ 
-                                                    ?>&nbsp; OR &nbsp;
-                                                    <a class="btn btn-google btn-sm  search text-white" href="<?php echo base_url('googlelogin/googlelogin/login')?>"><i class="fab fa-google"></i> <?php echo display('google_login')?></a>
-                                                <?php }?>
-                                                </div>
-
                                             </div>
                                         <?php } else { ?>
                                             <div class="col-sm-12">
@@ -138,7 +120,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="font-weight-500" for="customer_mobile"><?php echo display('customer_mobile') ?><span class="text-danger">*</span></label>
-                        <input type="number" id="customer_mobile" class="form-control" name="customer_mobile" placeholder="<?php echo display('customer_mobile') ?>" required value="<?php echo set_value('customer_mobile', $this->session->userdata('customer_mobile')) ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo display('add_country_code') ?>">
+                        <input type="text" id="customer_mobile" class="form-control" name="customer_mobile" placeholder="<?php echo display('customer_mobile') ?>" required value="<?php echo set_value('customer_mobile', $this->session->userdata('customer_mobile')) ?>" data-toggle="tooltip" data-placement="bottom" title="<?php echo display('add_country_code') ?>">
                     </div>
                 </div>
             </div>
@@ -472,7 +454,7 @@
                                     <input type="radio" class="shipping_cost" name="shipping_cost"
                                            id="<?php echo html_escape($shipping_method->method_id) ?>"
                                            value="<?php echo html_escape($shipping_method->charge_amount) ?>"
-                                           alt="<?php echo display('service_charge') ?>" <?php if ($this->session->userdata('method_id') == $shipping_method->method_id) {
+                                           alt="<?php echo html_escape($shipping_method->details) ?>" <?php if ($this->session->userdata('method_id') == $shipping_method->method_id) {
                                         echo "checked";
                                     } ?>>
 

@@ -3,11 +3,11 @@ class Cquotation extends MX_Controller {
 	
 	function __construct() {
       	parent::__construct();
-      	$this->auth->check_user_auth();
     }
 	public function index()
 	{
 		$CI =& get_instance();
+		$CI->auth->check_admin_auth();
 		$CI->load->library('Lquotation');
 		$content = $CI->lquotation->quotation_add_form();
 		$this->template_lib->full_admin_html_view($content);
@@ -16,6 +16,7 @@ class Cquotation extends MX_Controller {
 	public function new_quotation()
 	{
 		$CI =& get_instance();
+		$CI->auth->check_admin_auth();
 		$CI->load->library('Lquotation');
 		$content = $CI->lquotation->quotation_add_form();
 		$this->template_lib->full_admin_html_view($content);
@@ -24,6 +25,7 @@ class Cquotation extends MX_Controller {
 	public function insert_quotation()
 	{
 		$CI =& get_instance();
+		$CI->auth->check_admin_auth();
 		$CI->load->model('Quotations');
 		$quotation_id = $CI->Quotations->quotation_entry();
 		$this->session->set_userdata(array('message'=>display('successfully_added')));
@@ -39,6 +41,7 @@ class Cquotation extends MX_Controller {
 	public function search_inovoice_item()
 	{
 		$CI =& get_instance();
+		$this->auth->check_admin_auth();
 		$CI->load->library('Lquotation');
 		
 		$customer_id = $this->input->post('customer_id',TRUE);
@@ -49,6 +52,7 @@ class Cquotation extends MX_Controller {
 	public function manage_quotation()
 	{	
 		$CI =& get_instance();
+		$this->auth->check_admin_auth();
 		$CI->load->library('Lquotation');
 		$CI->load->model('Quotations');
 
@@ -60,6 +64,7 @@ class Cquotation extends MX_Controller {
 	public function quotation_update_form($quotation_id)
 	{	
 		$CI =& get_instance();
+		$CI->auth->check_admin_auth();
 		$CI->load->library('Lquotation');
 		$content = $CI->lquotation->quotation_edit_data($quotation_id);
 		$this->template_lib->full_admin_html_view($content);
@@ -67,6 +72,7 @@ class Cquotation extends MX_Controller {
 	//POS quotation page load
 	public function pos_quotation(){
 		$CI =& get_instance();
+		$CI->auth->check_admin_auth();
 		$CI->load->library('Lquotation');
 		$content = $CI->lquotation->pos_quotation_add_form();
 		$this->template_lib->full_admin_html_view($content);
@@ -75,6 +81,7 @@ class Cquotation extends MX_Controller {
 	public function quotation_update()
 	{
 		$CI =& get_instance();
+		$CI->auth->check_admin_auth();
 		$CI->load->model('Quotations');
 		$quotation_id = $CI->Quotations->update_quotation();
 		$this->session->set_userdata(array('message'=>display('successfully_updated')));
@@ -83,6 +90,7 @@ class Cquotation extends MX_Controller {
 	// Quotation paid data
 	public function quot_paid_data($quotation_id){
 		$CI =& get_instance();
+		$CI->auth->check_admin_auth();
 		$CI->load->model('Quotations');
 		$quotation_id = $CI->Quotations->quot_paid_data($quotation_id);
 		$this->session->set_userdata(array('message'=>display('successfully_added')));
@@ -92,6 +100,7 @@ class Cquotation extends MX_Controller {
 	public function quotation_inserted_data($quotation_id)
 	{	
 		$CI =& get_instance();
+		$CI->auth->check_admin_auth();
 		$CI->load->library('Lquotation');
 		$content = $CI->lquotation->quotation_html_data($quotation_id);		
 		$this->template_lib->full_admin_html_view($content);
@@ -100,6 +109,7 @@ class Cquotation extends MX_Controller {
 	public function quotation_details_data($quotation_id)
 	{	
 		$CI =& get_instance();
+		$CI->auth->check_admin_auth();
 		$CI->load->library('Lquotation');
 		$content = $CI->lquotation->quotation_details_data($quotation_id);	
 		$this->template_lib->full_admin_html_view($content);
@@ -108,6 +118,7 @@ class Cquotation extends MX_Controller {
 	public function pos_quotation_inserted_data($quotation_id)
 	{	
 		$CI =& get_instance();
+		$CI->auth->check_admin_auth();
 		$CI->load->library('Lquotation');
 		$content = $CI->lquotation->pos_quotation_html_data($quotation_id);		
 		$this->template_lib->full_admin_html_view($content);
@@ -116,6 +127,7 @@ class Cquotation extends MX_Controller {
 	public function retrieve_product_data()
 	{	
 		$CI =& get_instance();
+		$this->auth->check_admin_auth();
 		$CI->load->model('Quotations');
 		$product_id = $this->input->post('product_id',TRUE);
 		$product_info = $CI->Quotations->get_total_product($product_id);
@@ -125,6 +137,7 @@ class Cquotation extends MX_Controller {
 	public function quotation_delete($quotation_id)
 	{	
 		$CI =& get_instance();
+		$this->auth->check_admin_auth();
 		$CI->load->model('Quotations');
 		$result = $CI->Quotations->delete_quotation($quotation_id);
 		if ($result) {
@@ -136,6 +149,7 @@ class Cquotation extends MX_Controller {
 	public function product_stock_check($product_id)
 	{
 		$CI =& get_instance();
+		$this->auth->check_admin_auth();
 		$CI->load->model('Quotations');
 
 		$purchase_stocks = $CI->Quotations->get_total_purchase_item($product_id);	
@@ -160,6 +174,7 @@ class Cquotation extends MX_Controller {
 	//Search product by product name and category
 	public function search_product(){
 		$CI =& get_instance();
+		$this->auth->check_admin_auth();
 		$CI->load->model('Quotations');
 		$product_name = $this->input->post('product_name',TRUE);
 		$category_id  = $this->input->post('category_id',TRUE);
@@ -184,6 +199,7 @@ class Cquotation extends MX_Controller {
 	//Insert new customer
 	public function insert_customer(){
 		$CI =& get_instance();
+		$this->auth->check_admin_auth();
 		$CI->load->model('Quotations');
 
 		$customer_id=$this->auth->generator(15);

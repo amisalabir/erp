@@ -126,14 +126,12 @@
                                 <td id="t_<?php echo html_escape($value->id);?>"><?php echo html_escape($value->template_name); ?></td>
                                 <td id="ts_<?php echo html_escape($value->type); ?>"><?php echo html_escape($value->type); ?></td>
                                 <td id="td_<?php echo html_escape($value->id);?>"><?php echo html_escape($value->message); ?></td>
+                                
                                 <td width="70">
                                     <a data-id="<?php echo html_escape($value->id);?>" class="edit btn btn-xs btn-info">
                                     <i class="fa fa-edit"></i> </a>
-                                    <?php if($this->permission->check_label('sms_template')->delete()->access()){ ?>
                                     <a  class="btn btn-xs btn-danger" href="<?php echo base_url();?>dashboard/Csms_setting/delete_template/<?php echo html_escape($value->id) ;?>" onclick="return confirm('Are you want to delete?');">
-                                        <i class="fa fa-trash"></i> 
-                                    </a>
-                                    <?php } ?>
+                                    <i class="fa fa-trash"></i> </a>
                                 </td>
                             </tr>
                             <?php }?>

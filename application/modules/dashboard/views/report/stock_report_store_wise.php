@@ -45,7 +45,8 @@
                                     if ($store_product_list) {
                                         ?>
                                         <?php foreach($store_product_list as $product):
-                                            $stock =  $product['quantity'] - $product['sell']; ?>
+                                            $stock =  $product['quantity'] - $product['sell'];
+                                            ?>
                                             <tr>
                                                 <td class="text-center"><?php echo html_escape($product['sl']) ?></td>
                                                 <td class="text-center"><?php echo html_escape($product['store_name'])?></td>

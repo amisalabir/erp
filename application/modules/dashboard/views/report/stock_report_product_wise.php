@@ -27,19 +27,10 @@
 		<div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('stock_report')->read()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Creport')?>" class="btn btn-success m-b-5 m-r-2">
-                  		<i class="ti-align-justify"> </i><?php echo display('stock_report')?>
-                  	</a>  
-                <?php }if($this->permission->check_label('stock_report_supplier_wise')->read()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Creport/stock_report_supplier_wise')?>" class="btn btn-success m-b-5 m-r-2">
-                  		<i class="ti-align-justify"> </i> <?php echo display('stock_report_supplier_wise')?>
-                  	</a>  
-                <?php }if($this->permission->check_label('stock_report_store_wise')->read()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Creport/stock_report_store_wise')?>" class="btn btn-success m-b-5 m-r-2">
-                  		<i class="ti-align-justify"> </i> <?php echo display('stock_report_store_wise')?>
-                  	</a>
-	            <?php } ?>
+                  <a href="<?php echo base_url('dashboard/Creport')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('stock_report')?></a>  
+
+                  <a href="<?php echo base_url('dashboard/Creport/stock_report_supplier_wise')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('stock_report_supplier_wise')?></a>  
+                  <a href="<?php echo base_url('dashboard/Creport/stock_report_store_wise')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('stock_report_store_wise')?></a>
                 </div>
             </div>
         </div>

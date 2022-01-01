@@ -52,7 +52,7 @@
                             <i class="fa fa-bars"></i>
                         </div>
                            <div class="card-header-headshot" style='background-image:url(" <?php echo base_url().$logo;?>")'></div>
-                    </div>
+</div>
                     </div>
                     <div class="card-content">
                         <div class="card-content-member">

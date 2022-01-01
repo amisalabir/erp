@@ -3355,7 +3355,7 @@ select{
     transform: translateX(-15px);
     opacity: 0;
 }
-.hover-box .nav li a {
+.hover-box .nav li:first-child a {
     margin-bottom: 5px;
 }
 .hover-box .nav li a:hover,
@@ -4504,7 +4504,7 @@ ul.category li {
 .newsletter .newsletter-title {
     display: inline-block;
     font-size: 21px;
-    margin-right: 0px;
+    margin-right: 25px;
     margin-bottom: 0;
     color: #fff;
     font-weight: 600;
@@ -4522,9 +4522,6 @@ ul.category li {
     margin-left: 25px;
     font-size: 1.071em;
     color: #fff;
-}
-.offers{
-    font-size: 20px;
 }
 
 .newsletter form {
@@ -5408,7 +5405,7 @@ ul.category li {
 
 .cart-btn {
     border: 0;
-    padding: 12px 25px;
+    padding: 12px 35px;
     font-weight: 700;
     line-height: 24px;
     margin-bottom: 15px;
@@ -7230,7 +7227,7 @@ ul.category li {
 
 .cart_counter .input-text {
     height: 48px;
-    width: 40px;
+    width: 90px;
     box-shadow: none;
     border-radius: 0;
     padding: 0;
@@ -7398,6 +7395,12 @@ img {
     width: 100%;
     height: 3em;
 }
+
+
+
+
+
+
 
 
 .product-media .images-small .owl-prev, .product-media .images-small .owl-next {
@@ -7716,81 +7719,4 @@ img {
     .slick-slide img{
         max-height: 560px;
     }
-}
-/*Social media*/
-.social-icon a, .footer-box ul li a {
-    display: block;
-    margin-bottom: 8px;
-    text-decoration: none;
-    -webkit-transition: all .2s linear;
-    transition: all .2s linear;
-    padding-left: 26px;
-    color: #b3c0cc;
-}
-.social-icon .icon-wrap {
-    width: 30px;
-    height: 30px;
-    margin-right: 12px;
-    line-height: 30px;
-    border-radius: 3px;
-    vertical-align: middle;
-}
-.social-icon .icon-wrap.inst {
-    background-color: #3f729b !important;
-}
-.social-icon .icon-wrap.twi {
-    background-color: #00acee !important;
-}
-.social-icon .icon-wrap.dri {
-    background-color: #ea4c89 !important;
-}
-.social-icon .icon-wrap.fb {
-    background-color: #3b5998 !important;
-}
-.social-icon .icon-wrap.lin {
-    background-color: #0e76a8 !important;
-}
-.social-icon .icon-wrap.yt {
-    background-color: #FF0000 !important;
-}
-.footer-link li a{
-    color: #292b2c;
-}
-.footer-box .link-title{
-    color: #b3c0cc;
-}
-.align-middle{
-    vertical-align: middle!important;
-}
-
-.social_login{
-    padding-top: 10px;
-    margin-left: -7px;
-}
-.btn-facebook {
-    color: #fff;
-    background-color: #3B5999;
-    border-color: #2e6da4;
-    
-}
-
-.btn-google {
-    color: #fff;
-    background-color: #4285F4;
-    border-color: #2e6da4;
-    
-}
-
-.btn-instagram {
-    color: #fff;
-    background-color: #CD3F7A;
-    border-color: #2e6da4;
-}
-.btn-linkedin {
-    color: #fff;
-    background-color: #004182;
-    border-color: #2e6da4;
-}
-#affiliate_btn{
-    background: #f2853f !important;
 }

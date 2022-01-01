@@ -48,11 +48,11 @@ $theme = $CI->Themes->get_theme();
                                 ?>
                             </div>
                             <a href="#" class="review-link text-muted font-weight-400 fs-14">
-                                (<span class="count"><?php echo (!empty($result->t_reviewer)?$result->t_reviewer:0); ?></span> <?php echo display('review'); ?>)
+                                (<span class="count"><?php echo (!empty($result->t_reviewer)?$result->t_reviewer:0); ?></span><?php echo display('review'); ?>)
                             </a>
                         </div>
                     </li>
-                    <li class="meta-sku position-relative px-2 px-md-3"> <?php echo display('model') ?>: <span class="meta-value"><?php echo html_escape($product_model); ?></span></li>
+                    <li class="meta-sku position-relative px-2 px-md-3"> <?php echo display('product_model') ?>: <span class="meta-value"><?php echo html_escape($product_model); ?></span></li>
                 </ul>
             </div>
             <div class="col-md-4 mt-4 mt-md-0">
@@ -190,7 +190,7 @@ $theme = $CI->Themes->get_theme();
                         <?php if ($onsale) { ?>
 
                         <ins class="fs-29 d-inline-block">
-                            <span class="amount var_amount">
+                            <span class="amount">
                                 <?php
 
                             if ($target_con_rate > 1) {
@@ -203,23 +203,24 @@ $theme = $CI->Themes->get_theme();
                                 echo(($position1 == 0) ? $currency1 . " " . number_format($onsale_price, 2, '.', ',') : number_format($onsale_price, 2, '.', ',') . " " . $currency1);
                             }
                             ?>
+                            <input type="hidden" id="price" name="price"
+                           value="<?php echo html_escape($onsale_price) ?>">
                             </span>
-                            <input type="hidden" id="price" name="price" value="<?php echo html_escape($onsale_price) ?>">
                         </ins>
-                        <del class="Price-discount fs-14 text-black-50 font-weight-600 pl-1 price_discount">
-                            <span class="amount regular_price">
+                        <del class="Price-discount fs-14 text-black-50 font-weight-600 pl-1">
+                            <span class="amount">
                                 <?php echo(($position1 == 0) ? $currency1 . " " . number_format($price, 2, '.', ',') : number_format($price, 2, '.', ',') . " " . $currency1); ?>
                             </span>
                         </del>
                         <?php $save_amount =  ($price - $onsale_price);
                         if($save_amount > 0){
                          ?>
-                        <span class="sale fs-14 font-weight-500 ml-1 price_discount">(-<span class="save_perct"><?php echo ceil((($save_amount/$price)*100)) ?></span>%)</span>
+                        <span class="sale fs-14 font-weight-500 ml-1">(-<?php echo ceil((($save_amount/$price)*100)) ?>%)</span>
                         <?php } ?>
 
                     <?php } else { ?>
                         <ins class="fs-29 d-inline-block">
-                            <span class="amount var_amount">
+                            <span class="amount">
                                 
                                 <?php
                     if ($target_con_rate > 1) {
@@ -232,14 +233,13 @@ $theme = $CI->Themes->get_theme();
                         echo(($position1 == 0) ? $currency1 . " " . number_format($price, 2, '.', ',') : number_format($price, 2, '.', ',') . " " . $currency1);
                     }
                     ?>
-                            </span>
                     <input type="hidden" id="price" name="price" value="<?php echo html_escape($price) ?>">
+                            </span>
                     </ins>
                     <?php }  ?>
                     </div>
                     <ul class="summary-header d-flex flex-wrap align-items-center list-unstyled  border-bottom font-weight-600 pb-2">
                         <li class="position-relative px-2 px-md-3">
-                            <?php if(!($is_affiliate == 1)){ ?>
                             <div class="stock">
                                 <label class="text-dark pr-1 font-weight-500 mb-0"><?php echo display('status') ?>:</label>
                                 <input type="hidden" value="<?php echo html_escape($stok) ?>" id="stok">
@@ -253,64 +253,35 @@ $theme = $CI->Themes->get_theme();
                                     </span>
                                     <?php } ?>
                             </div>
-                            <?php } ?>
                         </li>
                     </ul>
                     <div class="short-description">
                         <p><?php echo character_limiter(strip_tags($product_details), 200); ?></p>
 
-                        <?php
-                            $var_types = [];
-                            if (!empty($variant)) {
-                                $exploded = explode(',', $variant);
-                                $this->db->select('*');
-                                $this->db->from('variant');
-                                $this->db->where_in('variant_id', $exploded);
-                                $this->db->order_by('variant_name', 'asc');
-                                $vresult = $this->db->get()->result();
-
-                                $var_types = array_column($vresult, 'variant_type');
-                            }
-                         ?>
-                         <?php if(in_array('color', $var_types)){ ?>
-                        <div class="product-color mb-3">
-                            <h5 class="fs-16 font-weight-500 mb-2"><?php echo display('color') ?>:</h5>
-                        <?php 
-                            foreach ($vresult as $vitem) {
-                                if($vitem->variant_type=='color'){
-                                    if(empty($default_color)){
-                                        $default_color = $vitem->variant_id;  // Set default color if not getting
-                                    }
-                                            
-                                    ?>
-                            <input type="radio" class="product_colors" name="select_color" id="color_<?php echo $vitem->variant_id; ?>" value="<?php echo $vitem->variant_id; ?>" onclick="select_color_variant(<?php echo html_escape($product_id) ?>,'<?php echo  html_escape($vitem->variant_id) ?>', '<?php echo html_escape($default_variant); ?>')" <?php echo (($vitem->variant_id == $default_color)?'checked="checked"':"") ?>>
-                            <label class="mb-0" for="color_<?php echo $vitem->variant_id; ?>"><span class="color_code" style="background: <?php echo (!empty($vitem->color_code)?$vitem->color_code:strtolower($vitem->variant_name)) ?>"></span></label>
-
-                        <?php } }?>
-                        </div>
-
-                    <?php  }  ?>
-
                         <div class="product-size mb-3">
                             <h5 class="fs-16 font-weight-500 mb-2"><?php echo display('product_size') ?>:</h5>
                             <?php
-
-                                foreach ($vresult as $vitem) {
-                                    if($vitem->variant_type=='size'){
+                            if ($variant) {
+                                $exploded = explode(',', $variant);
+                                foreach ($exploded as $elem) {
+                                    $this->db->select('*');
+                                    $this->db->from('variant');
+                                    $this->db->where('variant_id', $elem);
+                                    $this->db->order_by('variant_name', 'asc');
+                                    $result = $this->db->get()->row();
                                     ?>
 
-                                    <input class="d-none product_variants" type="radio" name="select_size1" id="<?php echo html_escape($vitem->variant_id) ?>" value="<?php echo html_escape($vitem->variant_id) ?>" onclick="select_variant(<?php echo html_escape($product_id) ?>,'<?php echo  html_escape($vitem->variant_id) ?>')"  <?php echo (($vitem->variant_id == $default_variant)?'checked="checked"':'') ?>>
-                                    <label class="mr-1" for="<?php echo html_escape($vitem->variant_id) ?>"><span class="size d-block bg-transparent border text-uppercase font-weight-500 fs-13 text-muted rounded"><?php echo html_escape($vitem->variant_name) ?></span></label>
+                                    <input class="d-none product_variants" type="radio" name="select_size1" id="<?php echo html_escape($result->variant_id) ?>" value="<?php echo html_escape($result->variant_id) ?>" onclick="select_variant(<?php echo html_escape($product_id) ?>,'<?php echo  html_escape($result->variant_id) ?>')"  <?php echo (($result->variant_id == $default_variant)?'checked="checked"':'') ?>>
+                                    <label class="mr-1" for="<?php echo html_escape($result->variant_id) ?>"><span class="size d-block bg-transparent border text-uppercase font-weight-500 fs-13 text-muted rounded"><?php echo html_escape($result->variant_name) ?></span></label>
 
                                     <?php
-                                } }
-                            
+                                }
+                            }
                             ?>
                         </div>
                         <!--  /.End of product Size -->
                     </div>
                     <?php echo form_open('#', array('class' => 'cart-row d-flex align-items-center')); ?>
-                        <?php if(!($is_affiliate == 1)){ ?>
                         <div class="num-block skin-2">
                             <div class="num-in d-flex bg-white border mr-2">
                                 <span class="minus position-relative dis reduced"></span>
@@ -318,23 +289,11 @@ $theme = $CI->Themes->get_theme();
                                 <span class="plus position-relative increase"></span>
                             </div>
                         </div>
-                        <?php } ?>
-
 
                         <?php if ($stok > 0) { ?>
                         <a href="javascript:void(0)" class="btn btn-primary cart-btn text-uppercase fs-12 font-weight-500 mr-2 cart-btn color4 color46" onclick="cart_btn(<?php echo html_escape($product_id) ?>)"><?php echo display('add_to_cart') ?></a>
-                        <?php }if($is_affiliate == 1){ ?>
-                            <a href="<?php echo html_escape($affiliate_url) ?>" class="btn btn-primary text-uppercase fs-12 font-weight-500 mr-2 color4 color46" target = "0"><?php echo display('buy_now')?></a>
                         <?php } ?>
-                        <a href="javascript:void(0)" class="add-wishlist wishlist d-flex align-items-center justify-content-center" data-toggle="tooltip" data-placement="top" 
-                            title="<?php echo display('wishlist') ?>" name="<?php echo html_escape($product_id) ?>">
-                            <i data-feather="heart"></i>
-                        </a>
-                        <a href="javascript:void(0)" class="add-wishlist d-flex align-items-center justify-content-center" data-toggle="tooltip" data-placement="top"
-                           onclick="comparison_btn(<?php echo html_escape($product_id) ?>)"
-                           title="<?php echo display('compare') ?>" >
-                           <i data-feather="repeat"></i>
-                        </a>
+                        <a href="javascript:void(0)" class="add-wishlist wishlist d-flex align-items-center justify-content-center" data-toggle="tooltip" data-placement="top" title="<?php echo display('wishlist') ?>" name="<?php echo html_escape($product_id) ?>"><i data-feather="heart"></i></a>
                     <?php echo form_close(); ?>
                     <div class="product-meta pt-2 border-top mt-2">
                         <div class="posted-in mb-1">
@@ -501,8 +460,8 @@ $theme = $CI->Themes->get_theme();
                                     ?></div>
                             </div><!-- /.End of rating dimension -->
                         </div>
-                    </div>          
-                </div>  
+                    </div>			
+                </div>	
             </div>
             <hr class="my-4">
             <div class="row">
@@ -656,5 +615,4 @@ $theme = $CI->Themes->get_theme();
 
 <input type="hidden" id="product_id" value="<?php echo $product_id; ?>">
 <input type="hidden" id="variant_id" value="<?php echo $default_variant; ?>">
-<input type="hidden" id="color_variant_id" value="<?php echo @$default_color; ?>">
 <input type="hidden" id="theme_url" value="<?php echo THEME_URL.$theme; ?>">

@@ -6,7 +6,6 @@ class Creport extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        $this->auth->check_user_auth();
         $this->load->model(array(
             'dashboard/Soft_settings',
             'dashboard/Reports',
@@ -24,14 +23,13 @@ class Creport extends MX_Controller
 
     public function index()
     {
-        $this->permission->check_label('stock_report')->read()->redirect();
-        
         $CI =& get_instance();
+        $this->auth->check_admin_auth();
         $today = date('m-d-Y');
 
         $product_id = $this->input->post('product_id')?$this->input->post('product_id'):"";
         $date=$this->input->post('stock_date')?$this->input->post('stock_date'):$today;
-        $limit=20;
+        $limit=2000;
         $start_record=($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
         $date=($this->uri->segment(4)) ? $this->uri->segment(4) : $date;
 
@@ -45,7 +43,8 @@ class Creport extends MX_Controller
     public function store_wise_product()
     {
 
-        #
+        $this->auth->check_admin_auth();
+#
         #pagination starts
         #
         $config["base_url"] = base_url('dashboard/Creport/store_wise_product/');
@@ -82,6 +81,7 @@ class Creport extends MX_Controller
 
     //Out of stock product
     public function out_of_stock(){
+        $this->auth->check_admin_auth();
         $this->load->library('lreport');
 
         $content = $this->lreport->out_of_stock();
@@ -93,37 +93,37 @@ class Creport extends MX_Controller
     //Stock report product wise
     public function stock_report_product_wise()
     {
-        $this->permission->check_label('stock_report_product_wise')->read()->redirect();
 
+        $this->auth->check_admin_auth();
         $today = date('m-d-Y');
 
-        $product_id  = $this->input->post('product_id',TRUE) ? $this->input->post('product_id',TRUE) : "";
+        $product_id = $this->input->post('product_id',TRUE) ? $this->input->post('product_id',TRUE) : "";
         $supplier_id = $this->input->post('supplier_id',TRUE) ? $this->input->post('supplier_id',TRUE) : "";
-        $from_date   = $this->input->post('from_date',TRUE);
-        $to_date     = $this->input->post('to_date',TRUE) ? $this->input->post('to_date',TRUE) : $today;
+        $from_date = $this->input->post('from_date',TRUE);
+        $to_date = $this->input->post('to_date',TRUE) ? $this->input->post('to_date',TRUE) : $today;
 
         #
         #pagination starts
         #
-        $config["base_url"]    = base_url('dashboard/Creport/stock_report_product_wise');
-        $config["total_rows"]  = $this->Reports->stock_report_product_bydate_count($supplier_id, $supplier_id, $from_date, $to_date);
-        $config["per_page"]    = 20;
+        $config["base_url"] = base_url('dashboard/Creport/stock_report_product_wise');
+        $config["total_rows"] = $this->Reports->stock_report_product_bydate_count($supplier_id, $supplier_id, $from_date, $to_date);
+        $config["per_page"] = 200;
         $config["uri_segment"] = 4;
-        $config["num_links"]   = 5;
+        $config["num_links"] = 5;
         /* This Application Must Be Used With BootStrap 3 * */
-        $config['full_tag_open']   = "<ul class='pagination'>";
-        $config['full_tag_close']  = "</ul>";
-        $config['num_tag_open']    = '<li>';
-        $config['num_tag_close']   = '</li>';
-        $config['cur_tag_open']    = "<li class='disabled'><li class='active'><a href='#'>";
-        $config['cur_tag_close']   = "<span class='sr-only'></span></a></li>";
-        $config['next_tag_open']   = "<li>";
-        $config['next_tag_close']  = "</li>";
-        $config['prev_tag_open']   = "<li>";
+        $config['full_tag_open'] = "<ul class='pagination'>";
+        $config['full_tag_close'] = "</ul>";
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+        $config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+        $config['next_tag_open'] = "<li>";
+        $config['next_tag_close'] = "</li>";
+        $config['prev_tag_open'] = "<li>";
         $config['prev_tagl_close'] = "</li>";
-        $config['first_tag_open']  = "<li>";
+        $config['first_tag_open'] = "<li>";
         $config['first_tagl_close'] = "</li>";
-        $config['last_tag_open']   = "<li>";
+        $config['last_tag_open'] = "<li>";
         $config['last_tagl_close'] = "</li>";
         /* ends of bootstrap */
         $this->pagination->initialize($config);
@@ -142,8 +142,8 @@ class Creport extends MX_Controller
     //Stock report supplier report
     public function stock_report_supplier_wise()
     {
-        $this->permission->check_label('stock_report_supplier_wise')->read()->redirect();
 
+        $this->auth->check_admin_auth();
         $today = date('m-d-Y');
 
         $product_id = $this->input->post('product_id',TRUE) ? $this->input->post('product_id',TRUE) : "";
@@ -183,17 +183,39 @@ class Creport extends MX_Controller
        $content =$this->lreport->stock_report_supplier_wise($product_id,$supplier_id,$date,$links,$config["per_page"],$page);
         $this->template_lib->full_admin_html_view($content);
     }
+    
+    //Category_wise
+    public function stock_report_category_wise()
+    {
 
+        $CI =& get_instance();
+        $this->auth->check_admin_auth();
+        $today = date('m-d-Y');
+
+        $product_id = $this->input->post('product_id')?$this->input->post('product_id'):"";
+        $date=$this->input->post('stock_date')?$this->input->post('stock_date'):$today;
+        $limit=2000;
+        $start_record=($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
+        $date=($this->uri->segment(4)) ? $this->uri->segment(4) : $date;
+
+        $link=$this->pagination($limit,"dashboard/Creport/index/$date",$date);
+        $content = $CI->lreport->stock_report_category_item($product_id,$date,$limit,$start_record,$link);
+
+        $this->template_lib->full_admin_html_view($content);
+        
+    }
+    
+//Storewise Product
     public function stock_report_store_wise()
     {
-        $this->permission->check_label('stock_report_store_wise')->read()->redirect();
-
-
+       
+        $this->auth->check_admin_auth();
         $today = date('Y-m-d');
         $from_date = $this->input->get('from_date',TRUE);
         $product_id = $this->input->get('product_id',TRUE);
         $to_date = $this->input->get('to_date',TRUE);
         $store_id = $this->input->get('store_id',TRUE);
+        echo $tore_id;
         if (empty($store_id)) {
             $from_date = date('Y-m-01');
             $to_date = date('Y-m-d');
@@ -231,6 +253,7 @@ class Creport extends MX_Controller
         #
         #pagination ends
         #
+
         $content =$this->lreport->stock_report_variant_wise($from_date,$to_date,$store_id,$links, $config["per_page"],$page, $product_id);
         $this->template_lib->full_admin_html_view($content);
 

@@ -55,42 +55,15 @@
                     <button type="submit" class="base_button"><?php echo display('login') ?></button>
                 </div>
                 <div class="other_link">
-                    <div class="create_account"><a href="<?php echo base_url('signup') ?>" class="base_button"><?php echo display('create_account') ?></a></div>
+
+                    <div class="create_account"><a href="<?php echo base_url('signup') ?>"
+                                                   class="base_button"><?php echo display('create_account') ?></a></div>
                 </div>
             <?php echo form_close(); ?>
-
         </div>
     </div>
 </div>
 <!--========== End Login Area ==========-->
-
-<div class="login_page">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 offset-md-4">
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                         <?php if(check_module_status('googlelogin') == 1){ 
-                        ?>
-                            <a class="btn btn-google btn-sm btn-block  search text-white" href="<?php echo base_url('googlelogin/googlelogin/login')?>"><i class="fa fa-google mr-1"></i> <?php echo display('google_login')?></a>
-                        <?php }?>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <?php if((check_module_status('facebooklogin') == 1)){
-                        ?>
-                            <a class="btn btn-facebook btn-sm btn-block  search text-white" href="<?php echo base_url('facebooklogin/facebooklogin/index/1')?>"><i class="fa fa-facebook mr-1"></i> <?php echo display('facebook_login')?></a>
-                        <?php }?> 
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <?php if((check_module_status('linkedinlogin') == 1)){ ?>
-                            <a class="btn btn-linkedin btn-sm btn-block  search text-white" href="<?php echo base_url('linkedinlogin/linkedinlogin/login/1')?>"><i class="fa fa-linkedin mr-1"></i> <?php echo display('linkedin_login')?></a>
-                        <?php }?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!--=========== Newsletter Area ===========-->
 <section class="newsletter_area">

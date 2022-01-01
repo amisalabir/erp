@@ -9,13 +9,16 @@ class Caccounts extends CI_Controller {
         $this->load->model('dashboard/Accounts');
         $this->load->model('dashboard/Soft_settings');
         $this->load->model('dashboard/Stores');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
+
+        if ($this->session->userdata('user_type') == '2') {
+            $this->session->set_userdata(array('error_message'=>display('you_are_not_access_this_part')));
+            redirect('dashboard/Admin_dashboard');
+        }
     }
     
     public function index()
     {
-        $this->permission->check_label('received')->read()->redirect();
-
         $data = array(
             'title'     => display('add_received'), 
             'accounts'  => $this->Accounts->accounts_name_finder(2),
@@ -30,8 +33,6 @@ class Caccounts extends CI_Controller {
     #===========Table Create============#
     public function create_account()
     {
-        $this->permission->check_label('create_accounts')->create()->redirect();
-
         $data=array('title'=> display('create_accounts'));
         $content = $this->parser->parse('dashboard/accounts/account_create',$data,true);
         $this->template_lib->full_admin_html_view($content);
@@ -39,16 +40,12 @@ class Caccounts extends CI_Controller {
     #==============Table list============#
     public function manage_account()
     {
-        $this->permission->check_label('manage_accounts')->read()->redirect();
-
         $content = $this->laccounts->account_list( );
         $this->template_lib->full_admin_html_view($content);
     }
     #===========Table edit============#
     public function account_edit($account_id)
     {
-         $this->permission->check_label('manage_accounts')->update()->redirect();
-
         $table_data = $this->Accounts->retrive_table_data($account_id);
         $data=array(
             'title'         =>  display('account_edit'),
@@ -61,8 +58,6 @@ class Caccounts extends CI_Controller {
     #===========Table update============#
     public function update_account_data()
     {
-         $this->permission->check_label('manage_accounts')->update()->redirect();
-
         $account_id = $this->input->post('account_id');
         $data['account_name'] = $this->input->post('account_name');
         $table_data = $this->Accounts->update_table_data($data,$account_id);
@@ -72,8 +67,6 @@ class Caccounts extends CI_Controller {
     #==============Create account data============#
     public function create_account_data()
     {
-        $this->permission->check_label('create_accounts')->create()->redirect();
-
         $id_generator=$this->auth->generator(10);
         $this->Accounts->account_create($id_generator);
         redirect('dashboard/Caccounts/manage_account');
@@ -82,8 +75,6 @@ class Caccounts extends CI_Controller {
     #===============Outflow accounts========#    
     public function outflow()
     {
-        $this->permission->check_label('payment')->read()->redirect();
-
         $data = array(
             'title'     => display('add_payment'), 
             'accounts'  => $this->Accounts->accounts_name_finder(1),
@@ -99,8 +90,6 @@ class Caccounts extends CI_Controller {
     #==============Closing reports==========#
     public function closing()
     {
-        $this->permission->check_label('closing')->read()->redirect();
-
       $data['closing'] = $this->Accounts->accounts_closing_data();
       $data['paid_amount'] = $this->Accounts->invoice_paid_amount();
       $content = $this->parser->parse('dashboard/accounts/closing_form',$data,true);
@@ -110,8 +99,6 @@ class Caccounts extends CI_Controller {
     // Add daily closing 
     public function add_daily_closing()
     {
-        $this->permission->check_label('closing')->create()->redirect();
-
         date_default_timezone_set(DEF_TIMEZONE);
         $todays_date = date("m-d-Y");
         
@@ -138,8 +125,6 @@ class Caccounts extends CI_Controller {
     #===============Accounts summary==========#
     public function summary()
     {
-        $this->permission->check_label('accounts_summary')->read()->redirect();
-
         $currency_details = $this->Soft_settings->retrieve_currency_info();
         $data=array(
             'title'=> display('accounts_summary'),
@@ -162,8 +147,6 @@ class Caccounts extends CI_Controller {
     #================Summary single===========#
     public function summary_single($start,$end,$account)
     {
-        $this->permission->check_label('accounts_summary')->read()->redirect();
-
         $data=array('title'=> display('accounts_summary'));
             
         //Getting all tables name.   
@@ -178,8 +161,6 @@ class Caccounts extends CI_Controller {
     #==============Summary report date  wise========#
     public function summary_datewise()
     {
-        $this->permission->check_label('accounts_summary')->read()->redirect();
-
         $start=  $this->input->post('from_date');
         $end=  $this->input->post('to_date');
         $account=$this->input->post('accounts');
@@ -214,8 +195,6 @@ class Caccounts extends CI_Controller {
     #============ Cheque Manager ==============#
     public function cheque_manager()
     {
-        $this->permission->check_label('cheque_manager')->read()->redirect();
-
         #
         #pagination starts
         #
@@ -265,8 +244,6 @@ class Caccounts extends CI_Controller {
     #============ Cheque Manager edit ==============#
     public function cheque_manager_edit($transection_id,$action)
     {
-        $this->permission->check_label('cheque_manager')->update()->redirect();
-
         $this->Accounts->data_update(array('status'=>$action),"customer_ledger",array('transaction_id'=>$transection_id));
         $this->Accounts->data_update(array('status'=>$action),"supplier_ledger",array('transaction_id'=>$transection_id));
         $this->Accounts->data_update(array('cheque_status'=>$action),"cheque_manger",array('transection_id'=>$transection_id));
@@ -462,7 +439,6 @@ class Caccounts extends CI_Controller {
     //This function will be used to edit the inflow & outflow data.    
     public function inout_edit($transection_id,$table,$action)
     {
-        $this->permission->check_label('accounts_summary')->read()->redirect();
         $data=array(
                 'title'=> display('accounts_summary')
             );
@@ -764,10 +740,79 @@ class Caccounts extends CI_Controller {
     }
 
     
+    // Add drawing entry
+    public function add_drawing_entry()
+    {
+        $CI =& get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->model('dashboard/Closings');
+        date_default_timezone_set(DEF_TIMEZONE);
+        $todays_date = date("m-d-Y");
+        
+        $data = array(
+            'drawing_id'        =>  $this->generator(15),
+            'date'              =>  $todays_date,
+            'drawing_title'     =>  $this->input->post('title'),
+            'description'       =>  $this->input->post('description'),
+            'amount'        =>  $this->input->post('amount'),
+            'status'        =>1
+        );
+        
+        $invoice_id = $CI->Closings->drawing_entry( $data );
+        $this->session->set_userdata(array('message'=> display('successfully_draw_added')));
+        redirect(base_url('dashboard/cclosing'));exit;
+    }
+    // Add expance entry
+    public function add_expence_entry()
+    {
+        $CI =& get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->model('dashboard/Closings');
+        date_default_timezone_set(DEF_TIMEZONE);
+        $todays_date = date("m-d-Y");
+        
+        $data = array(
+            'expence_id'        =>  $this->generator(15),
+            'date'              =>  $todays_date,
+            'expence_title'     =>  $this->input->post('title'),
+            'description'       =>  $this->input->post('description'),
+            'amount'        =>  $this->input->post('amount'),
+            'status'        =>1
+        );
+        
+        $invoice_id = $CI->Closings->expence_entry( $data );
+        $this->session->set_userdata(array('message'=> display('successfully_added')));
+        redirect(base_url('dashboard/cclosing'));exit;
+    }
+    // Add bank entry
+    public function add_banking_entry()
+    {
+        $CI =& get_instance();
+        $this->auth->check_admin_auth();
+        $CI->load->model('dashboard/Closings');
+        date_default_timezone_set(DEF_TIMEZONE);
+        $todays_date = date("m-d-Y");
+        
+        $data = array(
+            'banking_id'        =>  $this->generator(15),
+            'date'              =>  $todays_date,
+            'bank_id'           =>  $this->input->post('bank_id'),
+            'deposit_type'      =>  $this->input->post('deposit_name'),
+            'transaction_type'  =>  $this->input->post('transaction_type'),
+            'description'       =>  $this->input->post('description'),
+            'amount'            =>  $this->input->post('amount'),
+            'status'            =>1
+        );
+        
+        $invoice_id = $CI->Closings->banking_data_entry( $data );
+        $this->session->set_userdata(array('message'=> display('successfully_added')));
+        redirect(base_url('dashboard/cclosing'));exit;
+    }
+    
     //Closing report
     public function closing_report()
     {   
-        $this->permission->check_label('closing_report')->read()->redirect();
+
         #
         #pagination starts
         #

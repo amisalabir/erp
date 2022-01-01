@@ -56,8 +56,6 @@ class Lvariant
             'title' => display('variant_edit'),
             'variant_id' => $variant_details[0]['variant_id'],
             'variant_name' => $variant_details[0]['variant_name'],
-            'variant_type' => $variant_details[0]['variant_type'],
-            'color_code' => $variant_details[0]['color_code'],
             'status' => $variant_details[0]['status'],
             'categories'=> $categories,
             'category_variants'=> $cids

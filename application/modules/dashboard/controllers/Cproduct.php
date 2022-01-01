@@ -7,9 +7,8 @@ class Cproduct extends MX_Controller
 
     function __construct()
     {
-
         parent::__construct();
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
         $this->load->model(array(
             'dashboard/Products',
             'dashboard/Galleries',
@@ -20,6 +19,7 @@ class Cproduct extends MX_Controller
             'dashboard/Units',
             'dashboard/Soft_settings',
             'template/Template_model',
+
         ));
         $this->load->library('dashboard/lproduct');
         $this->load->library('dashboard/occational');
@@ -29,17 +29,14 @@ class Cproduct extends MX_Controller
     //Index page load
     public function index()
     {
-        $this->permission->check_label('add_product')->create()->redirect();
-
         $content = $this->lproduct->product_add_form();
         $this->template_lib->full_admin_html_view($content);
 
     }
 
-   //Insert Product and upload
+    //Insert Product and upload
     public function insert_product()
     {
-        $this->permission->check_label('add_product')->create()->redirect();
 
         $this->load->library('form_validation');
         $this->form_validation->set_rules('product_name', display('product_name'), 'trim|required|xss_clean');
@@ -87,28 +84,9 @@ class Cproduct extends MX_Controller
                 }
             }
             $variant = $this->input->post('variant',TRUE);
-            $variant_colors = $this->input->post('variant_colors',TRUE);
-
-            if(!empty($variant_colors)){
-                $full_variant = array_merge($variant, $variant_colors);
-            }else{
-                $full_variant = $variant;
-            }
-
-            $onsale = $this->input->post('onsale',TRUE);
-            if($onsale){
-                $onsale_price = $this->input->post('onsale_price',TRUE);
-                $onsale_price = (!empty($onsale_price) ? $onsale_price : null);
-            }else{
-                $onsale_price = null;
-            }
-
+            $onsale_price = $this->input->post('onsale_price',TRUE);
             $default_variant = $this->input->post('default_variant',TRUE);
             $product_id = $this->generator(8);
-
-            // Product variant prices
-            $variant_prices = $this->input->post('variant_prices',TRUE);
-
             $data = array(
                 'product_id' => $product_id,
                 'product_name' => $this->input->post('product_name',TRUE),
@@ -120,13 +98,12 @@ class Cproduct extends MX_Controller
                 'product_model' => $this->input->post('model',TRUE),
                 'product_details' => $this->input->post('details',TRUE),
                 'brand_id' => $this->input->post('brand',TRUE),
-                'variants' => implode(",", (array)$full_variant),
+                'variants' => implode(",", (array)$variant),
                 'default_variant' => $default_variant,
-                'variant_price' => (!empty($variant_prices)?1:0),
                 'type' => $this->input->post('type',TRUE),
                 'best_sale' => $this->input->post('best_sale',TRUE),
-                'onsale' => $onsale,
-                'onsale_price' => $onsale_price,
+                'onsale' => $this->input->post('onsale',TRUE),
+                'onsale_price' => (!empty($onsale_price) ? $onsale_price : null),
                 'review' => $this->input->post('review',TRUE),
                 'video' => $this->input->post('video',TRUE),
                 'description' => stripslashes($this->input->post('description', TRUE)),
@@ -139,33 +116,6 @@ class Cproduct extends MX_Controller
             );
 
             $result = $this->Products->product_entry($data);
-
-            //Product variant prices
-            if(isset($variant_prices) &&  !empty($variant_prices)){
-                $size_variant = $this->input->post('size_variant[]',TRUE);
-                $color_variant = $this->input->post('color_variant[]',TRUE);
-                $variant_price_amt = $this->input->post('variant_price_amt[]',TRUE);
-
-                if(!empty($size_variant)){
-                    $vprice_list = [];
-                    for($c=0;$c<count($size_variant);$c++){
-                        if(!empty($size_variant[$c]) || !empty($color_variant[$c])){
-                            $vprice_list[] = array(
-                                'product_id' => $product_id,
-                                'var_size_id' => $size_variant[$c],
-                                'var_color_id' => $color_variant[$c],
-                                'price' => $variant_price_amt[$c]
-                            );
-                        } 
-                    }
-
-                    if(!empty($vprice_list)){
-                        $this->db->insert_batch('product_variants', $vprice_list);
-                    }
-                }
-            }
-
-
 
             //gallery image insert start
             $dataInfo = [];
@@ -215,7 +165,6 @@ class Cproduct extends MX_Controller
     }
 
 
-
     private function set_upload_options()
     {
         //upload an image options
@@ -228,40 +177,34 @@ class Cproduct extends MX_Controller
 
         return $config;
     }
+
     //Manage Product
     public function manage_product($page = 0)
     {
-        $this->permission->check_label('manage_product')->read()->redirect();
-        $filter = array(
-            'product_name' => $this->input->get('product_name',TRUE),
-            'supplier_id'  => $this->input->get('supplier_id',TRUE),
-            'category_id'  => $this->input->get('category_id',TRUE),
-            'unit_id'      => $this->input->get('unit_id',TRUE),
-            'model_no'     => $this->input->get('model_no',TRUE)
-        );
+
         #
         #pagination starts
         #
-        $config["base_url"]    = base_url('dashboard/Cproduct/manage_product/');
-        $config["total_rows"]  = $this->Products->product_list_count($filter);
-        $config["per_page"]    = 20;
+        $config["base_url"] = base_url('dashboard/Cproduct/manage_product/');
+        $config["total_rows"] = $this->Products->product_list_count();
+        $config["per_page"] = 200;
         $config["uri_segment"] = 4;
-        $config["num_links"]   = 5;
+        $config["num_links"] = 5;
         /* This Application Must Be Used With BootStrap 3 * */
-        $config['full_tag_open']    = "<ul class='pagination'>";
-        $config['full_tag_close']   = "</ul>";
-        $config['num_tag_open']     = '<li>';
-        $config['num_tag_close']    = '</li>';
-        $config['cur_tag_open']     = "<li class='disabled'><li class='active'><a href='#'>";
-        $config['cur_tag_close']    = "<span class='sr-only'></span></a></li>";
-        $config['next_tag_open']    = "<li>";
-        $config['next_tag_close']   = "</li>";
-        $config['prev_tag_open']    = "<li>";
-        $config['prev_tagl_close']  = "</li>";
-        $config['first_tag_open']   = "<li>";
+        $config['full_tag_open'] = "<ul class='pagination'>";
+        $config['full_tag_close'] = "</ul>";
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+        $config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+        $config['next_tag_open'] = "<li>";
+        $config['next_tag_close'] = "</li>";
+        $config['prev_tag_open'] = "<li>";
+        $config['prev_tagl_close'] = "</li>";
+        $config['first_tag_open'] = "<li>";
         $config['first_tagl_close'] = "</li>";
-        $config['last_tag_open']    = "<li>";
-        $config['last_tagl_close']  = "</li>";
+        $config['last_tag_open'] = "<li>";
+        $config['last_tagl_close'] = "</li>";
         /* ends of bootstrap */
         $this->pagination->initialize($config);
         $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
@@ -269,15 +212,18 @@ class Cproduct extends MX_Controller
         #
         #pagination ends
         #
-        $content = $this->lproduct->product_list($filter,$links,$config["per_page"],$page);
+
+        $content = $this->lproduct->product_list($links,$config["per_page"],$page);
         $this->template_lib->full_admin_html_view($content);
     }
+
+
     //Product Update Form
     public function product_update_form($product_id)
     {
-        $this->permission->check_label('manage_product')->update()->redirect();
-
         $CI =& get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('lproduct');
         $content = $CI->lproduct->product_edit_data($product_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -285,8 +231,6 @@ class Cproduct extends MX_Controller
     // Product Update
     public function product_update()
     {
-        $this->permission->check_label('manage_product')->update()->redirect();
-
         $image = null;
         if ($_FILES['image_thumb']['name']) {
             //Chapter chapter add start
@@ -332,28 +276,8 @@ class Cproduct extends MX_Controller
         $old_img_lrg = $this->input->post('old_img_lrg',TRUE);
         $old_thumb_image = $this->input->post('old_thumb_image',TRUE);
         $product_id = $this->input->post('product_id',TRUE);
-        $onsale = $this->input->post('onsale',TRUE);
-        if($onsale){
-            $onsale_price = $this->input->post('onsale_price',TRUE);
-            $onsale_price = (!empty($onsale_price) ? $onsale_price : null);
-        }else{
-            $onsale_price = null;
-        }
-        
-
+        $onsale_price = $this->input->post('onsale_price',TRUE);
         $variant = $this->input->post('variant',TRUE);
-        $variant_colors = $this->input->post('variant_colors',TRUE);
-
-        if(!empty($variant_colors)){
-            $full_variant = array_merge($variant, $variant_colors);
-        }else{
-            $full_variant = $variant;
-        }
-
-        // Product variant prices
-        $variant_prices = $this->input->post('variant_prices',TRUE);
-        $provar_prices = $this->Products->get_product_variant_prices($product_id);
-
 
         $data = array(
             'product_name' => $this->input->post('product_name',TRUE),
@@ -365,14 +289,13 @@ class Cproduct extends MX_Controller
             'product_model' => $this->input->post('model',TRUE),
             'product_details' => $this->input->post('details',TRUE),
             'brand_id' => $this->input->post('brand',TRUE),
-            'variants' => implode(",", (array)$full_variant),
+            'variants' => implode(",", (array)$variant),
             'default_variant' => $this->input->post('default_variant',TRUE),
-            'variant_price' => (!empty($variant_prices)?1:0),
             'video' => $this->input->post('video',TRUE),
             'type' => $this->input->post('type',TRUE),
             'best_sale' => $this->input->post('best_sale',TRUE),
-            'onsale' => $onsale,
-            'onsale_price' => $onsale_price,
+            'onsale' => $this->input->post('onsale',TRUE),
+            'onsale_price' => (!empty($onsale_price) ? $onsale_price : null),
             'invoice_details' => $this->input->post('invoice_details',TRUE),
             'review' => $this->input->post('review',TRUE),
             'description' => stripslashes($this->input->post('description', TRUE)),
@@ -384,37 +307,6 @@ class Cproduct extends MX_Controller
         );
 
         $result = $this->Products->update_product($data, $product_id);
-
-        //Product variant prices
-        if(isset($variant_prices) &&  !empty($variant_prices)){
-            $size_variant = $this->input->post('size_variant[]',TRUE);
-            $color_variant = $this->input->post('color_variant[]',TRUE);
-            $variant_price_amt = $this->input->post('variant_price_amt[]',TRUE);
-
-
-            if(!empty($size_variant)){
-                $vprice_list = [];
-                for($c=0;$c<count($size_variant);$c++){
-                    if(!empty($size_variant[$c]) || !empty($color_variant[$c])){
-                        $vprice_list[] = array(
-                            'product_id' => $product_id,
-                            'var_size_id' => (!empty($size_variant[$c])?$size_variant[$c]:NULL),
-                            'var_color_id' => (!empty($color_variant[$c])?$color_variant[$c]:NULL),
-                            'price' => $variant_price_amt[$c]
-                        );
-                    } 
-                }
-
-                if(!empty($vprice_list)){
-                    $this->db->delete('product_variants', array('product_id' => $product_id));
-                    $this->db->insert_batch('product_variants', $vprice_list);
-                }
-            }
-        }else{
-            if(!empty($provar_prices)){
-                $this->db->delete('product_variants', array('product_id' => $product_id));
-            }
-        }
 
         $old_gallery_image = $this->input->post('old_gallery_image',TRUE);
 
@@ -486,15 +378,12 @@ class Cproduct extends MX_Controller
     // Product Delete
     public function product_delete($product_id)
     {
-        $this->permission->check_label('manage_product')->delete()->redirect();
-
         $this->Products->delete_product($product_id);
     }
 
     //Retrieve Single Item  By Search
     public function product_by_search()
     {
-        $this->permission->check_label('manage_product')->read()->redirect();
 
         $product_id = $this->input->post('product_id',TRUE);
 
@@ -522,12 +411,12 @@ class Cproduct extends MX_Controller
         } else {
             redirect('dashboard/Cproduct/manage_product');
         }
+
     }
 
     //Retrieve Single Item  By Search
     public function product_details($product_id)
     {
-        $this->permission->check_label('manage_product')->read()->redirect();
 
         $details_info = $this->Products->product_details_info($product_id);
         $purchaseData = $this->Products->product_purchase_info($product_id);
@@ -542,7 +431,9 @@ class Cproduct extends MX_Controller
                 $totalPurchase = ($totalPurchase + $purchaseData[$k]['quantity']);
             }
         }
+
         $salesData = $this->Products->invoice_data($product_id);
+
         $totalSales = 0;
         $totaSalesAmt = 0;
 
@@ -582,8 +473,6 @@ class Cproduct extends MX_Controller
     //Retrieve Single Item  By Search
     public function product_details_single()
     {
-        $this->permission->check_label('manage_product')->read()->redirect();
-
         $product_id = $this->input->post('product_id',TRUE);
 
         $details_info = $this->Products->product_details_info($product_id);
@@ -678,6 +567,7 @@ class Cproduct extends MX_Controller
 
         $category_id = $this->auth->generator(15);
         $this->form_validation->set_rules('category_name', display('category_name'), 'required');
+
         if ($this->form_validation->run() == FALSE) {
             echo '3';
         } else {
@@ -687,7 +577,9 @@ class Cproduct extends MX_Controller
                 'category_name' => $this->input->post('category_name',TRUE),
                 'status' => 1
             );
+
             $result = $this->Categories->category_entry($data);
+
             if ($result == TRUE) {
                 $this->session->set_userdata(array('message' => display('successfully_added')));
                 echo '1';
@@ -701,7 +593,7 @@ class Cproduct extends MX_Controller
     //Add Product CSV
     public function add_product_csv()
     {
-        $this->permission->check_label('import_product_csv')->create()->redirect();
+
         $data = array(
             'title' => display('import_product_csv')
         );
@@ -712,7 +604,6 @@ class Cproduct extends MX_Controller
     //CSV Upload File
     function uploadCsv()
     {
-        $this->permission->check_label('import_product_csv')->create()->redirect();
         $count = 0;
         $fp = fopen($_FILES['upload_csv_file']['tmp_name'], 'r') or die("can't open file");
 
@@ -733,38 +624,21 @@ class Cproduct extends MX_Controller
                     $insert_csv['image_thumb'] = (!empty($csv_line[8]) ? $csv_line[8] : '');
                     $insert_csv['brand_id'] = (!empty($csv_line[9]) ? $csv_line[9] : '');
                     $insert_csv['variants'] = (!empty($csv_line[10]) ? $csv_line[10] : '');
-
-                    $insert_csv['variant_prices'] = (!empty($csv_line[11]) ? $csv_line[11] : []);
-                    $insert_csv['type'] = (!empty($csv_line[12]) ? $csv_line[12] : '');
-                    $insert_csv['best_sale'] = (!empty($csv_line[13]) ? $csv_line[13] : 0);
-                    $insert_csv['onsale'] = (!empty($csv_line[14]) ? $csv_line[14] : 0);
-                    $insert_csv['onsale_price'] = (!empty($csv_line[15]) ? $csv_line[15] : '');
-                    $insert_csv['invoice_details'] = (!empty($csv_line[16]) ? $csv_line[16] : '');
-                    $insert_csv['image_large_details'] = (!empty($csv_line[17]) ? $csv_line[17] : '');
-                    $insert_csv['review'] = (!empty($csv_line[18]) ? $csv_line[18] : '');
-                    $insert_csv['description'] = (!empty($csv_line[19]) ? $csv_line[19] : '');
-                    $insert_csv['tag'] = (!empty($csv_line[20]) ? $csv_line[20] : '');
-                    $insert_csv['specification'] = (!empty($csv_line[21]) ? $csv_line[21] : '');
-                    $insert_csv['status'] = (!empty($csv_line[22]) ? $csv_line[22] : 0);
+                    $insert_csv['type'] = (!empty($csv_line[11]) ? $csv_line[11] : '');
+                    $insert_csv['best_sale'] = (!empty($csv_line[12]) ? $csv_line[12] : 0);
+                    $insert_csv['onsale'] = (!empty($csv_line[13]) ? $csv_line[13] : 0);
+                    $insert_csv['onsale_price'] = (!empty($csv_line[14]) ? $csv_line[14] : '');
+                    $insert_csv['invoice_details'] = (!empty($csv_line[15]) ? $csv_line[15] : '');
+                    $insert_csv['image_large_details'] = (!empty($csv_line[16]) ? $csv_line[16] : '');
+                    $insert_csv['review'] = (!empty($csv_line[17]) ? $csv_line[17] : '');
+                    $insert_csv['description'] = (!empty($csv_line[18]) ? $csv_line[18] : '');
+                    $insert_csv['tag'] = (!empty($csv_line[19]) ? $csv_line[19] : '');
+                    $insert_csv['specification'] = (!empty($csv_line[20]) ? $csv_line[20] : '');
+                    $insert_csv['status'] = (!empty($csv_line[21]) ? $csv_line[21] : 0);
                 }
-                if(!empty($insert_csv['image_thumb'])){
-
-                    $image_thumb = ((strpos($insert_csv['image_thumb'], 'my-assets/image/product/thumb/') > 0)? $insert_csv['image_thumb']:'my-assets/image/product/thumb/'.$insert_csv['image_thumb']);
-                }else{
-                    $image_thumb = base_url('my-assets/image/product.png');
-                }
-
-                if(!empty($insert_csv['image_large_details'])){
-
-                    $image_large_details = ((strpos($insert_csv['image_large_details'], 'my-assets/image/product/') > 0)? $insert_csv['image_large_details']:'my-assets/image/product/'.$insert_csv['image_large_details']);
-                }else{
-                    $image_large_details = base_url('my-assets/image/product.png');
-                }
-
                 //Data organizaation for insert to database
-                $product_id = $this->generator(8);
                 $data = array(
-                    'product_id' => $product_id,
+                    'product_id' => $this->generator(8),
                     'supplier_id' => $insert_csv['supplier_id'],
                     'category_id' => $insert_csv['category_id'],
                     'product_name' => $insert_csv['product_name'],
@@ -773,21 +647,20 @@ class Cproduct extends MX_Controller
                     'unit' => $insert_csv['unit'],
                     'product_model' => $insert_csv['product_model'],
                     'product_details' => $insert_csv['product_details'],
-                    'image_thumb' => $image_thumb,
+                    'image_thumb' => (!empty($insert_csv['image_thumb']) ? $insert_csv['image_thumb'] : base_url('my-assets/image/product.png')),
                     'brand_id' => $insert_csv['brand_id'],
                     'variants' => $insert_csv['variants'],
-                    'variant_price' => (!empty($insert_csv['variant_prices'])?1:0),
                     'type' => $insert_csv['type'],
                     'best_sale' => $insert_csv['best_sale'],
                     'onsale' => $insert_csv['onsale'],
                     'onsale_price' => $insert_csv['onsale_price'],
                     'invoice_details' => $insert_csv['invoice_details'],
-                    'image_large_details' => $image_large_details,
+                    'image_large_details' => (!empty($insert_csv['image_large_details']) ? $insert_csv['image_large_details'] : base_url('my-assets/image/product.png')),
                     'review' => $insert_csv['review'],
                     'description' => $insert_csv['description'],
                     'tag' => $insert_csv['tag'],
                     'specification' => $insert_csv['specification'],
-                    'status' => $insert_csv['status']
+                    'status' => $insert_csv['status'],
                 );
 
                 if ($count > 0) {
@@ -811,7 +684,6 @@ class Cproduct extends MX_Controller
                         $cache_file = './my-assets/js/admin_js/json/product.json';
                         $productList = json_encode($json_product);
                         file_put_contents($cache_file, $productList);
-
                     } else {
 
                         $this->db->where('supplier_id', $data['supplier_id']);
@@ -831,51 +703,7 @@ class Cproduct extends MX_Controller
                         $productList = json_encode($json_product);
                         file_put_contents($cache_file, $productList);
                     }
-
-                    //Product variant prices
-                    if(!empty($insert_csv['variant_prices'])) {
-
-                        $variant_prices = explode('&', $insert_csv['variant_prices']);
-                        if(is_array($variant_prices)){
-
-                            $vprice_list = [];
-
-                            foreach ($variant_prices as $vitem) {
-
-                                $vitem_list = explode(',',$vitem);
-
-                                if(is_array($vitem_list)){
-
-                                    $size_variant = trim($vitem_list[0]);
-                                    $color_variant = trim($vitem_list[1]);
-
-                                    if(empty($vitem_list[2])){
-                                        $color_variant = NULL;
-                                        $variant_price_amt = trim($vitem_list[1]);
-                                    }else{
-                                        $variant_price_amt = trim($vitem_list[2]);
-                                    }
-
-                                    if(!empty($size_variant)){
-                                        $vprice_list[] = array(
-                                            'product_id' => $product_id,
-                                            'var_size_id' => $size_variant,
-                                            'var_color_id' => (!empty($color_variant)?$color_variant:NULL),
-                                            'price' => $variant_price_amt
-                                        );
-                                    }
-                                }
-                            }
-
-                             if(!empty($vprice_list)){
-                                $this->db->delete('product_variants', array('product_id' => $product_id));
-                                $this->db->insert_batch('product_variants', $vprice_list);
-                            }
-
-                        }
-                    }
                 }
-
                 $count++;
             }
         }
@@ -933,8 +761,6 @@ class Cproduct extends MX_Controller
 
     public function delete_gallery_image()
     {
-        $this->permission->check_label('manage_product')->delete()->redirect();
-
         $imageId = $this->input->post('imageId',TRUE);
 
         $gallery_image = $this->db->select('image_url')->from('image_gallery')->where('image_gallery_id', $imageId)->get()->result();

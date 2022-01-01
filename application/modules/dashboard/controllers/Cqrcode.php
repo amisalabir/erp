@@ -7,7 +7,7 @@ class Cqrcode extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
         $this->load->library('ciqrcode');
         $this->load->model('dashboard/Products');
         $this->load->model('dashboard/Invoices');
@@ -18,7 +18,6 @@ class Cqrcode extends MX_Controller
     //QR-Code Generator
     public function qrgenerator($product_id)
     {
-        $this->permission->check_label('manage_product')->read()->redirect();
 
         if (!$product_id) {
             $this->session->set_userdata(array('error_message' => display('please_select_product')));

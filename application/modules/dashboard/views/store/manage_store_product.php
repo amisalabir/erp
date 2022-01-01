@@ -46,13 +46,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                	<?php if($this->permission->check_label('store_add')->create()->access()){ ?>
+                
                   	<a href="<?php echo base_url('dashboard/Cstore')?>" class="btn -btn-info color4 color5 m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_store')?></a>
-                  	<?php }if($this->permission->check_label('manage_store')->read()->access()){?>
                   	<a href="<?php echo base_url('dashboard/Cstore/manage_store')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_store')?></a>
-                  	<?php }if($this->permission->check_label('store_transfer')->update()->access()){ ?>
                   	<a href="<?php echo base_url('dashboard/Cstore/store_transfer')?>" class="btn btn-warning m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('store_transfer')?></a>
-                  	<?php } ?>
 
                 </div>
             </div>
@@ -81,22 +78,21 @@
 								</thead>
 								<tbody>
 								<?php
-								if (!empty($store_product_list)) {
-									$i=1;
-									foreach ($store_product_list as $item) {
+								if ($store_product_list) {
 								?>
+								{store_product_list}
 									<tr>
-										<td class="text-center"><?php echo $i++; ?></td>
-										<td class="text-center"><?php echo $item['store_name']; ?></td>
-										<td class="text-center"><a href="<?php echo base_url('dashboard/Cproduct/product_details/'.$item['product_id'])?>">
-											<?php echo $item['product_name'].(!empty($item['product_model'])?'-('.$item['product_model'].')':'') ; ?>
-											 <i class="fa fa-shopping-bag pull-right" aria-hidden="true"></i></a></td>
-										<td class="text-center"><?php echo $item['variant_name'].(!empty($item['variant_color_name'])?', '.$item['variant_color_name']:'') ; ?></td>
-										<td class="text-center"><?php echo $item['quantity']; ?></td>
+										<td class="text-center">{sl}</td>
+										<td class="text-center">{store_name}</td>
+										<td class="text-center"><a href="<?php echo base_url('dashboard/Cproduct/product_details/{product_id}')?>">
+
+                                                 {product_name}-({product_model}) <i class="fa fa-shopping-bag pull-right" aria-hidden="true"></i></a></td>
+										<td class="text-center">{variant_name}</td>
+										<td class="text-center">{quantity}</td>
 
 									</tr>
+								{/store_product_list}
 								<?php
-									}
 								}
 								?>
 								</tbody>

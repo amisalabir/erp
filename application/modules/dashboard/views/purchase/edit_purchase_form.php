@@ -61,8 +61,9 @@
                             <h4><?php echo display('purchase_edit') ?></h4>
                         </div>
                     </div>
-                    <?php echo form_open_multipart('dashboard/Cpurchase/purchase_update',array('class' => 'form-vertical', 'id' => 'validate'))?>
+                   <?php echo form_open_multipart('dashboard/Cpurchase/purchase_update',array('class' => 'form-vertical', 'id' => 'validate'))?>
                     <div class="panel-body">
+
                         <div class="row">
                             <div class="col-sm-6">
                                <div class="form-group row">
@@ -234,14 +235,6 @@
                                         $this->db->where(array('a.product_id' => $purchase['product_id'],'a.status' => 1)); 
                                         $product_information = $this->db->get()->row();
                                         $exploded = explode(',',$product_information->variants);
-
-                                        $this->db->select('*');
-                                        $this->db->from('variant');
-                                        $this->db->where_in('variant_id',$exploded);
-                                        $this->db->order_by('variant_name','asc');
-                                        $pvariants = $this->db->get()->result_array();
-                                        $vtypes_arr = array_column($pvariants, 'variant_type');
-
                                 ?>
         							<tr>
         								<td>
@@ -253,42 +246,22 @@
                                         </td>
 
                                         <td class="text-center">
-                                            <div class="variant_id_div">
-                                                <select name="variant_id[]" id="variant_id_<?php echo $purchase['sl']?>" class="form-control variant_id width_100p" required="">
-                                                    <option value=""></option>
-                                                <?php
-                                                if(!empty($pvariants)){
-                                                    foreach ($pvariants as $vitem) {
-                                                        if($vitem['variant_type'] == 'size'){
-                                                ?>
-                                                <option value="<?php echo html_escape($vitem['variant_id'])?>" <?php if($purchase['variant_id'] == $vitem['variant_id']){echo "selected";}?>><?php echo html_escape($vitem['variant_name'])?></option>
-                                                <?php 
-                                                        }
-                                                    }
+                                            <select name="variant_id[]" id="variant_id_<?php echo $purchase['sl']?>" class="form-control variant_id width_100p" required="">
+                                            <?php
+                                            if ($exploded) {
+                                                foreach ($exploded as $elem) {
+                                                    $this->db->select('*');
+                                                    $this->db->from('variant');
+                                                    $this->db->where('variant_id',$elem);
+                                                    $this->db->order_by('variant_name','asc');
+                                                    $result = $this->db->get()->row();
+                                            ?>
+                                                <option value="<?php echo html_escape($result->variant_id)?>" <?php if($purchase['variant_id'] == $result->variant_id){echo "selected";}?>><?php echo html_escape($result->variant_name)?></option>
+                                            <?php
                                                 }
-                                                ?>
-                                                </select>
-                                            </div>
-                                            <?php if(in_array('color', $vtypes_arr)){ ?>
-                                            <div>
-                                                <select name="color_variant[]" id="color_variant_<?php echo $purchase['sl']?>" class="form-control color_variant width_100p">
-                                                    <option value=""></option>
-                                               <?php
-                                                if(!empty($pvariants)){
-                                                    foreach ($pvariants as $vitem) {
-                                                        if($vitem['variant_type'] == 'color'){
-                                                ?>
-                                                <option value="<?php echo html_escape($vitem['variant_id'])?>" <?php if($purchase['variant_color'] == $vitem['variant_id']){echo "selected";}?>><?php echo html_escape($vitem['variant_name'])?></option>
-                                                <?php 
-                                                        }
-                                                    }
-                                                }
-                                                ?>
-                                                </select>
-                                            <?php }else{ ?>
-                                                <input type="hidden" name="color_variant[]" id="variant_color_id<?php echo $purchase['sl']?>">
-                                            <?php } ?>
-                                            </div>
+                                            }
+                                            ?>
+                                            </select>
                                         </td> 
 
                                         <td class="text-right">

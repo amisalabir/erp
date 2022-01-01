@@ -12,14 +12,12 @@ class Csupplier extends MX_Controller
         $this->load->library('dashboard/lsupplier');
         $this->load->library('session');
         $this->load->model('dashboard/Suppliers');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
 
 
     public function index()
     {
-        $this->permission->check_label('add_supplier')->create()->redirect();
-
         $content = $this->lsupplier->supplier_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -34,7 +32,6 @@ class Csupplier extends MX_Controller
     //Product Add Form
     public function manage_supplier()
     {
-        $this->permission->check_label('manage_supplier')->read()->redirect();
         $content = $this->lsupplier->supplier_list();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -43,8 +40,6 @@ class Csupplier extends MX_Controller
     //Insert Product and uload
     public function insert_supplier()
     {
-        $this->permission->check_label('add_supplier')->create()->redirect();
-
         $data = array(
             'supplier_id' => $this->auth->generator(20),
             'supplier_name' => $this->input->post('supplier_name',TRUE),
@@ -81,9 +76,8 @@ class Csupplier extends MX_Controller
     //Supplier Update Form
     public function supplier_update_form($supplier_id)
     {   
-        $this->permission->check_label('manage_supplier')->update()->redirect();
-
         $content = $this->lsupplier->supplier_edit_data($supplier_id);
+    
         $this->template_lib->full_admin_html_view($content);
     }
 
@@ -91,8 +85,6 @@ class Csupplier extends MX_Controller
     // Supplier Update
     public function supplier_update()
     {
-        $this->permission->check_label('manage_supplier')->update()->redirect();
-
         $supplier_id = $this->input->post('supplier_id',TRUE);
         $data = array(
             'supplier_name' => $this->input->post('supplier_name',TRUE),
@@ -111,8 +103,6 @@ class Csupplier extends MX_Controller
     // Supplier Delete from System
     public function supplier_delete($supplier_id)
     {
-        $this->permission->check_label('manage_supplier')->delete()->redirect();
-
         $result = $this->Suppliers->delete_supplier($supplier_id);
         if ($result) {
             $this->session->set_userdata(array('message' => display('successfully_delete')));
@@ -124,8 +114,6 @@ class Csupplier extends MX_Controller
     // Supplier details findings
     public function supplier_details($supplier_id)
     {   
-        $this->permission->check_label('manage_supplier')->read()->redirect();
-
         $content = $this->lsupplier->supplier_detail_data($supplier_id);
         $this->supplier_id=$supplier_id;
         $this->template_lib->full_admin_html_view($content);
@@ -141,8 +129,6 @@ class Csupplier extends MX_Controller
     //Supplier Ledger Report
     public function supplier_ledger_report()
     {
-        $this->permission->check_label('supplier_ledger')->read()->redirect();
-
         $supplier_id = $this->input->post('supplier_id');
         $this->supplier_id=$supplier_id;
         $content = $this->lsupplier->supplier_ledger_report($supplier_id);
@@ -153,6 +139,7 @@ class Csupplier extends MX_Controller
     // Supplier wise sales report details
     public function supplier_sales_details($supplier_id)
     {
+
 
         $content = $this->lsupplier->supplier_sales_details($supplier_id);
         $this->supplier_id=$supplier_id;

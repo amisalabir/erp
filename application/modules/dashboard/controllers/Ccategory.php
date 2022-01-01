@@ -11,22 +11,18 @@ class Ccategory extends MX_Controller
         $this->load->library('dashboard/session');
         $this->load->model('dashboard/Categories');
         $this->load->model('template/Template_model');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
 
     }
 
     public function index()
     {
-        $this->permission->check_label('add_category')->create()->redirect();
-
         $content = $this->lcategory->category_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
     //Product Add Form
     public function manage_category()
     {
-        $this->permission->check_label('manage_category')->read()->redirect();
-
         $content =$this->lcategory->category_list();
         $this->template_lib->full_admin_html_view($content);;
     }
@@ -36,8 +32,6 @@ class Ccategory extends MX_Controller
     //Insert Product and upload
     public function insert_category()
     {
-        $this->permission->check_label('add_category')->create()->redirect();
-
         $category_id = generator(15);
         if ($_FILES['cat_image']['name']) {
             //Chapter chapter add start
@@ -111,8 +105,6 @@ class Ccategory extends MX_Controller
     //customer Update Form
     public function category_update_form($category_id)
     {   
-        $this->permission->check_label('manage_category')->update()->redirect();
-
         $content = $this->lcategory->category_edit_data($category_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -120,8 +112,6 @@ class Ccategory extends MX_Controller
     // customer Update
     public function category_update()
     {
-        $this->permission->check_label('manage_category')->update()->redirect();
-
         $category_id = $this->input->post('category_id',TRUE);
 
         if ($_FILES['cat_image']['name']) {
@@ -187,8 +177,6 @@ class Ccategory extends MX_Controller
     // product_delete
     public function category_delete($category_id)
     {
-        $this->permission->check_label('manage_category')->delete()->redirect();
-
         $this->load->model('Categories');
         $this->Categories->delete_category($category_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
@@ -197,8 +185,6 @@ class Ccategory extends MX_Controller
 
 
     public function add_category_csv(){
-        $this->permission->check_label('import_category_csv')->read()->redirect();
-
         $CI =& get_instance();
         $data = array(
             'title' => display('import_category_csv'),
@@ -211,8 +197,6 @@ class Ccategory extends MX_Controller
     //CSV Upload File
     function uploadCsv()
     {
-        $this->permission->check_label('import_category_csv')->create()->redirect();
-
         $count = 0;
         $fp = fopen($_FILES['upload_csv_file']['tmp_name'], 'r') or die("can't open file");
 

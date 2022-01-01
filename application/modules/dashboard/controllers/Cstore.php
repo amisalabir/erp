@@ -10,13 +10,12 @@ class Cstore extends MX_Controller
         $this->load->model('dashboard/Stores');
         $this->load->model('dashboard/Wearhouses');
         $this->load->model('dashboard/Variants');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
     }
 
     //Default loading for store system.
     public function index()
     {
-        $this->permission->check_label('store_add')->create()->redirect();
         $content = $this->lstore->store_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -24,8 +23,6 @@ class Cstore extends MX_Controller
     //Insert store
     public function insert_store()
     {
-        $this->permission->check_label('store_add')->create()->redirect();
-
         $this->form_validation->set_rules('store_name', display('store_name'), 'trim|required');
         $this->form_validation->set_rules('store_address', display('store_address'), 'trim|required');
 
@@ -64,7 +61,6 @@ class Cstore extends MX_Controller
     //Manage store
     public function manage_store()
     {
-        $this->permission->check_label('manage_store')->read()->redirect();
         $content = $this->lstore->store_list();
         $this->template_lib->full_admin_html_view($content);;
     }
@@ -72,7 +68,6 @@ class Cstore extends MX_Controller
     //Store Update Form
     public function store_update_form($store_id)
     {
-        $this->permission->check_label('manage_store')->update()->redirect();
         $content = $this->lstore->store_edit_data($store_id);
         $this->menu = array('label' => 'Edit store', 'url' => 'Ccustomer');
         $this->template_lib->full_admin_html_view($content);
@@ -81,7 +76,6 @@ class Cstore extends MX_Controller
     // Store Update
     public function store_update($store_id = null)
     {
-        $this->permission->check_label('manage_store')->update()->redirect();
         $this->form_validation->set_rules('store_name', display('store_name'), 'trim|required');
         $this->form_validation->set_rules('store_address', display('store_address'), 'trim|required');
         $this->form_validation->set_rules('default_status', display('default_status'), 'trim|required');
@@ -109,8 +103,6 @@ class Cstore extends MX_Controller
      //Store Product
     public function store_transfer()
     {
-        $this->permission->check_label('store_transfer')->update()->redirect();
-
         $content = $this->lstore->store_transfer_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -119,7 +111,6 @@ class Cstore extends MX_Controller
     //Store transfer select
     public function store_transfer_select()
     {
-
         $this->load->model('dashboard/Products');
         $store_id = $this->input->post('store_id',TRUE);
         $product_lists = $this->Products->get_product_list_by_store($store_id);
@@ -169,30 +160,14 @@ class Cstore extends MX_Controller
         $this->db->group_by('a.variant_id');
         $variants = $this->db->get()->result();
 
-        $this->db->select('a.*');
-        $this->db->from('variant a');
-        $this->db->join('transfer b', 'a.variant_id=b.variant_color');
-        $this->db->where('b.store_id =', $store_id);
-        $this->db->where('b.product_id =', $product_id);
-        $this->db->group_by('a.variant_id');
-        $variant_color = $this->db->get()->result();
-
-        $variant_html = $variant_colorhtml = '<option value=""></option>';
-
+        echo "<label for=\"variant\" class=\"col-sm-3 col-form-label\">" . display('store') . "<i class=\"text-danger\">*</i></label>
+		<div class=\"col-sm-6\">
+		<select class=\"form-control \" id=\"variant\" name=\"variant_id\" required=\"\" >";
         foreach ($variants as $variant) {
-            $variant_html .= "<option value=" . $variant->variant_id . ">" . $variant->variant_name . "</option>";
+            echo "<option value=" . $variant->variant_id . ">" . $variant->variant_name . "</option>";
         }
-
-        if(!empty($variant_color)){
-            foreach ($variant_color as $cvariant) {
-                $variant_colorhtml .= "<option value=" . $cvariant->variant_id . ">" . $cvariant->variant_name . "</option>";
-            }
-        }
-
-        echo json_encode(array(
-            'variant_html' => $variant_html,
-            'variant_colorhtml' => $variant_colorhtml
-        ));
+        echo "</select>
+		</div>";
 
 
     }
@@ -201,8 +176,6 @@ class Cstore extends MX_Controller
     //Insert store product
     public function insert_store_product()
     {
-        $this->permission->check_label('store_transfer')->update()->redirect();
-
         $quantity = $this->input->post('quantity',TRUE);
 
         $data = array(
@@ -210,7 +183,6 @@ class Cstore extends MX_Controller
             'store_id' => $this->input->post('store_id',TRUE),
             'product_id' => $this->input->post('product_id',TRUE),
             'variant_id' => $this->input->post('variant_id',TRUE),
-            'variant_color' => $this->input->post('variant_color',TRUE),
             'quantity' => "-" . $quantity,
             'transfer_by' => $this->session->userdata('user_id'),
             't_store_id' => $this->input->post('t_store_id',TRUE),
@@ -223,7 +195,6 @@ class Cstore extends MX_Controller
             'store_id' => $this->input->post('t_store_id',TRUE),
             'product_id' => $this->input->post('product_id',TRUE),
             'variant_id' => $this->input->post('variant_id',TRUE),
-            'variant_color' => $this->input->post('variant_color',TRUE),
             'quantity' => $quantity,
             'transfer_by' => $this->session->userdata('user_id'),
             't_store_id' => $this->input->post('store_id',TRUE),
@@ -249,8 +220,6 @@ class Cstore extends MX_Controller
     // Manage store
     public function manage_store_product()
     {
-        $this->permission->check_label('manage_store_product')->update()->redirect();
-
         $content = $this->lstore->store_product_list();
         $this->template_lib->full_admin_html_view($content);;
     }
@@ -258,8 +227,6 @@ class Cstore extends MX_Controller
     //Store Product Update Form
     public function store_product_update_form($store_product_id)
     {
-        $this->permission->check_label('manage_store_product')->update()->redirect();
-
         $content = $this->lstore->store_product_edit_data($store_product_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -268,8 +235,6 @@ class Cstore extends MX_Controller
     // Store Product Update
     public function store_product_update($store_product_id = null)
     {
-        $this->permission->check_label('manage_store_product')->update()->redirect();
-
         $this->form_validation->set_rules('store_name', display('store_name'), 'trim|required');
         $this->form_validation->set_rules('product_name', display('product_name'), 'trim|required');
         $this->form_validation->set_rules('variant', display('variant'), 'trim|required');
@@ -305,8 +270,6 @@ class Cstore extends MX_Controller
     // Store Delete
     public function store_delete($store_id)
     {
-        $this->permission->check_label('manage_store')->delete()->redirect();
-
         $result = $this->Stores->delete_store($store_id);
         if ($result == 1) {
             $this->session->set_userdata(array('message' => display('successfully_delete')));
@@ -323,8 +286,6 @@ class Cstore extends MX_Controller
     // store product Delete
     public function store_product_delete()
     {
-        $this->permission->check_label('manage_store_product')->delete()->redirect();
-
         $store_product_id = $this->input->post('store_product_id',TRUE);
         $this->Stores->delete_store_product($store_product_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
@@ -350,8 +311,6 @@ class Cstore extends MX_Controller
     //Add Store CSV
     public function add_store_csv()
     {
-        $this->permission->check_label('import_store_csv')->create()->redirect();
-
         $CI =& get_instance();
         $data = array(
             'title' => display('import_store_csv')
@@ -364,8 +323,6 @@ class Cstore extends MX_Controller
     //CSV Upload File
     function uploadCsv()
     {
-        $this->permission->check_label('import_store_csv')->create()->redirect();
-
         $count = 0;
         $fp = fopen($_FILES['upload_csv_file']['tmp_name'], 'r') or die("can't open file");
 

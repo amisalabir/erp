@@ -45,11 +45,11 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                  <?php if($this->permission->check_label('received')->read()->access()){ ?>
+                  
                   	<a href="<?php echo base_url('dashboard/Caccounts')?>" class="btn -btn-info color4 color5 m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_received')?></a>  
-                  <?php }if($this->permission->check_label('accounts_summary')->read()->access()){ ?>
+
                     <a href="<?php echo base_url('dashboard/Caccounts/outflow')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_payment')?></a>
-                  <?php } ?>
+
                 </div>
             </div>
         </div>

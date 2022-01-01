@@ -162,25 +162,6 @@ if (!empty($this->session->userdata('language'))) {
 
                     </div>
                 </div>
-
-                <div class="row mt-3">
-                     <?php if(check_module_status('googlelogin') == 1){  ?>
-                    <div class="col-md-12 form-group">
-                        <a class="btn btn-google btn-sm btn-block  search text-white" href="<?php echo base_url('googlelogin/googlelogin/login')?>"><i class="fab fa-google mr-1"></i> <?php echo display('google_login')?></a>
-                    </div>
-                    <?php }?>
-                    <?php if((check_module_status('facebooklogin') == 1)){ ?>
-                    <div class="col-md-12 form-group">
-                        <a class="btn btn-facebook btn-sm btn-block  search text-white" href="<?php echo base_url('facebooklogin/facebooklogin/index/1')?>"><i class="fab fa-facebook mr-1"></i> <?php echo display('facebook_login')?></a>
-                    </div>
-                    <?php }?> 
-                    <?php if((check_module_status('linkedinlogin') == 1)){ ?>
-                    <div class="col-md-12 form-group">
-                        <a class="btn btn-linkedin btn-sm btn-block  search text-white" href="<?php echo base_url('linkedinlogin/linkedinlogin/login/1')?>"><i class="fab fa-linkedin mr-1"></i> <?php echo display('linkedin_login')?></a>
-                    </div>
-                    <?php }?> 
-                </div>
-
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <div class="signup-section"><?php echo display('dont_have_an_account'); ?><a href="#a" class="text-primary" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><?php echo display('sign_up'); ?></a>.</div>

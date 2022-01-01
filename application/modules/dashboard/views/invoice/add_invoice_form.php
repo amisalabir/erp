@@ -55,12 +55,11 @@ if (isset($error_message)) {
 <div class="row">
     <div class="col-sm-12">
         <div class="column">
-            <?php if($this->permission->check_label('manage_sale')->read()->access()){ ?>
+
             <a href="<?php echo base_url('dashboard/'.($this->auth->is_store()?'Store_invoice':'Cinvoice').'/manage_invoice') ?>"
                class="btn btn-primary color4 color5 m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_invoice') ?></a>
-           <?php } if($this->permission->check_label('pos_sale')->read()->access()){ ?>
-            <a href="<?php echo base_url('dashboard/'.($this->auth->is_store()?'Store_invoice':'Cinvoice').'/pos_invoice') ?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('pos_invoice') ?></a>
-            <?php } ?>
+            <a href="<?php echo base_url('dashboard/'.($this->auth->is_store()?'Store_invoice':'Cinvoice').'/pos_invoice') ?>" class="btn btn-primary m-b-5 m-r-2"><i
+                        class="ti-align-justify"> </i> <?php echo display('pos_invoice') ?></a>
         </div>
     </div>
 </div>
@@ -162,7 +161,7 @@ if (isset($error_message)) {
                                         class="text-danger">*</i></label>
                             <div class="col-sm-8">
                                 <?php 
-                                date_default_timezone_set(DEF_TIMEZONE);
+date_default_timezone_set(DEF_TIMEZONE);
                                 $date = date('m-d-Y'); ?>
                                 <input class="form-control datepicker" type="text" size="50" name="invoice_date"
                                        id="date" required value="<?php echo html_escape($date); ?>"/>
@@ -207,16 +206,10 @@ if (isset($error_message)) {
                                 <input type="hidden" class="baseUrl" value="<?php echo base_url(); ?>"/>
                             </td>
                             <td class="text-center">
-                                <div class="variant_id_div">
-                                    <select name="variant_id[]" id="variant_id_1" class="form-control variant_id width_100p" required="">
-                                        <option value=""></option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <select name="color_variant[]" id="variant_color_id_1" class="form-control color_variant width_100p">
-                                        <option value=""></option>
-                                    </select>
-                                </div>
+                                <select name="variant_id[]" id="variant_id_1" class="form-control variant_id width_100p"
+                                        required="">
+                                    <option value=""></option>
+                                </select>
                             </td>
                             <td>
                                 <input type="text" name="available_quantity[]"

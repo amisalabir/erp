@@ -43,20 +43,14 @@ $('body').on('change',"#product_name",function(event){
         url: base_url+'dashboard/Cstore/get_variant_by_store',
         type: 'post',
         data: {store_id:store_id,product_id:product_id,csrf_test_name:csrf_test_name},
-        success: function (result){
-            var res = JSON.parse(result);
-            if (res['variant_html'] != '') {
-                $("#variant").html(res['variant_html']);
+        success: function (msg){
+            console.log(msg);
+            if (msg) {
+                
+                $("#variant").html(msg);
             }else{
                 $("#variant").html('');
             }
-            
-            if (res['variant_colorhtml'] != '') {
-                $("#variant_color").html(res['variant_colorhtml']);
-            }else{
-                $("#variant_color").html('');
-            }
-
         },
         error: function (xhr, desc, err){
              alert('failed');

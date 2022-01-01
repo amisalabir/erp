@@ -46,9 +46,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-               	<?php if($this->permission->check_label('create_accounts')->create()->access()){ ?>
+                
                   <a href="<?php echo base_url('dashboard/Caccounts/create_account')?>" class="btn btn-success color4 m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('create_accounts')?></a>
-                <?php } ?>
+
                 </div>
             </div>
         </div>
@@ -93,9 +93,9 @@
 											</td>
 											<td>
 												<center>
-													<?php if($this->permission->check_label('manage_accounts')->update()->access()){ ?>
-														<a href="<?php echo base_url('dashboard/Caccounts/account_edit/'.$table['account_id']); ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="" data-original-title="Update"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-													<?php }?>
+													<?php echo form_open()?>
+													<a href="<?php echo base_url('dashboard/Caccounts/account_edit/'.$table['account_id']); ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="" data-original-title="Update"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+													<?php echo form_close()?>	
 												</center>
 											</td>
 										</tr>

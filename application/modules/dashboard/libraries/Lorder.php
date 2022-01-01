@@ -24,14 +24,14 @@ class Lorder {
     }
 
     //Retrieve  order List
-    public function order_list($filter=[], $page, $per_page, $links = false)
+    public function order_list()
     {
         $CI =& get_instance();
         $CI->load->model('dashboard/Orders');
         $CI->load->model('dashboard/Soft_settings');
         $CI->load->library('dashboard/occational');
 
-        $orders_list = $CI->Orders->order_list($filter, $page, $per_page);
+        $orders_list = $CI->Orders->order_list();
 
         if(!empty($orders_list)){
             foreach($orders_list as $k=>$v){
@@ -47,13 +47,44 @@ class Lorder {
         $data = array(
             'title'    => display('manage_order'),
             'orders_list' => $orders_list,
-            'links' => $links,
             'currency' => $currency_details[0]['currency_icon'],
             'position' => $currency_details[0]['currency_position'],
         );
         $orderList = $CI->parser->parse('dashboard/order/order',$data,true);
         return $orderList;
     }
+    //Retrieve  Due order List
+    public function due_order_list()
+    {
+        $CI =& get_instance();
+        $CI->load->model('dashboard/Orders');
+        $CI->load->model('dashboard/Soft_settings');
+        $CI->load->library('dashboard/occational');
+
+        $due_orders_list = $CI->Orders->due_order_list();
+
+        if(!empty($due_orders_list)){
+            foreach($due_orders_list as $k=>$v){
+                $due_orders_list[$k]['final_date'] = $CI->occational->dateConvert($due_orders_list[$k]['date']);
+            }
+            $i=0;
+            foreach($due_rders_list as $k=>$v){$i++;
+                $due_orders_list[$k]['sl']=$i;
+            }
+        }
+
+        $currency_details = $CI->Soft_settings->retrieve_currency_info();
+        $data = array(
+            'title'    => "Due Report",
+            'orders_list' => $due_orders_list,
+            'currency' => $currency_details[0]['currency_icon'],
+            'position' => $currency_details[0]['currency_position'],
+        );
+        $due_orderList = $CI->parser->parse('dashboard/order/order',$data,true);
+        return $due_orderList;
+    }    
+    
+    
     //Insert order
     public function insert_order($data)
     {
@@ -219,11 +250,11 @@ class Lorder {
                 return true;
             }else{
                 $CI->session->set_userdata(array('error_message'=> display('email_not_send')));
-                redirect(base_url('dashboard/Corder/manage_order'));
+                redirect(base_url('Corder/manage_order'));
             }
         }else{
             $CI->session->set_userdata(array('message'=>display('successfully_added')));
-            redirect(base_url('dashboard/Corder/manage_order'));
+            redirect(base_url('Corder/manage_order'));
         }
     }
 

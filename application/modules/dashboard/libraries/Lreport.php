@@ -64,6 +64,7 @@ class Lreport
             'out_of_stock' => $out_of_stock,
             'currency' => $currency_details[0]['currency_icon'],
             'position' => $currency_details[0]['currency_position'],
+
         );
 
         $reportList = $CI->parser->parse('dashboard/report/out_of_stock', $data, true);
@@ -78,12 +79,14 @@ class Lreport
         $CI->load->model('dashboard/Reports');
         $CI->load->library('dashboard/occational');
         $stok_report = $CI->Reports->stock_report_bydate($product_id, $date, $limit, $page);
+
         if (($stok_report)) {
             $i = $page;
             foreach ($stok_report as $k => $v) {
                 $i++;
                 $stok_report[$k]['sl'] = $i;
             }
+
             foreach ($stok_report as $k => $v) {
 
                 $sales = $CI->db->select("
@@ -94,6 +97,7 @@ class Lreport
                     ->where('product_id', $v['product_id'])
                     ->get()
                     ->row();
+
                 $stok_report[$k]['stok_quantity_cartoon'] = ($stok_report[$k]['totalPurchaseQnty'] - $sales->totalSalesQnty);
                 $stok_report[$k]['totalSalesCtn'] = $sales->totalSalesQnty;
                 $stok_report[$k]['totalPrhcsCtn'] = $stok_report[$k]['totalPurchaseQnty'];
@@ -119,6 +123,60 @@ class Lreport
         $reportList = $CI->parser->parse('dashboard/report/stock_report', $data, true);
         return $reportList;
     }
+// Retrieve Category Item Stock Stock Report
+    public function stock_report_category_item($product_id, $date, $limit, $page, $link)
+    {
+
+        $CI =& get_instance();
+        $CI->load->model('dashboard/Reports');
+        $CI->load->library('dashboard/occational');
+        $stok_report = $CI->Reports->stock_report_category($product_id, $date, $limit, $page);
+
+        if (($stok_report)) {
+            $i = $page;
+            foreach ($stok_report as $k => $v) {
+                $i++;
+                $stok_report[$k]['sl'] = $i;
+            }
+
+            foreach ($stok_report as $k => $v) {
+
+                $sales = $CI->db->select("
+					sum(quantity) as totalSalesQnty,
+					quantity
+					")
+                    ->from('invoice_details')
+                    ->where('product_id', $v['product_id'])
+                    ->get()
+                    ->row();
+
+                $stok_report[$k]['stok_quantity_cartoon'] = ($stok_report[$k]['totalPurchaseQnty'] - $sales->totalSalesQnty);
+                $stok_report[$k]['totalSalesCtn'] = $sales->totalSalesQnty;
+                $stok_report[$k]['totalPrhcsCtn'] = $stok_report[$k]['totalPurchaseQnty'];
+            }
+        } else {
+            $CI->session->set_userdata('error_message', display('stock_not_available'));
+            redirect('dashboard/Creport');
+        }
+
+        $currency_details = $CI->Soft_settings->retrieve_currency_info();
+        $company_info = $CI->Reports->retrieve_company();
+
+        $data = array(
+            'title' => display('stock_report'),
+            'stok_report' => $stok_report,
+            'link' => $link,
+            'date' => $date,
+            'company_info' => $company_info,
+            'currency' => $currency_details[0]['currency_icon'],
+            'position' => $currency_details[0]['currency_position'],
+        );
+
+        $reportList = $CI->parser->parse('dashboard/report/stock_report', $data, true);
+        return $reportList;
+    }
+
+
 
     // Stock report supplier wise
     public function stock_report_supplier_wise($product_id, $supplier_id, $date, $links, $per_page, $page)
@@ -314,52 +372,42 @@ class Lreport
             foreach ($stok_report as $k => $v) {
                 $i++;
 
-                $CI->db->select("sum(quantity) as totalSalesQnty,quantity");
-                $CI->db->from('invoice_details');
-                $CI->db->where('product_id', @$v['product_id']);
-                $CI->db->where('variant_id', @$v['variant_id']);
+                $sales = $CI->db->select("sum(quantity) as totalSalesQnty,quantity")
+                    ->from('invoice_details')
+                    ->where('product_id', @$v['product_id'])
+                    ->where('variant_id', @$v['variant_id'])
+                    ->where('store_id', @$v['store_id'])
+                    ->get()
+                    ->row();
 
-                if(!empty($v['variant_color'])){
-                  $CI->db->where('variant_color', @$v['variant_color']);  
-                }
+                $purchase = $CI->db->select("sum(b.quantity) as totalPrhcsCtn")
+                    ->from('transfer b')
+                    ->where('product_id', @$v['product_id'])
+                    ->where('variant_id', @$v['variant_id'])
+                    ->where('store_id', @$v['store_id'])
+                    ->where('t_store_id =', null)
+                    ->get()
+                    ->row();
 
-                $CI->db->where('store_id', @$v['store_id']);
-                $sales = $CI->db->get()->row();
+                $receive = $CI->db->select("sum(b.quantity) as totalReceive")
+                    ->from('transfer b')
+                    ->where('product_id', @$v['product_id'])
+                    ->where('variant_id', @$v['variant_id'])
+                    ->where('store_id', @$v['store_id'])
+                    ->where('quantity >', 0)
+                    ->where('t_store_id !=', null)
+                    ->get()
+                    ->row();
 
-                $CI->db->select("sum(b.quantity) as totalPrhcsCtn");
-                $CI->db->from('transfer b');
-                $CI->db->where('product_id', @$v['product_id']);
-                $CI->db->where('variant_id', @$v['variant_id']);
-                if(!empty($v['variant_color'])){
-                  $CI->db->where('variant_color', @$v['variant_color']);  
-                }
-                $CI->db->where('store_id', @$v['store_id']);
-                $CI->db->where('t_store_id =', null);
-                $purchase = $CI->db->get()->row();
-
-                $CI->db->select("sum(b.quantity) as totalReceive");
-                $CI->db->from('transfer b');
-                $CI->db->where('product_id', @$v['product_id']);
-                $CI->db->where('variant_id', @$v['variant_id']);
-                if(!empty($v['variant_color'])){
-                  $CI->db->where('variant_color', @$v['variant_color']);  
-                }
-                $CI->db->where('store_id', @$v['store_id']);
-                $CI->db->where('quantity >', 0);
-                $CI->db->where('t_store_id !=', null);
-                $receive = $CI->db->get()->row();
-
-                $CI->db->select("sum(b.quantity) as totalSend");
-                $CI->db->from('transfer b');
-                $CI->db->where('product_id', @$v['product_id']);
-                $CI->db->where('variant_id', @$v['variant_id']);
-                if(!empty($v['variant_color'])){
-                  $CI->db->where('variant_color', @$v['variant_color']);  
-                }
-                $CI->db->where('store_id', @$v['store_id']);
-                $CI->db->where('quantity <', 0);
-                $CI->db->where('t_store_id !=', null);
-                $send = $CI->db->get()->row();
+                $send = $CI->db->select("sum(b.quantity) as totalSend")
+                    ->from('transfer b')
+                    ->where('product_id', @$v['product_id'])
+                    ->where('variant_id', @$v['variant_id'])
+                    ->where('store_id', @$v['store_id'])
+                    ->where('quantity <', 0)
+                    ->where('t_store_id !=', null)
+                    ->get()
+                    ->row();
 
 
                 $stok_report[$k]['stok_quantity'] = (@$purchase->totalPrhcsCtn + @$receive->totalReceive -

@@ -8,14 +8,12 @@ class Cbrand extends MX_Controller
         parent::__construct();
         $this->load->library('dashboard/lbrand');
         $this->load->model('dashboard/Brands');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
 
     }
 
     public function index()
     {
-        $this->permission->check_label('add_brand')->create()->redirect();
-
         $content = $this->lbrand->brand_add_form();
         $this->template_lib->full_admin_html_view($content);
     }
@@ -23,8 +21,6 @@ class Cbrand extends MX_Controller
     //Insert brand
     public function insert_brand()
     {
-        $this->permission->check_label('add_brand')->create()->redirect();
-
         $this->form_validation->set_rules('brand_name', display('brand_name'), 'trim|required');
         $this->form_validation->set_rules('website', display('website'), 'trim|valid_url');
 
@@ -83,16 +79,12 @@ class Cbrand extends MX_Controller
     //Manage Brand
     public function manage_brand()
     {
-        $this->permission->check_label('manage_brand')->read()->redirect();
-
         $content =$this->lbrand->brand_list();
         $this->template_lib->full_admin_html_view($content);;
     }
     //Brand Update Form
     public function brand_update_form($brand_id)
     {   
-        $this->permission->check_label('manage_brand')->update()->redirect();
-
         $content = $this->lbrand->brand_edit_data($brand_id);
         $this->template_lib->full_admin_html_view($content);
     }
@@ -100,8 +92,6 @@ class Cbrand extends MX_Controller
     // Brand Update
     public function brand_update($brand_id = null)
     {
-        $this->permission->check_label('manage_brand')->update()->redirect();
-
         $this->form_validation->set_rules('brand_name', display('brand_name'), 'trim|required');
         $this->form_validation->set_rules('website', display('website'), 'trim|valid_url');
 
@@ -156,8 +146,6 @@ class Cbrand extends MX_Controller
     // Brand Delete
     public function brand_delete($brand_id)
     {
-        $this->permission->check_label('manage_brand')->delete()->redirect();
-
         $this->Brands->delete_brand($brand_id);
         $this->session->set_userdata(array('message' => display('successfully_delete')));
         redirect('dashboard/Cbrand/manage_brand');

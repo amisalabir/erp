@@ -14,14 +14,17 @@ class Language extends MX_Controller
         $this->load->database();
         $this->load->dbforge();
         $this->load->helper('language');
-        $this->auth->check_user_auth();
+        $this->auth->check_admin_auth();
+
+        if ($this->session->userdata('user_type') == '2') {
+            $this->session->set_userdata(array('error_message'=>display('you_are_not_access_this_part')));
+            redirect('Admin_dashboard');
+        }
 
     }
 
     public function index()
     {
-        $this->permission->check_label('language')->read()->redirect();
-
         $data = array(
             'title' => 'Language List', 
             'languages' => $this->languages()
@@ -33,8 +36,6 @@ class Language extends MX_Controller
 
     public function phrase()
     {
-        $this->permission->check_label('language')->read()->redirect();
-
         $data['title']    = 'Phrase List';
         $data['languages']    = $this->languages();
         $data['phrases']      = $this->phrases();
@@ -46,8 +47,6 @@ class Language extends MX_Controller
 
     public function languages()
     {
-        $this->permission->check_label('language')->read()->redirect();
-
         if ($this->db->table_exists($this->table)) {
 
             $fields = $this->db->field_data($this->table);
@@ -68,8 +67,6 @@ class Language extends MX_Controller
 
     public function addLanguage()
     {
-        $this->permission->check_label('language')->create()->redirect();
-
         $language = preg_replace('/[^a-zA-Z0-9_]/', '', $this->input->post('language', true));
         $language = strtolower($language);
 
@@ -91,8 +88,6 @@ class Language extends MX_Controller
 
     public function editPhrase($language = null)
     {
-        $this->permission->check_label('language')->update()->redirect();
-
         $data['title']    = 'Phrase Edit';
         $data['language'] = $language;
         $data['phrases']  = $this->phrases();
@@ -104,7 +99,8 @@ class Language extends MX_Controller
 
     public function languagePhaseUpdate()
     {
-        $this->permission->check_label('language')->update()->redirect();
+
+
         $id = $this->input->post('id',TRUE);
         $value = $this->input->post('phase_value',TRUE);
         $language = $this->input->post('language',TRUE);
@@ -118,7 +114,6 @@ class Language extends MX_Controller
 
     public function addPhrase()
     {
-        $this->permission->check_label('language')->create()->redirect();
 
         $lang = $this->input->post('phrase',TRUE);
 
@@ -158,8 +153,6 @@ class Language extends MX_Controller
 
     public function phrases()
     {
-        $this->permission->check_label('language')->read()->redirect();
-
         if ($this->db->table_exists($this->table)) {
 
             if ($this->db->field_exists($this->phrase, $this->table)) {
@@ -209,8 +202,6 @@ class Language extends MX_Controller
 
     public function deletePhrase($language = null)
     {
-        $this->permission->check_label('language')->delete()->redirect();
-
         $this->dbforge->drop_column('language', $language);
         $this->session->set_flashdata('message', 'Language Deleted successfully');
         redirect('dashboard/Language');

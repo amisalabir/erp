@@ -45,9 +45,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                	<?php if($this->permission->check_label('add_new_bank')->create()->access()){ ?>
-                  		<a href="<?php echo base_url('dashboard/Csettings/index')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_new_bank')?></a>
-              		<?php }?>
+                  <a href="<?php echo base_url('dashboard/Csettings/index')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_new_bank')?></a>
                 </div>
             </div>
         </div>

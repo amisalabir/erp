@@ -1,5 +1,5 @@
 <!-- dynamic template color  -->
-<?php $colors = $this->color_frontends->retrieve_color_editdata('zaima'); 
+<?php $colors = $this->color_frontends->retrieve_color_editdata(); 
 ?>
 <style>
     :root {

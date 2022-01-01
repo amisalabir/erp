@@ -44,11 +44,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                	<?php if($this->permission->check_label('new_sale')->create()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Store_invoice/new_invoice')?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('new_invoice')?></a>
-                  	<?php }if($this->permission->check_label('pos_sale')->read()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Store_invoice/pos_invoice')?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('pos_invoice')?></a>
-                  	<?php }?>
+                  <a href="<?php echo base_url('dashboard/Store_invoice/new_invoice')?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('new_invoice')?></a>
+
+                  <a href="<?php echo base_url('dashboard/Store_invoice/pos_invoice')?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('pos_invoice')?></a>
                 </div>
             </div>
         </div>
@@ -141,15 +139,14 @@
 										<td>
 											<center>
 												<?php echo form_open()?>
-												<?php if($this->permission->check_label('new_sale')->access()){?>
+
 													<a href="<?php echo base_url().'dashboard/Store_invoice/invoice_inserted_data/'.$invoice['invoice_id']; ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('invoice') ?>"><i class="fa fa-window-restore" aria-hidden="true"></i></a>
-												<?php }if($this->permission->check_label('pos_sale')->read()->access()){ ?>
+
 													<a href="<?php echo base_url().'dashboard/Store_invoice/pos_invoice_inserted_data/'.$invoice['invoice_id']; ?>" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('pos_invoice') ?>"><i class="fa fa-fax" aria-hidden="true"></i></a>
-												<?php }if($this->permission->check_label('manage_sale')->update()->access()){?>
+
 													<a href="<?php echo base_url().'dashboard/Store_invoice/invoice_update_form/'.$invoice['invoice_id']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-												<?php }if($this->permission->check_label('manage_sale')->delete()->access()){ ?>
+
 													<a href="<?php echo base_url('dashboard/Store_invoice/invoice_delete/'.$invoice['invoice_id'])?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-												<?php } ?>
 												<?php echo form_close()?>
 											</center>
 										</td>

@@ -141,30 +141,30 @@ class Lcategory
         }
 
         $data = array(
-            'title'                  => display('category_wise_product'),
-            'category_wise_product'  => $category_wise_product,
-            'category_name'          => $category[0]['category_name'],
-            'category_id'            => $category[0]['category_id'],
-            'category_list'          => $categoryList,
-            'total'                  => $total,
-            'block_list'             => $block_list,
-            'best_sales'             => $best_sales,
-            'footer_block'           => $footer_block,
-            'pro_category_list'      => $pro_category_list,
-            'Soft_settings'          => $Soft_settings,
-            'languages'              => $languages,
-            'currency_info'          => $currency_info,
-            'default_currency_icon'  => $selected_default_currency_info->currency_icon,
-            'selected_cur_id'        => (($selected_currency_info->currency_id) ? $selected_currency_info->currency_id : ""),
-            'select_category_product'=> $select_category_product,
-            'max_value'              => $max_value[0]['price'],
-            'min_value'              => $min_value[0]['price'],
-            'from_price'             => $from_price,
-            'to_price'               => $to_price,
-            'currency'               => $currency_details[0]['currency_icon'],
-            'position'               => $currency_details[0]['currency_position'],
-            'links'                  => $links,
-            'select_category_adds'   => $select_category_adds
+            'title' => display('category_wise_product'),
+            'category_wise_product' => $category_wise_product,
+            'category_name' => $category[0]['category_name'],
+            'category_id' => $category[0]['category_id'],
+            'category_list' => $categoryList,
+            'total' => $total,
+            'block_list' => $block_list,
+            'best_sales' => $best_sales,
+            'footer_block' => $footer_block,
+            'pro_category_list' => $pro_category_list,
+            'Soft_settings' => $Soft_settings,
+            'languages' => $languages,
+            'currency_info' => $currency_info,
+            'default_currency_icon' => $selected_default_currency_info->currency_icon,
+            'selected_cur_id' => (($selected_currency_info->currency_id) ? $selected_currency_info->currency_id : ""),
+            'select_category_product' => $select_category_product,
+            'max_value' => $max_value[0]['price'],
+            'min_value' => $min_value[0]['price'],
+            'from_price' => $from_price,
+            'to_price' => $to_price,
+            'currency' => $currency_details[0]['currency_icon'],
+            'position' => $currency_details[0]['currency_position'],
+            'links' => $links,
+            'select_category_adds' => $select_category_adds
         );
         $HomeForm = $CI->parser->parse('web/themes/' . $theme . '/category', $data, true);
         return $HomeForm;
@@ -219,7 +219,6 @@ class Lcategory
         $CI->load->model('dashboard/Blocks');
         $CI->load->model('dashboard/Themes');
         $CI->load->model('dashboard/Variants');
-        $CI->load->model('dashboard/Search_history');
         $theme = $CI->Themes->get_theme();
 
         $category_product = $CI->Categories->retrieve_category_product($product_name,$filter);
@@ -244,11 +243,7 @@ class Lcategory
         } else {
             $total = count($category_product);
         }
-        $search_data = array(
-            'keyword' => $product_name,
-            'results' => $total,
-        );
-        $insert_search = $CI->Search_history->insert_search_history($search_data);
+
         $data = array(
             'title' => display('category_product_search'),
             'category_product' => $category_product,

@@ -1,7 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-
-
 <section id="default" class="product_details">
 
 <?php if (!empty($select_details_adds)) {
@@ -61,12 +59,11 @@ endforeach;
         <!--========== Product zoom Area ==========-->
         <div class="row m0 product_zoom">
             <!-- Tab panes -->
-            <div class="col-md-12">
             <div class="tab-content">
                 <div class="tab-pane active" id="product1" role="tabpanel">
                     <div class="easyzoom easyzoom--adjacent">
                         <a href="<?php echo base_url() . $image_large_details ?>">
-                            <img src="<?php echo base_url() . $image_thumb ?>" alt="productImage" class="img img-responsive isshue-detail-img">
+                            <img src="<?php echo base_url() . $image_thumb ?>" alt="productImage">
                         </a>
                     </div>
                 </div>
@@ -76,10 +73,10 @@ endforeach;
                         ?>
                         <div class="tab-pane" id="product_<?php echo $gallery->image_gallery_id ?>"
                              role="tabpanel">
-                            <div class="easyzoom easyzoom--adjacent product_img">
+                            <div class="easyzoom easyzoom--adjacent">
                                 <a href="<?php echo base_url() . $gallery->image_url ?>">
                                     <img src="<?php echo base_url() . $gallery->image_url ?>"
-                                         alt="productImage" class="img img-responsive">
+                                         alt="productImage">
                                 </a>
                             </div>
                         </div>
@@ -88,42 +85,31 @@ endforeach;
                 }
                 ?>
             </div>
-            </div>
             <!-- Nav tabs -->
-            <div>
-                <ul class="nav nav-pills" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#product1" role="tab">
-                            <img src="<?php echo base_url() . $image_thumb ?>" alt="" class="img_thumb">
-                        </a>
-                        <input type="hidden" name="image" id="image"
-                               value="<?php echo base_url() . $image_thumb ?>">
-                    </li>
-                    <?php
-                    if ($product_gallery_img) {
-                        foreach ($product_gallery_img as $gallery_tab_img) {
-                            ?>
+            <ul class="nav nav-pills" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#product1" role="tab">
+                        <img src="<?php echo base_url() . $image_thumb ?>" alt="" class="img_thumb">
+                    </a>
+                    <input type="hidden" name="image" id="image"
+                           value="<?php echo base_url() . $image_thumb ?>">
+                </li>
+                <?php
+                if ($product_gallery_img) {
+                    foreach ($product_gallery_img as $gallery_tab_img) {
+                        ?>
 
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab"
-                                   href="#product_<?php echo $gallery_tab_img->image_gallery_id ?>" role="tab">
-                                    <img src="<?php echo base_url() . $gallery_tab_img->image_url ?>" alt="" class="img_thumb">
-                                </a>
-                            </li>
-                            <?php
-                        }
-                    }
-                    ?>
-
-                     <?php if ($video) { ?>
-                        <li class="nav-item product-video-btn">
-                            <a class="popup-youtube"
-                               href="<?php echo html_escape($video); ?>"><span><?php echo display('watch_video'); ?></span></a>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab"
+                               href="#product_<?php echo $gallery_tab_img->image_gallery_id ?>" role="tab">
+                                <img src="<?php echo base_url() . $gallery_tab_img->image_url ?>" alt="" class="img_thumb">
+                            </a>
                         </li>
-                    <?php } ?>
-
-                </ul>
-            </div>
+                        <?php
+                    }
+                }
+                ?>
+            </ul>
         </div>
         <!--======== End Product zoom Area ========-->
     </div>
@@ -193,26 +179,20 @@ endforeach;
             <?php } ?>
             <div class="product_type">
                 <p><?php echo display('product_type') ?> : <span><?php echo html_escape($type) ?></span></p>
-                <?php if(!($is_affiliate == 1)){ ?>
-                    <p><?php echo display('availability') ?> : 
-                    <input type="hidden" value="<?php echo html_escape($stok) ?>" id="stok">
-                    <?php if ($stok > 0) { ?>
-                    <span>
-                        <?php echo display('in_stock'); ?>
-                    </span>
-                    <?php  } else { ?>
-                    <span class="text-danger">
-                        <?php echo display('out_of_stock'); ?>
-                    </span>
-                    <?php } ?>
-                    </p>
-                <?php } ?>
+                <p><?php echo display('availability') ?> : 
+                <input type="hidden" value="<?php echo html_escape($stok) ?>" id="stok">
 
+        <?php if ($stok > 0) { ?>
+        <span>
+            <?php echo display('in_stock'); ?>
+        </span>
+        <?php  } else { ?>
+        <span class="text-danger">
+            <?php echo display('out_of_stock'); ?>
+        </span>
+        <?php } ?>
+                </p>
                 <p><?php echo display('product_model') ?> : <span> <?php echo html_escape($product_model) ?></span></p>
-                <p><?php echo display('brand') ?> : <span> <a
-                            href="<?php echo base_url('brand_product/list/' . $brand_id) ?>"
-                            class="meta-value"><?php
-                        echo html_escape($brand_name) ?></a></span></p>
 
                 <input type="hidden" name="model" id="model" value="<?php echo html_escape($product_model) ?>">
             </div>
@@ -248,7 +228,7 @@ endforeach;
                 <div class="product_cost">
                     <span><?php echo display('price_of_product') ?> : </span>
                     <div class="current">
-                        <p class="color35 var_amount">
+                        <p class="color35">
                             <?php
                             if ($target_con_rate > 1) {
                                 $onsale_price = $onsale_price * $target_con_rate;
@@ -265,7 +245,7 @@ endforeach;
                         <input type="hidden" id="price" name="price" value="<?php echo html_escape($onsale_price) ?>">
                     </div>
                     <div class="previous">
-                        <del class="regular_price">
+                        <del>
                             <?php
                             if ($target_con_rate > 1) {
                                 $price = $price * $target_con_rate;
@@ -279,7 +259,8 @@ endforeach;
                             ?>
                         </del>
 
-                        <input type="hidden" id="discount" name="discount" value="<?php echo html_escape($price - $onsale_price) ?>">
+                        <input type="hidden" id="discount" name="discount"
+                               value="<?php echo html_escape($price - $onsale_price) ?>">
                     </div>
                 </div>
                 <?php
@@ -288,7 +269,7 @@ endforeach;
                 <div class="product_cost">
                     <span><?php echo display('price_of_product') ?> : </span>
                     <div class="current">
-                        <p class="color35 var_amount">
+                        <p class="color35">
                             <?php
                             if ($target_con_rate > 1) {
                                 $price = $price * $target_con_rate;
@@ -306,98 +287,65 @@ endforeach;
                 <?php
             }
             if ($variant) { ?>
-                <?php
-                    $var_types = [];
-                    if (!empty($variant)) {
-                        $exploded = explode(',', $variant);
-                        $this->db->select('*');
-                        $this->db->from('variant');
-                        $this->db->where_in('variant_id', $exploded);
-                        $this->db->order_by('variant_name', 'asc');
-                        $vresult = $this->db->get()->result();
-
-                        $var_types = array_column($vresult, 'variant_type');
-                    }
-                 ?>
-
                 <div class="product_size">
                     <span><?php echo display('product_size') ?> * : </span>
                     <?php echo form_open('#')?>
                         <select id="select_size1" onchange="select_variant(<?php echo html_escape($product_id) ?>)"
                                 required="" class="form-control">
                             <option value="0">Select</option>
-                             <?php
-                                foreach ($vresult as $vitem) {
-                                    if($vitem->variant_type=='size'){
-                                ?>
-                            <option value="<?php echo html_escape($vitem->variant_id) ?>" <?php echo (($vitem->variant_id == $default_variant)?"selected":"") ?>><?php echo html_escape($vitem->variant_name) ?></option>
+                            <?php
+                            if ($variant) {
+                                $exploded = explode(',', $variant);
+                                foreach ($exploded as $elem) {
+                                    $this->db->select('*');
+                                    $this->db->from('variant');
+                                    $this->db->where('variant_id', $elem);
+                                    $this->db->order_by('variant_name', 'asc');
+                                    $result = $this->db->get()->row();
+                                    ?>
+                                    <option value="<?php echo html_escape($result->variant_id) ?>" <?php if ($result->variant_id == $default_variant) {
+                                        echo "selected";
+                                    } ?>><?php echo html_escape($result->variant_name) ?></option>
 
-                            <?php } } ?>
+                                    <?php
+                                }
+                            }
+                            ?>
                         </select>
                     <?php echo form_close(); ?>
                 </div>
+                <?php
+            }
+            ?>
 
-                 <?php if(in_array('color', $var_types)){ ?>
-                    <div class="product-color mb-3">
-                        <div class="var_color_box">
-                            <span><?php echo display('color') ?> : </span>
-                        <?php 
-                            foreach ($vresult as $vitem) {
-                                if($vitem->variant_type=='color'){
-                                    if(empty($default_color)){
-                                        $default_color = $vitem->variant_id;  // Set default color if not getting
-                                    }
-                                    
-                                    ?>
-                            <input type="radio" class="product_colors" name="select_color" id="color_<?php echo $vitem->variant_id; ?>" value="<?php echo $vitem->variant_id; ?>" onclick="select_color_variant(<?php echo html_escape($product_id) ?>,'<?php echo  html_escape($vitem->variant_id) ?>', '<?php echo html_escape($default_variant); ?>')" <?php echo (($vitem->variant_id == $default_color)?'checked="checked"':"") ?>>
-                            <label class="mb-0" for="color_<?php echo $vitem->variant_id; ?>"><span class="color_code" style="background: <?php echo (!empty($vitem->color_code)?$vitem->color_code:strtolower($vitem->variant_name)) ?>"></span></label>
-
-                        <?php } }?>
-                        </div>
-
-                    </div>
-                <?php  }  ?>
-
-
-                <?php } ?>
-            <?php if(!($is_affiliate == 1)){ ?>
-                <div class="cart_counter">
-                    <label><?php echo display('quantity') ?> : </label>
-                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 1 ) result.value--;return false;"
-                            class="reduced items-count" type="button">
-                        <i class="fa fa-angle-down"></i>
-                    </button>
-                    <input type="text" name="qty" id="sst" maxlength="12" value="1"
-                           title="<?php echo display('quantity') ?>" class="input-text qty" min="1">
-                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                            class="increase items-count" type="button">
-                        <i class="fa fa-angle-up"></i>
-                    </button>
-                </div>
-            <?php } ?>
+            <div class="cart_counter">
+                <label><?php echo display('quantity') ?> : </label>
+                <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 1 ) result.value--;return false;"
+                        class="reduced items-count" type="button">
+                    <i class="fa fa-angle-down"></i>
+                </button>
+                <input type="text" name="qty" id="sst" maxlength="12" value="1"
+                       title="<?php echo display('quantity') ?>" class="input-text qty" min="1">
+                <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                        class="increase items-count" type="button">
+                    <i class="fa fa-angle-up"></i>
+                </button>
+            </div>
 
 
             <input type="hidden" id="product_id" name="product_id" value="<?php echo html_escape($product_id) ?>">
-            
-            <div class="detail-action">
-                <?php
-                    if ($stok > 0) {
+            <?php
+            if ($stok > 0) {
                 ?>
-                <a href="javascript:void(0)" id="cart_btn" class="cart_btn color3" onclick="cart_btn(<?php echo html_escape($product_id) ?>)">
+                <a href="javascript:void(0)" id="cart_btn" class="cart_btn color3"
+                   onclick="cart_btn(<?php echo html_escape($product_id) ?>)">
                     <i class="fa fa-shopping-cart"></i><?php echo display('add_to_cart') ?>
                 </a>
-                <?php }if($is_affiliate == 1){ ?>
-                <a href="<?php echo html_escape($affiliate_url) ?>" class="cart_btn color3" target="0">
-                    <i class="fa fa-shopping-cart"></i><?php echo display('buy_now') ?>
-                </a>  
-                <?php } ?>
-                <a href="javascript:void(0)" id="compare_btn" title="<?php echo display('compare'); ?>" class="compare_btn"onclick="comparison_btn(<?php echo html_escape($product_id) ?>)">
-                    <i class="fa fa-balance-scale"></i>
-                </a>
-            </div>
+            <?php } ?>
+
             <div class="product_share">
                 <?php if(isset($web_settings[0]['social_share']) && !empty($web_settings[0]['social_share'])){ ?>
-                <!-- AddToAny BEGIN -->
+                 <!-- AddToAny BEGIN -->
                 <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
                     <a class="a2a_button_facebook"></a>
                     <a class="a2a_button_whatsapp"></a>
@@ -408,7 +356,7 @@ endforeach;
                     <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
                 </div>
                 <script async src="https://static.addtoany.com/menu/page.js"></script>
-                <?php  } ?>
+                <?php } ?>
 
             </div>
         </div>
@@ -632,7 +580,6 @@ if (3 == $ads->adv_position && !empty($ads->adv_code) && empty($ads->adv_code2) 
 endforeach;
 } ?>
 <!--========== Electronics Product Area ==========-->
-<?php if ($related_product) { ?>
 <section class="product_area wow fadeInUp">
 <div class="container">
 <div class="row db m0 product_inner">
@@ -641,7 +588,7 @@ endforeach;
     </div>
     <div class="owl-carousel product_slider slider_style">
         <?php
-        
+        if ($related_product) {
             foreach ($related_product as $product) {
                 ?>
                 <div class="item">
@@ -782,12 +729,6 @@ endforeach;
                         </div>
                         <div class="item_hover">
                             <ul class="nav">
-                                <li>
-                                    <a href="javascript:void(0)" class="compare"
-                                        onclick="comparison_btn(<?php echo html_escape($product->product_id) ?>)">
-                                        <i class="fa fa-balance-scale"></i>
-                                    </a>
-                                </li>
                                 <li>
                                     <a href="#" class="wishlist"
                                        name="<?php echo html_escape($product->product_id) ?>"><i
@@ -935,8 +876,7 @@ endforeach;
 
                                     <?php } ?>
                                     <!-- Tax collection information end-->
-                                    
-                                    <a href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>', <?php echo $product->variant_price; ?>);">
+                                    <a href="javascript:void(0)" onclick="add_to_cart_item('<?php echo $product->product_id; ?>', '<?php echo remove_space($product->product_name); ?>', '<?php echo $product->default_variant; ?>');">
                                         <button type="button" class="cart_button color2"><?php echo display('add_to_cart')
                                             ?></button>
                                     </a>
@@ -947,13 +887,12 @@ endforeach;
                 </div>
                 <?php
             }
-        
+        }
         ?>
     </div>
 </div>
 </div>
 </section>
-<?php } ?>
 <!-- ========== End Electronics Product Area ========== -->
 <?php if (!empty($select_details_adds)) {
 foreach ($select_details_adds as $ads):
@@ -999,4 +938,3 @@ if (4 == $ads->adv_position && !empty($ads->adv_code) && empty($ads->adv_code2) 
 <?php
 endforeach;
 } ?>
-<input type="hidden" id="color_variant_id" value="<?php echo @$default_color; ?>">

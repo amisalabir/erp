@@ -64,14 +64,15 @@
                         <div class="row">
                             <div class="form-group col-lg-6 col-sm-offset-3">
                                  <p class="alert update_recommendation" >
-                                    Note: Please update your software verion <b>sequenctially</b> if you already missed any updated version!
+                                    Note: Please update your software version sequentially</b> if you already missed any updated version!
                                 </p>
                                 <p class="alert update_recommendation" >
-                                    Note: strongly recomanded to backup your <b>SOURCE FILE</b> and <b>DATABASE</b>
-                                    before update. <a class="btn btn-success" href="<?php echo base_url('dashboard/backup_restore/download_backup') ?>">Download Database</a>
+
+                                    Note: Strongly recommended to backup your SOURCE FILE</b> and <b>DATABASE</b>
+                                    before the update. <a class="btn btn-success" href="<?php echo base_url('dashboard/backup_restore/download_backup') ?>">Download Database</a>
                                     <br>
                                     <br>
-                                    Please Enable <b>Zip </b>, <b>allow_url_fopen = 1</b> status From your Server setting to get update properly.
+                                    Please Enable <b>Zip</b>, <b>allow_url_fopen = 1</b> status From your Server setting to get updated properly.
                                 </p>
                                 <label>Licence/Purchase key <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="purchase_key">

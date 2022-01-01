@@ -54,11 +54,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                    <?php if($this->permission->check_label('stock_report')->read()->access()){ ?>
                     <a href="<?php echo base_url('dashboard/Creport')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('stock_report')?></a>
-                    <?php }if($this->permission->check_label('stock_report_product_wise')->read()->access()){ ?>
+
                     <a href="<?php echo base_url('dashboard/Creport/stock_report_product_wise')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i><?php echo display('stock_report_product_wise')?></a>
-                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -106,7 +104,7 @@
                                 <select class="form-control" name="product_id" id="product_id"  required="">
                                     <option value=""></option>
                                     <?php foreach ($product_list as $product_item){ ?>
-                                        <option value="<?php echo $product_item['product_id'] ?>" <?php echo (($product_item['product_id']==@$_GET['product_id'])?'selected':'') ?>><?php echo $product_item['product_name'] ?></option>
+                                        <option value="<?php echo $product_item['product_id'] ?>" <?php echo (($product_item['product_id']==$_GET['product_id'])?'selected':'') ?>><?php echo $product_item['product_name'] ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -185,26 +183,30 @@
                                     </thead>
                                     <tbody>
                                     <?php
-                                    if (!empty($stok_report)) {
-                                        foreach ($stok_report as $stock) {
+                                    if ($stok_report) {
                                         ?>
+                                        {stok_report}
                                         <tr>
-                                            <td align="center"><?php echo $stock['sl']; ?></td>
+                                            <td align="center">{sl}</td>
                                             <td align="center">
-                                                <a href="<?php echo base_url().'dashboard/Cproduct/product_details/'.$stock['product_id']; ?>"> <?php echo $stock['product_name']; ?> - (<?php echo $stock['product_model']; ?>) <i class="fa fa-shopping-bag pull-right" aria-hidden="true"></i>
+                                                <a href="<?php echo base_url().'dashboard/Cproduct/product_details/{product_id}'; ?>">
+                                                    {product_name}-({product_model}) <i class="fa fa-shopping-bag pull-right" aria-hidden="true"></i>
                                                 </a>
                                             </td>
 
-                                            <td align="center"><?php echo $stock['variant_name'].(!empty($stock['variant_color'])?', '.$stock['variant_color_name']:''); ?> </td>
-                                            <td class="text-center"><?php echo (($position==0)?"$currency ".$stock['price']:$stock['price']." $currency") ?></td>
-                                            <td class="text-center"><?php echo (($position==0)?"$currency ".$stock['supplier_price']:$stock['supplier_price']." $currency") ?></td>
-                                            <td align="center"><?php echo $stock['in_qnty']; ?></td>
-                                            <td align="center"><?php echo $stock['out_qnty']; ?></td>
-                                            <td align="center"><?php echo $stock['issue_qty']; ?></td>
-                                            <td align="center"><?php echo $stock['rec_qty']; ?></td>
-                                            <td align="center"><?php echo $stock['stok_quantity']; ?></td>
+                                            <td align="center">{variant_name}</td>
+                                            <td class="text-center"><?php echo (($position==0)?"$currency {price}":"{price} $currency") ?></td>
+                                            <td class="text-center"><?php echo (($position==0)?"$currency {supplier_price}":"{supplier_price} $currency") ?></td>
+                                            <td align="center">{in_qnty}</td>
+                                            <td align="center">{out_qnty}</td>
+                                            <td align="center">{issue_qty}</td>
+                                            <td align="center">{rec_qty}</td>
+                                            <td align="center">{stok_quantity}</td>
                                         </tr>
-                                        <?php } } ?>
+                                        {/stok_report}
+                                        <?php
+                                    }
+                                    ?>
                                     </tbody>
                                     <tfoot>
                                     <tr>

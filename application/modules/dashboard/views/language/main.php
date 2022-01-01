@@ -30,10 +30,8 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <?php if($this->permission->check_label('language')->read()->access()){ ?>
                 <a href="<?php echo base_url('dashboard/Language/phrase') ?>" class="btn btn-info color4 color5">Add
                     Phrase</a>
-                <?php } ?>
             </div>
         </div>
 
@@ -77,20 +75,14 @@
                                         <tr>
                                             <td><?php echo $sl++ ?></td>
                                             <td><?php echo html_escape($language) ?></td>
-                                            <td>
-                                                <?php if($this->permission->check_label('language')->update()->access()){ ?>
-                                                <a href="<?php echo base_url("dashboard/Language/editPhrase/$key") ?>"
-                                                   class="btn btn-xs btn-info">
-                                                   <i class="fa fa-edit"></i>
-                                               </a>
+                                            <td><a href="<?php echo base_url("dashboard/Language/editPhrase/$key") ?>"
+                                                   class="btn btn-xs btn-info"><i class="fa fa-edit"></i></a>
+                                                <?php if (strtolower($language) != 'english') { ?>
+                                                    <a href="<?php echo base_url("dashboard/Language/deletePhrase/$key") ?>"
+                                                       class="btn btn-xs btn-danger"
+                                                       onclick="return confirm('<?php echo display('are_you_sure_want_to_delete') ?>');"><i
+                                                                class="fa fa-trash"></i></a>
                                                 <?php } ?>
-                                                <?php if($this->permission->check_label('language')->delete()->access()){
-                                                if (strtolower($language) != 'english') { ?>
-                                                    <a href="<?php echo base_url("dashboard/Language/deletePhrase/$key") ?>" class="btn btn-xs btn-danger" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete') ?>');">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                <?php } } ?>
-
                                             </td>
                                         </tr>
                                     <?php } ?>

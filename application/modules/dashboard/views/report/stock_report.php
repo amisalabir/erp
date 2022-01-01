@@ -52,15 +52,11 @@
 		<div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                	<?php if($this->permission->check_label('stock_report_supplier_wise')->read()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Creport/stock_report_supplier_wise')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"></i> <?php echo display('stock_report_supplier_wise')?></a>
-	                <?php } ?>
-	                <?php if($this->permission->check_label('stock_report_product_wise')->read()->access()){ ?>
+                  <a href="<?php echo base_url('dashboard/Creport/stock_report_supplier_wise')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"></i> <?php echo display('stock_report_supplier_wise')?></a>
                     <a href="<?php echo base_url('dashboard/Creport/stock_report_product_wise')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"></i> <?php echo display('stock_report_product_wise')?></a>
-                	<?php } ?>
-                	<?php if($this->permission->check_label('stock_report_store_wise')->read()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Creport/stock_report_store_wise')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"></i> <?php echo display('stock_report_store_wise')?></a>
-                  	<?php } ?>
+                    <a href="<?php echo base_url('dashboard/Creport/stock_report_category_wise')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"></i> <?php echo"Stock Report (Category Wise)"; ?></a>
+                  <a href="<?php echo base_url('dashboard/Creport/stock_report_store_wise')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"></i> <?php echo display('stock_report_store_wise')?></a>
+                  
                 </div>
             </div>
         </div>
@@ -71,7 +67,8 @@
 		        <div class="panel panel-default">
 		            <div class="panel-body">
 						<?php echo form_open('dashboard/Creport',array('class' => 'form-inline', ));?>
-							<?php  date_default_timezone_set(DEF_TIMEZONE); $today = date('Y-m-d'); ?>
+							<?php 
+date_default_timezone_set(DEF_TIMEZONE); $today = date('m-d-Y'); ?>
 							<label class="select"><?php echo display('search_by_product') ?>:</label>
 							<input name="product_name" onclick="producstList();" class="form-control productSelection" placeholder="<?php echo display('product_name') ?>" id="product_name" required="" aria-required="true" type="text">
 							<input class="autocomplete_hidden_value" name="product_id" id="SchoolHiddenId" type="hidden">
@@ -111,11 +108,11 @@
 			                        <thead>
 										<tr>
 											<th class="text-center"><?php echo display('sl') ?></th>
-											<th class="text-center"><?php echo display('product_name') ?></th>
 											<th class="text-center"><?php echo display('category') ?></th>
+											<th class="text-center"><?php echo display('product_name') ?></th>
 											<th class="text-center"><?php echo display('unit') ?></th>
 											<th class="text-center"><?php echo display('sell_price') ?></th>
-											<th class="text-center"><?php echo display('supplier_price') ?></th>
+											<!-- <th class="text-center"><?php echo display('supplier_price') ?></th> -->
 											<th class="text-center"><?php echo display('in_quantity') ?></th>
 											<th class="text-center"><?php echo display('out_quantity') ?></th>
 											<th class="text-center"><?php echo display('stock') ?></th>
@@ -124,21 +121,33 @@
 									</thead>
 									<tbody>
 									<?php
+									
+									$totalIn=0;
+									$totalOut=0;
+									$totalStock=0;
+
 									if ($stok_report) {
 									?>
 									{stok_report}
+									<?php
+									
+								
+									/*
+									
+									
+									*/
+									 ?>
 										<tr>
 											<td>{sl}</td>
-											<td>
-												<a href="<?php echo base_url().'dashboard/Cproduct/product_details/{product_id}'; ?>">
-
-                                                     {product_name}-({product_model}) <i class="fa fa-shopping-bag pull-right" aria-hidden="true"></i>
-												</a>
-											</td>
 											<td>{category_name}</td>
+											<td>
+												<a href="<?php echo base_url().'dashboard/Cproduct/product_details/{product_id}'; ?>"> {product_name}-({product_model}) </a>
+											</td>
+											
 											<td>{unit_name}</td>
 											<td class="text-center"><?php echo (($position==0)?"$currency {price}":"{price} $currency") ?></td>
-											<td class="text-center"><?php echo (($position==0)?"$currency {supplier_price}":"{supplier_price} $currency") ?></td>
+											<!--<td class="text-center"><?php echo (($position==0)?"$currency {supplier_price}":"{supplier_price} $currency") ?></td>-->
+
 											<td align="center">{totalPrhcsCtn}</td>
 											<td align="center">{totalSalesCtn}</td>
 											<td align="center">{stok_quantity_cartoon}</td>
@@ -147,12 +156,30 @@
 									{/stok_report}
 									<?php
 									}
+									foreach($stok_report as $stock){
+
+										$totalIn=$totalIn+$stock['totalPrhcsCtn'];
+										$totalOut=$totalOut+$stock['totalSalesCtn'];
+										$totalStock=$totalStock+$stock['stok_quantity_cartoon'];
+									}
+
 									?>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td class="text-right">Total:</td>
+											<td class="text-center"></td>
+											<td class="text-center"><?php echo $totalIn; ?></td>
+											<td align="center"><?php echo $totalOut; ?></td>
+											<td align="center"><?php echo $totalStock; ?></td>
+										</tr>
 									</tbody>
 			                    </table>
 			                </div>
 			            </div>
 		                <div class="text-center">
+
 		                	 <?php if (isset($link)) { echo $link ;} ?>
 		                </div>
 		            </div>

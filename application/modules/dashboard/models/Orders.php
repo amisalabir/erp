@@ -12,69 +12,29 @@ class Orders extends CI_Model {
     {
         return $this->db->count_all("order");
     }
-    // Count order list
-    public function count_order_list($filter = [])
-    {
-        $this->db->select('a.order_id');
-        $this->db->from('order a');
-        $this->db->join('customer_information b','b.customer_id = a.customer_id','left');
-
-        if(!empty($filter['order_no'])){
-            $this->db->where('a.order', $filter['order_no']);
-        }
-        if(!empty($filter['customer_name'])){
-            $this->db->like('b.customer_name', $filter['customer_name'], 'both');
-        }
-
-        if(!empty($filter['order_date'])){
-            $this->db->where('a.date', date('m-d-Y', strtotime($filter['order_date'])));
-        }
-        if(!empty($filter['invoice_status'])){
-            $this->db->join('invoice c','c.order_id = a.order_id','left');
-             if(($filter['invoice_status']=='3')){
-                $this->db->where('c.invoice_status', 3);
-                $this->db->or_where('c.invoice_status IS NULL');
-            }else{
-                $this->db->where('c.invoice_status', $filter['invoice_status']);
-            }
-        }
-
-        $query = $this->db->get();
-        return $query->num_rows();
-    }
-
     //order List
-    public function order_list($filter = [], $page, $per_page)
+    public function order_list()
     {
-        $this->db->select('a.*,b.customer_name, IFNULL(c.invoice_status,0) as invoice_status');
+        $this->db->select('a.*,b.customer_name');
         $this->db->from('order a');
         $this->db->join('customer_information b','b.customer_id = a.customer_id','left');
-        $this->db->join('invoice c','c.order_id = a.order_id','left');
-
-
-        if(!empty($filter['order_no'])){
-            $this->db->where('a.order', $filter['order_no']);
-        }
-        if(!empty($filter['customer_name'])){
-            $this->db->like('b.customer_name', $filter['customer_name'], 'both');
-        }
-
-        if(!empty($filter['order_date'])){
-            $this->db->where('a.date', date('m-d-Y', strtotime($filter['order_date'])));
-        }
-
-        if(!empty($filter['invoice_status'])){
-             if(($filter['invoice_status']=='3')){
-                $this->db->where('c.invoice_status', 3);
-                $this->db->or_where('c.invoice_status IS NULL');
-            }else{
-                $this->db->where('c.invoice_status', $filter['invoice_status']);
-            }
-        }
-
-
         $this->db->order_by('a.order','desc');
-        $this->db->limit($per_page, $page );
+        $this->db->limit('500');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+    
+        // due order List
+    public function due_order_list()
+    {
+        $this->db->select('a.*,b.customer_name');
+        $this->db->from('order a');
+        $this->db->join('customer_information b','b.customer_id = a.customer_id','left');
+        $this->db->order_by('a.order','desc');
+        $this->db->limit('500');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result_array();
@@ -262,7 +222,7 @@ class Orders extends CI_Model {
             $result = $this->Customers->customer_entry($data);
             if ($result == false) {
                 $this->session->set_userdata(array('error_message'=>display('already_exists')));
-                redirect('dashboard/Corder/manage_order');
+                redirect('Corder/manage_order');
             }
             //Previous balance adding -> Sending to customer model to adjust the data.
             $this->Customers->previous_balance_add(0,$customer_id);
@@ -298,7 +258,6 @@ class Orders extends CI_Model {
         $total_amount = $this->input->post('total_price',TRUE);
         $discount 	= $this->input->post('discount',TRUE);
         $variants 	= $this->input->post('variant_id',TRUE);
-        $color_variants   = $this->input->post('color_variant',TRUE);
 
         //Order details entry
         for ($i=0, $n=count($p_id); $i < $n; $i++) {
@@ -308,7 +267,6 @@ class Orders extends CI_Model {
             $discount_rate    = $discount[$i];
             $total_price      = $total_amount[$i];
             $variant_id       = $variants[$i];
-            $variant_color    = $color_variants[$i];
             $supplier_rate    = $this->supplier_rate($product_id);
 
             $order_details = array(
@@ -316,7 +274,6 @@ class Orders extends CI_Model {
                 'order_id'			=>	$order_id,
                 'product_id'		=>	$product_id,
                 'variant_id'		=>	$variant_id,
-                'variant_color'     =>  $variant_color,
                 'store_id'			=>	$this->input->post('store_id',TRUE),
                 'quantity'			=>	$product_quantity,
                 'rate'				=>	$product_rate,
@@ -328,25 +285,19 @@ class Orders extends CI_Model {
 
             if(!empty($quantity))
             {
-                $this->db->select('*');
-                $this->db->from('order_details');
-                $this->db->where('order_id',$order_id);
-                $this->db->where('product_id',$product_id);
-                $this->db->where('variant_id',$variant_id);
-                if(!empty($variant_color)){
-                    $this->db->where('variant_color',$variant_color);
-                }
-                $query = $this->db->get();
-                $result = $query->num_rows();
+                $result = $this->db->select('*')
+                    ->from('order_details')
+                    ->where('order_id',$order_id)
+                    ->where('product_id',$product_id)
+                    ->where('variant_id',$variant_id)
+                    ->get()
+                    ->num_rows();
                 if ($result > 0) {
                     $this->db->set('quantity', 'quantity+'.$product_quantity, FALSE);
                     $this->db->set('total_price', 'total_price+'.$total_price, FALSE);
                     $this->db->where('order_id', $order_id);
                     $this->db->where('product_id', $product_id);
                     $this->db->where('variant_id', $variant_id);
-                    if(!empty($variant_color)){
-                        $this->db->where('variant_color',$variant_color);
-                    }
                     $this->db->update('order_details');
                 }else{
                     $this->db->insert('order_details',$order_details);
@@ -619,7 +570,6 @@ class Orders extends CI_Model {
         $total_amount = $this->input->post('total_price',TRUE);
         $discount 	= $this->input->post('discount',TRUE);
         $variants 	= $this->input->post('variant_id',TRUE);
-        $color_variants   = $this->input->post('color_variant',TRUE);
         $order_d_id = $this->input->post('order_details_id',TRUE);
         $quantity 	= $this->input->post('product_quantity',TRUE);
 
@@ -638,7 +588,6 @@ class Orders extends CI_Model {
             $discount_rate 	  = $discount[$i];
             $total_price 	  = $total_amount[$i];
             $variant_id 	  = $variants[$i];
-            $variant_color    = (!empty($color_variants[$i])?$color_variants[$i]:NULL);
             $supplier_rate    = $this->supplier_rate($product_id);
 
             $order_details = array(
@@ -646,7 +595,6 @@ class Orders extends CI_Model {
                 'order_id'		=>	$order_id,
                 'product_id'	=>	$product_id,
                 'variant_id'	=>	$variant_id,
-                'variant_color' =>  $variant_color,
                 'quantity'		=>	$product_quantity,
                 'rate'			=>	$product_rate,
                 'store_id'		=>	$this->input->post('store_id',TRUE),
@@ -658,26 +606,19 @@ class Orders extends CI_Model {
 
             if(!empty($p_id))
             {
-                $this->db->select('order_details_id');
-                $this->db->from('order_details');
-                $this->db->where('order_id',$order_id);
-                $this->db->where('product_id',$product_id);
-                $this->db->where('variant_id',$variant_id);
-                if(!empty($variant_color)){
-                    $this->db->where('variant_color',$variant_color);
-                }
-                $query = $this->db->get();
-                $result = $query->num_rows();
-
+                $result = $this->db->select('*')
+                    ->from('order_details')
+                    ->where('order_id',$order_id)
+                    ->where('product_id',$product_id)
+                    ->where('variant_id',$variant_id)
+                    ->get()
+                    ->num_rows();
                 if ($result > 0) {
                     $this->db->set('quantity', 'quantity+'.$product_quantity, FALSE);
                     $this->db->set('total_price', 'total_price+'.$total_price, FALSE);
                     $this->db->where('order_id', $order_id);
                     $this->db->where('product_id', $product_id);
                     $this->db->where('variant_id', $variant_id);
-                    if(!empty($variant_color)){
-                        $this->db->where('variant_color', $variant_color);
-                    }
                     $this->db->update('order_details');
                 }else{
                     $this->db->insert('order_details',$order_details);
@@ -977,16 +918,15 @@ if(!empty($igst)){
                     $invoice_details = array(
                         'invoice_details_id' => $this->auth->generator(15),
                         'invoice_id' 		 => $invoice_id,
-                        'product_id' 		 => $details->product_id,
-                        'variant_id'		 => $details->variant_id,
-                        'variant_color'      => $details->variant_color,
-                        'store_id'		 	 => $details->store_id,
-                        'quantity'			 => $details->quantity,
-                        'rate'				 => $details->rate,
-                        'supplier_rate'		 => $details->supplier_rate,
-                        'total_price'		 => $details->total_price,
-                        'discount'			 => $details->discount,
-                        'status'			 => $details->status,
+                        'product_id' 		 => $details ->product_id,
+                        'variant_id'		 => $details ->variant_id,
+                        'store_id'		 	 => $details ->store_id,
+                        'quantity'			 => $details ->quantity,
+                        'rate'				 => $details ->rate,
+                        'supplier_rate'		 => $details ->supplier_rate,
+                        'total_price'		 => $details ->total_price,
+                        'discount'			 => $details ->discount,
+                        'status'			 => $details ->status,
                     );
 
                     $order_details = $this->db->insert('invoice_details',$invoice_details);
@@ -1139,7 +1079,7 @@ if(!empty($igst)){
        if($details_page == 'order_details_data') {
            $this->db->where('g.order_id', $order_id);
        }
-        $this->db->group_by('c.product_id, c.order_details_id');
+        $this->db->group_by('c.product_id, c.variant_id');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result_array();
@@ -1273,34 +1213,19 @@ if(!empty($igst)){
         $this->db->where(array('product_id' => $product_id,'status' => 1));
         $product_information = $this->db->get()->row();
 
-        $html = $colorhtml = "";
+        $html = "";
         if (!empty($product_information->variants)) {
             $exploded = explode(',',$product_information->variants);
+            $html .="<option>".display('select_variant')."</option>";
+            foreach ($exploded as $elem) {
+                $this->db->select('*');
+                $this->db->from('variant');
+                $this->db->where('variant_id',$elem);
+                $this->db->order_by('variant_name','asc');
+                $result = $this->db->get()->row();
 
-            $this->db->select('*');
-            $this->db->from('variant');
-            $this->db->where_in('variant_id',$exploded);
-            $this->db->order_by('variant_name','asc');
-            $variant_list = $this->db->get()->result();
-            $var_types = array_column($variant_list, 'variant_type');
-
-            $html .= '<option value=""></option>';
-            foreach ($variant_list as $varitem) {
-
-                if($varitem->variant_type=='size'){
-                    $html .="<option value=".$varitem->variant_id.">".$varitem->variant_name."</option>";
-                }
+                $html .="<option value=".$result->variant_id.">".$result->variant_name."</option>";
             }
-
-            if(in_array('color',$var_types)) {
-                $colorhtml .="<option value=''></option>";
-                foreach ($variant_list as $varitem2) {
-                    if($varitem2->variant_type=='color'){
-                        $colorhtml .="<option value=".$varitem2->variant_id.">".$varitem2->variant_name."</option>";
-                    }
-                }
-            }
-
         }
 
         $this->db->select('tax.*,tax_product_service.product_id,tax_percentage');
@@ -1353,7 +1278,6 @@ if(!empty($igst)){
             'product_model' => $product_information->product_model,
             'product_id' 	=> $product_information->product_id,
             'variant' 		=> $html,
-            'colorhtml'       => $colorhtml,
             'sgst_tax' 		=> (!empty($tax['sgst_tax'])?$tax['sgst_tax']:null),
             'cgst_tax' 		=> (!empty($tax['cgst_tax'])?$tax['cgst_tax']:null),
             'igst_tax' 		=> (!empty($tax['igst_tax'])?$tax['igst_tax']:null),
@@ -1405,8 +1329,8 @@ if(!empty($igst)){
     public function number_generator_order()
     {
         $this->db->select_max('order', 'order_no');
-        $query    = $this->db->get('order');
-        $result   = $query->result_array();
+        $query = $this->db->get('order');
+        $result = $query->result_array();
         $order_no = $result[0]['order_no'];
         if ($order_no !='') {
             $order_no = $order_no + 1;
@@ -1485,72 +1409,5 @@ if(!empty($igst)){
             ->get()->row_array();
 
 
-    }
-
-    //Best Sale Product
-    public function best_sale_product()
-    {
-        $today    = date("m-d-Y");
-        $fromdate = date("m-d-Y",strtotime("-30 days"));
-
-        $product_ids = $this->db->query("SELECT COUNT(a.order_id) as order_count, c.product_name 
-                    FROM order_details a
-                    LEFT JOIN product_information c
-                    ON a.product_id = c.product_id
-                    LEFT JOIN `order` b
-                    ON a.order_id = b.order_id
-                    WHERE DATE(b.date) BETWEEN '".$fromdate."' AND '".$today."'
-                    GROUP BY a.product_id ORDER BY order_count DESC LIMIT 5")->result_array();
-        if (!empty($product_ids)) {
-            return $product_ids;
-        }
-    }
-
-    public function all_best_sale_product($from_date = false,$to_date = false, $product_id = false){
-        $from = date("Y-m-d",strtotime($from_date));
-        $to   = date("Y-m-d",strtotime($to_date));
-        if(!empty($from_date) && !empty($to_date) && !empty($product_id)){
-            $product_ids = $this->db->query("SELECT COUNT(a.order_id) as order_count, c.product_name 
-                    FROM order_details a
-                    LEFT JOIN product_information c
-                    ON a.product_id = c.product_id
-                    LEFT JOIN `order` b
-                    ON a.order_id = b.order_id
-                    WHERE DATE(b.created_at) BETWEEN '".$from."' AND '".$to."' AND c.product_id = '".$product_id."'
-                    GROUP BY a.product_id ORDER BY order_count DESC")->result_array();
-
-        }elseif(empty($from_date) && empty($to_date) && !empty($product_id)){
-            $product_ids = $this->db->query("SELECT COUNT(a.order_id) as order_count, c.product_name 
-                    FROM order_details a
-                    LEFT JOIN product_information c
-                    ON a.product_id = c.product_id
-                    LEFT JOIN `order` b
-                    ON a.order_id = b.order_id
-                    WHERE c.product_id = '".$product_id."'
-                    GROUP BY a.product_id ORDER BY order_count DESC")->result_array();
-        }elseif(!empty($from_date) && !empty($to_date) && empty($product_id)){
-            $product_ids = $this->db->query("SELECT COUNT(a.order_id) as order_count, c.product_name 
-                    FROM order_details a
-                    LEFT JOIN product_information c
-                    ON a.product_id = c.product_id
-                    LEFT JOIN `order` b
-                    ON a.order_id = b.order_id
-                    WHERE DATE(b.created_at) BETWEEN '".$from."' AND '".$to."'
-                    GROUP BY a.product_id ORDER BY order_count DESC")->result_array();
-        }else{
-            $to          = date("Y-m-d");
-            $from        = date("Y-m-d",strtotime("-30 days"));
-            $product_ids = $this->db->query("SELECT COUNT(a.order_id) as order_count, c.product_name 
-                    FROM order_details a
-                    LEFT JOIN product_information c
-                    ON a.product_id = c.product_id
-                    LEFT JOIN `order` b
-                    ON a.order_id = b.order_id
-                    WHERE DATE(b.created_at) BETWEEN '".$from."' AND '".$to."'
-                    GROUP BY a.product_id ORDER BY order_count DESC")->result_array();
-        }
-        if (!empty($product_ids)) {
-            return $product_ids;
-        }
     }
 }

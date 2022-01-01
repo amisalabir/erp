@@ -47,9 +47,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                    <?php if($this->permission->check_label('shipping_method')->read()->access()){ ?>
-                    <a href="<?php echo base_url('dashboard/Cshipping_method/manage_shipping_method')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_shipping_method')?></a>
-                    <?php } ?>
+                  <a href="<?php echo base_url('dashboard/Cshipping_method/manage_shipping_method')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('manage_shipping_method')?></a>
                 </div>
             </div>
         </div>

@@ -169,61 +169,6 @@
 
 </div>
 
-<!--========= Comparison Box start ====================-->
-<div class="dropdown cart_area tab_up_comparison" id="tab_up_comparison">
-    <a href="#" class="dropdown-toggle compare_color" data-toggle="dropdown" role="button"
-       aria-haspopup="true" aria-expanded="true" id="search-form">
-        <i class="fa fa-balance-scale"></i>
-        <span class="badge badge-notify my-cart-badge color4"><?php if ($this->session->userdata('comparison_ids')) {echo count($this->session->userdata('comparison_ids'));} else{echo 0;}?></span>
-    </a>
-    <?php
-        $total_comparison_ids = 0;
-        if ($this->session->userdata('comparison_ids')) {
-            $comparisons = $this->session->userdata('comparison_ids');
-            $total_comparison_ids = count($this->session->userdata('comparison_ids'));
-
-            $this->db->from('product_information');
-            $this->db->where_in('product_id', $comparisons);
-            $query = $this->db->get();
-            $comparison_products = $query->result();
-    ?>
-    <ul class="cart-box dropdown-menu">
-        <li class="cart-header">
-            <h4><?php echo display('you_have') . ' ' . count($this->session->userdata('comparison_ids')) . ' ' . display('items_to_compare') ?></h4>
-        </li>
-
-         <?php  foreach ($comparison_products as $comparison):  ?>
-            <li class="cart-content">
-                <div class="img-box">
-                    <img src="<?php echo base_url().$comparison->image_thumb ?>"
-                         alt="Awesome Image">
-                </div>
-                <div class="content">
-                    <h4><?php echo html_escape($comparison->product_name); ?></h4>
-                    <h6><?php echo(($position == 0) ? $currency . ' ' . $this->cart->format_number($comparison->price) : $this->cart->format_number($comparison->price) . ' ' . $currency) ?></h6>
-                </div>
-
-                <div class="delete_box">
-                    <a href="#" class="delete_comparison_item" name="<?php echo $comparison->product_id ?>">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                </div>
-            </li>
-        <?php   endforeach; ?>
-        
-            <li class="cart-footer clearfix">
-                
-                <div class="checkout-box btn-block">
-                    <a href="<?php echo base_url('comparison') ?>"><?php echo display('compare') ?></a>
-                </div>
-                
-            </li>
-        
-    </ul>
-    <?php } ?>
-</div>
-<!--========= Comparison Box ENd =========-->
-
 <!--========= Cart Box start ====================-->
 <div class="dropdown cart_area tab_up_cart" id="tab_up_cart">
     <a href="#" class="dropdown-toggle color2" data-toggle="dropdown" role="button"
@@ -277,8 +222,6 @@
     </ul>
 </div>
 <!--========= Cart Box ENd =========-->
-
-
 </div>
 
 
@@ -296,7 +239,6 @@
                 $sub_parent_cat = $this->db->select('*')
                     ->from('product_category')
                     ->where('parent_category_id', $parent_category->category_id)
-                    ->where('status','1')
                     ->order_by('menu_pos')
                     ->get()
                     ->result();
@@ -317,7 +259,6 @@
                                 $sub_category = $this->db->select('*')
                                     ->from('product_category')
                                     ->where('parent_category_id', $sub_p_cat->category_id)
-                                    ->where('status','1')
                                     ->order_by('menu_pos')
                                     ->get()
                                     ->result();
@@ -377,7 +318,6 @@
                     $sub_parent_cat = $this->db->select('*')
                         ->from('product_category')
                         ->where('parent_category_id', $parent_category->category_id)
-                        ->where('status','1')
                         ->order_by('menu_pos')
                         ->get()
                         ->result();

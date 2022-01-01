@@ -45,11 +45,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="column">
-                <?php if($this->permission->check_label('add_variant')->create()->access()){ ?>
-                  	<a href="<?php echo base_url('dashboard/Cvariant')?>" class="btn btn-success m-b-5 m-r-2">
-                  		<i class="ti-plus"> </i> <?php echo display('add_variant')?>
-                  	</a>
-                <?php } ?>
+                
+                  <a href="<?php echo base_url('dashboard/Cvariant')?>" class="btn btn-success m-b-5 m-r-2"><i class="ti-plus"> </i> <?php echo display('add_variant')?></a>
+
                 </div>
             </div>
         </div>
@@ -70,7 +68,6 @@
 									<tr>
 										<th class="text-center"><?php echo display('variant_id') ?></th>
 										<th class="text-center"><?php echo display('variant_name') ?></th>
-										<th class="text-center"><?php echo display('variant_type') ?></th>
 										<th class="text-center"><?php echo display('action') ?></th>
 									</tr>
 								</thead>
@@ -82,15 +79,12 @@
 									<tr>
 										<td class="text-center">{variant_id}</td>
 										<td class="text-center">{variant_name}</td>
-										<td class="text-center">{variant_type}</td>
 										<td>
 											<center>
 											<?php echo form_open()?>
-											<?php if($this->permission->check_label('manage_variant')->update()->access()){ ?>
 												<a href="<?php echo base_url().'dashboard/Cvariant/variant_update_form/{variant_id}'; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-											<?php }if($this->permission->check_label('manage_variant')->delete()->access()){ ?>
+
 												<a href="<?php echo base_url().'dashboard/Cvariant/variant_delete/{variant_id}'; ?>" class="btn btn-danger btn-sm" name="{variant_id}" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php } ?>
 											<?php echo form_close()?>
 											</center>
 										</td>

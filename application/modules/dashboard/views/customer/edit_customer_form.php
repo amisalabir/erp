@@ -50,7 +50,7 @@
                             <h4><?php echo display('customer_edit') ?> </h4>
                         </div>
                     </div>
-                <?php echo form_open_multipart('dashboard/Ccustomer/customer_update',array('class' => 'form-vertical', 'id' => 'validate'))?>
+                  <?php echo form_open_multipart('dashboard/Ccustomer/customer_update',array('class' => 'form-vertical', 'id' => 'validate'))?>
                     <div class="panel-body">
 
                     	<div class="form-group row">
@@ -152,7 +152,7 @@
                             </div>
                         </div>
                     </div>
-                <?php echo form_close()?>
+                    <?php echo form_close()?>
                 </div>
             </div>
         </div>

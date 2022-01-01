@@ -46,11 +46,9 @@ $this->session->unset_userdata('error_message');
 <div class="row">
 <div class="col-sm-12">
 <div class="column">
-    <?php if($this->permission->check_label('new_sale')->create()->access()){ ?>
-    <a href="<?php echo base_url('dashboard/Cinvoice/new_invoice')?>" class="btn btn-primary color4 color5 m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('new_invoice')?></a>
-<?php } if($this->permission->check_label('pos_sale')->read()->access()){ ?>
-    <a href="<?php echo base_url('dashboard/Cinvoice/pos_invoice')?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('pos_invoice')?></a>
-<?php } ?>
+<a href="<?php echo base_url('dashboard/Cinvoice/new_invoice')?>" class="btn btn-primary color4 color5 m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('new_invoice')?></a>
+
+<a href="<?php echo base_url('dashboard/Cinvoice/pos_invoice')?>" class="btn btn-primary m-b-5 m-r-2"><i class="ti-align-justify"> </i> <?php echo display('pos_invoice')?></a>
 </div>
 </div>
 </div>
@@ -134,6 +132,7 @@ $this->session->unset_userdata('error_message');
     </thead>
     <tbody>
     <?php if(!empty($invoices_list)) {
+
         $i=1;
         foreach ($invoices_list as $invoice) {
             ?>
@@ -166,8 +165,6 @@ $this->session->unset_userdata('error_message');
                             <option value="6" <?php if ($invoice['invoice_status'] == '6'){echo "selected";}?>><?php echo display('return')?></option>
                         </select>
 
-                        <?php if($this->permission->check_label('manage_sale')->update()->access()){ ?>
-
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal_<?php echo $i?>" title="<?php echo display('add_note')?>"  ><i class="fa fa-plus" aria-hidden="true"></i></button>
 
                         <input type="hidden" value="<?php echo html_escape($invoice['customer_email']) ?>" name="customer_email"/>
@@ -197,20 +194,17 @@ $this->session->unset_userdata('error_message');
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
                         <button type="submit" class="btn btn-primary inv_updatebtn"><?php echo display('update') ?></button>
-                        <?php } ?>
                    <?php echo form_close() ?>
                 </td>
                 <td>
                     <center>
-                        <?php if($this->permission->check_label('new_sale')->access()){ ?>
                         <a href="<?php echo base_url().'dashboard/Cinvoice/invoice_inserted_data/'.$invoice['invoice_id']; ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('invoice') ?>"><i class="fa fa-window-restore" aria-hidden="true"></i></a>
-                        <?php }if($this->permission->check_label('pos_sale')->read()->access()){ ?>
+
                         <a href="<?php echo base_url().'dashboard/Cinvoice/pos_invoice_inserted_data/'.$invoice['invoice_id']; ?>" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('pos_invoice') ?>"><i class="fa fa-fax" aria-hidden="true"></i></a>
-                        <?php } if($this->permission->check_label('manage_sale')->update()->access()){ ?>
+
                         <a href="<?php echo base_url().'dashboard/Cinvoice/invoice_update_form/'.$invoice['invoice_id']; ?>" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('update') ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                        <?php } if($this->permission->check_label('manage_sale')->delete()->access()){ ?>
+
                         <a href="<?php echo base_url('dashboard/Cinvoice/invoice_delete/'.$invoice['invoice_id'])?>" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo display('are_you_sure_want_to_delete')?>');" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo display('delete') ?> "><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                        <?php } ?>
                     </center>
                 </td>
             </tr>
