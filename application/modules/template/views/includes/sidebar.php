@@ -42,11 +42,9 @@
             <li class="<?php echo(($this->uri->segment(3) == 'manage_invoice' || ($this->uri->segment(3) == 'invoice_inserted_data') ? 'active' : '')) ?>">
                 <a href="<?php echo base_url('dashboard/Cinvoice/manage_invoice') ?>"><?php echo display('manage_sale') ?></a>
             </li>
-            <!--
             <li class="<?php echo(($this->uri->segment(3) == 'pos_invoice') ? 'active' : '') ?>">
                 <a href="<?php echo base_url('dashboard/Cinvoice/pos_invoice') ?>"><?php echo display('pos_sale') ?></a>
             </li>
-            -->
         </ul>
     </li>
     <!-- Invoice menu end -->
@@ -65,15 +63,11 @@
             <li class="<?php echo(($this->uri->segment(3) == 'manage_order' ? 'active' : '')) ?>">
                 <a href="<?php echo base_url('dashboard/Corder/manage_order') ?>"><?php echo display('manage_order') ?></a>
             </li>
-            <li class="<?php echo(($this->uri->segment(3) == 'manage_due_order' ? 'active' : '')) ?>">
-                <a href="<?php echo base_url('dashboard/Corder/manage_due_order') ?>"><?php echo "Manage Due" ?></a>
-            </li>
         </ul>
     </li>
     <!-- Order menu end -->
 
     <!-- Product menu start -->
-    
     <li class="treeview <?php if ($this->uri->segment(2) == ("Cproduct")) {
         echo "active";
     } else {
@@ -90,11 +84,9 @@
             <li class="<?php echo(($this->uri->segment(2) == 'Cproduct' && ($this->uri->segment(3) == '') ? 'active' : '')) ?>">
                 <a href="<?php echo base_url('dashboard/Cproduct') ?>"><?php echo display('add_product') ?></a>
             </li>
-            <!--
             <li class="<?php echo(($this->uri->segment(3) == 'add_product_csv' ? 'active' : '')) ?>">
                 <a href="<?php echo base_url('dashboard/Cproduct/add_product_csv') ?>"><?php echo display('import_product_csv') ?></a>
             </li>
-            -->
             <li class="<?php echo(($this->uri->segment(3) == 'manage_product' ? 'active' : '')) ?>">
                 <a href="<?php echo base_url('dashboard/Cproduct/manage_product') ?>"><?php echo display('manage_product') ?></a>
             </li>
@@ -103,7 +95,6 @@
             </li>
         </ul>
     </li>
-    
     <!-- Product menu end -->
 
     <!-- Customer menu start -->
@@ -277,7 +268,6 @@
     <!-- Unit menu end -->
 
     <!-- Gallery menu start -->
-    <!--
     <li class="treeview <?php if ($this->uri->segment(2) == ("Cgallery")) {
         echo "active";
     } else {
@@ -298,10 +288,8 @@
             </li>
         </ul>
     </li>
-    -->
     <!-- Gallery menu end -->
     <!-- Tax menu start -->
-    <!--
     <li class="treeview <?php if ($this->uri->segment(2) == ("Ctax")) {
         echo "active";
     } else {
@@ -325,11 +313,9 @@
             </li>
         </ul>
     </li>
-    -->
     <!-- Tax menu end -->
 
     <!-- Currency menu start -->
-    <!--
     <li class="treeview <?php if ($this->uri->segment(2) == ("Ccurrency")) {
         echo "active";
     } else {
@@ -350,7 +336,6 @@
             </li>
         </ul>
     </li>
-    -->
     <!-- Currency menu end -->
 
     <!-- Store set menu start -->
@@ -477,13 +462,12 @@
     } else {
         echo " ";
     } ?>">
-        <a href="<?php echo base_url('dashboard/Creport') ?>">
+        <a href="#">
             <i class="ti-bar-chart"></i><span><?php echo display('stock') ?></span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
-        <!--
         <ul class="treeview-menu">
             <li class="<?php echo(($this->uri->segment(2) == 'Creport' && ($this->uri->segment(3) == '') ? 'active' : '')) ?>">
                 <a href="<?php echo base_url('dashboard/Creport') ?>"><?php echo display('stock_report') ?></a>
@@ -497,8 +481,8 @@
             <li class="<?php echo(($this->uri->segment(3) == 'stock_report_store_wise' ? 'active' : '')) ?>">
                 <a href="<?php echo base_url('dashboard/Creport/stock_report_store_wise') ?>"><?php echo display('stock_report_store_wise') ?></a>
             </li>
+
         </ul>
-        -->
     </li>
     <!-- Stock menu end -->
 
@@ -894,7 +878,6 @@
 
 
 <!-- ends of admin area -->
-<!--
 <li class="<?php if ($this->uri->segment(3) == ("android_apps_view")) {
     echo "active";
 } else {
@@ -908,13 +891,12 @@
     </a>
 </li>
 <li>
-    <a href="https://olineit.com" target="_blank"><i class="ti-themify-favicon"></i>
+    <a href="https://forum.bdtask.com" target="_blank"><i class="ti-themify-favicon"></i>
         <span><?php echo display('support') ?></span>
         <span class="pull-right-container">
                <span class="label label-success pull-right"></span>
            </span>
     </a>
 </li>
--->
 </ul>
 </div> <!-- /.sidebar -->

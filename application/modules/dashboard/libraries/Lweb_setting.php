@@ -76,8 +76,6 @@ class Lweb_setting {
 			'map_api_key' 	  => $setting[0]['map_api_key'],
 			'map_latitude' 	  => $setting[0]['map_latitude'],
 			'map_langitude'   => $setting[0]['map_langitude'],
-			'mob_footer_block'  => $setting[0]['mob_footer_block'],
-			'social_share'  => $setting[0]['social_share']
 			);
 		$chapterList = $CI->parser->parse('dashboard/web_setting/web_setting',$data,true);
 		return $chapterList;

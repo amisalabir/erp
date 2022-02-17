@@ -175,8 +175,7 @@ class Linvoice {
 	}
 
 	//Invoice html Data
-	public function invoice_html_data($invoice_id)
-	{
+	public function invoice_html_data($invoice_id){
 		$CI =& get_instance();
 		$CI->load->model('dashboard/Invoices');
 		$CI->load->model('dashboard/Soft_settings');
@@ -241,6 +240,74 @@ class Linvoice {
 
 		return $chapterList;
 	}
+	//Invoice html Challan Data
+	public function invoice_html_challan_data($invoice_id)
+	{
+		$CI =& get_instance();
+		$CI->load->model('dashboard/Invoices');
+		$CI->load->model('dashboard/Soft_settings');
+		$CI->load->library('dashboard/occational');
+		$CI->load->model('dashboard/Shipping_methods');
+		$invoice_detail = $CI->Invoices->retrieve_invoice_html_data($invoice_id);
+
+        $shipping_method 	= $CI->Shipping_methods->shipping_method_search_item($invoice_detail[0]['shipping_method']);
+
+		$subTotal_quantity 	= 0;
+		$subTotal_cartoon 	= 0;
+		$subTotal_discount 	= 0;
+
+		if(!empty($invoice_detail)){
+			foreach($invoice_detail as $k=>$v){
+				$invoice_detail[$k]['final_date'] = $CI->occational->dateConvert($invoice_detail[$k]['date']);
+				$subTotal_quantity = $subTotal_quantity+$invoice_detail[$k]['quantity'];
+			}
+			$i=0;
+			foreach($invoice_detail as $k=>$v){$i++;
+			   $invoice_detail[$k]['sl']=$i;
+			}
+		}
+
+		$currency_details = $CI->Soft_settings->retrieve_currency_info();
+		$company_info 	  = $CI->Invoices->retrieve_company();
+		$store_info 	  = $CI->Soft_settings->get_store_details($invoice_detail[0]['store_id']);
+
+		$data=array(
+			'title'				=>	display('invoice_details'),
+			'invoice_id'		=>	$invoice_detail[0]['invoice_id'],
+			'invoice_no'		=>	$invoice_detail[0]['invoice'],
+			'customer_name'		=>	$invoice_detail[0]['customer_name'],
+			'customer_mobile'	=>	$invoice_detail[0]['customer_mobile'],
+			'customer_email'	=>	$invoice_detail[0]['customer_email'],
+			'customer_address'	=>	$invoice_detail[0]['customer_address_1'],
+			'final_date'		=>	$invoice_detail[0]['final_date'],
+			'total_amount'		=>	$invoice_detail[0]['total_amount'],
+			'total_discount'	=>	$invoice_detail[0]['total_discount'],
+			'invoice_discount'	=>	$invoice_detail[0]['invoice_discount'],
+			'service_charge'	=>	$invoice_detail[0]['service_charge'],
+			'shipping_charge'	=>	$invoice_detail[0]['shipping_charge'],
+			'shipping_method'	=>	$shipping_method[0]['method_name'],
+			'paid_amount'		=>	$invoice_detail[0]['paid_amount'],
+			'due_amount'		=>	$invoice_detail[0]['due_amount'],
+			'invoice_details'	=>	$invoice_detail[0]['invoice_details'],
+			'subTotal_quantity'	=>	$subTotal_quantity,
+			'invoice_all_data'	=>	$invoice_detail,
+			'company_info'		=>	$company_info,
+			'currency' 			=>  $currency_details[0]['currency_icon'],
+			'position' 			=>  $currency_details[0]['currency_position'],
+            'ship_customer_short_address'	=>	$invoice_detail[0]['ship_customer_short_address'],
+            'ship_customer_name'		=>	$invoice_detail[0]['ship_customer_name'],
+            'ship_customer_mobile'	=>	$invoice_detail[0]['ship_customer_mobile'],
+            'ship_customer_email'	=>	$invoice_detail[0]['ship_customer_email'],
+            'store_name'	=>	$invoice_detail[0]['store_name'],
+            'store_address'	=>	$invoice_detail[0]['store_address'],
+			);
+		$data['Soft_settings'] = $CI->Soft_settings->retrieve_setting_editdata();
+		$data['store_info'] = $CI->Soft_settings->get_store_details($invoice_detail[0]['store_id']);
+		$chapterList = $CI->parser->parse('dashboard/invoice/invoice_challan',$data,true);
+
+		return $chapterList;
+	}
+	
 
 	//POS invoice html Data
 	public function pos_invoice_html_data($invoice_id)

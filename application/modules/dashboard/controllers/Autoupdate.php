@@ -7,14 +7,13 @@
  *
  * MIN_VERSION          - set minimum version(for checking update compatiable or not)
  * MAX_VERSION          - set maximum version(for checking update compatiable or not)
- * UPDATE_LIST          - get available update version list
  *
  *
  * @System      : Autoupdate software(user-end)
- * @Author      : Bdtask
- * @E-mail      : info@bdtask.com
- * @datetime    : 2020-10-10
- * @version     : Version 2.0
+ * @developer   : Md.Tareq Rahman
+ * @E-mail      : tareq7500@gmail.com
+ * @datetime    : 2019-03-18
+ * @version     : Version 1.1.0
  * @filesource
  */
 
@@ -28,8 +27,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 define('MIN_VERSION', file_get_contents('https://update.bdtask.com/isshue_v3/autoupdate/update_min_version'));
 //Get Update file
 define('MAX_VERSION', file_get_contents('https://update.bdtask.com/isshue_v3/autoupdate/update_max_version'));
-//Update List
-define('UPDATE_LIST','https://update.bdtask.com/isshue_v3/autoupdate/update_list');
 
 //Get Update file
 define('UPDATE_URL','https://update.bdtask.com/isshue_v3/autoupdate');
@@ -37,6 +34,7 @@ define('UPDATE_URL','https://update.bdtask.com/isshue_v3/autoupdate');
 define('UPDATE_INFO_URL','https://update.bdtask.com/isshue_v3/autoupdate/update_info');
 // CRM temporary path
 define('TEMP_FOLDER', FCPATH .'temp' . '/');
+
 
 
 class Autoupdate extends CI_Controller
@@ -59,7 +57,6 @@ class Autoupdate extends CI_Controller
 
         $data['latest_version']  = file_get_contents(UPDATE_INFO_URL);
         $data['current_version'] = $this->current_version();
-        $data['update_list']  = file_get_contents(UPDATE_LIST);
 
 
         //Checking update available or not
@@ -88,7 +85,6 @@ class Autoupdate extends CI_Controller
 
         $purchase_key   = $this->input->post('purchase_key',TRUE);
         $purchase_key   = trim($purchase_key);
-        $version        = trim($this->input->post('version',TRUE));
         $latest_version = file_get_contents(UPDATE_INFO_URL);
         $url            = UPDATE_URL;
 
@@ -112,7 +108,6 @@ class Autoupdate extends CI_Controller
             curl_setopt($ch, CURLOPT_POSTFIELDS, [
                 'base_url'        => site_url(),
                 'running_version' => $product_version,
-                'version' => $version,
                 'purchase_key'    => $purchase_key,
                 'product_key'     => $product_key,
                 'user_ip'         => $this->input->ip_address(),
@@ -146,14 +141,9 @@ class Autoupdate extends CI_Controller
     {
         $purchase_key   = $this->input->post('purchase_key',TRUE);
         $purchase_key   = trim($purchase_key);
-        $version        = trim($this->input->post('version',TRUE));
-
-        if(!empty($version)){
-            $latest_version = $version;
-        }else{
-            $latest_version = file_get_contents(UPDATE_INFO_URL);
-        }
+        $latest_version = file_get_contents(UPDATE_INFO_URL);
         $url            = $this->input->post('update_url',TRUE);
+
         $product_version = $this->current_version();
         $product_key     = $this->product_key();
 
@@ -198,7 +188,6 @@ class Autoupdate extends CI_Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, [
             'base_url'        => site_url(),
             'running_version' => $product_version,
-            'version' => $version,
             'purchase_key'    => $purchase_key,
             'product_key'     => $product_key,
             'user_ip'         => $this->input->ip_address(),

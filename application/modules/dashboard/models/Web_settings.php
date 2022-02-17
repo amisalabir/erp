@@ -97,8 +97,8 @@ class Web_settings extends CI_Model {
 	public function update_web_settings($id,$data)
 	{
 		$this->db->where('setting_id',$id);
-		$result = $this->db->update('web_setting',$data);
-		return $result;
+		$this->db->update('web_setting',$data);
+		return true;
 	}	
 
 	//Slider entry
@@ -119,20 +119,6 @@ class Web_settings extends CI_Model {
 		}
 		return false;
 	}
-
-	public function home_slider_list()
-	{
-		$this->db->select('*');
-		$this->db->from('slider');
-		$this->db->where('status',1);
-		$this->db->order_by('slider_position','asc');
-		$query = $this->db->get();
-		if ($query->num_rows() > 0) {
-			return $query->result_array();	
-		}
-		return false;
-	}
-
 //Slider list
 	public function active_slider_list()
 	{

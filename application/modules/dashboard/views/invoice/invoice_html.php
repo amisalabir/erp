@@ -174,7 +174,7 @@
                                     <tr>
                                         <th><?php echo display('sl') ?></th>
                                         <th><?php echo display('product_name') ?></th>
-                                        <th><?php echo display('variant') ?></th>
+                                   
                                         <th><?php echo display('unit') ?></th>
                                         <th><?php echo display('quantity') ?></th>
                                         <th><?php echo display('rate') ?></th>
@@ -188,12 +188,12 @@
                                     <tr>
                                         <td><?php echo html_escape($invoice['sl']); ?></td>
                                         <td><strong><?php echo html_escape($invoice['product_name']); ?> - (<?php echo html_escape($invoice['product_model']); ?>)</strong></td>
-                                        <td><?php echo html_escape($invoice['variant_name']); ?></td>
+                                
                                         <td><?php echo html_escape($invoice['unit_short_name']); ?></td>
                                         <td><?php echo html_escape($invoice['quantity']); ?></td>
-                                        <td><?php echo(($position == 0) ? $currency." ".$invoice['rate'] : $invoice['rate']." ".$currency) ?></td>
-                                        <td><?php echo(($position == 0) ? $currency." ".$invoice['discount'] : $invoice['discount']." ".$currency) ?></td>
-                                        <td><?php echo(($position == 0) ? $currency." ".$invoice['total_price'] : $invoice['total_price']." ".$currency) ?></td>
+                                        <td><?php echo($invoice['rate']) ?></td>
+                                        <td><?php echo($invoice['discount']) ?></td>
+                                        <td><?php echo($invoice['total_price']) ?></td>
                                     </tr>
                                    <?php } } ?>
                                     </tbody>
@@ -322,10 +322,26 @@
                                             <?php } ?>
                                         </table>
 
-                                        <div class="auth_by" style="float:right;width:90%;text-align:center;border-top:1px solid #000;margin-top: 100px;font-weight: bold;">
+                                    </div>
+
+                                        <div class="" style="float:left; width: ; text-align:center;border-top:1px solid #000;margin-top:100px; font-weight: bold;">
+                                            <?php echo"Received by "; ?>
+                                        </div>
+                                        <div class="" style="float:left; width: ; text-align:center;border-top:1px solid #000;margin-top:100px; margin-left: 75px; font-weight: bold;">
+                                            <?php echo"Sold by "; ?>
+                                        </div>
+                                        <div class="" style="float:left; width: ; text-align:center;border-top:1px solid #000;margin-top:100px; margin-left: 75px; font-weight: bold;">
+                                            <?php echo"Checked by "; ?>
+                                        </div>
+                                        <div class="" style="float:left; width: ; text-align:center;border-top:1px solid #000;margin-top:100px; margin-left: 75px; font-weight: bold;">
+                                            <?php echo"Delivered by "; ?>
+                                        </div>
+                                        <div class="auth_by" style="float:left;width:100px; text-align:center;border-top:1px solid #000;margin-top: 100px; margin-left: 75px; font-weight: bold;">
                                             <?php echo display('authorised_by') ?>
                                         </div>
-                                    </div>
+                                        </div>
+
+
                                 </div>
                             </div>
                         </div>

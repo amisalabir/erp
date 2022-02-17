@@ -136,7 +136,7 @@ class Suppliers extends CI_Model {
 							->num_rows();
 		if ($result > 0) {
 			$this->session->set_userdata(array('error_message'=>display('you_cant_delete_this_supplier')));
-			redirect('dashboard/Csupplier/manage_supplier');
+			redirect('Csupplier/manage_supplier');
 		}else{
 			$this->db->where('supplier_id',$supplier_id);
 			$this->db->delete('supplier_information'); 	

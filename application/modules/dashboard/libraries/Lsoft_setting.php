@@ -7,7 +7,6 @@ class Lsoft_setting {
 		$CI->load->model('dashboard/Soft_settings');
 		$setting_detail = $CI->Soft_settings->retrieve_setting_editdata();
 		$language 		= $CI->Soft_settings->languages();
-		$country_list 	= $CI->Soft_settings->get_country_list();
 		$ses_lang 		= $CI->session->userdata('language');
 
 		$data = array(
@@ -23,8 +22,6 @@ class Lsoft_setting {
 			'site_key'		=> $setting_detail[0]['site_key'],
 			'secret_key'	=> $setting_detail[0]['secret_key'],
 			'sms_service'	=> $setting_detail[0]['sms_service'],
-			'country_id'	=> $setting_detail[0]['country_id'],
-			'country_list'	=> $country_list
 		);
 		$setting = $CI->parser->parse('dashboard/soft_setting/soft_setting',$data,true);
 		return $setting;

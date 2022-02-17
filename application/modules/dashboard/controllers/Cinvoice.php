@@ -143,11 +143,16 @@ class Cinvoice extends MX_Controller
     {
         $content = $this->linvoice->invoice_html_data($invoice_id);
         $this->template_lib->full_admin_html_view($content);
-        
-        //$backtrace = debug_backtrace();
-        //print_r( $backtrace );
 
     }
+
+     //Retrive right now inserted data to cretae html challan
+     public function invoice_inserted_challan($invoice_id)
+     {
+         $content = $this->linvoice->invoice_html_challan_data($invoice_id);
+         $this->template_lib->full_admin_html_view($content);
+ 
+     }
 
     //POS invoice page load
     public function pos_invoice()
@@ -187,41 +192,41 @@ class Cinvoice extends MX_Controller
             if (!empty($product_details)) {
                 $product_id = $this->auth->generator(5);
                 $tr .= "<tr id='" . $product_id . "'>
-				<th id=\"product_name_" . $product_id . "\">" . $product_details['product_name'] . "</th>
+                <th id=\"product_name_" . $product_id . "\">" . $product_details['product_name'] . "</th>
 
-				<td>
-				<script>
-				$(\"select.form-control:not(.dont-select-me)\").select2({
-					placeholder: \"Select option\",
-					allowClear: true
-					});
-					</script>
-					<input type=\"hidden\" class=\"sl\" value=" . $product_id . ">
-					<input type=\"hidden\" class=\"product_id_" . $product_id . "\" value=" . $product_details['product_id'] . ">
-					<select name=\"variant_id[]\" id=\"variant_id_" . $product_id . "\" class=\"form-control variant_id width_80\" required=\"\">" . $html . "</select>
-					</td>
-					<td>
-					<input type=\"text\" name=\"available_quantity[]\" id=\"avl_qntt_" . $product_id . "\" 
+                <td>
+                <script>
+                $(\"select.form-control:not(.dont-select-me)\").select2({
+                    placeholder: \"Select option\",
+                    allowClear: true
+                    });
+                    </script>
+                    <input type=\"hidden\" class=\"sl\" value=" . $product_id . ">
+                    <input type=\"hidden\" class=\"product_id_" . $product_id . "\" value=" . $product_details['product_id'] . ">
+                    <select name=\"variant_id[]\" id=\"variant_id_" . $product_id . "\" class=\"form-control variant_id width_80\" required=\"\">" . $html . "</select>
+                    </td>
+                    <td>
+                    <input type=\"text\" name=\"available_quantity[]\" id=\"avl_qntt_" . $product_id . "\" 
                 class=\"form-control text-right width_60  available_quantity_" . $product_id . "\" value=\"0\" readonly=\"readonly\"/>
-					</td>
-					<td width=\"\">
-					<input type=\"hidden\" class=\"form-control product_id_" . $product_id . "\" name=\"product_id[]\" value = '" . $product_details['product_id'] . "' id=\"product_id_" . $product_id . "\"/>
+                    </td>
+                    <td width=\"\">
+                    <input type=\"hidden\" class=\"form-control product_id_" . $product_id . "\" name=\"product_id[]\" value = '" . $product_details['product_id'] . "' id=\"product_id_" . $product_id . "\"/>
 
-					<input type=\"text\" name=\"product_rate[]\" value='" . $product_details['price'] . "' id=\"price_item_" . $product_id . "\" class=\"price_item width_60" . $product_id . " form-control text-right\" min=\"0\" readonly=\"readonly\"/>
+                    <input type=\"text\" name=\"product_rate[]\" value='" . $product_details['price'] . "' id=\"price_item_" . $product_id . "\" class=\"price_item width_60" . $product_id . " form-control text-right\" min=\"0\" readonly=\"readonly\"/>
 
-					<input type=\"hidden\" name=\"\" id=\"\" class=\"form-control text-right unit_" . $product_id . "\" value='" . $product_details['unit'] . "' readonly=\"readonly\" />
+                    <input type=\"hidden\" name=\"\" id=\"\" class=\"form-control text-right unit_" . $product_id . "\" value='" . $product_details['unit'] . "' readonly=\"readonly\" />
 
-					<input type=\"hidden\" name=\"discount[]\" id=\"discount_" . $product_id . "\" class=\"form-control text-right\" value ='" . $product_details['discount'] . "' min=\"0\"/>
-					</td>
-					<td scope=\"row\">
-					<input type=\"number\" name=\"product_quantity[]\"   onchange=\"quantity_limit('" . $product_id . "')\" onkeyup=\"quantity_calculate('"
+                    <input type=\"hidden\" name=\"discount[]\" id=\"discount_" . $product_id . "\" class=\"form-control text-right\" value ='" . $product_details['discount'] . "' min=\"0\"/>
+                    </td>
+                    <td scope=\"row\">
+                    <input type=\"number\" name=\"product_quantity[]\"   onchange=\"quantity_limit('" . $product_id . "')\" onkeyup=\"quantity_calculate('"
                     . $product_id . "');\" onchange=\"quantity_calculate('" . $product_id . "');\" id=\"total_qntt_" . $product_id . "\" class=\"form-control text-right width_50\" value=\"1\" min=\"1\"/>
-					</td>
-					<td width=\"\">
-					<input class=\"total_price form-control text-right width_70\" type=\"text\" name=\"total_price[]\" id=\"total_price_" . $product_id . "\" value='" . $product_details['price'] . "'  readonly=\"readonly\"/>
-					</td>
+                    </td>
+                    <td width=\"\">
+                    <input class=\"total_price form-control text-right width_70\" type=\"text\" name=\"total_price[]\" id=\"total_price_" . $product_id . "\" value='" . $product_details['price'] . "'  readonly=\"readonly\"/>
+                    </td>
 
-					<td width:\"300\">";
+                    <td width:\"300\">";
 
                 $this->db->select('*');
                 $this->db->from('tax');
@@ -249,45 +254,45 @@ class Cinvoice extends MX_Controller
                 if ($tax['cgst_status'] == 1) {
 
                     $tr .= "<input type=\"hidden\" id=\"cgst_" . $product_id . "\" class=\"cgst\" value='" . $product_details['cgst_tax'] . "'/>
-						<input type=\"hidden\" id=\"total_cgst_" . $product_id . "\" class=\"total_cgst\" name=\"cgst[]\" value='" . $product_details['cgst_tax'] * $product_details['price'] . "'/>
-						<input type=\"hidden\" name=\"cgst_id[]\" id=\"cgst_id_" . $product_id . "\" value='" . $product_details['cgst_id'] . "'/>";
+                        <input type=\"hidden\" id=\"total_cgst_" . $product_id . "\" class=\"total_cgst\" name=\"cgst[]\" value='" . $product_details['cgst_tax'] * $product_details['price'] . "'/>
+                        <input type=\"hidden\" name=\"cgst_id[]\" id=\"cgst_id_" . $product_id . "\" value='" . $product_details['cgst_id'] . "'/>";
                 }
                 if ($tax['sgst_status'] == 1) {
 
                     $tr .= "<input type=\"hidden\" id=\"sgst_" . $product_id . "\" class=\"sgst\" value='" . $product_details['sgst_tax'] . "'/>
-						<input type=\"hidden\" id=\"total_sgst_" . $product_id . "\" class=\"total_sgst\" name=\"sgst[]\" value='" . $product_details['sgst_tax'] * $product_details['price'] . "'/>
-						<input type=\"hidden\" name=\"sgst_id[]\" id=\"sgst_id_" . $product_id . "\" value='" . $product_details['sgst_id'] . "'/>";
+                        <input type=\"hidden\" id=\"total_sgst_" . $product_id . "\" class=\"total_sgst\" name=\"sgst[]\" value='" . $product_details['sgst_tax'] * $product_details['price'] . "'/>
+                        <input type=\"hidden\" name=\"sgst_id[]\" id=\"sgst_id_" . $product_id . "\" value='" . $product_details['sgst_id'] . "'/>";
                 }
                 if ($tax['igst_status'] == 1) {
 
                     $tr .= "<input type=\"hidden\" id=\"igst_" . $product_id . "\" class=\"igst\" value='" . $product_details['igst_tax'] . "'/>
-						<input type=\"hidden\" id=\"total_igst_" . $product_id . "\" class=\"total_igst\" name=\"igst[]\" value='" . $product_details['igst_tax'] * $product_details['price'] . "'/>
-						<input type=\"hidden\" name=\"igst_id[]\" id=\"igst_id_" . $product_id . "\" value='" . $product_details['igst_id'] . "'/>";
+                        <input type=\"hidden\" id=\"total_igst_" . $product_id . "\" class=\"total_igst\" name=\"igst[]\" value='" . $product_details['igst_tax'] * $product_details['price'] . "'/>
+                        <input type=\"hidden\" name=\"igst_id[]\" id=\"igst_id_" . $product_id . "\" value='" . $product_details['igst_id'] . "'/>";
                 }
 
                 $tr .= "<input type=\"hidden\" id=\"total_discount_" . $product_id . "\" class=\"\" />
-					<input type=\"hidden\" id=\"all_discount_" . $product_id . "\" class=\"total_discount\"/>
+                    <input type=\"hidden\" id=\"all_discount_" . $product_id . "\" class=\"total_discount\"/>
 
 
 
-					<a href=\"#\" class=\"ajax_modal btn btn-primary btn-xs m-r-2\" data-toggle=\"modal\" data-target=\"#myModal\"><i class=\"fa fa-pencil\" data-toggle=\"tooltip\" data-placement=\"left\" title='" . display('edit') . "'></i></a>
+                    <a href=\"#\" class=\"ajax_modal btn btn-primary btn-xs m-r-2\" data-toggle=\"modal\" data-target=\"#myModal\"><i class=\"fa fa-pencil\" data-toggle=\"tooltip\" data-placement=\"left\" title='" . display('edit') . "'></i></a>
 
-					<a href=\"#\" class=\"btn btn-danger btn-xs\" data-toggle=\"tooltip\" data-placement=\"top\" title='" . display('delete') . "' onclick=\"deletePosRow('" . $product_id . "')\"><i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a>
-					</td>
-					</tr>";
+                    <a href=\"#\" class=\"btn btn-danger btn-xs\" data-toggle=\"tooltip\" data-placement=\"top\" title='" . display('delete') . "' onclick=\"deletePosRow('" . $product_id . "')\"><i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a>
+                    </td>
+                    </tr>";
 
                 $order .= "<tr class='" . $product_id . "' data-item-id='" . $product_id . "'>
-					<td>0</td>
-					<td>" . $product_details['product_model'] . "-" . $product_details['product_name'] . "</td>
-					<td id='quantity_" . $product_id . "'>[ 1 ]</td>
-					</tr>";
+                    <td>0</td>
+                    <td>" . $product_details['product_model'] . "-" . $product_details['product_name'] . "</td>
+                    <td id='quantity_" . $product_id . "'>[ 1 ]</td>
+                    </tr>";
 
                 $bill .= "<tr class='" . $product_id . "' data-item-id='" . $product_id . "'>
-					<td>0</td>
-					<td colspan=\"2\" class=\"no-border\">" . $product_details['product_model'] . "-" . $product_details['product_name'] . "</td>
-					<td class='qnt_price_" . $product_id . "'>(1 x " . $product_details['price'] . ")</td>
-					<td class='total_price_bill_" . $product_id . " text-right'>" . $product_details['price'] . "</td>
-					</tr>";
+                    <td>0</td>
+                    <td colspan=\"2\" class=\"no-border\">" . $product_details['product_model'] . "-" . $product_details['product_name'] . "</td>
+                    <td class='qnt_price_" . $product_id . "'>(1 x " . $product_details['price'] . ")</td>
+                    <td class='total_price_bill_" . $product_id . " text-right'>" . $product_details['price'] . "</td>
+                    </tr>";
 
                 echo json_encode(array(
                     'item' => $tr,
@@ -443,7 +448,7 @@ class Cinvoice extends MX_Controller
         };
 
 
-        if (($invoice_status == 6) || ($invoice_status == 2)) { //6== product return or cancel
+        if ($invoice_status == 6) { //6== product return
             //Delete order table
             $this->db->where('order_id', $order_id);
             $this->db->delete('order');
@@ -485,70 +490,6 @@ class Cinvoice extends MX_Controller
         $this->db->where('invoice_id', $invoice_id);
         $result = $this->db->update('invoice');
 
-        // Woocommerce stock update if order invoice is completed
-         if ($invoice_status == 4) {
-            if(check_module_status('woocommerce')) {
-                $this->load->library('woocommerce/woolib/woo_lib');
-                $this->load->model('woocommerce/woo_model');
-                $this->woo_lib->connection();
-                // Check woo setting to update stock for local selling
-                $woo_sett = $this->woo_model->get_settings();
-                if(isset($woo_sett['woo_stock_update']) && !empty($woo_sett['woo_stock_update']))
-                {
-                    $invinfo = $this->woo_model->get_invoice_info_by_id($invoice_id); // get invoice info
-                    if(!empty($invinfo) && !empty($invinfo->default_status)){  // Stock update only for default store
-                        $invdetails = $this->woo_model->get_invoice_details_by_id($invoice_id); // invoice details
-
-                        //inv details with sync data
-                        if(!empty($invdetails)) {
-                            $woo_stock = [];
-                            foreach ($invdetails as $invitem) {
-                                if(!empty($invitem->woo_product_id)){
-
-                                    $prod_stock = $this->woo_model->get_product_stock($invinfo->store_id, $invitem->product_id, $invitem->variant_id);
-                                    if($invitem->woo_product_type=='variable') {  //If the product type is variable
-                                        
-
-                                        $varinfo = $this->woo_model->get_varsync_by_localvar($invitem->woo_product_id, $invitem->variant_id);
-                                        if(!empty($varinfo->woo_variant_id)){
-
-                                            $varstock = array(
-                                                'manage_stock' => TRUE,
-                                                'stock_quantity' => $prod_stock,
-                                                'stock_status' => ($prod_stock>0?'instock':'outofstock')
-                                            );
-                                            $this->woo_lib->put_request(array('param'=> 'products/'.$invitem->woo_product_id.'/variations/'.$varinfo->woo_variant_id), $varstock);
-                                        }
-                                    }else{
-                                        $woo_stock[] = array(
-                                            'id' => $invitem->woo_product_id,
-                                            'manage_stock' => TRUE,
-                                            'stock_quantity' => $prod_stock,
-                                            'stock_status' => ($prod_stock>0?'instock':'outofstock')
-                                        );
-                                    }
-                                }
-                            }
-
-                            if(!empty($woo_stock)){ //update global stock
-                                $this->woo_lib->post_request(array('param'=> 'products/batch'), array('update' => $woo_stock));
-                            }
-                        }
-                    }
-                }
-
-                // woo order status update
-                $woo_ordersync = $this->woo_model->get_ordersync_byid($order_id);
-                if(isset($woo_ordersync->woo_order_id) && !empty($woo_ordersync->woo_order_id))
-                {
-                    $sync_order_data = array(
-                        'status' => 'completed'
-                    );
-                    $this->woo_lib->put_request(array('param'=> 'orders/'.$woo_ordersync->woo_order_id), $sync_order_data);
-                }
-            }
-        }
-
         $setting_detail = $this->Soft_settings->retrieve_email_editdata();
         $sms_service = $this->Soft_settings->retrieve_setting_editdata();
 
@@ -583,7 +524,7 @@ class Cinvoice extends MX_Controller
             $this->email->message($message);
 
             $email = $this->test_input($this->input->post('customer_email',TRUE));
-            $server_status = serverAliveOrNot($setting_detail[0]['smtp_host'], $setting_detail[0]['smtp_port']);
+            $server_status = $this->serverAliveOrNot();
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 if ($server_status && $this->email->send()) {
                     $this->session->set_userdata(array('message' => display('email_send_to_customer')));
@@ -599,6 +540,20 @@ class Cinvoice extends MX_Controller
         } else {
             $this->session->set_userdata(array('error_message' => display('ooops_something_went_wrong')));
             redirect(base_url('dashboard/Cinvoice/manage_invoice'));
+        }
+    }
+
+// check mail server configured or not
+    private function serverAliveOrNot()
+    {
+        $url = base_url();
+        if ($pf = @fsockopen($url, 587)) {
+            fclose($pf);
+            $_SESSION['serverAliveOrNot'] = true;
+            return true;
+        } else {
+            $_SESSION['serverAliveOrNot'] = false;
+            return false;
         }
     }
 

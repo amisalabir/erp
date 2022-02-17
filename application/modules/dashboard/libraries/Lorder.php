@@ -53,38 +53,6 @@ class Lorder {
         $orderList = $CI->parser->parse('dashboard/order/order',$data,true);
         return $orderList;
     }
-    //Retrieve  Due order List
-    public function due_order_list()
-    {
-        $CI =& get_instance();
-        $CI->load->model('dashboard/Orders');
-        $CI->load->model('dashboard/Soft_settings');
-        $CI->load->library('dashboard/occational');
-
-        $due_orders_list = $CI->Orders->due_order_list();
-
-        if(!empty($due_orders_list)){
-            foreach($due_orders_list as $k=>$v){
-                $due_orders_list[$k]['final_date'] = $CI->occational->dateConvert($due_orders_list[$k]['date']);
-            }
-            $i=0;
-            foreach($due_rders_list as $k=>$v){$i++;
-                $due_orders_list[$k]['sl']=$i;
-            }
-        }
-
-        $currency_details = $CI->Soft_settings->retrieve_currency_info();
-        $data = array(
-            'title'    => "Due Report",
-            'orders_list' => $due_orders_list,
-            'currency' => $currency_details[0]['currency_icon'],
-            'position' => $currency_details[0]['currency_position'],
-        );
-        $due_orderList = $CI->parser->parse('dashboard/order/order',$data,true);
-        return $due_orderList;
-    }    
-    
-    
     //Insert order
     public function insert_order($data)
     {
@@ -195,12 +163,30 @@ class Lorder {
 
         $send_email = '';
         if (!empty($data['customer_email'])) {
-            $send_email = $this->setmail($data['customer_email'],$file_path);
+            $server_status = $this->serverAliveOrNot();
+            if($server_status){
+                $send_email = $this->setmail($data['customer_email'],$file_path);
+            }else{
+                $CI->session->set_userdata(array('error_message'=> display('email_not_send')));
+                return true;
+            }
         }
 
         if ($send_email != null) {
             return true;
         }else{
+            return false;
+        }
+    }
+    private function serverAliveOrNot()
+    {
+        $url =  base_url();
+        if($pf = @fsockopen($url, 587)) {
+            fclose($pf);
+            $_SESSION['serverAliveOrNot'] = true;
+            return true;
+        } else {
+            $_SESSION['serverAliveOrNot'] = false;
             return false;
         }
     }
@@ -212,12 +198,6 @@ class Lorder {
         $CI =& get_instance();
         $CI->load->model('Soft_settings');
         $setting_detail = $CI->Soft_settings->retrieve_email_editdata();
-
-        $server_status = serverAliveOrNot($setting_detail[0]['smtp_host'], $setting_detail[0]['smtp_port']);
-        if(!$server_status){
-            $CI->session->set_userdata(array('error_message'=> display('email_not_send')));
-            return true;
-        }
 
         $subject = display("order_information");
         $message = display("order_info_details").'<br>'.base_url();

@@ -198,6 +198,8 @@ $this->session->unset_userdata('error_message');
                 </td>
                 <td>
                     <center>
+                        <a href="<?php echo base_url().'dashboard/Cinvoice/invoice_inserted_challan/'.$invoice['invoice_id']; ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo "Challan"; ?>"><i class="fa fa-sticky-note-o" aria-hidden="true"></i></a>
+
                         <a href="<?php echo base_url().'dashboard/Cinvoice/invoice_inserted_data/'.$invoice['invoice_id']; ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('invoice') ?>"><i class="fa fa-window-restore" aria-hidden="true"></i></a>
 
                         <a href="<?php echo base_url().'dashboard/Cinvoice/pos_invoice_inserted_data/'.$invoice['invoice_id']; ?>" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="left" title="<?php echo display('pos_invoice') ?>"><i class="fa fa-fax" aria-hidden="true"></i></a>

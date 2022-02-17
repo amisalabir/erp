@@ -91,7 +91,7 @@ class Lreport
 
                 $sales = $CI->db->select("
 					sum(quantity) as totalSalesQnty,
-					quantity
+					quantity,rate
 					")
                     ->from('invoice_details')
                     ->where('product_id', $v['product_id'])
@@ -101,6 +101,7 @@ class Lreport
                 $stok_report[$k]['stok_quantity_cartoon'] = ($stok_report[$k]['totalPurchaseQnty'] - $sales->totalSalesQnty);
                 $stok_report[$k]['totalSalesCtn'] = $sales->totalSalesQnty;
                 $stok_report[$k]['totalPrhcsCtn'] = $stok_report[$k]['totalPurchaseQnty'];
+                $stok_report[$k]['stock_value']=($stok_report[$k]['stok_quantity_cartoon']*$sales->rate);
             }
         } else {
             $CI->session->set_userdata('error_message', display('stock_not_available'));
@@ -123,60 +124,6 @@ class Lreport
         $reportList = $CI->parser->parse('dashboard/report/stock_report', $data, true);
         return $reportList;
     }
-// Retrieve Category Item Stock Stock Report
-    public function stock_report_category_item($product_id, $date, $limit, $page, $link)
-    {
-
-        $CI =& get_instance();
-        $CI->load->model('dashboard/Reports');
-        $CI->load->library('dashboard/occational');
-        $stok_report = $CI->Reports->stock_report_category($product_id, $date, $limit, $page);
-
-        if (($stok_report)) {
-            $i = $page;
-            foreach ($stok_report as $k => $v) {
-                $i++;
-                $stok_report[$k]['sl'] = $i;
-            }
-
-            foreach ($stok_report as $k => $v) {
-
-                $sales = $CI->db->select("
-					sum(quantity) as totalSalesQnty,
-					quantity
-					")
-                    ->from('invoice_details')
-                    ->where('product_id', $v['product_id'])
-                    ->get()
-                    ->row();
-
-                $stok_report[$k]['stok_quantity_cartoon'] = ($stok_report[$k]['totalPurchaseQnty'] - $sales->totalSalesQnty);
-                $stok_report[$k]['totalSalesCtn'] = $sales->totalSalesQnty;
-                $stok_report[$k]['totalPrhcsCtn'] = $stok_report[$k]['totalPurchaseQnty'];
-            }
-        } else {
-            $CI->session->set_userdata('error_message', display('stock_not_available'));
-            redirect('dashboard/Creport');
-        }
-
-        $currency_details = $CI->Soft_settings->retrieve_currency_info();
-        $company_info = $CI->Reports->retrieve_company();
-
-        $data = array(
-            'title' => display('stock_report'),
-            'stok_report' => $stok_report,
-            'link' => $link,
-            'date' => $date,
-            'company_info' => $company_info,
-            'currency' => $currency_details[0]['currency_icon'],
-            'position' => $currency_details[0]['currency_position'],
-        );
-
-        $reportList = $CI->parser->parse('dashboard/report/stock_report', $data, true);
-        return $reportList;
-    }
-
-
 
     // Stock report supplier wise
     public function stock_report_supplier_wise($product_id, $supplier_id, $date, $links, $per_page, $page)
@@ -336,7 +283,7 @@ class Lreport
     }
 
     // Stock Report Variant Wise
-    public function stock_report_variant_wise($from_date, $to_date, $store_id, $links, $per_page, $page, $product_id = false)
+    public function stock_report_variant_wise($from_date, $to_date, $store_id, $links, $per_page, $page)
     {
         $CI =& get_instance();
         $CI->load->model('dashboard/Reports');
@@ -352,11 +299,11 @@ class Lreport
             $store_id = $result->store_id;
         }
 
-        $stok_report = $CI->Reports->stock_report_by_store($from_date, $to_date, $store_id, $per_page, $page, $product_id);
+        $stok_report = $CI->Reports->stock_report_by_store($from_date, $to_date, $store_id, $per_page, $page);
 
         $product_list = $CI->Products->product_list();
-
         $store_list = $CI->Stores->store_list();
+
 
         $sub_total_in = 0;
         $sub_total_out = 0;

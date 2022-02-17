@@ -116,6 +116,7 @@ date_default_timezone_set(DEF_TIMEZONE); $today = date('m-d-Y'); ?>
 											<th class="text-center"><?php echo display('in_quantity') ?></th>
 											<th class="text-center"><?php echo display('out_quantity') ?></th>
 											<th class="text-center"><?php echo display('stock') ?></th>
+											<th class="text-center"><?php echo "Stock Value"; ?></th>
 
 										</tr>
 									</thead>
@@ -125,6 +126,8 @@ date_default_timezone_set(DEF_TIMEZONE); $today = date('m-d-Y'); ?>
 									$totalIn=0;
 									$totalOut=0;
 									$totalStock=0;
+									$totalStockValue=0;
+
 
 									if ($stok_report) {
 									?>
@@ -151,6 +154,7 @@ date_default_timezone_set(DEF_TIMEZONE); $today = date('m-d-Y'); ?>
 											<td align="center">{totalPrhcsCtn}</td>
 											<td align="center">{totalSalesCtn}</td>
 											<td align="center">{stok_quantity_cartoon}</td>
+											<td align="center">{stock_value}</td>
 
 										</tr>
 									{/stok_report}
@@ -161,6 +165,7 @@ date_default_timezone_set(DEF_TIMEZONE); $today = date('m-d-Y'); ?>
 										$totalIn=$totalIn+$stock['totalPrhcsCtn'];
 										$totalOut=$totalOut+$stock['totalSalesCtn'];
 										$totalStock=$totalStock+$stock['stok_quantity_cartoon'];
+										$totalStockValue=$totalStockValue+$stock['stock_value'];
 									}
 
 									?>
@@ -173,6 +178,7 @@ date_default_timezone_set(DEF_TIMEZONE); $today = date('m-d-Y'); ?>
 											<td class="text-center"><?php echo $totalIn; ?></td>
 											<td align="center"><?php echo $totalOut; ?></td>
 											<td align="center"><?php echo $totalStock; ?></td>
+											<td align="center"><?php echo $totalStockValue; ?></td>
 										</tr>
 									</tbody>
 			                    </table>

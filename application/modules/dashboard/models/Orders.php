@@ -17,22 +17,7 @@ class Orders extends CI_Model {
     {
         $this->db->select('a.*,b.customer_name');
         $this->db->from('order a');
-        $this->db->join('customer_information b','b.customer_id = a.customer_id','left');
-        $this->db->order_by('a.order','desc');
-        $this->db->limit('500');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            return $query->result_array();
-        }
-        return false;
-    }
-    
-        // due order List
-    public function due_order_list()
-    {
-        $this->db->select('a.*,b.customer_name');
-        $this->db->from('order a');
-        $this->db->join('customer_information b','b.customer_id = a.customer_id','left');
+        $this->db->join('customer_information b','b.customer_id = a.customer_id');
         $this->db->order_by('a.order','desc');
         $this->db->limit('500');
         $query = $this->db->get();
@@ -1079,7 +1064,7 @@ if(!empty($igst)){
        if($details_page == 'order_details_data') {
            $this->db->where('g.order_id', $order_id);
        }
-        $this->db->group_by('c.product_id, c.variant_id');
+        $this->db->group_by('c.product_id');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result_array();

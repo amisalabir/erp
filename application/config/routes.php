@@ -11,7 +11,6 @@ $route['home/update_cart'] = 'web/Home/update_cart';
 $route['home/apply_coupon'] = 'web/Home/apply_coupon';
 $route['checkout'] = 'web/Home/checkout';
 $route['view_cart'] = 'web/Home/view_cart';
-$route['comparison'] = 'web/Home/comparison';
 $route['submit_checkout'] = 'web/Home/submit_checkout';
 $route['category/(:any)/(:any)'] = 'web/Category/category_product/$1/$2';
 $route['category/p/(:any)/(:any)'] = 'web/Category/category_product/$2';
@@ -24,7 +23,6 @@ $route['change_currency'] = 'web/Home/change_currency';
 $route['change_language'] = 'web/Home/change_language';
 //Front end routing end
 
-$route['track_my_order'] = 'web/Home/track_my_order';
 
 //Customer dashboard and profile start
 $route['forget_password_form'] = 'web/customer/Login/forget_password_form'; //martbd
@@ -78,25 +76,8 @@ $route['admin_password_update'] = 'dashboard/Admin_dashboard/admin_password_upda
 $route['paypal_success'] = 'web/home/paypal_success';
 $route['paypal_cancel'] = 'web/home/paypal_cancel';
 $route['paypal_ipn'] = 'web/home/paypal_ipn';
+
 //Admin Dashboard End
-
-// Role
-$route['create_system_role'] = 'role/create_system_role';
-$route['role_list'] = 'role/role_list';
-$route['role/edit_role/item/(:num)'] = 'role/edit_role/$1';
-$route['role/delete_role/item/(:num)'] = 'role/delete_role/$1';
-$route['role_save_update'] = 'role/save_update';
-//$route['dashboard_role_list'] = 'role/role_list';
-$route['assign_role_to_user'] = 'role/assign_role_to_user';
-$route['role_save_create'] = 'role/save_create';
-$route['save_role_access'] = 'role/save_role_access';
-$route['role/edit_access_role/item/(:num)'] = 'role/edit_access_role/$1';
-$route['role/delete_access_role/item/(:num)'] = 'role/delete_access_role/$1';
-$route['update_access_role'] = 'role/update_access_role';
-$route['user_access_role'] = 'role/user_access_role';
-
-
-
 
 $route['404_override'] = 'my404';
 $route['translate_uri_dashes'] = FALSE;

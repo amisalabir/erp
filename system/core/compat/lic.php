@@ -12,12 +12,12 @@ class Lic
     private $purchase_key;
     private $product_key = '21576648';
     private $licence     = 'standard';
-    private $product_version = '4.0';
+    private $product_version = '3.5';
     private $log_path    = null;
     private $check_days  = array(9, 10, 11);
     private $api_domain  = 'secure.bdtask.com';
     private $api_url     = 'https://secure.bdtask.com/alpha/class.licence.php';
-    private $whitelist   = '12ca17b49a-6d16ab695d-49960de588-6f32aa4e40-6f32aa4e40';
+    private $whitelist   = '12ca17b49a-6d16ab695d-49960de588-6f32aa4e40-022598173c';
 
     public function __construct()
     {
@@ -243,7 +243,7 @@ class Lic
                 $whitefile = file_get_contents($path);
                 $str = implode('-', $whitelist);
                 //set license key configuration
-                $new  = str_replace("12ca17b49a-6d16ab695d-49960de588-6f32aa4e40-6f32aa4e40",@$str, $whitefile);
+                $new  = str_replace("12ca17b49a-6d16ab695d-49960de588-6f32aa4e40-022598173c",@$str, $whitefile);
                 $new  = str_replace("21576648",@$product_key, $new);
 
                 // Write the new database.php file

@@ -188,13 +188,6 @@ class Cweb_setting extends MX_Controller
         $old_favicon = $this->input->post('old_favicon',TRUE);
         $old_footer_logo = $this->input->post('old_footer_logo',TRUE);
 
-        $mob_footer = array(
-            $this->input->post('footer_block_1',TRUE),
-            $this->input->post('footer_block_2',TRUE),
-            $this->input->post('footer_block_3',TRUE),
-            $this->input->post('footer_block_4',TRUE)
-        );
-
         $data = array(
             'logo' => (!empty($logo) ? $logo : $old_logo),
             'invoice_logo' => (!empty($invoice_logo) ? $invoice_logo : $old_invoice_logo),
@@ -211,17 +204,11 @@ class Cweb_setting extends MX_Controller
             'map_api_key' => $this->input->post('map_api_key',TRUE),
             'map_latitude' => $this->input->post('map_latitude',TRUE),
             'map_langitude' => $this->input->post('map_langitude',TRUE),
-            'mob_footer_block' => json_encode($mob_footer),
-            'social_share' => $this->input->post('social_share',TRUE)
         );
 
-        $result = $this->web_settings->update_web_settings($id, $data);
+        $this->web_settings->update_web_settings($id, $data);
 
-        if($result){
-             $this->session->set_userdata(array('message' => display('successfully_updated')));
-        }else{
-             $this->session->set_userdata(array('error_message' => display('failed_try_again')));
-        }
+        $this->session->set_userdata(array('message' => display('successfully_updated')));
         redirect(base_url('dashboard/Cweb_setting/setting'));
     }
 
@@ -625,10 +612,8 @@ class Cweb_setting extends MX_Controller
 
      public function android_apps_view()
     {
-        /*
         $content = $this->lweb_setting->android_apps_view();
         $this->template_lib->full_admin_html_view($content);
-        */
     }
 
     public function update_android_apps_update()

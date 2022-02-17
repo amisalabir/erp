@@ -23,7 +23,6 @@ function invoice_productList(cName) {
     var sgst_id			='sgst_id_'+cName;
     var igst_id			='igst_id_'+cName;
     var variant_id  	='variant_id_'+cName;
-    var variant_color   ='variant_color_id_'+cName;
     var discount  		='discount_'+cName;
 
     $( ".productSelection" ).autocomplete(
@@ -52,6 +51,7 @@ function invoice_productList(cName) {
                     {
                         
                         var obj = jQuery.parseJSON(data);
+                        //alert(obj.variant);
                         $('.'+qnttClass).val(obj.cartoon_quantity);
                         $('.'+priceClass).val(obj.price);
                         $('.'+total_tax_price).val(obj.tax);
@@ -65,8 +65,6 @@ function invoice_productList(cName) {
                         $('#'+sgst_id).val(obj.sgst_id);
                         $('#'+igst_id).val(obj.igst_id);
                         $('#'+variant_id).html(obj.variant);
-                        $('#'+variant_id).html(obj.variant);
-                        $('#'+variant_color).html(obj.colorhtml);
                         $('#'+discount).val(obj.discount);
 
                         //This Function Stay on others.js page

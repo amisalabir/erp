@@ -26,13 +26,11 @@ class Cpurchase extends MX_Controller
         $this->auth->check_admin_auth();
         $all_supplier = $this->Purchases->select_all_supplier();
         $store_list = $this->Stores->store_list();
-        $get_def_store = $this->Stores->get_def_store();
         $variant_list = $this->Variants->variant_list();
         $data = array(
             'title' => display('add_purchase'),
             'all_supplier' => $all_supplier,
             'store_list' => $store_list,
-            'def_store' => $get_def_store,
             'variant_list' => $variant_list,
         );
         $data['setting'] = $this->Template_model->setting();
@@ -334,21 +332,5 @@ class Cpurchase extends MX_Controller
         $total_sale = $this->db->get()->row();
 
         echo $total_purchase->total_purchase - $total_sale->total_sale;
-    }
-
-    // check default store is or not
-    public function check_default_store()
-    {
-        $store_id =  $this->input->post('store_id', TRUE);
-        $result = false;
-        if(!empty($store_id)){
-            $this->db->where('store_id', $store_id);
-            $this->db->where('default_status', 1);
-            $query = $this->db->get('store_set');
-            if($query->num_rows() > 0){
-                $result = TRUE;
-            }
-        }
-        echo $result;
     }
 }

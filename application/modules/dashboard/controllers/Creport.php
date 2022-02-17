@@ -29,7 +29,7 @@ class Creport extends MX_Controller
 
         $product_id = $this->input->post('product_id')?$this->input->post('product_id'):"";
         $date=$this->input->post('stock_date')?$this->input->post('stock_date'):$today;
-        $limit=2000;
+        $limit=20;
         $start_record=($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
         $date=($this->uri->segment(4)) ? $this->uri->segment(4) : $date;
 
@@ -107,7 +107,7 @@ class Creport extends MX_Controller
         #
         $config["base_url"] = base_url('dashboard/Creport/stock_report_product_wise');
         $config["total_rows"] = $this->Reports->stock_report_product_bydate_count($supplier_id, $supplier_id, $from_date, $to_date);
-        $config["per_page"] = 200;
+        $config["per_page"] = 20;
         $config["uri_segment"] = 4;
         $config["num_links"] = 5;
         /* This Application Must Be Used With BootStrap 3 * */
@@ -183,39 +183,16 @@ class Creport extends MX_Controller
        $content =$this->lreport->stock_report_supplier_wise($product_id,$supplier_id,$date,$links,$config["per_page"],$page);
         $this->template_lib->full_admin_html_view($content);
     }
-    
-    //Category_wise
-    public function stock_report_category_wise()
-    {
 
-        $CI =& get_instance();
-        $this->auth->check_admin_auth();
-        $today = date('m-d-Y');
-
-        $product_id = $this->input->post('product_id')?$this->input->post('product_id'):"";
-        $date=$this->input->post('stock_date')?$this->input->post('stock_date'):$today;
-        $limit=2000;
-        $start_record=($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
-        $date=($this->uri->segment(4)) ? $this->uri->segment(4) : $date;
-
-        $link=$this->pagination($limit,"dashboard/Creport/index/$date",$date);
-        $content = $CI->lreport->stock_report_category_item($product_id,$date,$limit,$start_record,$link);
-
-        $this->template_lib->full_admin_html_view($content);
-        
-    }
-    
-//Storewise Product
     public function stock_report_store_wise()
     {
-       
+
         $this->auth->check_admin_auth();
+
         $today = date('Y-m-d');
         $from_date = $this->input->get('from_date',TRUE);
-        $product_id = $this->input->get('product_id',TRUE);
         $to_date = $this->input->get('to_date',TRUE);
         $store_id = $this->input->get('store_id',TRUE);
-        echo $tore_id;
         if (empty($store_id)) {
             $from_date = date('Y-m-01');
             $to_date = date('Y-m-d');
@@ -227,7 +204,7 @@ class Creport extends MX_Controller
         #
         $config["base_url"] = base_url('dashboard/Creport/stock_report_store_wise/');
         $config["reuse_query_string"] = true;
-        $config["total_rows"] = $this->Reports->stock_report_variant_bydate_count($from_date, $to_date, $store_id, $product_id );
+        $config["total_rows"] = $this->Reports->stock_report_variant_bydate_count($from_date, $to_date, $store_id);
         $config["per_page"] = 20;
         $config["uri_segment"] = 4;
         $config["num_links"] = 5;
@@ -254,7 +231,8 @@ class Creport extends MX_Controller
         #pagination ends
         #
 
-        $content =$this->lreport->stock_report_variant_wise($from_date,$to_date,$store_id,$links, $config["per_page"],$page, $product_id);
+        $content =$this->lreport->stock_report_variant_wise($from_date,$to_date,$store_id,$links,
+            $config["per_page"],$page);
         $this->template_lib->full_admin_html_view($content);
 
     }

@@ -4,11 +4,10 @@ class Color_frontends extends CI_Model
 {
 
 //get frontend template color
-    public function retrieve_color_editdata($theme = 'default')
+    public function retrieve_color_editdata()
     {
         $this->db->select('*');
         $this->db->from('color_frontends');
-        $this->db->where('theme', $theme);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->row();

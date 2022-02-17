@@ -81,7 +81,7 @@ class Permission
 {    
 	protected $permission;
 	protected $module; 
-	protected $redirect = "admin";
+	protected $redirect = "login";
 	protected $ci;
 
 	public function __construct()
@@ -119,20 +119,6 @@ class Permission
 		return $this; 
 	}
 
-	public function check_label($label = null)
-	{
-		$label = (($label!=null)?strtolower($label):$this->ci->uri->segment(1));
-		$this->label = $label;
-		if ($this->check_label_to_Permission($label)) {
-			$this->permission = true;
-		} else {
-			$this->permission = false;
-		} 
-
-		return $this; 
-	}
-
-
 	public function method($module = null, $method = null)
 	{
 		$module = (($module!=null)?strtolower($module):$this->ci->uri->segment(1));
@@ -148,7 +134,7 @@ class Permission
 
 	public function create()
 	{   
-		if ($this->checkLebel_permission_type($this->label, 'create')) {
+		if ($this->checkMethod($this->module, 'create')) {
 			$this->permission = true;
 		} else {
 			$this->permission = false;
@@ -159,7 +145,7 @@ class Permission
 
 	public function read()
 	{   
-		if ($this->checkLebel_permission_type($this->label, 'read')) {
+		if ($this->checkMethod($this->module, 'read')) {
 			$this->permission = true;
 		} else {
 			$this->permission = false;
@@ -169,7 +155,7 @@ class Permission
 
 	public function update()
 	{   
-		if ($this->checkLebel_permission_type($this->label, 'update')) {
+		if ($this->checkMethod($this->module, 'update')) {
 			$this->permission = true;
 		} else {
 			$this->permission = false;
@@ -179,7 +165,7 @@ class Permission
  
 	public function delete()
 	{   
-		if ($this->checkLebel_permission_type($this->label, 'delete')) {
+		if ($this->checkMethod($this->module, 'delete')) {
 			$this->permission = true;
 		} else {
 			$this->permission = false;
@@ -202,33 +188,6 @@ class Permission
 				$modules = array_keys($permission);
 				//check current module permission
 				if ( in_array($module, $modules) ) {
-					return true;  
-				} else {
-					return false;
-				} 
-			} else {
-				return false;
-			} 
-		} else {
-			return false;
-		} 
-	}
-
-	protected function check_label_to_Permission($label = null)
-	{ 
-		$permission = $this->ci->session->userdata('label_permission');
-		$isAdmin    = $this->ci->session->userdata('isAdmin');
-		$isLogIn    = $this->ci->session->userdata('isLogIn');
-
-		if ($isLogIn && $isAdmin) { 
-			return true;
-		} else if($isLogIn) { 
-			if (($permission!=null)) {
-				$permission = json_decode($permission, true);
-				//module list
-				$labels = array_keys(@$permission);
-				//check current module permission
-				if ( in_array($label, $labels)) {
 					return true;  
 				} else {
 					return false;
@@ -267,54 +226,6 @@ class Permission
 					//check for each input
 					if (in_array(strtolower($method), $methods)) {
 						if ($methodList[$method] == 1) {
-							return true;
-						} else {
-							return false;
-						}	
-
-					} else {
-						return false;
-					} 
-
-				} else {
-					return false;
-				} 
-			} else {
-				return false;
-			}
-
-		} else {
-			return false;
-		} 
-	}
-
-	protected function checkLebel_permission_type($label = null, $method = null)
-	{ 
-		$permission = $this->ci->session->userdata('label_permission');
-		$isAdmin    = $this->ci->session->userdata('isAdmin');
-		$isLogIn    = $this->ci->session->userdata('isLogIn');
-
-		if ($isLogIn && $isAdmin) {
-			//action of administrator
-			return true;
-		} else if($isLogIn) {
-
-			if (($permission!=null)) {
-
-			$permission = json_decode($permission, true);
-				//module list
-				$labels = array_keys($permission);
-
-				//check current module permission
-				if ( in_array($label, $labels) ) {
-					//convert method to asoc
-					$labelList = $permission[$label]; 
-
-					$methods = array_keys($permission[$label]);
-
-					//check for each input
-					if (in_array(strtolower($method), $methods)) {
-						if ($labelList[$method] == 1) {
 							return true;
 						} else {
 							return false;

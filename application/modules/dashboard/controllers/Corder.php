@@ -187,22 +187,11 @@ class Corder extends MX_Controller
         $this->auth->check_admin_auth();
         $CI->load->library('dashboard/lorder');
         $CI->load->model('dashboard/Orders');
-        $CI->load->model('dashboard/Reports');
+
         $content = $CI->lorder->order_list();
-        
         $this->template_lib->full_admin_html_view($content);
     }
-    public function manage_due_order()
-    {   
-        $CI =& get_instance();
-        $this->auth->check_admin_auth();
-        $CI->load->library('dashboard/lorder');
-        $CI->load->model('dashboard/Orders');
-        $CI->load->model('dashboard/Reports');
-        $content = $CI->lorder->due_order_list();
-        
-        $this->template_lib->full_admin_html_view($content);
-    }
+
 
     //order Update Form
     public function order_update_form($order_id)

@@ -13,7 +13,7 @@ $dirname = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/').'/';
 
 $root=$protocol.$_SERVER['HTTP_HOST'].$dirname;
 
-$config["base_url"] = $root;
+$config["base_url"] = 'http://localhost/jk';
 
 
 /*

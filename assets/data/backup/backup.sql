@@ -28,6 +28,9 @@ CREATE TABLE `accounts` (
   `status` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `accounts` (`account_id`, `account_table_name`, `account_name`, `status`) VALUES ('D2RJU3C34Z', 'received', 'J.K. Trade International', 2);
+
+
 #
 # TABLE STRUCTURE FOR: advertisement
 #
@@ -39,8 +42,8 @@ CREATE TABLE `advertisement` (
   `add_page` varchar(100) DEFAULT NULL,
   `adv_position` int(11) NOT NULL,
   `adv_code` text NOT NULL,
-  `adv_code2` text,
-  `adv_code3` text,
+  `adv_code2` text DEFAULT NULL,
+  `adv_code3` text DEFAULT NULL,
   `adv_url` varchar(200) DEFAULT NULL,
   `adv_url2` varchar(200) DEFAULT NULL,
   `adv_url3` varchar(200) DEFAULT NULL,
@@ -64,10 +67,27 @@ CREATE TABLE `bank_add` (
   `ac_number` varchar(250) DEFAULT NULL,
   `branch` varchar(250) DEFAULT NULL,
   `signature_pic` varchar(250) DEFAULT NULL,
-  `status` int(11) DEFAULT '0',
-  `default_status` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) DEFAULT 0,
+  `default_status` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`bank_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('5FFUKKOLCN', 'Dutch Bangla Bank Ltd', 'Mohammad Jasim Uddin Khokan', '124.101.2441', 'Jubilee Road', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('7JVSFXUXLI', 'Standard Chartered Bank', 'Mohammad Jasim Uddin Khokan & Akter Begum', '01-1344466-01', 'Agarabad Main', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('BPYMHYY49M', 'Southeast Bank Limited', 'J.K. TRADE International', '000811100030574', 'Jubilee Road', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('CIYR5G1VNC', 'Eastern Bank Limited', 'J.K. TRADE International', '0031350508638', 'Jubilee Road', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('DAO7NH8Z4V', 'Dhaka Bank Ltd', 'Mohammad Jasim Uddin Khokan', 'USD-018.120.169', 'Jubilee Road', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('EZMDIZEXV8', 'First Security Islami Bank Limited', 'Mohammad Jasim Uddin Khokan', '010712200041723', 'Jubilee Road', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('H7F4C76NCZ', 'United Commercial Bank Limited', 'Kainaat Trade International Company', '17521010001078', 'Jamal Khan', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('IF7DINMDQB', 'United Commercial Bank Limited', 'Mohammad Jasim Uddin Khokan', '1753210000000032', 'Jamal Khan', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('JFC13CQYNP', 'Social Islami Bank Ltd', 'Mohammad Jasim Uddin Khokan', '023-13400007512', 'Jubilee Road', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('JZSXHF8WMN', 'Eastern Bank Limited', 'J.K. TRADE International', 'CC-0102220187720', 'Sirajuddowla Road', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('R61AETB4MC', 'Dhaka Bank Limited', 'J.K. Hardware & Tools', '018.100.11441', 'Jubilee Road', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('UVWA4YNNEM', 'United Commercial Bank Limited', 'J.K. TRADE International', '023.2112.000001546', 'Jubilee Road', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('WCIJYO2O33', 'Islami Bank Bangladesh Limited', 'Mohammad Jasim Uddin Khokan', '20501370201191617', 'Jubilee Road', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('WMPEVZQO7B', 'Shahjalal Islami Bank Ltd', 'J.K. TRADE International', '300311100002704', 'Jubilee Road', NULL, 0, 0);
+INSERT INTO `bank_add` (`bank_id`, `bank_name`, `ac_name`, `ac_number`, `branch`, `signature_pic`, `status`, `default_status`) VALUES ('ZTEPGVQITL', 'Shahjalal Islami Bank Ltd', 'Mohammad Jasim Uddin Khokan', '300312400000047', 'Jubilee Road', NULL, 0, 0);
+
 
 #
 # TABLE STRUCTURE FOR: block
@@ -78,7 +98,7 @@ DROP TABLE IF EXISTS `block`;
 CREATE TABLE `block` (
   `block_id` varchar(100) NOT NULL,
   `block_cat_id` varchar(100) DEFAULT NULL,
-  `block_css` text,
+  `block_css` text DEFAULT NULL,
   `block_position` int(11) DEFAULT NULL,
   `block_image` varchar(255) DEFAULT NULL,
   `block_style` int(11) DEFAULT NULL,
@@ -86,8 +106,8 @@ CREATE TABLE `block` (
   PRIMARY KEY (`block_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `block` (`block_id`, `block_cat_id`, `block_css`, `block_position`, `block_image`, `block_style`, `status`) VALUES ('6UZO3EAQ2B22WCU', '7VSM1ELNKJO349J', 'null', 1, 'my-assets/image/block_image/677297d226d79be0d2c5a5b3933d985d.jpg', 2, 1);
 INSERT INTO `block` (`block_id`, `block_cat_id`, `block_css`, `block_position`, `block_image`, `block_style`, `status`) VALUES ('FJQH2QJ2D43JIJ4', 'F9GNCBBPCOIEN67', 'null', 2, 'my-assets/image/block_image/ff3e3a547a2526c7af4d4c7dd711a34d.jpg', 1, 1);
-INSERT INTO `block` (`block_id`, `block_cat_id`, `block_css`, `block_position`, `block_image`, `block_style`, `status`) VALUES ('LL21UR7PWOZTRAC', 'F9GNCBBPCOIEN67', 'null', 1, 'my-assets/image/block_image/677297d226d79be0d2c5a5b3933d985d.jpg', 2, 1);
 
 
 #
@@ -104,12 +124,11 @@ CREATE TABLE `brand` (
   `status` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_image`, `website`, `status`) VALUES ('W6TGN2N16JUL5XA', 'Brand_1', 'my-assets/image/brand_image/f5c2659b1a25dd156c874a75fe2736a6.jpg', 'https://demo453464315.com', 1);
-INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_image`, `website`, `status`) VALUES ('1JDEMJYYXH1K7UQ', 'Brand_2', 'my-assets/image/brand_image/c43ee753324226b03a3747cdfaa532cf.jpg', 'https://demo453464315.com', 1);
-INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_image`, `website`, `status`) VALUES ('T36ZSIXTRZVPVEM', 'Brand_3', 'my-assets/image/brand_image/c85ecaefe52828ab5c7d7a92c31029ac.jpg', 'https://demo453464315.com', 1);
-INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_image`, `website`, `status`) VALUES ('R77CKBVFCB76UO9', 'Brand_4', 'my-assets/image/brand_image/0e64deaec1f10c3961fec5323a3bd20d.jpg', 'https://demo453464315.com', 1);
-INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_image`, `website`, `status`) VALUES ('Y9T6ZN4HRILB75N', 'Brand_5', 'my-assets/image/brand_image/bd32a563fca8302abecfc71eb936a3cb.jpg', 'https://demo453464315.com', 1);
-INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_image`, `website`, `status`) VALUES ('7XX8FG7MH7FGS87', 'Brand_6', 'my-assets/image/brand_image/e45791b012411f8d128814857e90e95b.jpg', 'https://demo453464315.com', 1);
+INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_image`, `website`, `status`) VALUES ('T36ZSIXTRZVPVEM', 'CEKON', 'my-assets/image/brand_image/2667b9039f5bcb839c4838f1d91416cc.jpg', 'https://www.jktradeinternational.com/CEKON', 1);
+INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_image`, `website`, `status`) VALUES ('R77CKBVFCB76UO9', 'OCTKI GLASS PAPER', 'my-assets/image/brand_image/8204a12a9891935f45ab9276cc232baf.jpg', 'https://www.jktradeinternational.com/glass-paper', 1);
+INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_image`, `website`, `status`) VALUES ('7XX8FG7MH7FGS87', 'Reddipile', 'my-assets/image/brand_image/ccc58a127bbaa2da7e464826366fef3f.jpg', 'https://www.jktradeinternational.com/Reddipile', 1);
+INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_image`, `website`, `status`) VALUES ('1CZ4UIG9Z11EF1U', 'KAINAAT', 'my-assets/image/brand_image/f3913db24137390bd27c5ec69cf4d20d.png', 'https://www.jktradeinternational.com', 1);
+INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_image`, `website`, `status`) VALUES ('V4JWHXG8I326M5T', 'VVP Glass Door Accessories', 'my-assets/image/brand_image/f7f2701b4572e07ba1154a284a97fbaf.png', 'https://www.jktradeinternational.com/VVP_Glass_Door_Accessories', 1);
 
 
 #
@@ -138,8 +157,8 @@ CREATE TABLE `category_variant` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` varchar(255) NOT NULL,
   `variant_id` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
@@ -249,7 +268,7 @@ CREATE TABLE `company_information` (
   PRIMARY KEY (`company_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `company_information` (`company_id`, `company_name`, `email`, `address`, `mobile`, `website`, `status`) VALUES ('NOILG8EGCRXXBWUEUQBM', 'ABC', 'abc@gmail.com', 'New York, USA', '+00-000-00000', 'https://abc.com', 1);
+INSERT INTO `company_information` (`company_id`, `company_name`, `email`, `address`, `mobile`, `website`, `status`) VALUES ('NOILG8EGCRXXBWUEUQBM', 'J.K. Trade International', 'sales@jktradeinternational.com', 'Epic Kader Height, Shop No: 34 & 35, 19, JC Guha Road, Nandan Kanon,Chattogram.', '+8801617-33 33 55', 'https://jktradeinternational.com/', 1);
 
 
 #
@@ -263,9 +282,66 @@ CREATE TABLE `contact` (
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `message` text,
+  `message` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=960008 DEFAULT CHARSET=utf8;
+
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (1, 'JasonBusZI', 'JasonBusZI', 'no-replysi@gmail.com', 'Hello!  jktradeinternational.com \r\n \r\nDid you know that it is possible to send message   legit? \r\nWe tender a new legal way of sending message through feedback forms. Such forms are located on many sites. \r\nWhen such business offers are sent, no personal data is used, and messages are sent to forms specifically designed to receive messages and appeals. \r\nalso, messages sent through contact Forms do not get into spam because such messages are considered important. \r\nWe offer you to test our service for free. We will send up to 50,000 messages for you. \r\nThe cost of sending one million messages is 49 USD. \r\n \r\nThis letter is created automatically. Please use the contact details below to contact us. \r\n \r\nContact us. \r\nTelegram - @FeedbackMessages \r\nSkype  live:contactform_18 \r\nWhatsApp - +375259112693');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (2, 'Elizabet', 'Larcombe', 'larcombe.elizabet@gmail.com', 'Hey Guys,\r\n\r\nYou won\'t believe what I managed to secure for you...\r\n \r\nAs most online marketers (myself included) you’re probably paying each month or each year ridiculously high fees for online hosting that’s sub-par, slow and keeps crashing.\r\n\r\nFACT: hosting is one of the biggest expenses for online marketers, and\r\nexpensive fees are the #1 reason why many give up quickly or never even start.\r\n\r\n-> This here puts an end to it!\r\n-> https://bloggybro.com/recommends/profithost/cf\r\n\r\nWHAT? Enterprise-level hosting  for a one-time fee?\r\n\r\nYES – cloud hosting for life with just one small payment, that still gives you 100% uptime, blazingly fast loading times, SUPERIOR service and the best possible support Internet Marketers wish for…\r\n\r\nProfitHost is the next step in cloud hosting. A revolution like no other that enables you to enjoy:\r\n\r\n[+] Faster loading websites than ever before\r\n[+] 100% uptime with free SSL encryption built-in\r\n[+] Unlimited sites, email accounts & more\r\n[+] Next-Generation Control Panel\r\n[+] Free one-click Wordpress installer\r\n[+] 24/7 support from marketing gurus\r\n\r\n… and here’s the kicker: you get all of this, for LIFE, with\r\njust ONE time low fee today:\r\n\r\n-> Get started now (available ONLY during early bird!)\r\n-> https://bloggybro.com/recommends/profithost/cf\r\n\r\nThere\'s not really much I can say about this other than - GET IT! I\'m sure you can see the huge value in it.\r\n \r\nIt\'s the same package huge corporations are offering and charging you hundreds of dollars a year.\r\n \r\nExcept this one is better in every way:\r\n \r\n[+] unlimited bandwidth\r\n[+] 24/7 premium support\r\n[+] faster loading websites\r\n \r\nLet’s not kid ourselves: you know you’re getting this. It’s what’s called in the industry as a “complete no-brainer”.\r\n\r\nSo why not get it now while the early bird is live?\r\n\r\nYou’d be virtually stealing it – it’s that affordable!\r\n\r\nIn fact, wait till you see the price – you get lifetime hosting for LESS than what you previously used to pay for one month of service!\r\n\r\n-> Click here now to claim yours!\r\n-> https://bloggybro.com/recommends/profithost/cf\r\n\r\nTo your success,\r\nHelpperIt Team\r\n(HelpperIt Marketer)');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (4, 'ShawncrymnDM', 'ShawncrymnDM', 'ahmedkirillov5@gmail.com', '<a href=http://zrenieblog.ru/>Detail</a>:  <a href=http://zrenieblog.ru/>http://zrenieblog.ru/</a>  http://zrenieblog.ru/ <a href=\"http://zrenieblog.ru/\">http://zrenieblog.ru/</a> \r\n歷史 \r\n六七千年前的先民就開始釣魚。周文王曾和兒子們在靈沼釣魚取樂。戰國時范蠡也愛釣魚，常把所釣之魚供給越王勾踐食用。 二十世紀八十年代，中國大陸的各級釣魚協會成立，釣魚地點也從自然水域向養殖水域過度，所釣之魚則從粗養向細養過度。人數增多、水體污染及濫捕濫撈導致釣魚難度上升。釣魚協會開始與漁民和農民簽訂文件，使更多釣者能夠在養殖水域釣魚，達到了雙贏的目的。 二十世紀九十年代初，來自台灣的懸釣法走紅大陸，各地開始建造標準釣池。 二十世紀末，發達國家的釣者提倡回顧自然，引發新一輪野釣戰，而中國的釣者則更青睞精養魚池。<>] \r\n \r\n工具 \r\n \r\n一种钓鱼竿机械部分示意图 \r\n最基本的钓具包括：鱼竿、鱼线、鱼钩、沉坨（又名沉子）、浮标（又名鱼漂）、鱼饵。<>]:1其他辅助钓具包括：失手绳、钓箱、线轮、抄网、鱼篓、渔具盒、钓鱼服、钓鱼鞋等。<>]:1 \r\n \r\n钓竿一般由玻璃纖維或碳纖維轻而有力的竿状物质製成，钓竿和鱼饵用丝线联接。一般的鱼饵可以是蚯蚓、米饭、蝦子、菜叶、苍蝇、蛆等，现代有专门制作好（多数由自己配置的半成品）的粉製鱼饵出售。鱼饵挂在鱼鉤上，不同的對象鱼有不同的釣組配置。在周围水面撒一些誘餌通常会有較好的集魚效果。 \r\n \r\n钓具 \r\n鱼竿 \r\n主条目：鱼竿 \r\n钓鱼的鱼竿按照材质包括：传统竹竿、玻璃纤维竿、碳素竿，按照钓法包括：手竿、矶竿、海竿（又名甩竿），按照所钓鱼类包括：溪流小继竿、日鲫竿（又名河内竿）、鲤竿、矶中小物竿。<>]:6-8 \r\n \r\n鱼钩 \r\n主条目：鱼钩 \r\n鱼钩就是垂钓用的钩，主要分为：有倒钩、无倒钩、毛钩。<>]:14 \r\n \r\n鱼线 \r\n主条目：鱼线 \r\n鱼线就是垂钓时绑接鱼竿和鱼钩的线，历史上曾使用蚕丝（远古日本）、发丝（江户时期日本）、马尾（西欧）、二枚贝（地中海）、蛛网丝（夏威夷）、琼麻（东南亚）、尼龙钓线（美国）。<>]:25 \r\n \r\n鱼漂 \r\n主条目：鱼漂 \r\n鱼漂又名浮标，垂钓时栓在鱼线上的能漂浮的东西，主要用于搜集水底情报，查看鱼汛，观察鱼饵存留状态，以及水底水流起伏变化。<>]:36 \r\n \r\n鱼饵 \r\n主条目：鱼饵 \r\n鱼饵分为诱饵和钓饵，是一种用来吸引鱼群和垂钓时使用的物品，钓饵分为荤饵、素饵、拟饵、拉饵。<>]:170 \r\n \r\n沉子 \r\n主条目：沉子 \r\n沉子又名沉坨、铅锤，是一种调节鱼漂的工具。<>]:45 \r\n \r\n卷线器 \r\n主条目：卷线器 \r\n卷线器主要安装在海竿和矶竿上的一种卷线的工具。<>]:63 \r\n \r\n连结具 \r\n主条目：连结具 \r\n连结具是连结鱼线与钓竿、母线与子线的一种连结物，使用最广泛的是连结环。<>]:55 \r\n \r\n识鱼 \r\n鱼类的视力不如人类，距离、宽度均无法和人类的视力比较，鱼类对水色、绿色比较敏感，鱼类的嗅觉非常灵敏，鱼类的听觉也非常灵敏，钓鲤鱼时，不能在岸上大声谈笑、走动不停，鱼类的思考能力非常弱，鱼类应对周边环境随着气象、水温、水色、潮流、流速、水量的变化而变化，于是便出现了在同一个池塘、水库、湖泊，往日钓鱼收获大，今日少，上午收获大，下午少，晴天大，雨天少等情况。<>]:114-117淡水钓鱼，中国大陆经常垂钓的鱼类对象是本地鲫鱼、日本鲫、非洲鲫、鲤鱼、游鱼、罗非鱼、黄刺鱼（黄鸭叫）、黄尾、鳊鱼、青鱼、草鱼、鲢鱼、鳙鱼，台湾经常垂钓的鱼类对象是本地鲫鱼、日本鲫、吴郭鱼（罗非鱼）、溪哥仔和红猫（粗首马口鱲）、斗鱼、罗汉鱼、苦花、三角姑（河鮠）、竹蒿头（密鱼）。<>]:117 \r\n \r\n影响鱼类的6大因素主要是：季节变更、气温高低、水的涨落、风的大小、水的清浊、天气阴晴');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (5, 'Gina', 'Etienne', 'etienne.gina@gmail.com', 'Hi,\r\n\r\nI’ve just tried this software, and I can tell this has changed the way I make money online.\r\n=>> https://seoclerkspro.com/recommends/buzzpress/cf\r\n\r\nIn fact, it makes me hate Internet Marketing.\r\n\r\nHere’s why:\r\n\r\nBefore this, I could spend countless hours in front of my computer just to generate more leads, increasing the conversion rates, or just trying to generate more visitors to my sites.\r\n\r\nOn the weekend, I could spend more than 12 hours working on my sites.\r\n\r\n…And I absolutely love it!\r\n\r\nAll the struggle and sleepless nights have made me fall in love with Internet Marketing from the start. I’m obsessed with it.\r\nThat’s until I gave Buzzpress a try.\r\n\r\nWhen this software launched a few days ago, I decided to give it a try and see if it really works for me.\r\n\r\nAnyway, making money with this software is as easy as this:\r\n\r\n1.   I spent 15 minutes to decide the niche\r\n2.   Another 15 minutes to set up a fresh website\r\n3.   And a few minutes to set up an automation system, which is designed to generate traffic on autopilot\r\n\r\nAfter that, I just need to wait.\r\n\r\nTo my surprise, this morning I just got a sales notification from one affiliate product I’m promoting on my website.\r\n\r\nCrazy, right?\r\n\r\nI know it’s not that instantly, but considering the fact I spend no more than an hour to make the sale, it completely blew my mind.\r\n“So how does it make you hate Internet Marketing?” you might ask.\r\n=>> https://seoclerkspro.com/recommends/buzzpress/cf\r\n\r\nWell, as I mentioned earlier, I love Internet Marketing because of all the struggles and the sleepless night I spent just for making $100.\r\n\r\nThis software completely eliminates that.\r\n\r\nThat’s how it made me hate Internet Marketing.\r\n\r\nIf you’re interested to buy this software, just remember: This is NOT for everyone.\r\n\r\nIf you love all the struggle and the countless hours you spend on your computer, then this is absolutely not for you.\r\n\r\nBut if you want an easier way, less time working and more time enjoying the profit, then this is probably the one you’ve been waiting for.\r\n\r\n…And here’s the link to get the software: https://seoclerkspro.com/recommends/buzzpress/cf\r\n\r\nAll the best,\r\nSeoClerksPro Team\r\n[SeoClerksPro Marketer\'s Pvt]');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (6, 'Jerome', 'Pung', 'pung.jerome@googlemail.com', 'Hey Guys,\r\n\r\nIMAGINE … Passive Income From OTHER PEOPLE’S Content Served Up By Google & YouTube\r\n \r\nThat’s right – a virtually unlimited, untapped 24/7 traffic stream that maximizes your profit with zero work for you.\r\n \r\n Check it out right here\r\n =>> https://earningradar.com/recommends/yt-evolution/cf\r\n \r\n AND it’s all\r\n\r\n100% Newbie Friendly\r\n100% Done for you\r\nand 200% money back guarantee if it doesn’t work for you (it will)\r\n \r\nHow?\r\nSimple: A Plugin converts ANY YouTube videos into DFY monetized niche blogs that search engines love for multiple hands-free income streams.\r\n\r\n Get started right here\r\n =>> https://earningradar.com/recommends/yt-evolution/cf\r\n \r\nSTEP 1\r\nActivate your website\r\n\r\nSTEP 2\r\nPick videos\r\n\r\nSTEP 3\r\nMonetize your site\r\n\r\nANYONE Can Do This ... Great Ahh..\r\n\r\nEffortlessly Monetize Any YouTube Video\r\nMade By You OR By Others Through Your Website!\r\n\r\nGet full details here!\r\n=>> https://earningradar.com/recommends/yt-evolution/cf\r\n \r\n Hurry and join today! One-time fee available for limited time only!\r\n \r\nTo your success,\r\nEarningRadar Team\r\n(EarningRadar Marketer\'s Pvt)');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (7, 'Delilah', 'Flick', 'delilah.flick@yahoo.com', 'Hey Guys,\r\n\r\nIMAGINE … Passive Income From OTHER PEOPLE’S Content Served Up By Google & YouTube\r\n \r\nThat’s right – a virtually unlimited, untapped 24/7 traffic stream that maximizes your profit with zero work for you.\r\n \r\n Check it out right here\r\n =>> https://earningradar.com/recommends/yt-evolution/cf\r\n \r\n AND it’s all\r\n\r\n100% Newbie Friendly\r\n100% Done for you\r\nand 200% money back guarantee if it doesn’t work for you (it will)\r\n \r\nHow?\r\nSimple: A Plugin converts ANY YouTube videos into DFY monetized niche blogs that search engines love for multiple hands-free income streams.\r\n\r\n Get started right here\r\n =>> https://earningradar.com/recommends/yt-evolution/cf\r\n \r\nSTEP 1\r\nActivate your website\r\n\r\nSTEP 2\r\nPick videos\r\n\r\nSTEP 3\r\nMonetize your site\r\n\r\nANYONE Can Do This ... Great Ahh..\r\n\r\nEffortlessly Monetize Any YouTube Video\r\nMade By You OR By Others Through Your Website!\r\n\r\nGet full details here!\r\n=>> https://earningradar.com/recommends/yt-evolution/cf\r\n \r\n Hurry and join today! One-time fee available for limited time only!\r\n \r\nTo your success,\r\nEarningRadar Team\r\n(EarningRadar Marketer\'s Pvt)');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (8, 'Piper', 'Palmos', 'palmos.piper@msn.com', 'Hey Guys,\r\n\r\nWant to CLONE an affiliate site that is making commissions RIGHT NOW?\r\n\r\nWell you need this \"website cloning\" app - which creates an instant \"mirror image\" of one of the top money-making sites out there:\r\n\r\nClick here - CLONE Proven Affiliate Sites...\r\n\r\n==> https://seoclerkspro.com/recommends/affiliate-cloner/cf\r\n\r\nSee, one vital moneymaking skill is: building profitable websites.\r\n\r\nI\'m talking about websites that make commissions, build your list and get traffic.\r\n\r\nBut that isn\'t easy - unless you\'re some big guru:\r\n\r\n• You need to hire a fancy designer - typically $200 to $2,000.. per site\r\n\r\n• You need to create content - either do it yourself or pay $10-100 per article\r\n\r\n• You need to get traffic - ideally free buyer traffic\r\n\r\nAnd THEN you need to worry about domain names, hosting, wordpress, etc. \r\n\r\nSounds tricky, right?\r\n\r\nBut what if there is a solution...\r\n\r\nSomething that does EVERYTHING for you?\r\n\r\nWell, today, THERE IS!\r\n\r\nPresenting Affiliate Cloner\r\n\r\n==> https://seoclerkspro.com/recommends/affiliate-cloner/cf\r\n\r\nThis new cloud-based software lets you CLONE this proven, profitable affiliate site so you can...\r\n\r\n• Build an instant affiliate website, generating commissions with ClickBank, WarriorPlus & JVZoo\r\n\r\n• Generate free traffic from Facebook, Twitter, Instagram, Youtube, TikTok and Pinterest\r\n\r\n• Build your list while also making daily commissions\r\n\r\nThere\'s NO writing, hosting, domains or content to worry about.\r\n\r\nAnd in case you\'re wondering...\r\n\r\n\"But how PROFITABLE is this?\"\r\n\r\nWell, here\'s the answer: it CLONES the exact campaigns of an elite super affiliate!\r\n\r\nHere\'s the PROOF:\r\n\r\n==> https://seoclerkspro.com/recommends/affiliate-cloner/cf\r\n\r\n\r\nTo your success,\r\nSeoclerkspro Team\r\n(Seoclerkspro Marketer, Pvt)\r\n\r\n\r\nP.S. There\'s ONE CATCH: the price increases IN THE NEXT HOUR. And then every hour after that!\r\n\r\nSo click here to setup your instant affiliate website:\r\n==> https://seoclerkspro.com/recommends/affiliate-cloner/cf');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (9, 'Odette', 'Rene', 'rene.odette@gmail.com', 'Hey Guys,\r\n\r\nDo you want to make money like a super affiliate?\r\n\r\nLike you stole his website, cloned his affiliate programs, and jacked his commissions?\r\n\r\nClick here to see how this works\r\n\r\n(and yes, it\'s 100% legal)\r\n\r\n==> https://seoclerkspro.com/recommends/affiliate-cloner/cf\r\n\r\nOK, so..\r\n\r\nIf you want to build a profitable affiliate business, you’ll need to start from scratch.\r\n\r\nAnd for most marketers, that isn’t easy.\r\n\r\nYou’ll need to study the market, and find the most profitable offers on sites like ClickBank, WarriorPlus and JVZoo.\r\n\r\nYou’ll need to hire a developer to create software tools that you can give away as bonuses.\r\n\r\nYou’ll need to write some amazing copy to sell your offers, and drive people to your buy links…\r\n\r\nAnd then, when all this is done, you still need to build your website...\r\n\r\nAnd that involves buying a domain name, hosting, web design, and of course writing content from scratch… \r\n\r\nNow imagine having to do that for dozens of campaigns!\r\n\r\nAnd only then do you start to get traffic - and build a list.\r\n\r\nUgh!\r\n\r\nIs it any wonder that, in 2020, 99% of affiliates are struggling...\r\n\r\nBut, imagine if I could just give you a special link…\r\n\r\nSo that MY affiliate link became YOUR affiliate link…\r\n\r\nMy affiliate campaigns became your affiliate campaigns…\r\n\r\nMy $10,000 bonuses became your $10,000 bonuses…\r\n\r\nAnd my website became your website.\r\n\r\nSo you could clone my entire affiliate business… in 1 click.\r\n\r\nSounds incredible, right?\r\n\r\nSo, let me show you how it works...\r\n\r\n==> https://seoclerkspro.com/recommends/affiliate-cloner/cf\r\n\r\nP.S. This really is a NEW way  to “copy and paste” your way to daily commissions.\r\n\r\nBy automating ALL of your affiliate marketing, so that you can finally profit…\r\n\r\nEven if you have no list, no website and no time to run a profitable online business.\r\n\r\nBut you\'ll need to join RIGHT NOW.\r\n\r\nAs the price is going up (permanently) in the next few minutes.\r\n\r\nSo hit this link for all the juicy info, and enjoy ;)\r\n\r\n==> https://seoclerkspro.com/recommends/affiliate-cloner/cf\r\n\r\n\r\n\r\n\r\nTo your success,\r\nSeoclerkspro Team\r\n(Seoclerkspro Marketer, Pvt)\r\n\r\n\r\nBut do it RIGHT NOW, as the price increases in the next minutes (and every hour after that)');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (23, 'Niesha AbdulazJO', 'Niesha AbdulazJO', 'nieshaabdulaz634@gmail.com', 'Assalamalekum, \r\n \r\nI apologies for sending this email like this but Its important you reply, \r\n \r\nMy name is Niesha Al Salman Abdulaz, daughter of H.E. (Shaikh AL Abdul married to Prince Sa\'Id in Saudi Arabia. Am reaching you through this way because I might not get you by phone. \r\n \r\nAs a woman in Saudi Arabia, I am restricted in some ways as a woman. Even to do business is a problem and not easy for me, so I seek your assistance. \r\n \r\nThe money involved is very huge. As a foreigner it will be easy. \r\n \r\nI will like to keep this brief until I hear from you, you can reach me on  Nieshasalam0812@gmail.com or niesha@saudiroyalfamily.live WhatsApp: +972559662716 \r\n \r\nHave a nice day, \r\nNiesha Salman Abdulaz');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (49, 'Eric', 'Jones', 'ericjonesonline@outlook.com', 'Hey there, I just found your site, quick question…\r\n\r\nMy name’s Eric, I found jktradeinternational.com after doing a quick search – you showed up near the top of the rankings, so whatever you’re doing for SEO, looks like it’s working well.\r\n\r\nSo here’s my question – what happens AFTER someone lands on your site?  Anything?\r\n\r\nResearch tells us at least 70% of the people who find your site, after a quick once-over, they disappear… forever.\r\n\r\nThat means that all the work and effort you put into getting them to show up, goes down the tubes.\r\n\r\nWhy would you want all that good work – and the great site you’ve built – go to waste?\r\n\r\nBecause the odds are they’ll just skip over calling or even grabbing their phone, leaving you high and dry.\r\n\r\nBut here’s a thought… what if you could make it super-simple for someone to raise their hand, say, “okay, let’s talk” without requiring them to even pull their cell phone from their pocket?\r\n  \r\nYou can – thanks to revolutionary new software that can literally make that first call happen NOW.\r\n\r\nTalk With Web Visitor is a software widget that sits on your site, ready and waiting to capture any visitor’s Name, Email address and Phone Number.  It lets you know IMMEDIATELY – so that you can talk to that lead while they’re still there at your site.\r\n  \r\nYou know, strike when the iron’s hot!\r\n\r\nCLICK HERE http://www.talkwithcustomer.com to try out a Live Demo with Talk With Web Visitor now to see exactly how it works.\r\n\r\nWhen targeting leads, you HAVE to act fast – the difference between contacting someone within 5 minutes versus 30 minutes later is huge – like 100 times better!\r\n\r\nThat’s why you should check out our new SMS Text With Lead feature as well… once you’ve captured the phone number of the website visitor, you can automatically kick off a text message (SMS) conversation with them. \r\n \r\nImagine how powerful this could be – even if they don’t take you up on your offer immediately, you can stay in touch with them using text messages to make new offers, provide links to great content, and build your credibility.\r\n\r\nJust this alone could be a game changer to make your website even more effective.\r\n\r\nStrike when  the iron’s hot!\r\n\r\nCLICK HERE http://www.talkwithcustomer.com to learn more about everything Talk With Web Visitor can do for your business – you’ll be amazed.\r\n\r\nThanks and keep up the great work!\r\n\r\nEric\r\nPS: Talk With Web Visitor offers a FREE 14 days trial – you could be converting up to 100x more leads immediately!   \r\nIt even includes International Long Distance Calling. \r\nStop wasting money chasing eyeballs that don’t turn into paying customers. \r\nCLICK HERE http://www.talkwithcustomer.com to try Talk With Web Visitor now.\r\n\r\nIf you\'d like to unsubscribe click here http://talkwithcustomer.com/unsubscribe.aspx?d=jktradeinternational.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (78, 'Tyrell', 'Lafleur', 'lafleur.tyrell@googlemail.com', 'Hey Guys,\r\n\r\nWant to “copy and paste” your way... to daily commissions...\r\n\r\nBy automating ALL of your affiliate marketing.. In 1 click?\r\n\r\nThen you need to CLONE these affiliate websites...\r\n\r\n==> https://seoclerkspro.com/recommends/affiliate-cloner/cf\r\n\r\nAnd YES, this works, even if...\r\n\r\nYou have no list, no website and no time to run a profitable online business!\r\n\r\nSee, 2020 has been a profitable year for this guy “Chris”.\r\n\r\nChris has made money with over 300 different affiliate programs.\r\n\r\nAnd, as the year comes to an end, he wondered:\r\n\r\n“Would it be possible to give everyone the ability to bank life-changing commissions…\r\n\r\nBy simply copying and cloning what he’s doing…\r\n\r\nBUT without having to invest the time and money that he invests daily?”\r\n\r\nWell, today I can finally say, it IS possible. In fact, it’s here!\r\n\r\n==> https://seoclerkspro.com/recommends/affiliate-cloner/cf\r\n\r\nPresenting: Affiliate Cloner.\r\n\r\nThis new, one-stop software gives you an instant turnkey website…\r\n\r\nPacked with affiliate programs, reviews and bonuses… for all of the most profitable affiliate promotions, built right into one website. YOUR website.\r\n\r\nThat’s right… ALL of these done-for-you affiliate campaigns, each based on evergreen top converting offers, are preloaded right into YOUR website.\r\n\r\nYou get to keep 100% of the commissions…\r\n\r\nWhile doing 0% of the work.\r\n\r\nAnd that’s what makes this so unique...\r\n\r\nIt’s only because Chris is an elite marketer, that he\'s been able to select the best affiliate programs.\r\n\r\nIt’s only because he’s been building software for 12 years, that he\'s able to create these 10 software giveaways.\r\n\r\nIt’s only because he\'s a world-class copywriter, that he can hand you these done-for-you campaigns.\r\n\r\nIt’s only because he invested thousands building this website, that he can just let you clone it..\r\n\r\nAnd, quite frankly, it’s only because he\'s feeling generous…\r\n\r\nThat he\'s giving you all of this on a silver platter - ALL preloaded into ONE website. Your website.\r\n\r\nBut his generosity CAN\'T LAST.\r\n\r\nIn fact the price is about to go up in the next hour (and again, every hour after that):\r\n\r\n==> https://seoclerkspro.com/recommends/affiliate-cloner/cf\r\n\r\nNow, you already know: these sites are VERY profitable.\r\n\r\nYou also know... they\'re done for you\r\n\r\nAnd, they let you build your list and social presence, whilst also making commissions!\r\n\r\nBut... have you seen how beautiful these sites look too?\r\n\r\nWith professionally written reviews, stunning graphics, and a call to action for all of these moneymaking affiliate programs.\r\n\r\nAll bundled into your very own authority review site, with all the bells and whistles…\r\n\r\nIncluding 100% free hosting of your site on premium servers.\r\n\r\nYou can even add your autoresponder code to build your list, while you monetize at the same time.\r\n\r\nAnd yes… you can also promote all of your social media sites - letting you build your social presence on the side, too!\r\n\r\nBut you need to join NOW, before the price increases:\r\n\r\n==> https://seoclerkspro.com/recommends/affiliate-cloner/cf\r\n\r\n\r\n\r\nTo your success,\r\nSeoClerksPro Team\r\n(SeoClerksPro International Marketer\'s)\r\n\r\n\r\nP.S. It’s the easiest way to become a super affiliate in 2021 - by leveraging all of the hard work Chris did, every day of 2020.\r\n\r\nClick here to see how it works...\r\n\r\n==> https://seoclerkspro.com/recommends/affiliate-cloner/cf');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (79, 'Eric', 'Jones', 'ericjonesonline@outlook.com', 'My name’s Eric and I just came across your website - jktradeinternational.com - in the search results.\r\n\r\nHere’s what that means to me…\r\n\r\nYour SEO’s working.\r\n\r\nYou’re getting eyeballs – mine at least.\r\n\r\nYour content’s pretty good, wouldn’t change a thing.\r\n\r\nBUT…\r\n\r\nEyeballs don’t pay the bills.\r\n\r\nCUSTOMERS do.\r\n\r\nAnd studies show that 7 out of 10 visitors to a site like jktradeinternational.com will drop by, take a gander, and then head for the hills without doing anything else.\r\n\r\nIt’s like they never were even there.\r\n\r\nYou can fix this.\r\n\r\nYou can make it super-simple for them to raise their hand, say, “okay, let’s talk” without requiring them to even pull their cell phone from their pocket… thanks to Talk With Web Visitor.\r\n\r\nTalk With Web Visitor is a software widget that sits on your site, ready and waiting to capture any visitor’s Name, Email address and Phone Number.  It lets you know immediately – so you can talk to that lead immediately… without delay… BEFORE they head for those hills.\r\n  \r\nCLICK HERE http://www.talkwithcustomer.com to try out a Live Demo with Talk With Web Visitor now to see exactly how it works.\r\n\r\nNow it’s also true that when reaching out to hot leads, you MUST act fast – the difference between contacting someone within 5 minutes versus 30 minutes later is huge – like 100 times better!\r\n\r\nThat’s what makes our new SMS Text With Lead feature so powerful… you’ve got their phone number, so now you can start a text message (SMS) conversation with them… so even if they don’t take you up on your offer right away, you continue to text them new offers, new content, and new reasons to do business with you.\r\n\r\nThis could change everything for you and your business.\r\n\r\nCLICK HERE http://www.talkwithcustomer.com to learn more about everything Talk With Web Visitor can do and start turing eyeballs into money.\r\n\r\nEric\r\nPS: Talk With Web Visitor offers a FREE 14 days trial – you could be converting up to 100x more leads immediately!   \r\nIt even includes International Long Distance Calling. \r\nPaying customers are out there waiting. \r\nStarting connecting today by CLICKING HERE http://www.talkwithcustomer.com to try Talk With Web Visitor now.\r\n\r\nIf you\'d like to unsubscribe click here http://talkwithcustomer.com/unsubscribe.aspx?d=jktradeinternational.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (80, 'ShaunfroriSU', 'ShaunfroriSU', 'no-replysi@gmail.com', 'Gооd dаy!  jktradeinternational.com \r\n \r\nDid yоu knоw thаt it is pоssiblе tо sеnd соmmеrсiаl оffеr еntirеly lеgаlly? \r\nWе suggеst а nеw lеgаl mеthоd оf sеnding lеttеr thrоugh соntасt fоrms. Suсh fоrms аrе lосаtеd оn mаny sitеs. \r\nWhеn suсh rеquеsts аrе sеnt, nо pеrsоnаl dаtа is usеd, аnd mеssаgеs аrе sеnt tо fоrms spесifiсаlly dеsignеd tо rесеivе mеssаgеs аnd аppеаls. \r\nаlsо, mеssаgеs sеnt thrоugh соntасt Fоrms dо nоt gеt intо spаm bесаusе suсh mеssаgеs аrе соnsidеrеd impоrtаnt. \r\nWе оffеr yоu tо tеst оur sеrviсе fоr frее. Wе will sеnd up tо 50,000 mеssаgеs fоr yоu. \r\nThе соst оf sеnding оnе milliоn mеssаgеs is 49 USD. \r\n \r\nThis lеttеr is сrеаtеd аutоmаtiсаlly. Plеаsе usе thе соntасt dеtаils bеlоw tо соntасt us. \r\n \r\nContact us. \r\nTelegram - @FeedbackMessages \r\nSkype  live:contactform_18 \r\nWhatsApp - +375259112693');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (81, 'Mike Peterson', 'Mike Peterson', 'no-replysi@gmail.com', 'Hi there \r\n \r\nDo you want a quick boost in ranks and sales for your %domain% website? \r\nHaving a high DA score, always helps \r\n \r\nGet your jktradeinternational.com to have a 50+ points in Moz DA with us today and rip the benefits of such a great feat. \r\n \r\nSee our offers here: \r\nhttps://www.monkeydigital.co/product/moz-da50-seo-plan/ \r\n \r\nFYI: \r\nWe also give big discounts for multiple plans \r\n \r\n \r\nthank you \r\nMike Peterson\r\n \r\nsupport@monkeydigital.co');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (82, 'Manuel Guisado', 'Manuel Guisado', 'carvalhoadvogadosp1@gmail.com', 'Dear  Sir/Madam. \r\n \r\nI am a lawyer  from Madrid,  Spain. \r\n \r\nI seek for your concept to claim my late client  funds with a  bank here in Spain, of which we shall share 50% each after the claim process. \r\n \r\nPlease confirm if you are the legal owner of this email address for further information via my email: carvalhoadvogadosp2@gmail.com. \r\n \r\nI would appreciate your prompt response. \r\n \r\nBest regards, \r\n \r\nAdvocate    Manuel    Guisado \r\nReply  To:   carvalhoadvogadosp2@gmail.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (83, 'James Reynolds', 'James Reynolds', 'no-reply@google.com', 'Hеllо! \r\nI have just checked jktradeinternational.com for the ranking keywords and seen that your SEO metrics could use a boost. \r\n \r\nWe will improve your SEO metrics and ranks organically and safely, using only whitehat methods, while providing monthly reports and outstanding support. \r\n \r\nPlease check our pricelist here, we offer SEO at cheap rates. \r\nhttps://www.hilkom-digital.de/cheap-seo-packages/ \r\n \r\nStart increasing your sales and leads with us, today! \r\n \r\nregards \r\nHilkom Digital Team \r\nsupport@hilkom-digital.de');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (84, 'Eric', 'Jones', 'ericjonesonline@outlook.com', 'My name’s Eric and I just came across your website - jktradeinternational.com - in the search results.\r\n\r\nHere’s what that means to me…\r\n\r\nYour SEO’s working.\r\n\r\nYou’re getting eyeballs – mine at least.\r\n\r\nYour content’s pretty good, wouldn’t change a thing.\r\n\r\nBUT…\r\n\r\nEyeballs don’t pay the bills.\r\n\r\nCUSTOMERS do.\r\n\r\nAnd studies show that 7 out of 10 visitors to a site like jktradeinternational.com will drop by, take a gander, and then head for the hills without doing anything else.\r\n\r\nIt’s like they never were even there.\r\n\r\nYou can fix this.\r\n\r\nYou can make it super-simple for them to raise their hand, say, “okay, let’s talk” without requiring them to even pull their cell phone from their pocket… thanks to Talk With Web Visitor.\r\n\r\nTalk With Web Visitor is a software widget that sits on your site, ready and waiting to capture any visitor’s Name, Email address and Phone Number.  It lets you know immediately – so you can talk to that lead immediately… without delay… BEFORE they head for those hills.\r\n  \r\nCLICK HERE http://www.talkwithcustomer.com to try out a Live Demo with Talk With Web Visitor now to see exactly how it works.\r\n\r\nNow it’s also true that when reaching out to hot leads, you MUST act fast – the difference between contacting someone within 5 minutes versus 30 minutes later is huge – like 100 times better!\r\n\r\nThat’s what makes our new SMS Text With Lead feature so powerful… you’ve got their phone number, so now you can start a text message (SMS) conversation with them… so even if they don’t take you up on your offer right away, you continue to text them new offers, new content, and new reasons to do business with you.\r\n\r\nThis could change everything for you and your business.\r\n\r\nCLICK HERE http://www.talkwithcustomer.com to learn more about everything Talk With Web Visitor can do and start turing eyeballs into money.\r\n\r\nEric\r\nPS: Talk With Web Visitor offers a FREE 14 days trial – you could be converting up to 100x more leads immediately!   \r\nIt even includes International Long Distance Calling. \r\nPaying customers are out there waiting. \r\nStarting connecting today by CLICKING HERE http://www.talkwithcustomer.com to try Talk With Web Visitor now.\r\n\r\nIf you\'d like to unsubscribe click here http://talkwithcustomer.com/unsubscribe.aspx?d=jktradeinternational.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (85, 'Peter Lewis', 'Peter Lewis', 'no-replytap@gmail.com', 'Hеllо! \r\n \r\nDo you have issues ranking your website locally? \r\n \r\nWith our Google Maps citations strategy, we are able to rank you in top 5 in the Google Local Search for specific keywords. \r\nThe more Citations you build with us, the more keywords you`ll start ranking for \r\n \r\nMore details here: \r\nhttps://speed-seo.net/product/google-maps-citations/ \r\n \r\nthank you \r\nSpeed SEO Digital \r\nsupport@speed-seo.net');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (86, 'Eric', 'Jones', 'ericjonesonline@outlook.com', 'My name’s Eric and I just came across your website - jktradeinternational.com - in the search results.\r\n\r\nHere’s what that means to me…\r\n\r\nYour SEO’s working.\r\n\r\nYou’re getting eyeballs – mine at least.\r\n\r\nYour content’s pretty good, wouldn’t change a thing.\r\n\r\nBUT…\r\n\r\nEyeballs don’t pay the bills.\r\n\r\nCUSTOMERS do.\r\n\r\nAnd studies show that 7 out of 10 visitors to a site like jktradeinternational.com will drop by, take a gander, and then head for the hills without doing anything else.\r\n\r\nIt’s like they never were even there.\r\n\r\nYou can fix this.\r\n\r\nYou can make it super-simple for them to raise their hand, say, “okay, let’s talk” without requiring them to even pull their cell phone from their pocket… thanks to Talk With Web Visitor.\r\n\r\nTalk With Web Visitor is a software widget that sits on your site, ready and waiting to capture any visitor’s Name, Email address and Phone Number.  It lets you know immediately – so you can talk to that lead immediately… without delay… BEFORE they head for those hills.\r\n  \r\nCLICK HERE http://www.talkwithwebvisitors.com to try out a Live Demo with Talk With Web Visitor now to see exactly how it works.\r\n\r\nNow it’s also true that when reaching out to hot leads, you MUST act fast – the difference between contacting someone within 5 minutes versus 30 minutes later is huge – like 100 times better!\r\n\r\nThat’s what makes our new SMS Text With Lead feature so powerful… you’ve got their phone number, so now you can start a text message (SMS) conversation with them… so even if they don’t take you up on your offer right away, you continue to text them new offers, new content, and new reasons to do business with you.\r\n\r\nThis could change everything for you and your business.\r\n\r\nCLICK HERE http://www.talkwithwebvisitors.com to learn more about everything Talk With Web Visitor can do and start turing eyeballs into money.\r\n\r\nEric\r\nPS: Talk With Web Visitor offers a FREE 14 days trial – you could be converting up to 100x more leads immediately!   \r\nIt even includes International Long Distance Calling. \r\nPaying customers are out there waiting. \r\nStarting connecting today by CLICKING HERE http://www.talkwithwebvisitors.com to try Talk With Web Visitor now.\r\n\r\nIf you\'d like to unsubscribe click here http://talkwithwebvisitors.com/unsubscribe.aspx?d=jktradeinternational.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (87, 'James Brooks', 'James Brooks', 'no-reply@google.com', 'Hi there \r\nI have just checked jktradeinternational.com for the ranking keywords and seen that your SEO metrics could use a boost. \r\n \r\nWe will improve your SEO metrics and ranks organically and safely, using only whitehat methods, while providing monthly reports and outstanding support. \r\n \r\nPlease check our pricelist here, we offer SEO at cheap rates. \r\nhttps://www.hilkom-digital.de/cheap-seo-packages/ \r\n \r\nStart increasing your sales and leads with us, today! \r\n \r\nregards \r\nHilkom Digital Team \r\nsupport@hilkom-digital.de');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (88, 'Mike Liu', 'Mike Liu', 'noreply@googlemail.com', 'Hello, \r\nOur Investors wishes to invest in your company by offering debt financing in any viable Project presented by your Management, Kindly send your Business Project Presentation Plan Asap. \r\n \r\nmikeliu2032cfbltd@gmail.com \r\n \r\nRegards, \r\nMr. Mike Liu');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (89, 'Averox Team', 'Averox Team', 'infontechnology@gmail.com', 'Averox Solutions Ltd , a UK leading software company is offering low cost monthly subscriptions to their award winning all in one cloud based business software suite. ( http://www.averox.com/abm ). \r\nYour business will be operational 24X7 from home or anywhere in the world through the internet and a browser. No formal training is required. \r\nAverox cloud based solution ( http://www.averox.com/abm )  includes the following: \r\n1)	Complete online accounting system :  Invoices, expenses, P&L and online VAT submission to HMRC. \r\n2)	Customer relationship management (CRM):  Manage and serve your customers from one dashboard. \r\n3)	eSigning- Legally sign all of your important documents and contracts with just a few clicks. \r\n4)	Task Management- Manage your entire team and staff or organise your own daily work load with an easy to use built in task management system. \r\n5)	Document Management-  Upload, share and organise all of your company wide important documents securely online. \r\n6)	E-Campaigns, e-Newsletters. Run campaigns and send newsletters from one screen. \r\n7)	Consolidate all your personal and company emails into one Inbox and access from anywhere in the world. \r\n8)	Collaborate with your team, staff and colleagues through a built in secure chat system. \r\nYou can get all these solutions for a fraction of the cost i.e. ?79/- per month with this special limited offer! \r\nHere’s to your online success, \r\nAverox Team \r\ninfo@averox.com \r\nhttp://www.averox.com/abm  (info@averox.com)');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (90, 'Kenneth George', 'Kenneth George', 'investmentcompany55@gmail.com', 'Dear  Sir/Madam, \r\n \r\nI am a broker/financier with sound financial management abilities to  manage a vast capital for an Arab investor with an embattled political  situation. \r\n \r\nThese funds can be invested in tranches of Millions or a tranche that  is suitable for the portfolio manager. \r\n \r\nIf you have financial management abilities, credible projects in need  of funding or existing business requiring expansion;  we would be  willing to work with you.  We will also consider micro credits/funding  with a sound payback plan for short term personal financial needs. A genuine impending financial transaction with visible proof can also be  funded. \r\n \r\nSincerely, \r\n \r\nMr.  Kenneth   Rodney  George \r\nReply To This e-mail:  kennethrodneygeorge@gmail.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (91, 'Henryhew', 'Henryhew', 'whazzup@gmx.net', 'Even a child knows how to make $100 today. \r\nLink - http://1c-met.ru/bitrix/rk.php?id=2&event1=banner&event2=click&goto=https://hdredtube3.mobi/btsmart');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (92, 'Mike Keat', 'Mike Keat', 'no-replysi@gmail.com', 'Hello \r\n \r\nIf you want to get ahead of  your competition then you must have a improved Domain Authority score for your website. Its just as simple as that. With our service your jktradeinternational.com DA score will get above 50 points in just 30 days. \r\n \r\nThis service is assured \r\n \r\nFor more details, check our service here \r\nhttps://speed-seo.net/Get-Guaranteed-Domain-Authority-50/ \r\n \r\nNEW: ahrefs DR50+ possible now: \r\nhttps://speed-seo.net/product/ahrefs-dr60/ \r\n \r\n \r\nthank you \r\nMike Keat\r\n \r\nSpeed SEO Agency \r\nsupport@speed-seo.net');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (93, 'Eric', 'Jones', 'ericjonesonline@outlook.com', 'Hey, this is Eric and I ran across jktradeinternational.com a few minutes ago.\r\n\r\nLooks great… but now what?\r\n\r\nBy that I mean, when someone like me finds your website – either through Search or just bouncing around – what happens next?  Do you get a lot of leads from your site, or at least enough to make you happy?\r\n\r\nHonestly, most business websites fall a bit short when it comes to generating paying customers. Studies show that 70% of a site’s visitors disappear and are gone forever after just a moment.\r\n\r\nHere’s an idea…\r\n \r\nHow about making it really EASY for every visitor who shows up to get a personal phone call you as soon as they hit your site…\r\n \r\nYou can –\r\n  \r\nTalk With Web Visitor is a software widget that’s works on your site, ready to capture any visitor’s Name, Email address and Phone Number.  It signals you the moment they let you know they’re interested – so that you can talk to that lead while they’re literally looking over your site.\r\n\r\nCLICK HERE http://www.talkwithwebvisitors.com to try out a Live Demo with Talk With Web Visitor now to see exactly how it works.\r\n\r\nYou’ll be amazed - the difference between contacting someone within 5 minutes versus a half-hour or more later could increase your results 100-fold.\r\n\r\nIt gets even better… once you’ve captured their phone number, with our new SMS Text With Lead feature, you can automatically start a text (SMS) conversation.\r\n  \r\nThat way, even if you don’t close a deal right away, you can follow up with text messages for new offers, content links, even just “how you doing?” notes to build a relationship.\r\n\r\nPretty sweet – AND effective.\r\n\r\nCLICK HERE http://www.talkwithwebvisitors.com to discover what Talk With Web Visitor can do for your business.\r\n\r\nYou could be converting up to 100X more leads today!\r\n\r\nEric\r\nPS: Talk With Web Visitor offers a FREE 14 days trial – and it even includes International Long Distance Calling. \r\nYou have customers waiting to talk with you right now… don’t keep them waiting. \r\nCLICK HERE http://www.talkwithwebvisitors.com to try Talk With Web Visitor now.\r\n\r\nIf you\'d like to unsubscribe click here http://talkwithwebvisitors.com/unsubscribe.aspx?d=jktradeinternational.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (94, 'Peter Creighton', 'Peter Creighton', 'no-replytap@gmail.com', 'Greetings \r\n \r\nDo your rivals not playing the game fair and square? \r\nNow you can fight back. \r\n \r\nNegative SEO, to make ranks go down \r\nhttps://blackhat.to/ \r\n \r\nContact us for any queries: \r\nsupport@blackhat.to');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (95, 'Richard Wahl', 'Richard Wahl', 'maikereine.mmr@gmail.com', 'Hello, \r\nHope this email finds you well. \r\nThis is a very big news and a special message to you. \r\nI am the winner of 533-Million, in the Mega Millions Jackpot. Due to the current pandemic, I\'ve decided to join other world philantropists to do what is within my capacity to bring relief to a few people and their local community, globally, through a random selection of web addresses by my team. \r\nYour website has surfaced as one of the lucky recipients of this selection and with a heart of warm benevolence, I wish you a big congratulations. \r\nHere is your donation code: RFECD00032020FP \r\nWhen replying to this email, please ensure you state your donation code for verificaion by my team. \r\nMore details are on my youtube channel. \r\nWATCH ME HERE: https://www.youtube.com/watch?v=tne02ExNDrw \r\nContact WhatsApp: +1 (315) 803-1010 \r\ncontact financial team via email only when you don’t have WhatsApp: globalrelief.richardwahl.rfecd@financier.com \r\nCongratulations once again! \r\nKind regards, \r\nRichard Wahl.');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (96, 'MORELLO083HW', 'MORELLO397HW', 'CONELLY499@thefmail.com', 'Thank you!!1');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (97, 'MichaelKamWA', 'MichaelKamWA', 'alexander466alan@gmail.com', 'Looking for Facebook likes or Instagram followers? \r\nWe can help you. Please visit https://1000-likes.com/ to place your order.');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (98, 'Eric', 'Jones', 'ericjonesonline@outlook.com', 'Hey, this is Eric and I ran across jktradeinternational.com a few minutes ago.\r\n\r\nLooks great… but now what?\r\n\r\nBy that I mean, when someone like me finds your website – either through Search or just bouncing around – what happens next?  Do you get a lot of leads from your site, or at least enough to make you happy?\r\n\r\nHonestly, most business websites fall a bit short when it comes to generating paying customers. Studies show that 70% of a site’s visitors disappear and are gone forever after just a moment.\r\n\r\nHere’s an idea…\r\n \r\nHow about making it really EASY for every visitor who shows up to get a personal phone call you as soon as they hit your site…\r\n \r\nYou can –\r\n  \r\nTalk With Web Visitor is a software widget that’s works on your site, ready to capture any visitor’s Name, Email address and Phone Number.  It signals you the moment they let you know they’re interested – so that you can talk to that lead while they’re literally looking over your site.\r\n\r\nCLICK HERE http://www.talkwithwebvisitors.com to try out a Live Demo with Talk With Web Visitor now to see exactly how it works.\r\n\r\nYou’ll be amazed - the difference between contacting someone within 5 minutes versus a half-hour or more later could increase your results 100-fold.\r\n\r\nIt gets even better… once you’ve captured their phone number, with our new SMS Text With Lead feature, you can automatically start a text (SMS) conversation.\r\n  \r\nThat way, even if you don’t close a deal right away, you can follow up with text messages for new offers, content links, even just “how you doing?” notes to build a relationship.\r\n\r\nPretty sweet – AND effective.\r\n\r\nCLICK HERE http://www.talkwithwebvisitors.com to discover what Talk With Web Visitor can do for your business.\r\n\r\nYou could be converting up to 100X more leads today!\r\n\r\nEric\r\nPS: Talk With Web Visitor offers a FREE 14 days trial – and it even includes International Long Distance Calling. \r\nYou have customers waiting to talk with you right now… don’t keep them waiting. \r\nCLICK HERE http://www.talkwithwebvisitors.com to try Talk With Web Visitor now.\r\n\r\nIf you\'d like to unsubscribe click here http://talkwithwebvisitors.com/unsubscribe.aspx?d=jktradeinternational.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (99, 'Dorine', 'Breton', 'dorine@stardatagroup.com', 'It is with sad regret to inform you StarDataGroup.com is shutting down.\r\nIt has been a tough year all round and we decided to go out with a bang!\r\n\r\nAny group of databases listed below is $49 or $149 for all 16 databases in this one time offer.\r\nYou can purchase it at www.StarDataGroup.com and view samples.\r\n\r\n- LinkedIn Database\r\n 43,535,433 LinkedIn Records\r\n\r\n- USA B2B Companies Database\r\n 28,147,835 Companies\r\n\r\n- Forex\r\n Forex South Africa 113,550 Forex Traders\r\n Forex Australia 135,696 Forex Traders\r\n Forex UK 779,674 Forex Traders\r\n\r\n- UK Companies Database\r\n 521,303 Companies\r\n\r\n- German Databases\r\n German Companies Database: 2,209,191 Companies\r\n German Executives Database: 985,048 Executives\r\n\r\n- Australian Companies Database\r\n 1,806,596 Companies\r\n\r\n- UAE Companies Database\r\n 950,652 Companies\r\n\r\n- Affiliate Marketers Database\r\n 494,909 records\r\n\r\n- South African Databases\r\n B2B Companies Database: 1,462,227 Companies\r\n Directors Database: 758,834 Directors\r\n Healthcare Database: 376,599 Medical Professionals\r\n Wholesalers Database: 106,932 Wholesalers\r\n Real Estate Agent Database: 257,980 Estate Agents\r\n Forex South Africa: 113,550 Forex Traders\r\n\r\nVisit www.stardatagroup.com or contact us with any queries.\r\n\r\nKind Regards,\r\nStarDataGroup.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (100, 'Mike Nyman', 'Mike Nyman', 'see-email-in-message@monkeydigital.co', 'Hi there \r\n \r\nDo you want a quick boost in ranks and sales for your jktradeinternational.com website? \r\nHaving a high DA score, always helps \r\n \r\nGet your jktradeinternational.com to have a 50+ points in Moz DA with us today and rip the benefits of such a great feat. \r\n \r\nSee our offers here: \r\nhttps://www.monkeydigital.co/product/moz-da50-seo-plan/ \r\n \r\nNEW: \r\nhttps://www.monkeydigital.co/product/ahrefs-dr60/ \r\n \r\n \r\nthank you \r\nMike Nyman\r\n \r\nsupport@monkeydigital.co');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (101, 'Mike Fisher\r\nNE', 'Mike Fisher\r\nNE', 'no-replytap@gmail.com', 'Hi \r\n \r\nI have just analyzed  jktradeinternational.com for its Local SEO Trend and seen that your website could use a boost. \r\n \r\nWe will enhance your Local Ranks organically and safely, using only whitehat methods, while providing Google maps and website offsite work at the same time. \r\n \r\nPlease check our services below, we offer SEO at cheap rates. \r\nhttps://speed-seo.net/product/local-seo-package/ \r\n \r\nStart increasing your local visibility with us, today! \r\n \r\nregards \r\nMike Fisher\r\n \r\nSpeed SEO Digital Agency \r\nsupport@speed-seo.net');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (102, 'John  Jefferson', 'John  Jefferson', 'waynelee446@gmail.com', 'Your   Urgent   Attention. \r\nWe were waiting for you to contact us about your conformable online banking draft worth Millions of Dollars, but we haven\'t heard from  you. The accredited online banking service (Alliance County Finance  House / HS / 02482 / BG) awarded for contractual payment with card \r\nnumber 3478763199030014 has been awarded to For your benefit). Did you  instructed Mr. James Brown to represent??. \r\nI will advise you to reconfirm the below information and make sure  that you fill them correctly and contact Mr. Morgan  Morris, who is in  charge of your transaction: E-MAIL  ADDRESS:  morganmorrisconsultant@gmail.com). \r\nDid you instructed Mr. James Brown to collect your Funds?:….(Yes/No) \r\n*Your Full Names:………. \r\n*Residential Address: ………… \r\n*City:…………….. \r\n*State:…………… \r\n*Country:…………… \r\n*Zip Code:…………. \r\n*Direct Phone Number#:………. \r\n*Office Number#:…………….. \r\n*Age:……… \r\n*Sex:……… \r\n*Occupation:…………… \r\n*Next of Kin:…………… \r\nAsk  Mr.  John  Jefferson, for  your  online  account  login  username  and  password. E-Mail: ...........) \r\nReply  To - morganmorrisconsultant@gmail.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (103, 'Jerry', 'Tallent', 'jerry@sendbulkmails.com', 'Use SendBulkMails.com to run email campaigns from your own private dashboard.\r\n\r\nCold emails are allowed and won\'t get you blocked :)\r\n\r\nStarter Package 50% off sale\r\n- 1Mil emails / mo @ $99 USD\r\n- Dedicated IP and Domain Included\r\n- Detailed statistical reports (delivery, bounce, clicks etc.)\r\n- Quick and easy setup with extended support at no extra cost.\r\n- Cancel anytime!\r\n\r\nRegards,\r\nwww.SendBulkMails.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (104, 'Lavada', 'Whatmore', 'lavada@stardatagroup.com', 'It is with sad regret to inform you StarDataGroup.com is shutting down.\r\n\r\nFire sale till the 7th of Feb.\r\n\r\nAny group of databases listed below is $49 or $149 for all 16 databases in this one time offer.\r\nYou can purchase it at www.StarDataGroup.com and view samples.\r\n\r\n- LinkedIn Database\r\n 43,535,433 LinkedIn Records\r\n\r\n- USA B2B Companies Database\r\n 28,147,835 Companies\r\n\r\n- Forex\r\n Forex South Africa 113,550 Forex Traders\r\n Forex Australia 135,696 Forex Traders\r\n Forex UK 779,674 Forex Traders\r\n\r\n- UK Companies Database\r\n 521,303 Companies\r\n\r\n- German Databases\r\n German Companies Database: 2,209,191 Companies\r\n German Executives Database: 985,048 Executives\r\n\r\n- Australian Companies Database\r\n 1,806,596 Companies\r\n\r\n- UAE Companies Database\r\n 950,652 Companies\r\n\r\n- Affiliate Marketers Database\r\n 494,909 records\r\n\r\n- South African Databases\r\n B2B Companies Database: 1,462,227 Companies\r\n Directors Database: 758,834 Directors\r\n Healthcare Database: 376,599 Medical Professionals\r\n Wholesalers Database: 106,932 Wholesalers\r\n Real Estate Agent Database: 257,980 Estate Agents\r\n Forex South Africa: 113,550 Forex Traders\r\n\r\nVisit www.stardatagroup.com or contact us with any queries.\r\n\r\nKind Regards,\r\nStarDataGroup.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (105, 'Eric', 'Jones', 'eric.jones.z.mail@gmail.com', 'Cool website!\r\n\r\nMy name’s Eric, and I just found your site - jktradeinternational.com - while surfing the net. You showed up at the top of the search results, so I checked you out. Looks like what you’re doing is pretty cool.\r\n \r\nBut if you don’t mind me asking – after someone like me stumbles across jktradeinternational.com, what usually happens?\r\n\r\nIs your site generating leads for your business? \r\n \r\nI’m guessing some, but I also bet you’d like more… studies show that 7 out 10 who land on a site wind up leaving without a trace.\r\n\r\nNot good.\r\n\r\nHere’s a thought – what if there was an easy way for every visitor to “raise their hand” to get a phone call from you INSTANTLY… the second they hit your site and said, “call me now.”\r\n\r\nYou can –\r\n  \r\nTalk With Web Visitor is a software widget that’s works on your site, ready to capture any visitor’s Name, Email address and Phone Number.  It lets you know IMMEDIATELY – so that you can talk to that lead while they’re literally looking over your site.\r\n\r\nCLICK HERE https://talkwithwebvisitors.com to try out a Live Demo with Talk With Web Visitor now to see exactly how it works.\r\n\r\nTime is money when it comes to connecting with leads – the difference between contacting someone within 5 minutes versus 30 minutes later can be huge – like 100 times better!\r\n\r\nThat’s why we built out our new SMS Text With Lead feature… because once you’ve captured the visitor’s phone number, you can automatically start a text message (SMS) conversation.\r\n  \r\nThink about the possibilities – even if you don’t close a deal then and there, you can follow up with text messages for new offers, content links, even just “how you doing?” notes to build a relationship.\r\n\r\nWouldn’t that be cool?\r\n\r\nCLICK HERE https://talkwithwebvisitors.com to discover what Talk With Web Visitor can do for your business.\r\n\r\nYou could be converting up to 100X more leads today!\r\nEric\r\n\r\nPS: Talk With Web Visitor offers a FREE 14 days trial – and it even includes International Long Distance Calling. \r\nYou have customers waiting to talk with you right now… don’t keep them waiting. \r\nCLICK HERE https://talkwithwebvisitors.com to try Talk With Web Visitor now.\r\n\r\nIf you\'d like to unsubscribe click here http://talkwithwebvisitors.com/unsubscribe.aspx?d=jktradeinternational.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (106, 'Ashly', 'Lysaght', 'ashly@sendbulkmails.com', 'Use SendBulkMails.com to run email campaigns from your own private dashboard.\r\n\r\nCold emails are allowed and won\'t get you blocked :)\r\n\r\n- 1Mil emails / mo @ $99 USD\r\n- Dedicated IP and Domain Included\r\n- Detailed statistical reports (delivery, bounce, clicks etc.)\r\n- Quick and easy setup with extended support at no extra cost.\r\n- Cancel anytime!\r\n\r\nRegards,\r\nwww.SendBulkMails.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (107, 'Lonnie', 'Lonnie', 'info@jktradeinternational.com', 'You Won\'t Want To Miss This!  50 pcs medical surgical masks only $1.99 and N95 Mask $1.79 each.  \r\n\r\nOnly 10 orders left!  Get yours here: pharmacyusa.online\r\n\r\nThank You,\r\n\r\nContact Us');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (108, 'Mike Lewis', 'Mike Lewis', 'see-email-in-message@monkeydigital.co', 'Hi there \r\n \r\nDo you want a quick boost in ranks and sales for your jktradeinternational.com website? \r\nHaving a high DA score, always helps \r\n \r\nGet your jktradeinternational.com to have DA between 40 and 50 points in Moz DA with us today and rip the benefits of such a great feat. \r\n \r\nSee our offers here: \r\nhttps://www.monkeydigital.co/product/moz-da50-seo-plan/ \r\n \r\nNEW: \r\nhttps://www.monkeydigital.co/product/ahrefs-dr60/ \r\n \r\n \r\nthank you \r\nMike Lewis\r\n \r\nsupport@monkeydigital.co');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (109, 'Eric', 'Jones', 'eric.jones.z.mail@gmail.com', 'Cool website!\r\n\r\nMy name’s Eric, and I just found your site - jktradeinternational.com - while surfing the net. You showed up at the top of the search results, so I checked you out. Looks like what you’re doing is pretty cool.\r\n \r\nBut if you don’t mind me asking – after someone like me stumbles across jktradeinternational.com, what usually happens?\r\n\r\nIs your site generating leads for your business? \r\n \r\nI’m guessing some, but I also bet you’d like more… studies show that 7 out 10 who land on a site wind up leaving without a trace.\r\n\r\nNot good.\r\n\r\nHere’s a thought – what if there was an easy way for every visitor to “raise their hand” to get a phone call from you INSTANTLY… the second they hit your site and said, “call me now.”\r\n\r\nYou can –\r\n  \r\nTalk With Web Visitor is a software widget that’s works on your site, ready to capture any visitor’s Name, Email address and Phone Number.  It lets you know IMMEDIATELY – so that you can talk to that lead while they’re literally looking over your site.\r\n\r\nCLICK HERE https://talkwithwebvisitors.com to try out a Live Demo with Talk With Web Visitor now to see exactly how it works.\r\n\r\nTime is money when it comes to connecting with leads – the difference between contacting someone within 5 minutes versus 30 minutes later can be huge – like 100 times better!\r\n\r\nThat’s why we built out our new SMS Text With Lead feature… because once you’ve captured the visitor’s phone number, you can automatically start a text message (SMS) conversation.\r\n  \r\nThink about the possibilities – even if you don’t close a deal then and there, you can follow up with text messages for new offers, content links, even just “how you doing?” notes to build a relationship.\r\n\r\nWouldn’t that be cool?\r\n\r\nCLICK HERE https://talkwithwebvisitors.com to discover what Talk With Web Visitor can do for your business.\r\n\r\nYou could be converting up to 100X more leads today!\r\nEric\r\n\r\nPS: Talk With Web Visitor offers a FREE 14 days trial – and it even includes International Long Distance Calling. \r\nYou have customers waiting to talk with you right now… don’t keep them waiting. \r\nCLICK HERE https://talkwithwebvisitors.com to try Talk With Web Visitor now.\r\n\r\nIf you\'d like to unsubscribe click here http://talkwithwebvisitors.com/unsubscribe.aspx?d=jktradeinternational.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (110, 'Mike Kingsman\r\nNE', 'Mike Kingsman\r\nNE', 'no-replytap@gmail.com', 'Greetings \r\n \r\nI have just checked  jktradeinternational.com for its Local SEO ranks and seen that your website could use a boost. \r\n \r\nWe will increase your Local Ranks organically and safely, using only whitehat methods, while providing Google maps and website offsite work at the same time. \r\n \r\nPlease check our services below, we offer SEO at cheap rates. \r\nhttps://speed-seo.net/product/local-seo-package/ \r\n \r\nStart increasing your local visibility with us, today! \r\n \r\nregards \r\nMike Kingsman\r\n \r\nSpeed SEO Digital Agency \r\nsupport@speed-seo.net');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (111, 'Odessa', 'Odessa', 'info@jktradeinternational.com', 'You Won\'t Want To Miss This!  \r\n\r\nBuy N95 Mask only $1.69 each and get 10 pcs of medical surgical masks for FREE.  \r\n\r\nLimited Time Offer! + Fast Shipping!  Get yours here: pharmacyusa.online\r\n\r\nMany Thanks,\r\n\r\nContact Us');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (112, 'Eric', 'Jones', 'eric.jones.z.mail@gmail.com', 'Hey, my name’s Eric and for just a second, imagine this…\r\n\r\n- Someone does a search and winds up at jktradeinternational.com.\r\n\r\n- They hang out for a minute to check it out.  “I’m interested… but… maybe…”\r\n\r\n- And then they hit the back button and check out the other search results instead. \r\n\r\n- Bottom line – you got an eyeball, but nothing else to show for it.\r\n\r\n- There they go.\r\n\r\nThis isn’t really your fault – it happens a LOT – studies show 7 out of 10 visitors to any site disappear without leaving a trace.\r\n\r\nBut you CAN fix that.\r\n\r\nTalk With Web Visitor is a software widget that’s works on your site, ready to capture any visitor’s Name, Email address and Phone Number.  It lets you know right then and there – enabling you to call that lead while they’re literally looking over your site.\r\n\r\nCLICK HERE http://talkwithcustomer.com to try out a Live Demo with Talk With Web Visitor now to see exactly how it works.\r\n\r\nTime is money when it comes to connecting with leads – the difference between contacting someone within 5 minutes versus 30 minutes later can be huge – like 100 times better!\r\n\r\nPlus, now that you have their phone number, with our new SMS Text With Lead feature you can automatically start a text (SMS) conversation… so even if you don’t close a deal then, you can follow up with text messages for new offers, content links, even just “how you doing?” notes to build a relationship.\r\n\r\nStrong stuff.\r\n\r\nCLICK HERE http://talkwithcustomer.com to discover what Talk With Web Visitor can do for your business.\r\n\r\nYou could be converting up to 100X more leads today!\r\n\r\nEric\r\nPS: Talk With Web Visitor offers a FREE 14 days trial – and it even includes International Long Distance Calling. \r\nYou have customers waiting to talk with you right now… don’t keep them waiting. \r\nCLICK HERE http://talkwithcustomer.com to try Talk With Web Visitor now.\r\n\r\nIf you\'d like to unsubscribe click here http://talkwithcustomer.com/unsubscribe.aspx?d=jktradeinternational.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (113, 'Mike Campbell', 'Mike Campbell', 'no-reply@google.com', 'Hi there \r\n \r\nI have just took a look on your SEO for  jktradeinternational.com for its SEO metrics and saw that your website could use an upgrade. \r\n \r\nWe will enhance your SEO metrics and ranks organically and safely, using only whitehat methods, while providing monthly reports and outstanding support. \r\n \r\nPlease check our pricelist here, we offer SEO at cheap rates. \r\nhttps://www.hilkom-digital.de/cheap-seo-packages/ \r\n \r\nStart improving your sales and leads with us, today! \r\n \r\nregards \r\nMike Campbell\r\n \r\nHilkom Digital Team \r\nsupport@hilkom-digital.de');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (114, 'Georgetta', 'Georgetta', 'georgetta@jktradeinternational.com', 'Good Morning \r\n \r\nBuy all styles of Ray-Ban Sunglasses only 19.99 dollars.  If interested, please visit our site: framesoutlet.online\r\n \r\nEnjoy, \r\n \r\njktradeinternational.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (960000, 'Allison', 'Neidig', 'allison@sesforyou.com', 'Hey, \r\n\r\nListen, business is tough right now for most people.  \r\n\r\nDoes this sound like your situation?\r\n\r\n-Not enough quality leads?\r\n-Not enough revenue?\r\n-Always looking for more business?\r\n-Working too hard?\r\n\r\nI have the solution to help make this a great year for your business.\r\n\r\nI will show you how to Drive Revenue, Sales and Commissions...during the day and more importantly while you sleep...\r\n \r\n==> https://sesforyou.com\r\n \r\nRegards,\r\nSesForYou.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (960001, 'Eric', 'Jones', 'eric.jones.z.mail@gmail.com', 'Cool website!\r\n\r\nMy name’s Eric, and I just found your site - jktradeinternational.com - while surfing the net. You showed up at the top of the search results, so I checked you out. Looks like what you’re doing is pretty cool.\r\n \r\nBut if you don’t mind me asking – after someone like me stumbles across jktradeinternational.com, what usually happens?\r\n\r\nIs your site generating leads for your business? \r\n \r\nI’m guessing some, but I also bet you’d like more… studies show that 7 out 10 who land on a site wind up leaving without a trace.\r\n\r\nNot good.\r\n\r\nHere’s a thought – what if there was an easy way for every visitor to “raise their hand” to get a phone call from you INSTANTLY… the second they hit your site and said, “call me now.”\r\n\r\nYou can –\r\n  \r\nTalk With Web Visitor is a software widget that’s works on your site, ready to capture any visitor’s Name, Email address and Phone Number.  It lets you know IMMEDIATELY – so that you can talk to that lead while they’re literally looking over your site.\r\n\r\nCLICK HERE https://talkwithwebvisitors.com to try out a Live Demo with Talk With Web Visitor now to see exactly how it works.\r\n\r\nTime is money when it comes to connecting with leads – the difference between contacting someone within 5 minutes versus 30 minutes later can be huge – like 100 times better!\r\n\r\nThat’s why we built out our new SMS Text With Lead feature… because once you’ve captured the visitor’s phone number, you can automatically start a text message (SMS) conversation.\r\n  \r\nThink about the possibilities – even if you don’t close a deal then and there, you can follow up with text messages for new offers, content links, even just “how you doing?” notes to build a relationship.\r\n\r\nWouldn’t that be cool?\r\n\r\nCLICK HERE https://talkwithwebvisitors.com to discover what Talk With Web Visitor can do for your business.\r\n\r\nYou could be converting up to 100X more leads today!\r\nEric\r\n\r\nPS: Talk With Web Visitor offers a FREE 14 days trial – and it even includes International Long Distance Calling. \r\nYou have customers waiting to talk with you right now… don’t keep them waiting. \r\nCLICK HERE https://talkwithwebvisitors.com to try Talk With Web Visitor now.\r\n\r\nIf you\'d like to unsubscribe click here http://talkwithwebvisitors.com/unsubscribe.aspx?d=jktradeinternational.com');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (960002, 'Dallas', 'Dallas', 'dallas@jktradeinternational.com', 'The #1 Best Dog Bed Of 2021\r\nGet yours now, we\'re currently having a sale & Free Shipping\r\nShop now: dogloverclub.store\r\n\r\nContact Us');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (960003, 'Magnolia', 'Magnolia', 'magnolia@jktradeinternational.com', 'Morning\r\n\r\nBuy face mask to protect your loved ones from the deadly CoronaVirus.  We wholesale N95 Masks and Surgical Masks for both adult and kids.  The prices begin at $0.19 each.  If interested, please check our site: pharmacyoutlets.online\r\n\r\nSincerely,\r\n\r\nContact Us');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (960004, 'Sibyl', 'Sibyl', 'sibyl@jktradeinternational.com', 'Hey there \r\n\r\nThe complete selection of all Ray-Ban sunglasses styles available online and only 19.99 dollars. \r\n\r\nInsanely special offer for the next 24 hours only! Get yours here: designerframes.online\r\n\r\nYou Won\'t Want To Miss This!\r\n\r\nHave a great time, \r\n\r\nSibyl\r\nContact Us');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (960005, 'Mike Oakman', 'Mike Oakman', 'see-email-in-message@monkeydigital.co', 'Hi there \r\n \r\nDo you want a quick boost in ranks and sales for your jktradeinternational.com website? \r\nHaving a high DA score, always helps \r\n \r\nGet your jktradeinternational.com to have a DA between 50 to 60 points in Moz with us today and rip the benefits of such a great feat. \r\n \r\nSee our offers here: \r\nhttps://www.monkeydigital.co/product/moz-da50-seo-plan/ \r\n \r\nNEW: \r\nhttps://www.monkeydigital.co/product/ahrefs-dr60/ \r\n \r\n \r\nthank you \r\nMike Oakman\r\n \r\nsupport@monkeydigital.co \r\nMonkey Digital');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (960006, 'Rolando', 'Rolando', 'rolando@jktradeinternational.com', 'EASE YOUR PAIN IN 10 MINUTES EFFORTLESSLY\r\n\r\nBe Free from Neck Pain\r\nTry NeckFlexer & Relieve Neck Pain Effortlessly In 10 Min!\r\nSave 50% OFF + FREE Worldwide Shipping\r\n\r\nShop Now: neckflexer.online\r\n\r\nRolando');
+INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `message`) VALUES (960007, 'Joseph', 'Davis', 'joseph@directbizlending.xyz', 'Hello,\r\nI hope you\'re having a great day and staying safe!\r\n\r\nAre you looking for working capital to further grow and expand your business?\r\n\r\nIf so, put the power of a direct lender to work for you.\r\n\r\nWe provide loans up to 500k without requiring good credit or collateral. This is because be base our funding decisions off your \r\ntotal bank deposits, and we approve over 95% of all businesses!\r\n\r\nPlus, we provide you a funding decision within 30 seconds without submitting a single document, and funding the very next day.\r\n\r\nVisit www.directbizlending.xyz to get your INSTANT APPROVAL now! Applying does NOT affect your credit!\r\n\r\nAlso, please check out this video to see all the funding options we have available for you.  www.directbizlending.xyz/video\r\n\r\nThanks again and we look forward to funding you soon. \r\n\r\n\r\nWarm Regards,\r\n\r\nJoseph Davis\r\nDirect Biz Lending\r\nwww.directbizlending.xyz');
+
 
 #
 # TABLE STRUCTURE FOR: countries
@@ -570,21 +646,21 @@ DROP TABLE IF EXISTS `crypto_payments`;
 
 CREATE TABLE `crypto_payments` (
   `paymentID` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `boxID` int(11) unsigned NOT NULL DEFAULT '0',
+  `boxID` int(11) unsigned NOT NULL DEFAULT 0,
   `boxType` enum('paymentbox','captchabox') NOT NULL,
   `orderID` varchar(50) NOT NULL DEFAULT '',
   `userID` varchar(50) NOT NULL DEFAULT '',
   `countryID` varchar(3) NOT NULL DEFAULT '',
   `coinLabel` varchar(6) NOT NULL DEFAULT '',
-  `amount` double(20,8) NOT NULL DEFAULT '0.00000000',
-  `amountUSD` double(20,8) NOT NULL DEFAULT '0.00000000',
-  `unrecognised` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `amount` double(20,8) NOT NULL DEFAULT 0.00000000,
+  `amountUSD` double(20,8) NOT NULL DEFAULT 0.00000000,
+  `unrecognised` tinyint(1) unsigned NOT NULL DEFAULT 0,
   `addr` varchar(34) NOT NULL DEFAULT '',
   `txID` char(64) NOT NULL DEFAULT '',
   `txDate` datetime DEFAULT NULL,
-  `txConfirmed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `txConfirmed` tinyint(1) unsigned NOT NULL DEFAULT 0,
   `txCheckDate` datetime DEFAULT NULL,
-  `processed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `processed` tinyint(1) unsigned NOT NULL DEFAULT 0,
   `processedDate` datetime DEFAULT NULL,
   `recordCreated` datetime DEFAULT NULL,
   PRIMARY KEY (`paymentID`),
@@ -620,13 +696,13 @@ CREATE TABLE `currency_info` (
   `currency_id` varchar(255) NOT NULL,
   `currency_name` varchar(255) NOT NULL,
   `currency_icon` text NOT NULL,
-  `currency_position` int(11) NOT NULL DEFAULT '0',
+  `currency_position` int(11) NOT NULL DEFAULT 0,
   `convertion_rate` float NOT NULL,
   `default_status` varchar(255) NOT NULL,
   PRIMARY KEY (`currency_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `currency_info` (`currency_id`, `currency_name`, `currency_icon`, `currency_position`, `convertion_rate`, `default_status`) VALUES ('ZFUXHWW83EM6QGP', 'USD', '$', 0, '1', '1');
+INSERT INTO `currency_info` (`currency_id`, `currency_name`, `currency_icon`, `currency_position`, `convertion_rate`, `default_status`) VALUES ('ZFUXHWW83EM6QGP', 'BDT', '৳', 0, '1', '1');
 
 
 #
@@ -649,13 +725,39 @@ CREATE TABLE `customer_information` (
   `zip` varchar(255) NOT NULL,
   `customer_mobile` varchar(100) NOT NULL,
   `customer_email` varchar(255) NOT NULL,
-  `image` text,
+  `image` text DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
   `company` varchar(255) DEFAULT NULL,
   `status` int(2) NOT NULL COMMENT '1=paid,2=credit',
   PRIMARY KEY (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('1QZOJ7EYZ8E9X82', 'Alfonzo Rohan', 'Alfonzo', 'Rohan', '', '', '', '', '', '', '', '18827207033', 'Ellie_Goodwin@hotmail.com', 'assets/dist/img/user.png', '6cf3a869d372ca3a92d46d39f81e3ccf', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('3EW4XOQH6HKHZIF', 'Dameon Bayer', 'Dameon', 'Bayer', '', '', '', '', '', '', '', '15338024322', 'normanward1940@gmail.com', 'assets/dist/img/user.png', '265e2d2846f8b0a350bbf721a7f4eb78', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('3JAMCKB9MEUV2IM', 'Annamarie Toy', 'Annamarie', 'Toy', '', '', '', '', '', '', '', '16516224949', 'timr@clearwire.net', 'assets/dist/img/user.png', 'a8f5a773ef805c870c29cafafb3e150a', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('5R6S1N5B2WNJGSG', 'Amiya Friesen', 'Amiya', 'Friesen', '', '', '', '', '', '', '', '11212628653', 'finance@supremedia.com', 'assets/dist/img/user.png', '29b132e43103818695c6997e57fae1a4', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('68SYHPBKCZYPRZR', 'Leonard Hansen', 'Leonard', 'Hansen', '', '', '', '', '', '', '', '17442631393', 'reply_swsgir_hsjlhduh_o@cpro20.com', 'assets/dist/img/user.png', '788854204e049853f5aee3cc64bdbeb2', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('81DKUEJ2XTZPVF3', 'Caroline Medhurst', 'Caroline', 'Medhurst', '', '', '', '', '', '', '', '18805567208', 'martin.koopmann@t-online.de', 'assets/dist/img/user.png', '864b82e9771236e7ef2cf555a75ad26d', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('8KLN5GYK5LPXBII', 'Hassie Bednar', 'Hassie', 'Bednar', '', '', '', '', '', '', '', '19513148091', 'kucharski.kyle@gmail.com', 'assets/dist/img/user.png', '0f4454cb30c03dce6ae870bbbaa97bcd', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('AHLB3Y8UKMGN1GA', 'Alberta Lubowitz', 'Alberta', 'Lubowitz', '', '', '', '', '', '', '', '11219402225', 'lizedmonds83@gmail.com', 'assets/dist/img/user.png', 'abbf8add5f6dcdf064f8290558a96aa4', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('CE7LV3392HGL21W', 'Jaiden Upton', 'Jaiden', 'Upton', '', '', '', '', '', '', '', '15742878581', 'rochaalex110@gmail.com', 'assets/dist/img/user.png', '8ed7723e58b9b43c76fe0b8d0fa0fe81', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('DRM9ALOBH6X72MK', 'Vida Thompson', 'Vida', 'Thompson', '', '', '', '', '', '', '', '19642369580', 'dansartango@aol.com', 'assets/dist/img/user.png', '025985262e1cad9daf79d2b2d9c19b41', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('FCDP2KUSJGSMYYQ', 'Garrick Cronin', 'Garrick', 'Cronin', '', '', '', '', '', '', '', '12130052475', 'jhankish@yahoo.com', 'assets/dist/img/user.png', '3fc847be0c270b41b0c99f022fcc56d9', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('GBKARBGF4EOO83I', 'Cassandre Dicki', 'Cassandre', 'Dicki', '', '', '', '', '', '', '', '16114517135', 'kateimoore802@gmail.com', 'assets/dist/img/user.png', 'c69434d33a2d67cf77f068a0ab061e3c', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('HT9U9SW9966BO4C', 'Eashan Glass  House ', 'Eashan Glass ', 'House ', '', '', '', '', '', '', '', '01826112525', 'joypal889@gmail.com', 'assets/dist/img/user.png', '67070fa4f7ec6c0e4a2e90bbb1f5bce9', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('K6WQBDH6GQQ61J7', 'Kainaat Trade International Company Ltd', NULL, '', 'J.C Guho Road, Nandankanan, ', 'Nandankanan,', 'Nandankanan,', 'Chittagong ', 'Chattagam', '18', '4000', '01627333355', 'kainaat.trade.international.co@gmail.com', NULL, '', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('LO9CK2TILOUPVNM', 'Retta Deckow', 'Retta', 'Deckow', '', '', '', '', '', '', '', '11851684791', 'Thad_Maggio35@hotmail.com', 'assets/dist/img/user.png', '2bf2f3c832a19f7ec1ac534a5acd1b2f', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('M9BZPHLYEEVSZ45', 'Florida Daniel', 'Florida', 'Daniel', '', '', '', '', '', '', '', '10640462226', 'aumi.ton.10@gmail.com', 'assets/dist/img/user.png', '530e51029aaf950fb82c98b8e8a83aac', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('O6ANQBOWUXHBYOP', 'Md Alauddin ', 'Md', 'Alauddin ', '', '', '', '', '', '', '', '01318810510', 'alauddin00731@gmail.com', 'assets/dist/img/user.png', 'c1d078b181c819c652df186bffa1437f', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('OZ1V6FEZB6NKZMN', 'Jena Kunde', 'Jena', 'Kunde', '', '', '', '', '', '', '', '16259844778', 'julieb1256@msn.com', 'assets/dist/img/user.png', '2c8bc6dd30408cc0c5b8fe18be52e3f0', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('QTFNSXNSB6CB7QB', 'Richard Mayer', 'Richard', 'Mayer', '', '', '', '', '', '', '', '18848316708', 'requests@plateaupropertymgmt.com', 'assets/dist/img/user.png', 'd42ed18661ed10cee9a3ec041a73b9be', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('R7EWN3XLQ1E7GVH', 'Kevin Conn', 'Kevin', 'Conn', '', '', '', '', '', '', '', '13505461557', 'derek.s.pierce@gmail.com', 'assets/dist/img/user.png', '496bde1f598aadc4ec45e473849d892e', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('TJA3CEJUFO31W1K', 'Zion Rowe', 'Zion', 'Rowe', '', '', '', '', '', '', '', '18131879573', 'sasbock@orange.fr', 'assets/dist/img/user.png', 'd3e1b916cb2b17f86880ea9a8a1f6427', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('USBGL61EFCSNNLY', 'Emery Russel', 'Emery', 'Russel', '', '', '', '', '', '', '', '10387783891', 'kareemtope1@gmail.com', 'assets/dist/img/user.png', 'a287055e4760856347ae815b3a00876f', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('WC97BW9Y5BFNJS4', 'Hannah Carroll', 'Hannah', 'Carroll', '', '', '', '', '', '', '', '10726985939', 'jasonfontenot82@yahoo.com', 'assets/dist/img/user.png', '160c9a9f1e8b7d217d0e67e659995872', '', NULL, 1);
+INSERT INTO `customer_information` (`customer_id`, `customer_name`, `first_name`, `last_name`, `customer_short_address`, `customer_address_1`, `customer_address_2`, `city`, `state`, `country`, `zip`, `customer_mobile`, `customer_email`, `image`, `password`, `token`, `company`, `status`) VALUES ('ZAT91I1OVR2PYOA', 'Nathanael Schamberger', 'Nathanael', 'Schamberger', '', '', '', '', '', '', '', '10243039751', 'kimmyhagan@yahoo.com', 'assets/dist/img/user.png', 'da848d434ea642fc1f9e571909351fd8', '', NULL, 1);
+
 
 #
 # TABLE STRUCTURE FOR: customer_ledger
@@ -682,6 +784,12 @@ CREATE TABLE `customer_ledger` (
   KEY `receipt_no_4` (`receipt_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `customer_ledger` (`transaction_id`, `customer_id`, `invoice_no`, `quotation_no`, `order_no`, `receipt_no`, `amount`, `description`, `payment_type`, `cheque_no`, `date`, `status`) VALUES ('KVFZJU6BTY7ZNGD', 'K6WQBDH6GQQ61J7', 'DV7Q3QQI1N7LIYD', NULL, '', 'GWRT5IYK1F81OPK', '20', 'ITP', '1', '', '10-28-2020', 1);
+INSERT INTO `customer_ledger` (`transaction_id`, `customer_id`, `invoice_no`, `quotation_no`, `order_no`, `receipt_no`, `amount`, `description`, `payment_type`, `cheque_no`, `date`, `status`) VALUES ('12QUPDRRFA6UOI5', 'K6WQBDH6GQQ61J7', 'DV7Q3QQI1N7LIYD', NULL, '', NULL, '26', '', '', '', '10-28-2020', 1);
+INSERT INTO `customer_ledger` (`transaction_id`, `customer_id`, `invoice_no`, `quotation_no`, `order_no`, `receipt_no`, `amount`, `description`, `payment_type`, `cheque_no`, `date`, `status`) VALUES ('JPPXWCVQN11MUTN', 'K6WQBDH6GQQ61J7', 'RDHOJ6L73JV2HZL', NULL, '', 'PPSWEJLRKUUVJT7', '28574', 'ITP', '1', '', '10-28-2020', 1);
+INSERT INTO `customer_ledger` (`transaction_id`, `customer_id`, `invoice_no`, `quotation_no`, `order_no`, `receipt_no`, `amount`, `description`, `payment_type`, `cheque_no`, `date`, `status`) VALUES ('J97EB4ANY6BOEBS', 'K6WQBDH6GQQ61J7', 'RDHOJ6L73JV2HZL', NULL, '', NULL, '28574', '', '', '', '10-28-2020', 1);
+
+
 #
 # TABLE STRUCTURE FOR: customer_order
 #
@@ -692,7 +800,7 @@ CREATE TABLE `customer_order` (
   `customer_order_id` varchar(100) NOT NULL,
   `customer_id` varchar(100) NOT NULL,
   `shiping_id` varchar(100) NOT NULL,
-  `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `order_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `payment_method` varchar(100) NOT NULL,
   `total_bill` float NOT NULL,
   `order_status` int(2) NOT NULL,
@@ -771,6 +879,32 @@ CREATE TABLE `image_gallery` (
   PRIMARY KEY (`image_gallery_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('6J4E4GTZNXZN29Q', '31359986', 'my-assets/image/gallery/94ac33cd1b92899d03bae332b3f883ea.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('7F864BIKZ1VKPJV', '71884495', 'my-assets/image/gallery/88ce8e67fe89676c50456801e3272c11.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('93ZE16K8L2HKF6V', '22886814', 'my-assets/image/gallery/979d1b1c75ed854afc198be52585b3b1.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('C4V492DEOZJN2TA', '99588131', 'my-assets/image/gallery/d4910ed3868038c2eb900ed723641254.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('D31LF8R9AZUN856', '98128178', 'my-assets/image/gallery/e85686d83cc723faa4507ab78d7cea9e.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('HWQKNSCO9Y2TQZE', '69544126', 'my-assets/image/gallery/623cfe227c15763397714ad19785ae5a.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('IDLU6IUVC7SMPSM', '67354589', 'my-assets/image/gallery/60794c118ded80c87b358d29da26e1bb.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('KYVEJ4RNESG5E3M', '42741961', 'my-assets/image/gallery/27b58198c1a25c22d13eb56a696dfc43.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('L6PC9Z8M357QT2Z', '77555273', 'my-assets/image/gallery/a1218a8d790110702a8ef212c3bd7385.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('O6U75PNROP4Q6FE', '99831319', 'my-assets/image/gallery/4ec05f69cf5f68285c3ad53931549638.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('OCKDYAGNAD4NKIV', '22869924', 'my-assets/image/gallery/6852d080c2609ae87eaf395d1c91c278.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('R1YWG9M2QDGGOLK', '99664357', 'my-assets/image/gallery/eb20cadd2748f1c7d3f3d13908fdd917.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('R2CGF8IWT6MH2E8', '42737837', 'my-assets/image/gallery/4a98f1858ea9a5ec610877bfa7cde7aa.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('R5QW9WXV85ON1SA', '66429181', 'my-assets/image/gallery/513bb17449e4baa1898ee0cdcba7dcbf.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('RDGXCNON95XMZWU', '98366399', 'my-assets/image/gallery/0be1b974b5d1f88ed01c147a84341231.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('RE9P45B3DHRD4A2', '58974185', 'my-assets/image/gallery/d1687ef65395750de0fc0d79d6f30309.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('T4P8G15E39U9CCV', '41517943', 'my-assets/image/gallery/2cad2e8700f4712154d3b407e3716265.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('TNVUCXZB39YOHQL', '98366399', 'my-assets/image/gallery/f95b1f762116090e9daa3578188d8acf.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('UAVSVYXUQE4RCD8', '93578636', 'my-assets/image/gallery/3d50e1a0008d78ad8e1d4da1d669f338.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('VCX9H2DVPE9RPH8', '33315338', 'my-assets/image/gallery/f7d4e3b404019ecb38bfb11e21092841.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('WL5U1YGSDXFHNOU', '51664521', 'my-assets/image/gallery/eb7571889ebb6b0d772153db292092ab.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('WUV2UAOV44Y6354', '41848226', 'my-assets/image/gallery/e1c212f1f1ec88f2ac13eeca7316ce1f.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('Y4CRMV5FR5MYHGN', '42812618', 'my-assets/image/gallery/dbb84a32702cf0325d1392fa732c035a.jpg', 'null');
+INSERT INTO `image_gallery` (`image_gallery_id`, `product_id`, `image_url`, `img_thumb`) VALUES ('ZD84JRED2XINYUK', '72685772', 'my-assets/image/gallery/d236d8dd2acc324135cb71c8b5ae19ca.jpg', 'null');
+
+
 #
 # TABLE STRUCTURE FOR: invoice
 #
@@ -790,15 +924,19 @@ CREATE TABLE `invoice` (
   `total_discount` float DEFAULT NULL,
   `invoice_discount` float DEFAULT NULL COMMENT 'total_discount + invoice_discount',
   `service_charge` float DEFAULT NULL,
-  `shipping_charge` tinyint(4) NOT NULL DEFAULT '0',
+  `shipping_charge` tinyint(4) NOT NULL DEFAULT 0,
   `shipping_method` varchar(255) DEFAULT NULL,
   `paid_amount` float NOT NULL,
   `due_amount` float NOT NULL,
-  `invoice_details` text,
+  `invoice_details` text DEFAULT NULL,
   `status` int(2) NOT NULL,
   `invoice_status` int(11) NOT NULL COMMENT '1=shipped,2=cancel,3=pending,4=complete,5=processing,6=return',
   PRIMARY KEY (`invoice_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `invoice` (`invoice_id`, `quotation_id`, `order_id`, `customer_id`, `store_id`, `user_id`, `date`, `total_amount`, `invoice`, `total_discount`, `invoice_discount`, `service_charge`, `shipping_charge`, `shipping_method`, `paid_amount`, `due_amount`, `invoice_details`, `status`, `invoice_status`) VALUES ('DV7Q3QQI1N7LIYD', NULL, NULL, 'K6WQBDH6GQQ61J7', 'JSG794YZP94M2QF', '1', '10-28-2020', '26', '1000', '0', '0', '0', 0, '', '20', '6', '', 1, 4);
+INSERT INTO `invoice` (`invoice_id`, `quotation_id`, `order_id`, `customer_id`, `store_id`, `user_id`, `date`, `total_amount`, `invoice`, `total_discount`, `invoice_discount`, `service_charge`, `shipping_charge`, `shipping_method`, `paid_amount`, `due_amount`, `invoice_details`, `status`, `invoice_status`) VALUES ('RDHOJ6L73JV2HZL', NULL, NULL, 'K6WQBDH6GQQ61J7', 'JSG794YZP94M2QF', '1', '10-28-2020', '28574', '1001', '1099', '1099', '0', 0, '', '28574', '0', '', 1, 4);
+
 
 #
 # TABLE STRUCTURE FOR: invoice_details
@@ -821,6 +959,10 @@ CREATE TABLE `invoice_details` (
   PRIMARY KEY (`invoice_details_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `invoice_details` (`invoice_details_id`, `invoice_id`, `product_id`, `variant_id`, `store_id`, `quantity`, `rate`, `supplier_rate`, `total_price`, `discount`, `status`) VALUES ('9F2TMUIOSAWTWCV', 'DV7Q3QQI1N7LIYD', '16241948', 'DBQD7B1AGBAUZSS', 'JSG794YZP94M2QF', 1, '26', '25', '26', '0', 1);
+INSERT INTO `invoice_details` (`invoice_details_id`, `invoice_id`, `product_id`, `variant_id`, `store_id`, `quantity`, `rate`, `supplier_rate`, `total_price`, `discount`, `status`) VALUES ('JE92HAQFHE69YS8', 'RDHOJ6L73JV2HZL', '16241948', 'DBQD7B1AGBAUZSS', 'JSG794YZP94M2QF', 1099, '27', '25', '29673', '1', 1);
+
+
 #
 # TABLE STRUCTURE FOR: language
 #
@@ -830,9 +972,9 @@ DROP TABLE IF EXISTS `language`;
 CREATE TABLE `language` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `phrase` text NOT NULL,
-  `english` text,
+  `english` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1322 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1324 DEFAULT CHARSET=utf8;
 
 INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1, 'user_profile', 'User Profile');
 INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (2, 'setting', 'Setting');
@@ -1835,7 +1977,7 @@ INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1018, '5', '5');
 INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1019, '4', '4');
 INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1020, 'your_email_address_will_not_be_published', 'Your email address will not be published. Required fields are marked *');
 INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1021, 'shop_of_the_week', 'Shop Of The Week');
-INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1022, 'copyright', 'Copyright Â© 2018 Bdtask. All Rights Reserved');
+INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1022, 'copyright', 'Copyright Ã‚Â© 2018 Bdtask. All Rights Reserved');
 INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1023, 'app_link_status', 'App Link Status');
 INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1024, 'update_your_software_setting', 'Update Your Software Setting');
 INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1025, 'update_color_setting', 'Update Color Setting');
@@ -2111,13 +2253,15 @@ INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1311, 'manage_states'
 INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1312, 'add_state', 'Add State');
 INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1313, 'edit_state', 'Edit State');
 INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1314, 'connect_with_us', 'Connect With Us');
-INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1315, 'footer_block_1', 'Footer Block 1');
-INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1316, 'footer_block_2', 'Footer Block 2');
-INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1317, 'footer_block_3', 'Footer Block 3');
-INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1318, 'footer_block_4', 'Footer Block 4');
-INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1319, 'show', 'Show');
-INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1320, 'hide', 'Hide');
-INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1321, 'mobile_settings', 'Mobile Settings (For website Footer)');
+INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1315, 'see_deals', 'See Deals');
+INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1316, 'footer_block_1', 'Footer Block 1');
+INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1317, 'footer_block_2', 'Footer Block 2');
+INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1318, 'footer_block_3', 'Footer Block 3');
+INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1319, 'footer_block_4', 'Footer Block 4');
+INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1320, 'show', 'Show');
+INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1321, 'hide', 'Hide');
+INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1322, 'mobile_settings', 'Mobile Settings (For website Footer)');
+INSERT INTO `language` (`id`, `phrase`, `english`) VALUES (1323, 'social_share', 'Social Share');
 
 
 #
@@ -2130,8 +2274,8 @@ CREATE TABLE `link_page` (
   `link_page_id` varchar(100) NOT NULL,
   `page_id` varchar(255) NOT NULL,
   `language_id` varchar(255) NOT NULL,
-  `headlines` text,
-  `image` text,
+  `headlines` text DEFAULT NULL,
+  `image` text DEFAULT NULL,
   `details` text NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`link_page_id`)
@@ -2140,7 +2284,7 @@ CREATE TABLE `link_page` (
 INSERT INTO `link_page` (`link_page_id`, `page_id`, `language_id`, `headlines`, `image`, `details`, `status`) VALUES ('1O7RLB4BQ1HR94K', '3', 'bangla', '', 'my-assets/image/link_page/8f5013440d835b56c55867a9125f0e4c.jpg', '', 1);
 INSERT INTO `link_page` (`link_page_id`, `page_id`, `language_id`, `headlines`, `image`, `details`, `status`) VALUES ('E3XOZ4N7DM8IG4P', '1', 'english', '<p>ABOUT US<br></p>', 'my-assets/image/link_page/2eaa2ed9eee24c9c08feb568d26f54e7.jpg', '<p><span xss=removed>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</span><br></p>', 1);
 INSERT INTO `link_page` (`link_page_id`, `page_id`, `language_id`, `headlines`, `image`, `details`, `status`) VALUES ('PQA7JY6HKXTHW81', '1', 'bangla', '<p><br></p>', 'my-assets/image/link_page/2eaa2ed9eee24c9c08feb568d26f54e7.jpg', '<p><br></p>', 1);
-INSERT INTO `link_page` (`link_page_id`, `page_id`, `language_id`, `headlines`, `image`, `details`, `status`) VALUES ('SCHKM9YIFLEJ7OV', '3', 'english', '<p>Delivery Infomation<br></p>', 'my-assets/image/link_page/8f5013440d835b56c55867a9125f0e4c.jpg', '<p>we are trying to deliver our product  very short time<br></p>', 1);
+INSERT INTO `link_page` (`link_page_id`, `page_id`, `language_id`, `headlines`, `image`, `details`, `status`) VALUES ('SCHKM9YIFLEJ7OV', '3', 'english', '<p>Delivery Infomation<br></p>', 'my-assets/image/link_page/8f5013440d835b56c55867a9125f0e4c.jpg', '<p>we are trying to deliver our productÂ  very short time<br></p>', 1);
 
 
 #
@@ -2156,8 +2300,8 @@ CREATE TABLE `message` (
   `subject` varchar(255) NOT NULL,
   `message` text NOT NULL,
   `datetime` datetime NOT NULL,
-  `sender_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0=unseen, 1=seen, 2=delete',
-  `receiver_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0=unseen, 1=seen, 2=delete',
+  `sender_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=unseen, 1=seen, 2=delete',
+  `receiver_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=unseen, 1=seen, 2=delete',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2170,10 +2314,10 @@ DROP TABLE IF EXISTS `module`;
 CREATE TABLE `module` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `directory` varchar(100) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2232,7 +2376,7 @@ CREATE TABLE `order_delivery` (
   `order_delivery_id` varchar(255) NOT NULL,
   `delivery_id` varchar(255) NOT NULL,
   `order_id` varchar(255) NOT NULL,
-  `details` text
+  `details` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
@@ -2266,7 +2410,7 @@ CREATE TABLE `order_payment` (
   `order_payment_id` varchar(255) NOT NULL,
   `payment_id` varchar(255) NOT NULL,
   `order_id` varchar(255) NOT NULL,
-  `details` text
+  `details` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
@@ -2319,7 +2463,7 @@ CREATE TABLE `our_location` (
 
 INSERT INTO `our_location` (`location_id`, `language_id`, `headline`, `details`, `position`, `status`) VALUES (1, 'english', 'Head Office Location <br>', '<p>We sell our product all over the world . <br></p>', 1, 1);
 INSERT INTO `our_location` (`location_id`, `language_id`, `headline`, `details`, `position`, `status`) VALUES (2, 'bangla', '', '', 1, 1);
-INSERT INTO `our_location` (`location_id`, `language_id`, `headline`, `details`, `position`, `status`) VALUES (3, 'english', '<p>Africa </p>', '<p>our second location at Cameroon in Africa.<br></p>', 2, 1);
+INSERT INTO `our_location` (`location_id`, `language_id`, `headline`, `details`, `position`, `status`) VALUES (3, 'english', '<p>AfricaÂ </p>', '<p>our second location at Cameroon in Africa.<br></p>', 2, 1);
 INSERT INTO `our_location` (`location_id`, `language_id`, `headline`, `details`, `position`, `status`) VALUES (4, 'bangla', '', '', 2, 1);
 
 
@@ -2335,16 +2479,17 @@ CREATE TABLE `pay_withs` (
   `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `link` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(4) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `pay_withs` (`id`, `title`, `image`, `link`, `status`, `created_at`, `updated_at`) VALUES (2, 'mastercard', '54e64b679aeba35bb2888d303342b75b.png', 'http://bdtask.com', 1, '2019-01-01 07:39:14', '2019-03-09 01:04:19');
-INSERT INTO `pay_withs` (`id`, `title`, `image`, `link`, `status`, `created_at`, `updated_at`) VALUES (5, 'visa', 'ab52aa6b0653710cdd75ce58d2faf7ab.png', 'https://visa.com', 1, '2019-01-01 22:14:38', '2019-03-09 01:04:19');
-INSERT INTO `pay_withs` (`id`, `title`, `image`, `link`, `status`, `created_at`, `updated_at`) VALUES (6, 'paypal', '56e595d709a8a4d500b7e893a51acc0c.png', 'https://paypal.com', 1, '2019-01-01 22:24:35', '2019-03-09 01:04:19');
-INSERT INTO `pay_withs` (`id`, `title`, `image`, `link`, `status`, `created_at`, `updated_at`) VALUES (7, 'bkash', '15d320188b47f3f8f00866a26dd88403.jpg', 'https://bkash.com', 1, '2018-12-11 00:22:39', '2019-03-09 01:04:19');
-INSERT INTO `pay_withs` (`id`, `title`, `image`, `link`, `status`, `created_at`, `updated_at`) VALUES (8, 'rocket', 'dd6425bd07943dcc90698b3d0e81187f.jpeg', 'http://rocket.com', 1, '2019-03-09 01:04:19', '2019-03-09 01:04:19');
+INSERT INTO `pay_withs` (`id`, `title`, `image`, `link`, `status`, `created_at`, `updated_at`) VALUES (2, 'MasterCard', '54e64b679aeba35bb2888d303342b75b.png', 'http://bdtask.com', 1, '2019-01-01 07:39:14', '2020-10-31 19:12:05');
+INSERT INTO `pay_withs` (`id`, `title`, `image`, `link`, `status`, `created_at`, `updated_at`) VALUES (5, 'VISA', 'ab52aa6b0653710cdd75ce58d2faf7ab.png', 'https://visa.com', 1, '2019-01-01 22:14:38', '2020-10-31 19:12:20');
+INSERT INTO `pay_withs` (`id`, `title`, `image`, `link`, `status`, `created_at`, `updated_at`) VALUES (6, 'Paypal', '56e595d709a8a4d500b7e893a51acc0c.png', 'https://paypal.com', 1, '2019-01-01 22:24:35', '2020-10-31 19:12:35');
+INSERT INTO `pay_withs` (`id`, `title`, `image`, `link`, `status`, `created_at`, `updated_at`) VALUES (7, 'bKash', '15d320188b47f3f8f00866a26dd88403.jpg', 'https://bkash.com', 1, '2018-12-11 00:22:39', '2020-10-31 19:12:53');
+INSERT INTO `pay_withs` (`id`, `title`, `image`, `link`, `status`, `created_at`, `updated_at`) VALUES (8, 'Rocket', 'dd6425bd07943dcc90698b3d0e81187f.jpeg', 'http://rocket.com', 1, '2019-03-09 01:04:19', '2020-10-31 19:13:09');
+INSERT INTO `pay_withs` (`id`, `title`, `image`, `link`, `status`, `created_at`, `updated_at`) VALUES (9, 'BANK', 'c24b8c81fc5f7b5688a669029a539f37.png', '', 1, '2021-02-06 11:52:32', '2021-02-06 11:53:32');
 
 
 #
@@ -2405,9 +2550,9 @@ CREATE TABLE `payment_gateway` (
   `shop_id` varchar(100) NOT NULL,
   `secret_key` varchar(100) NOT NULL,
   `paypal_email` varchar(250) DEFAULT NULL,
-  `paypal_client_id` text,
-  `currency` text,
-  `is_live` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=live,0=sandbox',
+  `paypal_client_id` text DEFAULT NULL,
+  `currency` text DEFAULT NULL,
+  `is_live` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=live,0=sandbox',
   `image` varchar(255) DEFAULT NULL,
   `status` int(2) NOT NULL,
   PRIMARY KEY (`id`)
@@ -2433,12 +2578,12 @@ CREATE TABLE `payment_history` (
   `order_id` varchar(100) DEFAULT NULL,
   `order_no` varchar(30) NOT NULL,
   `trans_id` varchar(100) DEFAULT NULL,
-  `amount` float(10,2) NOT NULL DEFAULT '0.00',
-  `store_amount` float(10,2) NOT NULL DEFAULT '0.00',
+  `amount` float(10,2) NOT NULL DEFAULT 0.00,
+  `store_amount` float(10,2) NOT NULL DEFAULT 0.00,
   `status` varchar(20) DEFAULT NULL,
   `trans_date` varchar(100) DEFAULT NULL,
   `currency` varchar(10) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2455,22 +2600,27 @@ CREATE TABLE `product_category` (
   `top_menu` int(11) NOT NULL,
   `menu_pos` int(11) NOT NULL,
   `cat_image` text NOT NULL,
-  `cat_favicon` text,
+  `cat_favicon` text DEFAULT NULL,
   `cat_type` int(11) DEFAULT NULL COMMENT '1=parent,2=sub caregory',
   `status` int(11) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('ADXL7ARPEMKH3DI', 'F9GNCBBPCOIEN67', 'Category_7', 0, 7, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 2, 1);
-INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('CSSBW6HW54N62HE', NULL, 'Category_8', 0, 8, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 1, 1);
-INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('F9GNCBBPCOIEN67', '', 'Category_1', 1, 1, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 1, 1);
-INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('MY58TSN15SDZ36E', NULL, 'Category_2', 1, 2, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 1, 1);
-INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('OER22ASL88IWCCI', NULL, 'Category_10', 0, 10, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 1, 1);
-INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('QK1RF1L7G5ID28Q', NULL, 'Category_6', 0, 6, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 1, 1);
-INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('S8UEL9N18YX7481', 'F9GNCBBPCOIEN67', 'Category_9', 0, 9, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 2, 1);
-INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('UJRTM2YY6941UGA', 'F9GNCBBPCOIEN67', 'Category_3', 1, 3, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 2, 1);
-INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('UZ2UQ4PV74K8JK9', 'F9GNCBBPCOIEN67', 'Category_5', 1, 5, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 2, 1);
-INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('WLFACXRF6T3U3UV', NULL, 'Category_4', 1, 4, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 1, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('1GY243DVZBJNAR2', '', 'Glass Door Handle', 1, 7, 'my-assets/image/category/f99a2fab94918620125dcb9f6f685336.JPG', 'my-assets/image/category/0a4c9b0751e018f10a6e97b1f1e4782c.JPG', 1, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('4QOIHLDX7GEYHJ5', '', 'Glass Paper', 1, 4, 'my-assets/image/category/f731e6e145682cb1ff81ca50f1a6660d.jpg', 'my-assets/image/category.png', 1, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('4U649KZ1UEHQEAT', 'C7R16HZYIO4LUUT', 'Vertical Blind', 0, 7, 'my-assets/image/category/e5174d202e09cf187e69d3f35c5d3d1e.png', 'my-assets/image/category.png', 2, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('5OYVYTQ1NCVGANE', NULL, 'Glass Door Accessories ', 0, 0, '', NULL, NULL, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('6SNQDTBE65LEGY5', '', 'False Ceiling Material', 1, 5, 'my-assets/image/category.png', 'my-assets/image/category.png', 1, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('7VSM1ELNKJO349J', '', 'Interior & Exterior', 1, 6, 'my-assets/image/category.png', 'my-assets/image/category.png', 1, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('9MQ3B4TJULDHQ45', '', 'Kainaat Wheel', 0, 1, 'my-assets/image/category/c9765200d4caa054b7b383ba9886a625.jpg', 'my-assets/image/category/c0dd3cbf722b4b3ad93b3546080d538d.jpg', 1, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('ADXL7ARPEMKH3DI', '', 'Hardware Accessories ', 1, 7, 'my-assets/image/category/fd9cbabb13dbf08d4084db62e3bcb52b.png', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 1, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('C7R16HZYIO4LUUT', '', 'Roller Blind', 0, 7, 'my-assets/image/category/7ce69e1518c11a42a7562c80bb17009f.png', 'my-assets/image/category.png', 1, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('DARWSJB6PVXK3MQ', '', '3D Wall Paper', 0, 1, 'my-assets/image/category/996cbb7a00ca778f4f26343aeae6c14e.jpg', 'my-assets/image/category/277dd36ba1c53d5a5defd6757d9c6ac6.jpg', 1, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('F9GNCBBPCOIEN67', '', 'Wall Paper', 1, 3, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 1, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('MY58TSN15SDZ36E', '', 'Window Roller', 1, 1, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/1da93fcfed3cff7d9e620b71da15c9d8.jpg', 1, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('OER22ASL88IWCCI', '', 'Door Window Accessories', 0, 10, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 1, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('W8U6GCEXHQEUPOB', '4U649KZ1UEHQEAT', 'Vanishing Blinds ', 0, 8, 'my-assets/image/category/edb9fea2d37ff7bc8fe2f468d44c5cb8.png', 'my-assets/image/category.png', 2, 1);
+INSERT INTO `product_category` (`category_id`, `parent_category_id`, `category_name`, `top_menu`, `menu_pos`, `cat_image`, `cat_favicon`, `cat_type`, `status`) VALUES ('WLFACXRF6T3U3UV', '', 'Sliding Lock & Door Lock', 1, 2, 'my-assets/image/category/77d14ea6ae1ed219556ece65858f9d57.jpg', 'my-assets/image/category/0c9839f47ecf49664d2f7985be6887e5.png', 1, 1);
 
 
 #
@@ -2489,38 +2639,62 @@ CREATE TABLE `product_information` (
   `supplier_price` float DEFAULT NULL,
   `unit` varchar(100) DEFAULT NULL,
   `product_model` varchar(100) NOT NULL,
-  `product_details` longtext,
-  `image_thumb` text,
+  `product_details` longtext DEFAULT NULL,
+  `image_thumb` text DEFAULT NULL,
   `brand_id` varchar(255) DEFAULT NULL,
-  `variants` text,
+  `variants` text DEFAULT NULL,
   `default_variant` varchar(255) DEFAULT NULL,
-  `type` text,
-  `best_sale` int(11) NOT NULL DEFAULT '0',
-  `onsale` int(11) NOT NULL DEFAULT '0',
+  `type` text DEFAULT NULL,
+  `best_sale` int(11) NOT NULL DEFAULT 0,
+  `onsale` int(11) NOT NULL DEFAULT 0,
   `onsale_price` float DEFAULT NULL,
-  `invoice_details` text,
+  `invoice_details` text DEFAULT NULL,
   `image_large_details` text NOT NULL,
-  `review` text,
-  `description` text,
-  `tag` text,
-  `specification` text,
+  `review` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `tag` text DEFAULT NULL,
+  `specification` text DEFAULT NULL,
   `video` varchar(255) DEFAULT NULL,
-  `status` int(2) DEFAULT '1',
+  `status` int(2) DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE KEY `product_model` (`product_model`),
   UNIQUE KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
-INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (1, '98366399', 'I3JRQQJSJ67GG2ZTEEU1', 'F9GNCBBPCOIEN67', 'Product_3', '200', '150', '', 'P3', 'product details', 'my-assets/image/product/thumb/5852af8e1870db74fb43e5234f8cbeb0.jpg', 'W6TGN2N16JUL5XA', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 0, 0, NULL, 'invoice details 1 ', 'my-assets/image/product/5852af8e1870db74fb43e5234f8cbeb0.jpg', 'review1', 'description 1', '', 'spec 1', '', 1);
-INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (2, '25869255', 'I3JRQQJSJ67GG2ZTEEU1', 'F9GNCBBPCOIEN67', 'Product_4', '300', '250', '', 'P4', 'product details', 'my-assets/image/product/thumb/d8aac1ebd37a1d16e6fcbe0c4a339956.jpg', 'T36ZSIXTRZVPVEM', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 1, 0, '300', 'invoice details 2', 'my-assets/image/product/d8aac1ebd37a1d16e6fcbe0c4a339956.jpg', 'review2', 'description 2', '', 'spec 2', '', 1);
-INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (3, '21473628', 'I3JRQQJSJ67GG2ZTEEU1', 'F9GNCBBPCOIEN67', 'Product_5', '400', '350', '', 'P5', '', 'my-assets/image/product/thumb/f993579035d7691c3d367ad37bf910d3.jpg', '7XX8FG7MH7FGS87', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 1, 0, NULL, '', 'my-assets/image/product/f993579035d7691c3d367ad37bf910d3.jpg', '', '', '', '', '', 1);
-INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (4, '62572489', 'I3JRQQJSJ67GG2ZTEEU1', 'F9GNCBBPCOIEN67', 'Product_6', '500', '470', '', 'P6', '', 'my-assets/image/product/thumb/e8d15852cbbde19f38b40309b2d6e0e1.jpg', '1JDEMJYYXH1K7UQ', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 1, 0, NULL, '', 'my-assets/image/product/e8d15852cbbde19f38b40309b2d6e0e1.jpg', '', '', '', '', '', 1);
-INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (5, '11389311', 'I3JRQQJSJ67GG2ZTEEU1', 'F9GNCBBPCOIEN67', 'Product_7', '600', '570', '', 'P7', '', 'my-assets/image/product/thumb/551f0014e4e6dbf0805455534b0eab36.jpg', '', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 1, 0, NULL, '', 'my-assets/image/product/551f0014e4e6dbf0805455534b0eab36.jpg', '', '', '', '', '', 1);
-INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (6, '77144835', 'I3JRQQJSJ67GG2ZTEEU1', 'F9GNCBBPCOIEN67', 'Product_8', '200', '150', '', 'P8', '', 'my-assets/image/product/thumb/54490be7219193a7fb07194efcb1aab3.jpg', '', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 1, 0, NULL, '', 'my-assets/image/product/54490be7219193a7fb07194efcb1aab3.jpg', '', '', '', '', '', 1);
-INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (7, '64148874', 'I3JRQQJSJ67GG2ZTEEU1', 'F9GNCBBPCOIEN67', 'Product_9', '400', '350', '', 'P9', '', 'my-assets/image/product/thumb/2ed8a6979f7bb9d530bb98f6a2e3bbeb.jpg', '', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 0, 0, NULL, '', 'my-assets/image/product/2ed8a6979f7bb9d530bb98f6a2e3bbeb.jpg', '', '', '', '', '', 1);
-INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (8, '16789548', 'I3JRQQJSJ67GG2ZTEEU1', 'F9GNCBBPCOIEN67', 'Product_10', '500', '450', '', 'P10', '', 'my-assets/image/product/thumb/185c4176d4c6f6fd0f188c0cb89c188d.jpg', '', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 1, 1, '450', '', 'my-assets/image/product/185c4176d4c6f6fd0f188c0cb89c188d.jpg', '', '', '', '', '', 1);
-INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (9, '69428333', 'I3JRQQJSJ67GG2ZTEEU1', 'F9GNCBBPCOIEN67', 'Product_11', '300', '250', '', 'P11', '', 'my-assets/image/product/thumb/6964e1feeae391db310c5230cff125e2.jpg', '', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 1, 0, NULL, '', 'my-assets/image/product/6964e1feeae391db310c5230cff125e2.jpg', '', '', '', '', '', 1);
-INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (10, '22161617', 'I3JRQQJSJ67GG2ZTEEU1', 'F9GNCBBPCOIEN67', 'Product_12', '100', '80', '', 'P12', '', 'my-assets/image/product/thumb/a66a7502d4d823781de7ec79c025bd63.jpg', '', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 0, 1, '90', '', 'my-assets/image/product/a66a7502d4d823781de7ec79c025bd63.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (1, '98366399', 'G7Y4M5AE4SO7ICFX5XR8', '4U649KZ1UEHQEAT', 'Vertical Blind', '55', '55', 'CSQGG6N5JAMVYVU', 'FB', 'product details', 'my-assets/image/product/thumb/1ad6a3b4edbeb5e3d68db70af7a745f0.jpg', '', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 0, 0, NULL, 'invoice details 1 ', 'my-assets/image/product/1ad6a3b4edbeb5e3d68db70af7a745f0.jpg', 'review1', 'description 1', '', '<br>', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (2, '25869255', 'G7Y4M5AE4SO7ICFX5XR8', 'C7R16HZYIO4LUUT', 'Vanishing blind', '120', '110', '', 'P4', '<br>', 'my-assets/image/product/thumb/665f538317877bba423ac75ef6d1a425.jpg', '', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 1, 1, '120', '', 'my-assets/image/product/665f538317877bba423ac75ef6d1a425.jpg', 'review2', 'description 2', '', '<br>', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (3, '21473628', 'I3JRQQJSJ67GG2ZTEEU1', '4QOIHLDX7GEYHJ5', 'Glass Paper', '4428', '3444', '', 'E Series', '', 'my-assets/image/product/thumb/ba2e4ed2cc0fcc16a9386d140b66d248.png', '', '', '', '', 1, 1, '3690', '', 'my-assets/image/product/ba2e4ed2cc0fcc16a9386d140b66d248.png', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (4, '62572489', '7ZR4G3LBC97LDXJ2AQ3B', 'ADXL7ARPEMKH3DI', 'Fiber Net (Window Screen)', '5', '3.8', 'CSQGG6N5JAMVYVU', 'P6', '', 'my-assets/image/product/thumb/38d909da4b2cfdb72b6e20f2092c82bb.png', '', '', NULL, '', 0, 0, NULL, '', 'my-assets/image/product/38d909da4b2cfdb72b6e20f2092c82bb.png', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (5, '11389311', 'I3JRQQJSJ67GG2ZTEEU1', '4QOIHLDX7GEYHJ5', '3\' Glass Paper (Adhesive Glass Film)', '4428', '3198', '3K6S9EXPBTAREQT', 'P7', '', 'my-assets/image/product/thumb/93b419804b50ff5e26fefe20bc7f0230.jpg', '', '', '', '', 1, 1, '3690', '', 'my-assets/image/product/93b419804b50ff5e26fefe20bc7f0230.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (6, '77144835', 'I3JRQQJSJ67GG2ZTEEU1', 'OER22ASL88IWCCI', 'Shower Door', '850', '650', '', 'P8', '', 'my-assets/image/product/thumb/5d55f2f25bee8d769bbf978065df277c.png', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 1, 0, NULL, '', 'my-assets/image/product/5d55f2f25bee8d769bbf978065df277c.png', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (7, '64148874', 'IG4ARZJZ7WQWNEB73RRF', '1GY243DVZBJNAR2', 'Glass Door Handle', '2500', '1700', '9QVCEJM3TC7IYBV', 'KT009', '', 'my-assets/image/product/thumb/2c12a18fe3f257a9bba0909ac5c81da4.JPG', '', '', NULL, '', 0, 0, '2500', '', 'my-assets/image/product/2c12a18fe3f257a9bba0909ac5c81da4.JPG', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (8, '16789548', 'I3JRQQJSJ67GG2ZTEEU1', 'F9GNCBBPCOIEN67', 'Wall Paper', '1800', '1400', '', 'P10', '', 'my-assets/image/product/thumb/2d12a2df31565489ecbc6d4190f3efc9.png', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 1, 0, '450', '', 'my-assets/image/product/2d12a2df31565489ecbc6d4190f3efc9.png', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (9, '69428333', '7ZR4G3LBC97LDXJ2AQ3B', 'OER22ASL88IWCCI', 'Fiber Net (Aluminium Fiber Glass)', '20', '13.5', '3K6S9EXPBTAREQT', 'SFT', '', 'my-assets/image/product/thumb/40b430c0f29fbc0aa15ce0c6525f66bb.png', '', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 1, 0, NULL, '', 'my-assets/image/product/40b430c0f29fbc0aa15ce0c6525f66bb.png', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (10, '22161617', 'IG4ARZJZ7WQWNEB73RRF', '1GY243DVZBJNAR2', 'Glass Door Handle', '2500', '1700', '', 'KT001', '', 'my-assets/image/product/thumb/332e22c8c928babc6c30799276a657df.JPG', '', '', NULL, '', 0, 0, '90', '', 'my-assets/image/product/332e22c8c928babc6c30799276a657df.JPG', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (11, '99664357', 'I3JRQQJSJ67GG2ZTEEU1', 'ADXL7ARPEMKH3DI', 'Double Push Magnet Black', '40', '32', '', 'China', '', 'my-assets/image/product/thumb/09cb14dd1ae237865e56481749a57a82.jpg', '', '3JJRT8TG11VD1FY,DBQD7B1AGBAUZSS,MMYXJ4FWYXAHXPJ', 'DBQD7B1AGBAUZSS', '', 0, 0, NULL, '', 'my-assets/image/product/09cb14dd1ae237865e56481749a57a82.jpg', '', '', '', '', 'Chittagong ', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (20, '16241948', 'IG4ARZJZ7WQWNEB73RRF', 'MY58TSN15SDZ36E', 'Kainaat Wheel 608zz/298', '27', '25', '9QVCEJM3TC7IYBV', '608zz/298', '<p>Window Wheel 608zz/298, Thickness 1.2mm, Weight 84gm, Color Chrome, Brand: KAINAAT, Country: Made in China</p>', 'my-assets/image/product/thumb/ed1586001929df4bfa7bb2eea3bdec35.jpg', '1CZ4UIG9Z11EF1U', 'DBQD7B1AGBAUZSS', 'DBQD7B1AGBAUZSS', '', 1, 0, '27', '', 'my-assets/image/product/ed1586001929df4bfa7bb2eea3bdec35.jpg', '<p>Minimum Order 300 Pcs</p>', '', '', '', 'https://www.jktradeinternational.com/product_details/Kainaat-Wheel-608zz298/16241948', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (21, '58974185', 'IG4ARZJZ7WQWNEB73RRF', 'MY58TSN15SDZ36E', 'Kainaat Wheel 6001ZZ/297', '29', '27', '9QVCEJM3TC7IYBV', '6001ZZ/297', '<p><span xss=removed>Window Wheel 6001zz/297, Thickness 1.2mm, Weight 90gm, Color Chrome, Brand: KAINAAT, Country: Made in China</span><br></p>', 'my-assets/image/product/thumb/58be11ea5b2d619df2e52ae2e3874044.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 1, '29', '', 'my-assets/image/product/58be11ea5b2d619df2e52ae2e3874044.jpg', '<p><span xss=removed>Window Wheel 6001ZZ/297, Thickness 1.2mm, Weight 90gm, Color Chrome, Brand: KAINAAT, Country: Made in China</span><br></p>', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (22, '99588131', 'IG4ARZJZ7WQWNEB73RRF', 'MY58TSN15SDZ36E', 'Kainaat Wheel 6201ZZ Getton', '44', '40', '9QVCEJM3TC7IYBV', '6201ZZ', '<p><span xss=removed>Window Wheel 6201ZZ, Thickness 1.2mm, Weight 116gm, Color Chrome, Brand: KAINAAT, Country: Made in China</span><br></p>', 'my-assets/image/product/thumb/5aba988f7ec2899903c9851b0f7f3313.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 1, '42', '', 'my-assets/image/product/5aba988f7ec2899903c9851b0f7f3313.jpg', '<p>Minimum Order 200 Pcs</p>', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (23, '98128178', 'IG4ARZJZ7WQWNEB73RRF', 'MY58TSN15SDZ36E', 'Kainaat Wheel 6200/299 Getton', '34', '32', '9QVCEJM3TC7IYBV', '6200/299 Getton', '<p><span xss=\"removed\">Window Wheel 6200/299, Thickness 1.2mm, Weight 108gm, Color Chrome, Brand: KAINAAT, Country: Made in China</span><br></p>', 'my-assets/image/product/thumb/a299acc9fa9f851eed9ba934950e5586.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 0, '33', '', 'my-assets/image/product/a299acc9fa9f851eed9ba934950e5586.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (24, '42737837', 'PJRZ8OPC4WQLR7QW499A', 'MY58TSN15SDZ36E', 'Kainaat Double Wheel 6001ZZ/253', '60', '55', '9QVCEJM3TC7IYBV', 'Double 6001ZZ/253', '<p><span xss=removed>Window Wheel 6001zz/253, Thickness 1.2mm, Weight 164gm, Color Chrome, Brand: KAINAAT, Country: Made in China</span><br></p>', 'my-assets/image/product/thumb/8770f426474e41eb2028baf96a6b2534.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 0, '58', '', 'my-assets/image/product/8770f426474e41eb2028baf96a6b2534.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (25, '51664521', 'IG4ARZJZ7WQWNEB73RRF', 'MY58TSN15SDZ36E', 'Kainaat Wheel 626B/18#', '20', '18.5', '9QVCEJM3TC7IYBV', '626B/18#', '<p><font color=\"#282c3f\" face=\"Raleway, sans-serif\">Window Wheel 626B, Cheaper Wheel, Color Chrome, Brand: KAINAAT, Country: Made in China</font><br></p>', 'my-assets/image/product/thumb/35bc0cea97979bcfab16ebb8d54e5e19.jpg', '1CZ4UIG9Z11EF1U', 'MMYXJ4FWYXAHXPJ', 'MMYXJ4FWYXAHXPJ', '', 1, 0, '19', '', 'my-assets/image/product/35bc0cea97979bcfab16ebb8d54e5e19.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (26, '41848226', 'IG4ARZJZ7WQWNEB73RRF', 'MY58TSN15SDZ36E', 'Kainaat Wheel 626ZZ', '24', '21', '9QVCEJM3TC7IYBV', '626ZZ', '<p><span xss=removed>Window Wheel 626ZZ, Thickness 1.0mm, Weight 70gm, Color Chrome, Brand: KAINAAT, Country: Made in China</span><br></p>', 'my-assets/image/product/thumb/c620dd13f8e6d4abb6f4b4ccfb2628da.jpg', '1CZ4UIG9Z11EF1U', 'MMYXJ4FWYXAHXPJ', 'MMYXJ4FWYXAHXPJ', '', 1, 1, '23', '', 'my-assets/image/product/c620dd13f8e6d4abb6f4b4ccfb2628da.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (27, '41517943', 'IG4ARZJZ7WQWNEB73RRF', 'MY58TSN15SDZ36E', 'Kainaat Net Wheel 696zz/230', '12.5', '11', '9QVCEJM3TC7IYBV', '696ZZ/230', '<p><span xss=removed>Window Net Wheel 696ZZ, Thickness 1.0mm, Weight 16gm, Color Chrome, Brand: KAINAAT, Country: Made in China</span><br></p>', 'my-assets/image/product/thumb/16a420a013f7960fc19237053cc40c07.jpg', '1CZ4UIG9Z11EF1U', 'MMYXJ4FWYXAHXPJ', 'MMYXJ4FWYXAHXPJ', '', 1, 0, '12', '', 'my-assets/image/product/16a420a013f7960fc19237053cc40c07.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (28, '42741961', 'IG4ARZJZ7WQWNEB73RRF', 'OER22ASL88IWCCI', 'Net Angle', '15.5', '14', '9QVCEJM3TC7IYBV', 'Net Angle', '', 'my-assets/image/product/thumb/521d2657f2186b1ba9b4886819e09b9e.jpg', '1CZ4UIG9Z11EF1U', 'DBQD7B1AGBAUZSS', 'DBQD7B1AGBAUZSS', '', 1, 0, '15.5', '', 'my-assets/image/product/521d2657f2186b1ba9b4886819e09b9e.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (29, '71884495', 'PJRZ8OPC4WQLR7QW499A', 'WLFACXRF6T3U3UV', 'Kainaat Sliding Lock 70gm Chrome', '53', '51', '9QVCEJM3TC7IYBV', '70gm Chrome', '<p>100% Aluminium Material <br><br></p>', 'my-assets/image/product/thumb/3e8102409bdef03af9b208ee8d118db8.jpg', '1CZ4UIG9Z11EF1U', 'MMYXJ4FWYXAHXPJ', 'MMYXJ4FWYXAHXPJ', '', 1, 1, '50', '', 'my-assets/image/product/3e8102409bdef03af9b208ee8d118db8.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (30, '67354589', 'PJRZ8OPC4WQLR7QW499A', 'WLFACXRF6T3U3UV', 'Kainaat Sliding Lock 70gm Bronze', '52', '48', '9QVCEJM3TC7IYBV', '70gm Bronze', '<p>100% Aluminium Material</p><p>We have stock available 70gm, 92gm, 116gm </p><p>Colour: Silver, Bronze, Chrome<br></p>', 'my-assets/image/product/thumb/7dc267edaa9a8f8afff352777793a5d3.jpg', '1CZ4UIG9Z11EF1U', 'MMYXJ4FWYXAHXPJ', 'MMYXJ4FWYXAHXPJ', 'We have stock available 70gm, 92gm, 116gm Colour: Silver, Bronze, Chrome', 1, 1, '49', '', 'my-assets/image/product/7dc267edaa9a8f8afff352777793a5d3.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (31, '66429181', 'PJRZ8OPC4WQLR7QW499A', 'WLFACXRF6T3U3UV', 'Key Lock Chrome', '140', '105', '9QVCEJM3TC7IYBV', 'Key Chrome', '', 'my-assets/image/product/thumb/54178bce0ace544870c17ef8a7d3d465.jpg', 'T36ZSIXTRZVPVEM', 'DBQD7B1AGBAUZSS', 'DBQD7B1AGBAUZSS', '', 1, 1, '130', '', 'my-assets/image/product/54178bce0ace544870c17ef8a7d3d465.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (32, '83751842', 'PJRZ8OPC4WQLR7QW499A', 'ADXL7ARPEMKH3DI', 'Wether Strip_SL Mohiar', '900', '780', '3K6S9EXPBTAREQT', '400M', '', 'my-assets/image/product/thumb/ca312e83e31d31fd8b98c79c13268019.jpeg', '1CZ4UIG9Z11EF1U', 'DBQD7B1AGBAUZSS', 'DBQD7B1AGBAUZSS', '', 1, 1, '800', '', 'my-assets/image/product/ca312e83e31d31fd8b98c79c13268019.jpeg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (33, '93578636', 'PJRZ8OPC4WQLR7QW499A', '4QOIHLDX7GEYHJ5', '3\' Glass Paper 3D3001', '6888', '5904', '3K6S9EXPBTAREQT', '3DJK3001', '', 'my-assets/image/product/thumb/765c5574764eea39bb6f1cd10fa6fc36.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 1, '6150', '', 'my-assets/image/product/765c5574764eea39bb6f1cd10fa6fc36.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (34, '69544126', 'PJRZ8OPC4WQLR7QW499A', '4QOIHLDX7GEYHJ5', '3\' Glass Paper 3D3002', '6888', '5904', '3K6S9EXPBTAREQT', '3DJK3002', '', 'my-assets/image/product/thumb/fc86a721ee231b87e91ec2400763d40e.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 1, '6150', '', 'my-assets/image/product/fc86a721ee231b87e91ec2400763d40e.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (35, '42812618', 'PJRZ8OPC4WQLR7QW499A', '4QOIHLDX7GEYHJ5', '3\' Glass Paper 3D3003', '6888', '5904', 'L8AWHW3LFIZE7V4', '3DJK3003', '', 'my-assets/image/product/thumb/3c58efbcca2b6a24838e96acdb06e327.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 1, '6150', '', 'my-assets/image/product/3c58efbcca2b6a24838e96acdb06e327.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (36, '77555273', 'PJRZ8OPC4WQLR7QW499A', '4QOIHLDX7GEYHJ5', '3\' Glass Paper 3D3006', '6888', '5904', '3K6S9EXPBTAREQT', '3DJK3006', '', 'my-assets/image/product/thumb/401f2c93c04ac3e9101e4a014a368559.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 1, '6150', '', 'my-assets/image/product/401f2c93c04ac3e9101e4a014a368559.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (37, '33315338', 'PJRZ8OPC4WQLR7QW499A', '4QOIHLDX7GEYHJ5', '3\' Glass Paper 3D3007', '6888', '25904', '3K6S9EXPBTAREQT', '3DJK3007', '', 'my-assets/image/product/thumb/05c00c995d8a5bdb01805a48b0739b79.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 1, '6150', '', 'my-assets/image/product/05c00c995d8a5bdb01805a48b0739b79.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (38, '22869924', 'PJRZ8OPC4WQLR7QW499A', '4QOIHLDX7GEYHJ5', '3\' Glass Paper 3D3008', '6888', '5904', '3K6S9EXPBTAREQT', '3DJK3008', '', 'my-assets/image/product/thumb/7ba6002b3730ed54ef2c4a7520bc1cb2.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 1, '6150', '', 'my-assets/image/product/7ba6002b3730ed54ef2c4a7520bc1cb2.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (39, '22886814', 'PJRZ8OPC4WQLR7QW499A', '4QOIHLDX7GEYHJ5', '3\' Glass Paper 3D3009', '6888', '5904', '3K6S9EXPBTAREQT', '3DJK3009', '', 'my-assets/image/product/thumb/d836a547b6f4d3eef174d3a0801d2701.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 1, '6150', '', 'my-assets/image/product/d836a547b6f4d3eef174d3a0801d2701.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (40, '31359986', 'PJRZ8OPC4WQLR7QW499A', '4QOIHLDX7GEYHJ5', '3\' Glass Paper 3D3010', '6888', '5904', '3K6S9EXPBTAREQT', '3DJK3010', '', 'my-assets/image/product/thumb/fc1db1072ed91974d83b9e351d8e951a.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 1, '6150', '', 'my-assets/image/product/fc1db1072ed91974d83b9e351d8e951a.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (41, '99831319', 'PJRZ8OPC4WQLR7QW499A', '4QOIHLDX7GEYHJ5', '3\' Glass Paper 3D3011', '6888', '5904', '3K6S9EXPBTAREQT', '3DJK3011', '', 'my-assets/image/product/thumb/68996b325c9d4a13c39d144bbec7c054.jpg', '1CZ4UIG9Z11EF1U', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '', 1, 1, '6150', '', 'my-assets/image/product/68996b325c9d4a13c39d144bbec7c054.jpg', '', '', '', '', '', 1);
+INSERT INTO `product_information` (`id`, `product_id`, `supplier_id`, `category_id`, `product_name`, `price`, `supplier_price`, `unit`, `product_model`, `product_details`, `image_thumb`, `brand_id`, `variants`, `default_variant`, `type`, `best_sale`, `onsale`, `onsale_price`, `invoice_details`, `image_large_details`, `review`, `description`, `tag`, `specification`, `video`, `status`) VALUES (42, '72685772', 'PJRZ8OPC4WQLR7QW499A', '5OYVYTQ1NCVGANE', 'Glass Door Floor Hings/Closer FC34 30N', '5800', '5000', '3K6S9EXPBTAREQT', 'VVP', '<p><br></p>', 'my-assets/image/product/thumb/626ca655382a182f0e2e92603a50ea05.jpg', 'V4JWHXG8I326M5T', '3JJRT8TG11VD1FY', '3JJRT8TG11VD1FY', '5 Years Guarantee', 1, 1, '4500', '', 'my-assets/image/product/626ca655382a182f0e2e92603a50ea05.jpg', '<p><br></p><p><br></p>', '', '', '', '', 1);
 
 
 #
@@ -2544,6 +2718,7 @@ CREATE TABLE `product_purchase` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `product_purchase` (`purchase_id`, `invoice_no`, `supplier_id`, `store_id`, `wearhouse_id`, `grand_total_amount`, `purchase_date`, `purchase_details`, `user_id`, `status`) VALUES ('MXFA4S9NF2ZBTBU', '55645', 'I3JRQQJSJ67GG2ZTEEU1', '3384CTWDU7QZFRO', '', '3095000', '09-07-2020', '', '1', 1);
+INSERT INTO `product_purchase` (`purchase_id`, `invoice_no`, `supplier_id`, `store_id`, `wearhouse_id`, `grand_total_amount`, `purchase_date`, `purchase_details`, `user_id`, `status`) VALUES ('TP2OY7ONGAJMIYU', '1220', 'IG4ARZJZ7WQWNEB73RRF', 'JSG794YZP94M2QF', '', '28800', '2020-10-28', '', '1', 1);
 
 
 #
@@ -2582,6 +2757,7 @@ INSERT INTO `product_purchase_details` (`purchase_detail_id`, `purchase_id`, `pr
 INSERT INTO `product_purchase_details` (`purchase_detail_id`, `purchase_id`, `product_id`, `variant_id`, `store_id`, `wearhouse_id`, `quantity`, `rate`, `total_amount`, `status`) VALUES ('MUUAXNXR8OBPXF7', 'MXFA4S9NF2ZBTBU', '11389311', '3JJRT8TG11VD1FY', '3384CTWDU7QZFRO', '', 500, '570', '285000', 1);
 INSERT INTO `product_purchase_details` (`purchase_detail_id`, `purchase_id`, `product_id`, `variant_id`, `store_id`, `wearhouse_id`, `quantity`, `rate`, `total_amount`, `status`) VALUES ('O3832XANWST7QNM', 'MXFA4S9NF2ZBTBU', '77144835', '3JJRT8TG11VD1FY', '3384CTWDU7QZFRO', '', 500, '150', '75000', 1);
 INSERT INTO `product_purchase_details` (`purchase_detail_id`, `purchase_id`, `product_id`, `variant_id`, `store_id`, `wearhouse_id`, `quantity`, `rate`, `total_amount`, `status`) VALUES ('ONE1TEFZ75A1IMC', 'MXFA4S9NF2ZBTBU', '98366399', 'DBQD7B1AGBAUZSS', '3384CTWDU7QZFRO', '', 500, '150', '75000', 1);
+INSERT INTO `product_purchase_details` (`purchase_detail_id`, `purchase_id`, `product_id`, `variant_id`, `store_id`, `wearhouse_id`, `quantity`, `rate`, `total_amount`, `status`) VALUES ('S83WKDGZE5BPZIB', 'TP2OY7ONGAJMIYU', '16241948', 'DBQD7B1AGBAUZSS', 'JSG794YZP94M2QF', '', 1200, '24', '28800', 1);
 INSERT INTO `product_purchase_details` (`purchase_detail_id`, `purchase_id`, `product_id`, `variant_id`, `store_id`, `wearhouse_id`, `quantity`, `rate`, `total_amount`, `status`) VALUES ('SDHRW3IE7Q61768', 'MXFA4S9NF2ZBTBU', '69428333', 'DBQD7B1AGBAUZSS', '3384CTWDU7QZFRO', '', 500, '250', '125000', 1);
 INSERT INTO `product_purchase_details` (`purchase_detail_id`, `purchase_id`, `product_id`, `variant_id`, `store_id`, `wearhouse_id`, `quantity`, `rate`, `total_amount`, `status`) VALUES ('U84HUCEBZW1D8GT', 'MXFA4S9NF2ZBTBU', '64148874', '3JJRT8TG11VD1FY', '3384CTWDU7QZFRO', '', 500, '350', '175000', 1);
 INSERT INTO `product_purchase_details` (`purchase_detail_id`, `purchase_id`, `product_id`, `variant_id`, `store_id`, `wearhouse_id`, `quantity`, `rate`, `total_amount`, `status`) VALUES ('VO7DCWMGNI979NM', 'MXFA4S9NF2ZBTBU', '11389311', 'DBQD7B1AGBAUZSS', '3384CTWDU7QZFRO', '', 500, '570', '285000', 1);
@@ -2599,9 +2775,9 @@ CREATE TABLE `product_review` (
   `product_review_id` varchar(100) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
   `reviewer_id` varchar(255) DEFAULT NULL,
-  `comments` text,
+  `comments` text DEFAULT NULL,
   `rate` varchar(100) DEFAULT NULL,
-  `date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `date_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`product_review_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -2626,7 +2802,7 @@ CREATE TABLE `quotation` (
   `service_charge` float DEFAULT NULL,
   `paid_amount` float NOT NULL,
   `due_amount` float NOT NULL,
-  `file_path` text,
+  `file_path` text DEFAULT NULL,
   `status` int(2) NOT NULL COMMENT '1=not_invoice,2=invoiced',
   PRIMARY KEY (`quotation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -2712,7 +2888,7 @@ DROP TABLE IF EXISTS `setting`;
 CREATE TABLE `setting` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
-  `address` text,
+  `address` text DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `logo` varchar(50) DEFAULT NULL,
@@ -2723,7 +2899,7 @@ CREATE TABLE `setting` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
-INSERT INTO `setting` (`id`, `title`, `address`, `email`, `phone`, `logo`, `favicon`, `language`, `site_align`, `footer_text`) VALUES (2, 'Dynamic Admin Panel', '98 Green Road, Farmgate, Dhaka-1215.', 'bdtask@gmail.com', '0123456789', 'assets/img/icons/logo.png', 'assets/img/icons/m.png', 'english', 'LTR', '2017©Copyright');
+INSERT INTO `setting` (`id`, `title`, `address`, `email`, `phone`, `logo`, `favicon`, `language`, `site_align`, `footer_text`) VALUES (2, 'Dynamic Admin Panel', '98 Green Road, Farmgate, Dhaka-1215.', 'bdtask@gmail.com', '0123456789', 'assets/img/icons/logo.png', 'assets/img/icons/m.png', 'english', 'LTR', '2017Â©Copyright');
 
 
 #
@@ -2765,11 +2941,7 @@ CREATE TABLE `shipping_method` (
   `charge_amount` float NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`method_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
-INSERT INTO `shipping_method` (`method_id`, `method_name`, `details`, `charge_amount`, `position`) VALUES (1, 'Inside the city', '', '0', 1);
-INSERT INTO `shipping_method` (`method_id`, `method_name`, `details`, `charge_amount`, `position`) VALUES (2, 'Outside the city', '', '0', 2);
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # TABLE STRUCTURE FOR: slider
@@ -2787,9 +2959,13 @@ CREATE TABLE `slider` (
   PRIMARY KEY (`slider_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `slider` (`slider_id`, `slider_link`, `slider_image`, `slider_category`, `slider_position`, `status`) VALUES ('DLHEPY7IUPOJKAD', 'https://demo453464315.com', 'my-assets/image/slider/c679efc9baf1dd51b094e62495e90deb.jpg', NULL, 1, 1);
-INSERT INTO `slider` (`slider_id`, `slider_link`, `slider_image`, `slider_category`, `slider_position`, `status`) VALUES ('T17X8HSQ8W8MYG1', 'https://demo453464315.com', 'my-assets/image/slider/7419bc5930885fbeaba23af59bc1c147.jpg', NULL, 2, 1);
-INSERT INTO `slider` (`slider_id`, `slider_link`, `slider_image`, `slider_category`, `slider_position`, `status`) VALUES ('ZFTN9GODSNWAN7Q', 'https://demo453464315.com', 'my-assets/image/slider/5724307f6b03846b2302c32c1c335010.jpg', NULL, 3, 1);
+INSERT INTO `slider` (`slider_id`, `slider_link`, `slider_image`, `slider_category`, `slider_position`, `status`) VALUES ('9ZGFV1GK9WGFXWG', 'https://jktradeinternational.com/Wallpaper', 'my-assets/image/slider/1091e89ca8ab9789f803a8e80ac820ad.jpg', '', 7, 1);
+INSERT INTO `slider` (`slider_id`, `slider_link`, `slider_image`, `slider_category`, `slider_position`, `status`) VALUES ('DLHEPY7IUPOJKAD', 'https://jktradeinternational.com/Window_Roller', 'my-assets/image/slider/7e17521662fc1bc7419d6f098571f08f.png', '', 1, 1);
+INSERT INTO `slider` (`slider_id`, `slider_link`, `slider_image`, `slider_category`, `slider_position`, `status`) VALUES ('MWAPBT46L6GZCPW', 'https://jktradeinternational.com/sliding_handle', 'my-assets/image/slider/21ee83b04fd31cb63d0c8518ceae6709.jpg', '', 6, 1);
+INSERT INTO `slider` (`slider_id`, `slider_link`, `slider_image`, `slider_category`, `slider_position`, `status`) VALUES ('PR86J4SJEQCUBD5', 'https://jktradeinternational.com/', 'my-assets/image/slider/67852247c866932e5939686d9762c56f.jpg', '', 4, 1);
+INSERT INTO `slider` (`slider_id`, `slider_link`, `slider_image`, `slider_category`, `slider_position`, `status`) VALUES ('T17X8HSQ8W8MYG1', 'https://jktradeinternational.com/', 'my-assets/image/slider/6e1137a9a52e9ea4907fc80073d26c01.png', '', 2, 1);
+INSERT INTO `slider` (`slider_id`, `slider_link`, `slider_image`, `slider_category`, `slider_position`, `status`) VALUES ('TJ8QN8KCKI5F224', 'https://jktradeinternational.com/', 'my-assets/image/slider/f0fd873a81036fa7cd9415c3277f5ee0.jpg', '', 5, 1);
+INSERT INTO `slider` (`slider_id`, `slider_link`, `slider_image`, `slider_category`, `slider_position`, `status`) VALUES ('ZFTN9GODSNWAN7Q', 'https://jktradeinternational.com/', 'my-assets/image/slider/3e73d4b2f1849a32268ef77ee2e0d4e1.png', '', 3, 1);
 
 
 #
@@ -2807,8 +2983,8 @@ CREATE TABLE `sms_configuration` (
   `status` tinyint(4) NOT NULL,
   `link` varchar(255) NOT NULL,
   `sms_from` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
@@ -2827,10 +3003,10 @@ CREATE TABLE `sms_template` (
   `template_name` varchar(255) NOT NULL,
   `message` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `default_status` tinyint(4) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
@@ -2848,11 +3024,11 @@ DROP TABLE IF EXISTS `social_auth`;
 
 CREATE TABLE `social_auth` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text,
-  `app_id` text,
-  `app_secret` text,
-  `api_key` text,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `name` text DEFAULT NULL,
+  `app_id` text DEFAULT NULL,
+  `app_secret` text DEFAULT NULL,
+  `api_key` text DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2871,14 +3047,14 @@ CREATE TABLE `soft_setting` (
   `country_id` int(11) NOT NULL,
   `language` varchar(255) DEFAULT NULL,
   `rtr` varchar(255) DEFAULT NULL,
-  `captcha` int(11) DEFAULT '1' COMMENT '0=active,1=inactive',
+  `captcha` int(11) DEFAULT 1 COMMENT '0=active,1=inactive',
   `site_key` varchar(250) DEFAULT NULL,
   `secret_key` varchar(250) DEFAULT NULL,
-  `sms_service` tinyint(4) NOT NULL DEFAULT '0',
+  `sms_service` tinyint(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`setting_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-INSERT INTO `soft_setting` (`setting_id`, `logo`, `invoice_logo`, `favicon`, `footer_text`, `country_id`, `language`, `rtr`, `captcha`, `site_key`, `secret_key`, `sms_service`) VALUES (1, 'my-assets/image/logo/b8ff8857c1620fab5853a68c12842246.png', 'my-assets/image/logo/62cd9a2d8daedec26abc30bcfbbaf5cb.png', 'my-assets/image/logo/8409b9e21c1a226954929cf091a09f68.png', 'Developed by Demosoft586454684', 18, 'english', '0', 1, '', '', 0);
+INSERT INTO `soft_setting` (`setting_id`, `logo`, `invoice_logo`, `favicon`, `footer_text`, `country_id`, `language`, `rtr`, `captcha`, `site_key`, `secret_key`, `sms_service`) VALUES (1, 'my-assets/image/logo/5866c104f19ac7b11ca0f670bc7a7db4.png', 'my-assets/image/logo/000d6f9db1cf9900f30d497f030cf8d3.png', 'my-assets/image/logo/8a4e3c3beeb4ed56bff363efc80951fe.png', 'Developed by Oline IT', 0, 'english', '0', 1, '', '', 1);
 
 
 #
@@ -2890,7 +3066,7 @@ DROP TABLE IF EXISTS `states`;
 CREATE TABLE `states` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
-  `country_id` int(11) NOT NULL DEFAULT '1',
+  `country_id` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=760 DEFAULT CHARSET=latin1;
 
@@ -3680,12 +3856,12 @@ CREATE TABLE `store_set` (
   `store_id` varchar(100) NOT NULL,
   `store_name` varchar(100) NOT NULL,
   `store_address` text NOT NULL,
-  `default_status` int(11) NOT NULL DEFAULT '0' COMMENT '0=inactive,1=active',
+  `default_status` int(11) NOT NULL DEFAULT 0 COMMENT '0=inactive,1=active',
   PRIMARY KEY (`store_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `store_set` (`store_id`, `store_name`, `store_address`, `default_status`) VALUES ('3384CTWDU7QZFRO', 'Store_a', 'Lorem ipsum dolor sit amet.', 1);
-INSERT INTO `store_set` (`store_id`, `store_name`, `store_address`, `default_status`) VALUES ('JSG794YZP94M2QF', 'Store_b', 'Lorem ipsum dolor sit amet.', 0);
+INSERT INTO `store_set` (`store_id`, `store_name`, `store_address`, `default_status`) VALUES ('3384CTWDU7QZFRO', 'Store_a', 'Lorem ipsum dolor sit amet.', 0);
+INSERT INTO `store_set` (`store_id`, `store_name`, `store_address`, `default_status`) VALUES ('JSG794YZP94M2QF', 'Store_b', 'Lorem ipsum dolor sit amet.', 1);
 
 
 #
@@ -3701,6 +3877,9 @@ CREATE TABLE `subscriber` (
   `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`subscriber_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `subscriber` (`subscriber_id`, `apply_ip`, `email`, `status`) VALUES ('JLZBRR52661LN96', '103.111.36.72', 'demo@gmail.com', 1);
+
 
 #
 # TABLE STRUCTURE FOR: supplier_information
@@ -3721,7 +3900,12 @@ CREATE TABLE `supplier_information` (
   KEY `supplier_id` (`supplier_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `supplier_information` (`supplier_id`, `supplier_name`, `address`, `mobile`, `email`, `details`, `website`, `status`) VALUES ('I3JRQQJSJ67GG2ZTEEU1', 'Supplier_1', '', '48454656544', '', '', '', 1);
+INSERT INTO `supplier_information` (`supplier_id`, `supplier_name`, `address`, `mobile`, `email`, `details`, `website`, `status`) VALUES ('7ZR4G3LBC97LDXJ2AQ3B', 'Metro Thai Aluminium', '1055/42, Love Lane, Chittagong', '01817791768', 'alsufia@gmail.com', 'Phone 031-620793', '', 1);
+INSERT INTO `supplier_information` (`supplier_id`, `supplier_name`, `address`, `mobile`, `email`, `details`, `website`, `status`) VALUES ('G7Y4M5AE4SO7ICFX5XR8', 'Fashion Blind Company', 'Jubilee Road, Enayat Bazar, Chittagong, Bangladesh', '00880312868048', 'fashionblind1974@gmail.vom', 'Jahir: 01711-668710 Selim: 01742-447518', '', 1);
+INSERT INTO `supplier_information` (`supplier_id`, `supplier_name`, `address`, `mobile`, `email`, `details`, `website`, `status`) VALUES ('I3JRQQJSJ67GG2ZTEEU1', 'Brothers Interior Solution', '54/1, New Airport Road, Mohakhali, Amtoli, Dhaka-1212', '01914579670', '', 'Phone 02-9895452', '', 1);
+INSERT INTO `supplier_information` (`supplier_id`, `supplier_name`, `address`, `mobile`, `email`, `details`, `website`, `status`) VALUES ('IG4ARZJZ7WQWNEB73RRF', 'M A TRade International', 'H-61/1, Mohakhali, Amtoli, Dhaka-1212, Bangladesh', '01817025515', 'kmadiluddin@gmil.com', 'Phone: 02-222262518', '', 1);
+INSERT INTO `supplier_information` (`supplier_id`, `supplier_name`, `address`, `mobile`, `email`, `details`, `website`, `status`) VALUES ('PJRZ8OPC4WQLR7QW499A', 'J.K. TRADE International (Import Sector)', '35, Northern Hill Park, 1st Floor, Flat No L1C, Buddhist Temple Road, Nandankanan, Chittoagong-4000. Bangladesh ', '8801617333355', 'j.k.tradeinternational@gmail.com', 'Importer & Whole Sellers ', '', 1);
+INSERT INTO `supplier_information` (`supplier_id`, `supplier_name`, `address`, `mobile`, `email`, `details`, `website`, `status`) VALUES ('ZILC7THYIEJIZVM166CG', 'Siam Trade Internatioanal', 'H-79, Block-F, Shop No-6, Banani, Chairman Bari, Dhaka-1213', '01716358697', '', 'Phone 02-58813164, 02-9846890', '', 1);
 
 
 #
@@ -3750,6 +3934,7 @@ CREATE TABLE `supplier_ledger` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `supplier_ledger` (`transaction_id`, `purchase_id`, `supplier_id`, `invoice_no`, `deposit_no`, `amount`, `description`, `payment_type`, `cheque_no`, `date`, `status`) VALUES ('PKB71G24FCUW6J7', 'MXFA4S9NF2ZBTBU', 'I3JRQQJSJ67GG2ZTEEU1', '55645', NULL, '3095000', '', '', '', '09-07-2020', 1);
+INSERT INTO `supplier_ledger` (`transaction_id`, `purchase_id`, `supplier_id`, `invoice_no`, `deposit_no`, `amount`, `description`, `payment_type`, `cheque_no`, `date`, `status`) VALUES ('QK4MV6VT86N8UZP', 'TP2OY7ONGAJMIYU', 'IG4ARZJZ7WQWNEB73RRF', '1220', NULL, '28800', '', '', '', '2020-10-28', 1);
 
 
 #
@@ -3781,7 +3966,7 @@ DROP TABLE IF EXISTS `tax`;
 CREATE TABLE `tax` (
   `tax_id` varchar(100) NOT NULL,
   `tax_name` varchar(100) NOT NULL,
-  `status` int(11) DEFAULT '0',
+  `status` int(11) DEFAULT 0,
   PRIMARY KEY (`tax_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -3860,15 +4045,14 @@ CREATE TABLE `themes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `status` tinyint(4) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
-INSERT INTO `themes` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES (1, 'isshue_classic', 0, '2020-08-27 07:26:41', '2020-09-26 09:33:44');
-INSERT INTO `themes` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES (2, 'martbd', 0, '2020-08-31 00:09:01', '2020-11-22 10:01:27');
-INSERT INTO `themes` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES (3, 'shatu', 0, '2020-08-31 00:09:01', '2020-10-08 11:44:30');
-INSERT INTO `themes` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES (4, 'zaima', 1, '2020-11-22 15:57:33', '2020-11-22 15:57:33');
+INSERT INTO `themes` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES (1, 'isshue_classic', 0, '2020-08-27 07:26:41', '2021-02-01 15:53:56');
+INSERT INTO `themes` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES (2, 'martbd', 1, '2020-08-31 00:09:01', '2021-02-01 15:54:50');
+INSERT INTO `themes` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES (3, 'shatu', 0, '2020-08-31 00:09:01', '2021-02-01 15:54:51');
 
 
 #
@@ -3913,6 +4097,7 @@ INSERT INTO `transfer` (`transfer_id`, `store_id`, `warehouse_id`, `product_id`,
 INSERT INTO `transfer` (`transfer_id`, `store_id`, `warehouse_id`, `product_id`, `variant_id`, `quantity`, `t_store_id`, `t_warehouse_id`, `purchase_id`, `date_time`, `transfer_by`, `status`) VALUES ('ERW1DW4IGUKG733', '3384CTWDU7QZFRO', NULL, '98366399', 'DBQD7B1AGBAUZSS', '500', NULL, NULL, 'MXFA4S9NF2ZBTBU', '09-07-2020', NULL, 3);
 INSERT INTO `transfer` (`transfer_id`, `store_id`, `warehouse_id`, `product_id`, `variant_id`, `quantity`, `t_store_id`, `t_warehouse_id`, `purchase_id`, `date_time`, `transfer_by`, `status`) VALUES ('88SVAM9BPSA5LIE', '3384CTWDU7QZFRO', NULL, '98366399', '3JJRT8TG11VD1FY', '500', NULL, NULL, 'MXFA4S9NF2ZBTBU', '09-07-2020', NULL, 3);
 INSERT INTO `transfer` (`transfer_id`, `store_id`, `warehouse_id`, `product_id`, `variant_id`, `quantity`, `t_store_id`, `t_warehouse_id`, `purchase_id`, `date_time`, `transfer_by`, `status`) VALUES ('ISYBVNTDFPN8K9K', '3384CTWDU7QZFRO', NULL, '98366399', 'MMYXJ4FWYXAHXPJ', '500', NULL, NULL, 'MXFA4S9NF2ZBTBU', '09-07-2020', NULL, 3);
+INSERT INTO `transfer` (`transfer_id`, `store_id`, `warehouse_id`, `product_id`, `variant_id`, `quantity`, `t_store_id`, `t_warehouse_id`, `purchase_id`, `date_time`, `transfer_by`, `status`) VALUES ('HIWVLD4E4U2R21J', 'JSG794YZP94M2QF', NULL, '16241948', 'DBQD7B1AGBAUZSS', '1200', NULL, NULL, 'TP2OY7ONGAJMIYU', '2020-10-28', NULL, 3);
 
 
 #
@@ -3928,6 +4113,14 @@ CREATE TABLE `unit` (
   PRIMARY KEY (`unit_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `unit` (`unit_id`, `unit_name`, `unit_short_name`) VALUES ('3K6S9EXPBTAREQT', 'Roll', 'Roll');
+INSERT INTO `unit` (`unit_id`, `unit_name`, `unit_short_name`) VALUES ('9QVCEJM3TC7IYBV', 'Pieces', 'Pcs');
+INSERT INTO `unit` (`unit_id`, `unit_name`, `unit_short_name`) VALUES ('CSQGG6N5JAMVYVU', 'Square Feet', 'SFT');
+INSERT INTO `unit` (`unit_id`, `unit_name`, `unit_short_name`) VALUES ('L8AWHW3LFIZE7V4', 'RFT', 'RFT');
+INSERT INTO `unit` (`unit_id`, `unit_name`, `unit_short_name`) VALUES ('OCM3D229ETYMZBX', 'Kilo gram', 'KG');
+INSERT INTO `unit` (`unit_id`, `unit_name`, `unit_short_name`) VALUES ('QYSWKEG671K54QC', 'Set', 'Set');
+
+
 #
 # TABLE STRUCTURE FOR: user
 #
@@ -3938,7 +4131,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
-  `about` text,
+  `about` text DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(32) NOT NULL,
   `password_reset_token` varchar(20) NOT NULL,
@@ -3946,8 +4139,8 @@ CREATE TABLE `user` (
   `last_login` datetime DEFAULT NULL,
   `last_logout` datetime DEFAULT NULL,
   `ip_address` varchar(14) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `is_admin` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `is_admin` tinyint(4) NOT NULL DEFAULT 0,
   `user_type` tinyint(4) NOT NULL COMMENT '1=admin,2=shop-manager,3=sales man,4=store keeper,5=customer',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -3970,7 +4163,8 @@ CREATE TABLE `user_login` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `user_login` (`user_id`, `store_id`, `username`, `password`, `token`, `user_type`, `security_code`, `status`) VALUES ('1', '1', 'super@admin.com', '41d99b369894eb1ec3f461135132d8bb', NULL, 1, '1', 1);
+INSERT INTO `user_login` (`user_id`, `store_id`, `username`, `password`, `token`, `user_type`, `security_code`, `status`) VALUES ('1', '1', 'admin@jktradeinternational.com', 'f19310faa738252dbeb5d5a0d8062cfc', NULL, 1, '1', 1);
+INSERT INTO `user_login` (`user_id`, `store_id`, `username`, `password`, `token`, `user_type`, `security_code`, `status`) VALUES ('AWB73OFF8L1OWD5', '', 'shagor@jktradeinternational.com', '6b41ffe4b3d5a32dd8bbbe709a18bedf', NULL, 2, '', 1);
 
 
 #
@@ -3990,7 +4184,8 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `users` (`user_id`, `last_name`, `first_name`, `gender`, `date_of_birth`, `logo`, `status`) VALUES ('1', 'admin', 'Super', 1, '', NULL, 1);
+INSERT INTO `users` (`user_id`, `last_name`, `first_name`, `gender`, `date_of_birth`, `logo`, `status`) VALUES ('1', 'Admin', 'Super', 1, '', 'assets/dist/img/profile_picture/6ec1b67f528adffaa10c18f4ce38e50c.jpg', 1);
+INSERT INTO `users` (`user_id`, `last_name`, `first_name`, `gender`, `date_of_birth`, `logo`, `status`) VALUES ('AWB73OFF8L1OWD5', 'Das', 'Shagor', 0, '', 'https://www.jktradeinternational.com/assets/website/image/login.png', 1);
 
 
 #
@@ -4052,28 +4247,29 @@ DROP TABLE IF EXISTS `web_setting`;
 
 CREATE TABLE `web_setting` (
   `setting_id` int(11) NOT NULL AUTO_INCREMENT,
-  `logo` text,
-  `invoice_logo` text,
-  `favicon` text,
-  `footer_logo` text,
-  `footer_text` text,
-  `footer_details` text,
-  `google_analytics` text,
-  `facebook_messenger` text,
+  `logo` text DEFAULT NULL,
+  `invoice_logo` text DEFAULT NULL,
+  `favicon` text DEFAULT NULL,
+  `footer_logo` text DEFAULT NULL,
+  `footer_text` text DEFAULT NULL,
+  `footer_details` text DEFAULT NULL,
+  `google_analytics` text DEFAULT NULL,
+  `facebook_messenger` text DEFAULT NULL,
   `meta_keyword` varchar(255) DEFAULT NULL,
   `meta_description` varchar(255) DEFAULT NULL,
   `application_protocol` varchar(30) NOT NULL DEFAULT 'http',
   `app_link_status` tinyint(4) NOT NULL,
   `pay_with_status` tinyint(4) NOT NULL COMMENT '1=active , 0=inactive',
-  `map_api_key` text,
-  `map_latitude` text,
-  `map_langitude` text,
+  `map_api_key` text DEFAULT NULL,
+  `map_latitude` text DEFAULT NULL,
+  `map_langitude` text DEFAULT NULL,
   `apps_url` varchar(255) DEFAULT NULL,
   `mob_footer_block` varchar(100) DEFAULT NULL,
+  `social_share` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`setting_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-INSERT INTO `web_setting` (`setting_id`, `logo`, `invoice_logo`, `favicon`, `footer_logo`, `footer_text`, `footer_details`, `google_analytics`, `facebook_messenger`, `meta_keyword`, `meta_description`, `application_protocol`, `app_link_status`, `pay_with_status`, `map_api_key`, `map_latitude`, `map_langitude`, `apps_url`, `mob_footer_block`) VALUES (1, 'my-assets/image/logo/df04af33355957b356412ee3699f4a7e.png', NULL, 'my-assets/image/logo/ce1697c92622e92f91e2b341eb89419c.png', 'my-assets/image/logo/5e8f6887b4830e633d9c8ded53fe990c.png', 'Developed by <a href=\"https://demo453464315.com/\" class=\"color5\" target=\"_blank\">Demo</a>', 'Isshue Multistore E-Commerce system.', '', '', 'meta keyword', 'multistore ecommerce software', '', 1, 1, 'AIzaSyBGwh3ShY_W1hMms1wmwlHK3hpInhExn3o', '8.901922', '66.325790', '', NULL);
+INSERT INTO `web_setting` (`setting_id`, `logo`, `invoice_logo`, `favicon`, `footer_logo`, `footer_text`, `footer_details`, `google_analytics`, `facebook_messenger`, `meta_keyword`, `meta_description`, `application_protocol`, `app_link_status`, `pay_with_status`, `map_api_key`, `map_latitude`, `map_langitude`, `apps_url`, `mob_footer_block`, `social_share`) VALUES (1, 'my-assets/image/logo/d4352d23fd5ddd0692347e0c09f62f34.png', NULL, 'my-assets/image/logo/2e4a9d108ed60f652fb3c15b593cca8b.png', 'my-assets/image/logo/8972e7e3eb8d6bca05862b57b9cb14b2.png', 'Developed by <a href=\"https://olineit.com\" class=\"color5\" target=\"_blank\">Oline IT</a>', '', '', '', 'meta keyword', 'multistore ecommerce software', '', 0, 1, 'AIzaSyBGwh3ShY_W1hMms1wmwlHK3hpInhExn3o', '8.901922', '66.325790', 'http://www.olineit.com', NULL, 1);
 
 
 #

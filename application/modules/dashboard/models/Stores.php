@@ -334,14 +334,4 @@ class Stores extends CI_Model {
 		$this->db->delete('store_product'); 	
 		return true;
 	}
-
-	 // Get default store info
-    public function get_def_store()
-    {
-        $this->db->select('*');
-        $this->db->from('store_set');
-        $this->db->where('default_status',1);
-        $result = $this->db->get()->row_array();
-        return $result;
-    }
 }

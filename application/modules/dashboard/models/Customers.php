@@ -224,7 +224,6 @@ class Customers extends CI_Model {
 	{
 		$this->db->select('*');
 		$this->db->from('customer_ledger');
-		$this->db->order_by('invoice_no','DESC');
 		$this->db->where(array('customer_id'=>$customer_id,'status'=>1));
 		$query = $this->db->get();
 		if ($query->num_rows() > 0) {
@@ -286,7 +285,7 @@ class Customers extends CI_Model {
 		->num_rows();
 		if ($result > 0) {
 			$this->session->set_userdata(array('error_message'=>display('you_cant_delete_this_customer')));
-			redirect('dashboard/Ccustomer/manage_customer');
+			redirect('Ccustomer/manage_customer');
 		}else{
 			$this->db->where('customer_id',$customer_id);
 			$this->db->delete('customer_information'); 

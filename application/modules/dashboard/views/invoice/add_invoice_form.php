@@ -84,9 +84,9 @@ if (isset($error_message)) {
                                    class="col-sm-3 col-form-label"><?php echo display('customer_name') ?> <i
                                         class="text-danger">*</i></label>
                             <div class="col-sm-6">
-                                <input type="text" size="100" value="<?php echo html_escape($customer['customer_name']); ?>"
+                                <input type="text" autocomplete="off" size="100" value=" "
                                        name="customer_name" class="customerSelection form-control"
-                                       placeholder='<?php echo display('customer_name') ?>' id="customer_name"
+                                       placeholder=' Type Customer Name' id="customer_name"
                                        />
                                 <input id="SchoolHiddenId" value="<?php echo html_escape($customer['customer_id']) ?>"
                                        class="customer_hidden_value" type="hidden" name="customer_id">
@@ -134,7 +134,7 @@ if (isset($error_message)) {
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group row">
-                            <label for="store_id" class="col-sm-4 col-form-label"><?php echo display('store') ?>
+                            <label for="store_id" class="col-sm-4 col-form-label"><?php echo "Warehouse"; ?>
                                 <i class="text-danger">*</i></label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="store_id" required="" name="store_id">
@@ -151,6 +151,7 @@ if (isset($error_message)) {
                                         }
                                     endforeach; ?>
                                 </select>
+
                             </div>
                         </div>
                     </div>
@@ -169,7 +170,33 @@ date_default_timezone_set(DEF_TIMEZONE);
                         </div>
                     </div>
                 </div>
+                <div class="row">
 
+                    <div class="col-sm-6">
+                        <div class="form-group row">
+                            <label for="store_id" class="col-sm-4 col-form-label"><?php echo"Sales Point" ?>
+                                <i class="text-danger">*</i></label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="sp_id" required="" name="sp_id">
+                                    <option value=""></option>
+                                    <?php foreach ($store_list as $v_store_list):
+                                        if (1 == $v_store_list['default_status']) {
+                                            ?>
+                                            <option selected
+                                                    value="<?php echo html_escape($v_store_list['store_id']) ?>"><?php echo html_escape($v_store_list['store_name']) ?></option>
+                                        <?php } else {
+                                            ?>
+                                            <option value="<?php echo html_escape($v_store_list['store_id']) ?>"><?php echo html_escape($v_store_list['store_name']) ?></option>
+                                            <?php
+                                        }
+                                    endforeach; ?>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6"></div>
+                </div>
                 <div class="table-responsive mt_10">
                     <table class="table table-bordered table-hover" id="normalinvoice">
                         <thead>

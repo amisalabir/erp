@@ -187,7 +187,7 @@ class Cproduct extends MX_Controller
         #
         $config["base_url"] = base_url('dashboard/Cproduct/manage_product/');
         $config["total_rows"] = $this->Products->product_list_count();
-        $config["per_page"] = 200;
+        $config["per_page"] = 20;
         $config["uri_segment"] = 4;
         $config["num_links"] = 5;
         /* This Application Must Be Used With BootStrap 3 * */
@@ -420,7 +420,6 @@ class Cproduct extends MX_Controller
 
         $details_info = $this->Products->product_details_info($product_id);
         $purchaseData = $this->Products->product_purchase_info($product_id);
-
         $totalPurchase = 0;
         $totalPrcsAmnt = 0;
 
@@ -465,9 +464,10 @@ class Cproduct extends MX_Controller
             'position' => $currency_details[0]['currency_position'],
         );
 
-        $content = $this->parser->parse('dashboard/product/product_details',$data,true);
-        $this->template_lib->full_admin_html_view($content);
-
+        $data['setting'] = $this->Template_model->setting();
+        $data['module'] = "dashboard";
+        $data['page'] = 'product/product_details';
+        $this->parser->parse('template/layout', $data);
     }
 
     //Retrieve Single Item  By Search

@@ -120,7 +120,6 @@ class Csoft_setting extends MX_Controller
             'site_key' => $site_key,
             'secret_key' => $secret_key,
             'sms_service' => $this->input->post('sms_service',TRUE),
-            'country_id' => $this->input->post('country',TRUE)
         );
 
         $this->Soft_settings->update_setting($data);
@@ -206,22 +205,22 @@ class Csoft_setting extends MX_Controller
     //Update payment configuration
     public function update_payment_gateway_setting($id = null)
     {
-        if ($id == 3) {
+        if ($id == 2) {
+            $data = array(
+                'shop_id' => $this->input->post('shop_id',TRUE),
+                'secret_key' => $this->input->post('secret_key',TRUE),
+                'status' => $this->input->post('status',TRUE),
+            );
+            $this->Soft_settings->update_payment_gateway_setting($data, $id);
+        } else if ($id == 1) {
             $data = array(
                 'public_key' => $this->input->post('public_key',TRUE),
                 'private_key' => $this->input->post('private_key',TRUE),
                 'status' => $this->input->post('status',TRUE),
             );
 
-            $this->Soft_settings->update_payment_gateway_setting_new($data, $id);
-        }else if ($id == 4) {
-            $data = array(
-                'shop_id' => $this->input->post('shop_id',TRUE),
-                'secret_key' => $this->input->post('secret_key',TRUE),
-                'status' => $this->input->post('status',TRUE),
-            );
-            $this->Soft_settings->update_payment_gateway_setting_new($data, $id);
-        } else if ($id == 5) {
+            $this->Soft_settings->update_payment_gateway_setting($data, $id);
+        } else if ($id == 3) {
             $data = array(
                 'paypal_email' => $this->input->post('paypal_email',TRUE),
                 'paypal_client_id' => $this->input->post('client_id',TRUE),
@@ -230,8 +229,8 @@ class Csoft_setting extends MX_Controller
                 'status' => $this->input->post('status',TRUE),
             );
 
-            $this->Soft_settings->update_payment_gateway_setting_new($data, $id);
-        } else if ($id == 6) {
+            $this->Soft_settings->update_payment_gateway_setting($data, $id);
+        } else if ($id == 4) {
             $data = array(
                 'paypal_email' => $this->input->post('sslcommerz_email',TRUE),
                 'shop_id' => $this->input->post('store_id',TRUE),
@@ -241,19 +240,7 @@ class Csoft_setting extends MX_Controller
                 'status' => $this->input->post('status',TRUE),
             );
 
-            $this->Soft_settings->update_payment_gateway_setting_new($data, $id);
-        }else{
-
-            $data = array(
-                'paypal_email' => $this->input->post('business_email',TRUE),
-                'public_key' => $this->input->post('public_key',TRUE),
-                'private_key' => $this->input->post('private_key',TRUE),
-                'currency' => $this->input->post('currency',TRUE),
-                'is_live' => $this->input->post('is_live',TRUE),
-                'status' => $this->input->post('status',TRUE),
-            );
-
-            $this->Soft_settings->update_payment_gateway_setting_new($data, $id);
+            $this->Soft_settings->update_payment_gateway_setting($data, $id);
         }
 
         $this->session->set_userdata(array('message' => display('successfully_updated')));

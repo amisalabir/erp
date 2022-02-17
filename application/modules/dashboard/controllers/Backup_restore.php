@@ -170,29 +170,4 @@ class Backup_restore extends MX_Controller {
 		}
 	}
 
-	// downlaod database
-	public function download_backup() {
-        $db_name = 'backup' . '.sql';
-
-        $this->load->dbutil();
-        $prefs = array(
-            'format'   => 'txt',
-            'filename' => 'backup.sql');
-        $b         = $this->dbutil->backup($prefs);
-        $save      = 'assets/data/backup/' . $db_name;
-        $this->load->helper('file');
-        $username = $this->db->username;
-        //----- Removing Security Hash FROM CREATE VIEW Queries
-        $backup =  $b;
-        //----- Commenting INSERT queries FOR VIEWS
-
-       
-        write_file($save, $backup);
-
-        
-        $this->load->helper('download');
-        force_download('./assets/data/backup/' . $db_name, NULL);
-
-    }
-
 }

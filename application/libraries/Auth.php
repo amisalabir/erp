@@ -24,38 +24,11 @@ class Auth
             $key = str_replace("0", "eXnyiKFj", $key);
             $sid_web = substr($key, rand(0, 3), rand(28, 32));
 
-            // if ($result[0]['user_type'] == 1 || $result[0]['user_type'] == 2) {
-            if ($result[0]['user_type'] == 1) {
-                $isAdmin = 1;
+            if ($result[0]['user_type'] == 1 || $result[0]['user_type'] == 2) {
+                $isAdmin = true;
             } else {
-                $isAdmin = 0;
+                $isAdmin = false;
             }
-
-            $checkPermission = $CI->Users->getUserPermission($result[0]['user_id']);
-            $permission = array();
-            $permission1 = array();
-            if($checkPermission!=NULL){
-                
-                if(!empty($checkPermission)){
-                    foreach ($checkPermission as $value) {
-                        
-                        $permission[$value->module] = array( 
-                            'create' => $value->create,
-                            'read'   => $value->read,
-                            'update' => $value->update,
-                            'delete' => $value->delete
-                        );
-
-                        $permission1[$value->menu_title] = array( 
-                            'create' => $value->create,
-                            'read'   => $value->read,
-                            'update' => $value->update,
-                            'delete' => $value->delete
-                        );
-                    }
-                } 
-            }
-
             // codeigniter session stored data
             $user_data = array(
                 'isLogIn' => true,
@@ -67,12 +40,10 @@ class Auth
                 'user_name' => $result[0]['first_name'] . " " . $result[0]['last_name'],
                 'user_email' => $result[0]['username'],
                 'logo' => $result[0]['logo'],
-                'permission'    => json_encode(@$permission), 
-                'label_permission'  => json_encode(@$permission1)
             );
 
             $CI->session->set_userdata($user_data);
-            $CI->session->set_flashdata('message', display('welcome_back') . ' ' . $user_data['user_name']);
+            $CI->session->set_flashdata('message', display('welcome_back') . ' ' . $user_data[user_name]);
             return TRUE;
         } else {
             return FALSE;
@@ -119,22 +90,6 @@ class Auth
         }
         return false;
     }
-
-    public function check_user_auth($url = '')
-    {
-        if ($url == '') {
-            $url = base_url() . 'admin';
-        }
-        $CI =& get_instance();
-        if (!$this->is_logged()) {
-            $this->logout();
-            $error = display('you_are_not_authorised');
-            $CI->session->set_userdata(array('error_message' => $error));
-            redirect($url, 'refresh');
-            exit;
-        }
-    }
-
 
     //Check admin auth
     function check_admin_auth($url = '')

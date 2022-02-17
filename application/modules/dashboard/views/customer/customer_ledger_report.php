@@ -133,6 +133,10 @@
 								</thead>
 								<tbody>
 								<?php
+							  /*  echo "<pre>";
+							    var_dump($ledger);
+							     echo "<pre>";
+							     */
 								if($ledger){ ?>
 								{ledger}
 									<tr>

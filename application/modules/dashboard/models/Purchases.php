@@ -67,7 +67,7 @@ class Purchases extends CI_Model {
 		$quantity 	= $this->input->post('product_quantity',TRUE);
 		$variant_id = $this->input->post('variant_id',TRUE);
 		
-		// Supplier & product id relation ship checker.
+		//Supplier & product id relation ship checker.
 		for ($i=0, $n=count($p_id); $i < $n; $i++) {
 			$product_id = $p_id[$i];
 			$value 		= $this->product_supplier_check($product_id,$supplier_id);
@@ -159,78 +159,9 @@ class Purchases extends CI_Model {
 				if(!empty($quantity))
 				{
 
-					$this->db->insert('transfer',$store);
+						$this->db->insert('transfer',$store);
 				}
 		}
-
-		// Woocommerce module stock update
-		$woocom_stock = $this->input->post('woocom_stock',TRUE);
-		if(check_module_status('woocommerce') && ($woocom_stock=='1')) {
-
-        	$this->load->library('woocommerce/woolib/woo_lib');
-        	$this->load->model('woocommerce/woo_model');
-            $this->woo_lib->connection();
-            $def_store = $this->woo_model->get_def_store();
-            
-            $woo_stock = [];
-        	for ($i=0, $n=count($p_id); $i < $n; $i++) {
-				$product_quantity = $quantity[$i];
-				$product_id = $p_id[$i];
-				$variant = $variant_id[$i];
-				$fulldata = $woo_data = [];
-				$product_stock = 0;
-				
-
-				$prodinfo = $this->woo_model->get_product_sync_by_local_id($product_id);
-
-				if(!empty($prodinfo))
-				{
-					if($prodinfo->woo_product_type == 'variable')
-					{
-
-						$varinfo = $this->woo_model->get_variant_sync_by_local($product_id, $variant);
-
-						if(!empty($varinfo->woo_product_id) && !empty($varinfo->woo_variant_id)){
-
-						 	$product_stock = $this->woo_model->get_product_stock($def_store->store_id, $product_id, $variant);
-
-								$woo_data[] = array(
-							 		'id' => $varinfo->woo_variant_id,
-							 		'manage_stock' => TRUE,
-							 		'stock_quantity' => $product_stock,
-							 		'stock_status' => (intval($product_stock)>0?'instock':'outofstock')
-							 	);
-
-							 	if(!empty($woo_data)){
-									$fulldata['update'] = $woo_data;
-									$woovarinfo = $this->woo_lib->post_request(array('param'=> 'products/'.$varinfo->woo_product_id.'/variations/batch'), $fulldata);
-								}
-						}
-
-					}else{
-
-						$pdef_info = $this->woo_model->get_product_variant_info($product_id);
-
-						if(!empty($pdef_info)){
-
-							$product_stock = $this->woo_model->get_product_stock($def_store->store_id, $product_id, $pdef_info->default_variant);
-
-							$woo_stock[] = array(
-		                        'id' => $prodinfo->woo_product_id,
-		                        'manage_stock' => TRUE,
-		                        'stock_quantity' => $product_stock,
-		                        'stock_status' => (intval($product_stock)>0?'instock':'outofstock')
-		                    );
-						}
-					}
-				}
-			}
-			if(!empty($woo_stock)){ //update global stock
-                $this->woo_lib->post_request(array('param'=> 'products/batch'), array('update' => $woo_stock));
-            }
-        }
-
-
 		return true;
 	}
 	//Retrieve purchase Edit Data
@@ -367,75 +298,6 @@ class Purchases extends CI_Model {
 
 				$this->db->insert('transfer',$store);
 		}
-
-
-		// Woocommerce Stock update
-		$woocom_stock = $this->input->post('woocom_stock',TRUE);
-		if(check_module_status('woocommerce') && ($woocom_stock=='1')) {
-
-        	$this->load->library('woocommerce/woolib/woo_lib');
-        	$this->load->model('woocommerce/woo_model');
-            $this->woo_lib->connection();
-            $def_store = $this->woo_model->get_def_store();
-            
-            $woo_stock = [];
-        	for ($i=0, $n=count($p_id); $i < $n; $i++) {
-				$product_quantity = $quantity[$i];
-				$product_id = $p_id[$i];
-				$variant = $variants[$i];
-				$fulldata = $woo_data = [];
-				$product_stock = 0;
-
-
-				$prodinfo = $this->woo_model->get_product_sync_by_local_id($product_id);
-
-				if(!empty($prodinfo))
-				{
-					if($prodinfo->woo_product_type == 'variable')
-					{
-
-						$varinfo = $this->woo_model->get_variant_sync_by_local($product_id, $variant);
-
-						if(!empty($varinfo->woo_product_id) && !empty($varinfo->woo_variant_id)){
-
-						 	$product_stock = $this->woo_model->get_product_stock($def_store->store_id, $product_id, $variant);
-
-								$woo_data[] = array(
-							 		'id' => $varinfo->woo_variant_id,
-							 		'manage_stock' => TRUE,
-							 		'stock_quantity' => $product_stock,
-							 		'stock_status' => (intval($product_stock)>0?'instock':'outofstock')
-							 	);
-
-							 	if(!empty($woo_data)){
-									$fulldata['update'] = $woo_data;
-									$woovarinfo = $this->woo_lib->post_request(array('param'=> 'products/'.$varinfo->woo_product_id.'/variations/batch'), $fulldata);
-								}
-						}
-
-					}else{
-
-						$pdef_info = $this->woo_model->get_product_variant_info($product_id);
-
-						if(!empty($pdef_info)){
-
-							$product_stock = $this->woo_model->get_product_stock($def_store->store_id, $product_id, $pdef_info->default_variant);
-
-							$woo_stock[] = array(
-		                        'id' => $prodinfo->woo_product_id,
-		                        'manage_stock' => TRUE,
-		                        'stock_quantity' => $product_stock,
-		                        'stock_status' => (intval($product_stock)>0?'instock':'outofstock')
-		                    );
-						}
-					}
-				}
-			}
-			if(!empty($woo_stock)){ //update global stock
-                $this->woo_lib->post_request(array('param'=> 'products/batch'), array('update' => $woo_stock));
-            }
-        }
-        
 		return true;
 	}
 
